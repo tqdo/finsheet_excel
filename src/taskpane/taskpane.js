@@ -691,7 +691,7 @@ function onBlurNewSymbol() {
 
 function clickNavigate(which){
   var all_components = ['symbols', 'metrics', 'etf', 'mutual_fund', 'equity_metrics', 'equity_full_financials', 'equity_candles', 'forex_candles', 'forex_all_rates',
-                'crypto_candles', 'crypto_profile', 'etf_candles', 'etf_profile', 'streaming']
+                'crypto_candles', 'crypto_profile', 'etf_candles', 'etf_profile', 'streaming', 'mutual_fund_candles', 'mutual_fund_profile']
   for(var name of all_components){
     if(which == name){
       $("#" + which).css({ display: "block" });
