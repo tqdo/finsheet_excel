@@ -690,7 +690,7 @@ function onBlurNewSymbol() {
 
 
 function clickNavigate(which){
-  var all_components = ['symbols', 'metrics', 'etf', 'equity_metrics', 'equity_full_financials', 'equity_candles', 'forex_candles', 'forex_all_rates',
+  var all_components = ['symbols', 'metrics', 'etf', 'mutual_fund', 'equity_metrics', 'equity_full_financials', 'equity_candles', 'forex_candles', 'forex_all_rates',
                 'crypto_candles', 'crypto_profile', 'etf_candles', 'etf_profile', 'streaming']
   for(var name of all_components){
     if(which == name){
@@ -1529,8 +1529,7 @@ function changeNewEtf(){
   var all_symbols = $('.all_etf')
   all_symbols.empty();
   if(!input){ return}
-  var url = 'https://valueinvesting.io/get_some_etfs?val='
-  fetch(url + input).then(function(response){
+  fetch("https://valueinvesting.io/get_some_etfs?val=" + input).then(function(response){
     if (response.ok) {return response.json().then(function (json) {
       console.log(json);
       for(var dic of json.data){
@@ -1542,6 +1541,36 @@ function changeNewEtf(){
   })
 }
 
+
+function onFocusNewMutualFund(){
+  $("#mutual_fund_dropdown").css({ display: "block" });
+}
+function onBlurNewMutualFund(){
+  $("#mutual_fund_dropdown").css({ display: "none" });
+}
+function clickMutualFund(str){
+  var arr = str.split('__')
+  $(".mutual_fund_wrap").css({display: 'block'})
+  $("#mutual_fund_result").text(arr[0])
+  $("#mutual_fund_name_result").text(arr[1])
+  $("#mutual_fund_input").val('')
+}
+function changeNewMutualFund(){
+  var input = $("#mutual_fund_input").val()
+  var all_symbols = $('.all_mutual_fund')
+  all_symbols.empty();
+  if(!input){ return}
+  fetch(link + "/search_symbols?which=mutual_fund&val=" + input).then(function(response){
+    if (response.ok) {return response.json().then(function (json) {
+      console.log(json);
+      for(var dic of json.data){
+        all_symbols.append(
+            `<div class="one_filter_suggestion pointer" id="${dic.tickers}" onmousedown="clickMutualFund('${dic.tickers + '__' +  dic.comp_name}')"><div style="display: inline; color: #2cbd54">${dic.tickers}</div>${' - ' + dic.comp_name}</div>`
+        )
+      }
+    })} else {window.pushNoti("Network Error", 3000, "error")}
+  })
+}
 $("#search_dropdown_wrap").on("mouseover", function() {$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
 $("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});

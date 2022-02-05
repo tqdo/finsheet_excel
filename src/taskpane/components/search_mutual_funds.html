@@ -1,0 +1,29 @@
+<div id="mutual_fund" style="display: none">
+    <div style="position: relative; margin: 15px 0px 5px 0;">
+        <div class="" style="text-align: center; font-size: 12px; margin-left: -10px; ">Click <a style="color: #2cbd54" href="https://docs.google.com/spreadsheets/d/1WGGMCMF3kBbE9Sx_Cr6Xbog3i2e54cedPT_z-Rbloq0/edit#gid=0" >here</a> to see the full list of supported Mutual Funds</div>
+        <div style="position: relative; display: inline-block; width: 90%; margin-top: 10px" >
+            <i class="fas fa-search icon_all_metrics_popup_input"></i>
+            <input class="all_metrics_popup_input " placeholder="Mutual Funds Lookup..." onfocus="onFocusNewMutualFund()" oninput="changeNewMutualFund('etf')" onblur="onBlurNewMutualFund()" id="mutual_fund_input">
+        </div>
+
+        <div class='filter_suggestions standard_dropdown' style="display: none" id="mutual_fund_dropdown">
+            <div class='all_mutual_fund' style="min-height: 15px; overflow: auto" >
+
+            </div>
+        </div>
+
+        <div class="each_main_section" style="min-height: 200px">
+            <div class="mutual_fund_wrap" style="display: none">
+                <div class="candle_argument" >
+                    <div class="candle_argument_name" style="font-weight: bold">Mutual Fund Symbol</div>
+                    <div class="candle_argument_explain" id="mutual_fund_result" style="color: #2cbd54; font-weight: bold"></div>
+                </div>
+
+                <div class="candle_argument">
+                    <div class="candle_argument_name" style="">Mutual Fund Full Name</div>
+                    <div class="candle_argument_explain" id="mutual_fund_name_result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
