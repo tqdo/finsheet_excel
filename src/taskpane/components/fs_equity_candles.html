@@ -1,0 +1,61 @@
+<div class="each_main_section">
+    <h3 style="font-size: 15px; margin-top: 15px">Example Formula</h3>
+    <div class="actual_example_formula" style="margin-top: 5px; padding: 3px; border-left: 2px solid #dadada; background: #f8f8f8; font-size: 12px; margin-bottom: 25px">=FS_EquityCandles(
+        <div class="formula_candle_ticker" style="display: inline; color: #eba547">"AAPL"</div>
+        <div class="formula_resolution" style="display: inline; color: #2cbd54">, "D"</div>
+        <div class="formula_from" style="display: inline; color: #027bfa">, "1631022248"</div>
+        <div class="formula_to" style="display: inline; color: #027bfa">, "09/15/2021"</div>)
+    </div>
+
+    <h3 style="font-size: 15px; ">Arguments</h3>
+    <div class="candle_argument">
+        <div class="candle_argument_name" style="color: #eba547">symbol</div>
+        <div class="candle_argument_explain">Stock symbol</div>
+    </div>
+
+    <div class="candle_argument">
+        <div class="candle_argument_name" style="color: #2cbd54">resolution</div>
+        <div class="candle_argument_explain">Supported resolution includes <div style="display: inline; ">1, 5, 15, 30, 60, D, W, M</div></div>
+    </div>
+
+    <div class="candle_argument">
+        <div class="candle_argument_name" style="color: #027bfa">from <div style="display: inline; font-size: 10px; font-style: italic; margin-left: 5px; font-weight: normal; color: black">(optional)</div></div>
+        <div class="candle_argument_explain">Interval initial value (can be string of datetime or string of UNIX timestamp). Leave both "from" and "to" blank to get the latest price. </div>
+    </div>
+
+    <div class="candle_argument">
+        <div class="candle_argument_name" style="color: #027bfa">to <div style="display: inline; font-size: 10px; font-style: italic; margin-left: 5px; font-weight: normal; color: black">(optional)</div></div>
+        <div class="candle_argument_explain">Interval end value (can be string of datetime or string of UNIX timestamp)</div>
+    </div>
+
+    <div class="res_attributes" >
+        <h3 style="font-size: 15px">Results</h3>
+        <div class="candle_argument">
+            <div class="candle_argument_name" style="">Period</div>
+            <div class="candle_argument_explain">List of timestamp for returned candles (displayed in your timezone)</div>
+        </div>
+
+        <div class="candle_argument">
+            <div class="candle_argument_name" style="">Close</div>
+            <div class="candle_argument_explain">List of close prices for returned candles.</div>
+        </div>
+
+        <div class="candle_argument">
+            <div class="candle_argument_name" style="">Open</div>
+            <div class="candle_argument_explain">List of open prices for returned candles.</div>
+        </div>
+        <div class="candle_argument">
+            <div class="candle_argument_name" style="">High</div>
+            <div class="candle_argument_explain">List of high prices for returned candles.</div>
+        </div>
+
+        <div class="candle_argument">
+            <div class="candle_argument_name" style="">Low</div>
+            <div class="candle_argument_explain">List of low prices for returned candles.</div></div>
+    </div>
+
+    <div class="candle_argument" style="margin-bottom: 25px">
+        <div class="candle_argument_name" style="">Volume</div>
+        <div class="candle_argument_explain">List of volume data for returned candles.</div>
+    </div>
+</div>

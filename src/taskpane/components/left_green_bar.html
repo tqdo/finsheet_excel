@@ -1,0 +1,111 @@
+<a class="left_bar_icon"   style="margin-bottom: 40px" href="https://finsheet.io" target="_blank"><img src="https://imgur.com/Tyz2vB0.png" style="margin: auto; width: 100%"/></a>
+
+<div id="search_dropdown_wrap">
+    <div class="left_bar_icon" title="Search symbols/metrics" id="search_dropdown_section" onclick="toggleSearchDropdown()"><i class="fas fa-search pointer margin_auto"></i></div>
+    <div class='filter_suggestions standard_dropdown dropdown_for_left_bar' style="display: none;   width: 180px;  z-index: 1002;  " id="search_dropdown" >
+        <div class='all_refresh_dropdown' style="min-height: 15px; overflow: auto" >
+            <div class="one_filter_suggestion  refresh_dropdown_suggestion white_background_hover"   style="font-weight: bold">
+                LOOKUP
+            </div>
+            <div style="width: 90%; height: 1px; background: black; margin: 2px auto;"></div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('symbols')">
+                Equity Lookup
+            </div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('metrics')">
+                Metric Lookup
+            </div>
+            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickAllCrypto()">
+                Crypto Lookup
+            </div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('etf')">
+                ETF Lookup
+            </div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickAllForex()">
+                Forex Lookup
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div id="functions_dropdown_wrap">
+    <div class="left_bar_icon" title="Check out the functions" onclick="toggleFunctionsDropdown()" id="functions_dropdown_section"><i class="fas fa-wave-square pointer margin_auto"></i></div>
+    <div class='filter_suggestions standard_dropdown dropdown_for_left_bar' style="display: none;  width: 180px;   z-index: 1002;  " id="functions_dropdown" >
+        <div class='all_refresh_dropdown' style="min-height: 15px; overflow: auto" >
+            <div class="one_filter_suggestion  refresh_dropdown_suggestion white_background_hover"   style="font-weight: bold">
+                FUNCTIONS
+            </div>
+            <div style="width: 90%; height: 1px; background: black; margin: 2px auto;"></div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('equity_metrics')">
+                FS_EquityMetrics
+            </div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('equity_full_financials')">
+                FS_EquityFullFinancials
+            </div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('equity_candles')">
+                FS_EquityCandles
+            </div>
+            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('crypto_candles')">
+                FS_CryptoCandles
+            </div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('crypto_profile')">
+                FS_CryptoProfile
+            </div>
+            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('forex_candles')">
+                FS_ForexCandles
+            </div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('forex_all_rates')">
+                FS_ForexAllRates
+            </div>
+            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('etf_candles')">
+                FS_EtfCandles
+            </div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('etf_profile')">
+                FS_EtfProfile
+            </div>
+            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('streaming')">
+                FS_Streaming
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div id="refresh_dropdown_wrap">
+    <div class="left_bar_icon" title="Refresh data" onclick="toggleRefreshDropdown()" id="refresh_dropdown_section"><i class="fas fa-sync-alt pointer margin_auto"></i></div>
+    <div class='filter_suggestions standard_dropdown dropdown_for_left_bar' style="display: none;  width: 180px;   z-index: 1002;  " id="refresh_dropdown" >
+        <div class='all_refresh_dropdown' style="min-height: 15px; overflow: auto" >
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickRefreshDropdown('refresh_all_sheet')">
+                Refresh all (in all sheets)
+            </div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickRefreshDropdown('refresh_this_sheet')">
+                Refresh all (in this sheet)
+            </div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickRefreshDropdown('refresh_selected')">
+                Refresh selected
+            </div>
+            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="start_streaming()">
+                Start/resume streaming
+            </div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="stop_streaming()">
+                Pause streaming
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<a class="left_bar_icon" title="Full Documentation" target="_blank" href="https://finsheet.io/docs"><i class="fas fa-book pointer margin_auto"></i></a>-->
+<div class="left_bar_icon" title="Logout" onclick="showApiInputDiv()"><i class="fas fa-power-off pointer margin_auto"></i></div>

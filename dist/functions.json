@@ -1,0 +1,256 @@
+{
+    "functions": [
+        {
+            "id": "FS_EQUITYMETRICS",
+            "name": "FS_EquityMetrics",
+            "parameters": [
+                {
+                    "description": "Stock Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Metric.",
+                    "name": "metric",
+                    "type": "string"
+                },
+                {
+                    "description": "Period (optional).",
+                    "name": "period",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Limit (optional, default to 1).",
+                    "name": "limit",
+                    "optional": true,
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_EQUITYFULLFINANCIALS",
+            "name": "FS_EquityFullFinancials",
+            "parameters": [
+                {
+                    "description": "Stock Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Statement (bs, ic or cf).",
+                    "name": "statement",
+                    "type": "string"
+                },
+                {
+                    "description": "Period (optional).",
+                    "name": "period",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Limit (optional, default to 1).",
+                    "name": "limit",
+                    "optional": true,
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_EQUITYCANDLES",
+            "name": "FS_EquityCandles",
+            "parameters": [
+                {
+                    "description": "Stock Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Resolution.",
+                    "name": "resolution",
+                    "type": "string"
+                },
+                {
+                    "description": "From.",
+                    "name": "from",
+                    "type": "string"
+                },
+                {
+                    "description": "To (optional).",
+                    "name": "to",
+                    "optional": true,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_FOREXCANDLES",
+            "name": "FS_ForexCandles",
+            "parameters": [
+                {
+                    "description": "Forex Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Resolution.",
+                    "name": "resolution",
+                    "type": "string"
+                },
+                {
+                    "description": "From.",
+                    "name": "from",
+                    "type": "string"
+                },
+                {
+                    "description": "To (optional).",
+                    "name": "to",
+                    "optional": true,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_CRYPTOCANDLES",
+            "name": "FS_CryptoCandles",
+            "parameters": [
+                {
+                    "description": "Crypto Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Resolution.",
+                    "name": "resolution",
+                    "type": "string"
+                },
+                {
+                    "description": "From.",
+                    "name": "from",
+                    "type": "string"
+                },
+                {
+                    "description": "To (optional).",
+                    "name": "to",
+                    "optional": true,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_ETFCANDLES",
+            "name": "FS_EtfCandles",
+            "parameters": [
+                {
+                    "description": "Etf Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Resolution.",
+                    "name": "resolution",
+                    "type": "string"
+                },
+                {
+                    "description": "From.",
+                    "name": "from",
+                    "type": "string"
+                },
+                {
+                    "description": "To (optional).",
+                    "name": "to",
+                    "optional": true,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_FOREXALLRATES",
+            "name": "FS_ForexAllRates",
+            "parameters": [
+                {
+                    "description": "base_currency (optional).",
+                    "name": "base_currency",
+                    "optional": true,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_CRYPTOPROFILE",
+            "name": "FS_CryptoProfile",
+            "parameters": [
+                {
+                    "description": "Crypto symbol such as BTC or ETH.",
+                    "name": "symbol",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_ETFPROFILE",
+            "name": "FS_EtfProfile",
+            "parameters": [
+                {
+                    "description": "ETF symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "description": "Stream Real-time price for Stocks, Forex, Cryptos and ETFs.",
+            "id": "FS_STREAMING",
+            "name": "Fs_Streaming",
+            "options": {
+                "stream": true
+            },
+            "parameters": [
+                {
+                    "description": "Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "type": "string"
+            }
+        }
+    ]
+}

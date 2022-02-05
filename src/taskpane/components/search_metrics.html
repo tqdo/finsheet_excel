@@ -1,0 +1,31 @@
+<div style="position: relative; margin: 15px 0px 5px 0;">
+    <div class="" style="text-align: center; font-size: 12px; margin-left: -10px; ">Click <a style="color: #2cbd54" href="https://docs.google.com/spreadsheets/d/1-F49pgcANEgOH3SH7sAp9E2xIolMzOyONvzKL7SKW2Q/edit#gid=0" >here</a> to see the full list of supported metrics</div>
+    <div style="position: relative; margin: 5px 0px 5px 0; width: 95%">
+        <div style="position: relative; display: inline-block; width: 100%; margin-top: 7px">
+            <i class="fas fa-search icon_all_metrics_popup_input"></i>
+            <input class="all_metrics_popup_input " placeholder="Metric Lookup..."  onfocus="onFocusNewFilter()" oninput="changeNewFilterName()" onblur="onBlurNewFilter()" id="metric_input" style="width: 100%; ">
+        </div>
+    </div>
+    <div class='filter_suggestions standard_dropdown' style="display: none;width: 95%" id="metric_dropdown">
+        <div class='all_suggestions' style="min-height: 15px" >
+
+        </div>
+    </div>
+
+    <div style="margin-top: 8px; min-height: 200px" class="metric_detail">
+        <div class="all_metric_lines" style="display: none">
+            <div class="metric_one_line">Formal Name: <div class="metric_formal_name"  style="font-size: 14px"></div></div>
+            <div class="metric_one_line">Code Name: <div class="actual_fieldname"  style="color: #2cbd54"></div></div>
+            <div class="metric_one_line all_periods_section">Periods Available: <div class="actual_all_periods"  style="color: #027bfa"></div></div>
+            <div class="metric_one_line default_period_section">Default Period: <div class="actual_default_period"  style="color: #027bfa"></div></div>
+            <div class="metric_one_line unit_section">Unit: <div class=""  style="font-weight: normal">Millions</div></div>
+        </div>
+        <!-- Customized Period section  -->
+        <div class="customized_period_wrap" style="display: none" id="customized_period_wrap">
+            <div class="bigger" style="font-weight: normal; font-size: 13px; font-weight: bold; " >
+                Examples of Custom Periods
+            </div>
+            <div class="customized_period_section" style="margin-top: 10px; display: block"></div>
+        </div>
+    </div>
+</div>

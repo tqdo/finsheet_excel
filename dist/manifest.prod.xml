@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
+  <Id>8d1b78f7-9bb6-4e29-a45a-c0d5c553c979</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Finsheet.io</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Finsheet.io"/>
+  <Description DefaultValue="Import Quotes and Financials"/>
+  <IconUrl DefaultValue="https://imgur.com/SdA1fEp.png"/>
+  <HighResolutionIconUrl DefaultValue="https://imgur.com/PDU2pf1.png"/>
+  <SupportUrl DefaultValue="https://alpharesearch.io/excel-addin-support"/>
+  <AppDomains>
+    <AppDomain>"https://alpharesearch.io</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Workbook"/>
+  </Hosts>
+  <Requirements>
+    <Sets DefaultMinVersion="1.1">
+      <Set Name="SharedRuntime" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://www.contoso.com/taskpane.html"/>
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Workbook">
+        <Runtimes>
+          <Runtime resid="Taskpane.Url" lifetime="long" />
+        </Runtimes>
+        <AllFormFactors>
+          <ExtensionPoint xsi:type="CustomFunctions">
+            <Script>
+              <SourceLocation resid="Functions.Script.Url"/>
+            </Script>
+            <Page>
+              <SourceLocation resid="Taskpane.Url"/>
+            </Page>
+            <Metadata>
+              <SourceLocation resid="Functions.Metadata.Url"/>
+            </Metadata>
+          </ExtensionPoint>
+        </AllFormFactors>
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title"/>
+            <Description resid="GetStarted.Description"/>
+            <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
+          </GetStarted>
+          <FunctionFile resid="Taskpane.Url"/>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="CommandsGroup">
+                <Label resid="CommandsGroup.Label"/>
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16"/>
+                  <bt:Image size="32" resid="Icon.32x32"/>
+                  <bt:Image size="80" resid="Icon.80x80"/>
+                </Icon>
+                <Control xsi:type="Button" id="TaskpaneButton">
+                  <Label resid="TaskpaneButton.Label"/>
+                  <Supertip>
+                    <Title resid="TaskpaneButton.Label"/>
+                    <Description resid="TaskpaneButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>ButtonId1</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16x16" DefaultValue="https://imgur.com/SdA1fEp.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://imgur.com/PDU2pf1.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://imgur.com/XFCeWjR.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Functions.Script.Url" DefaultValue="https://www.contoso.com/dist/functions.js"/>
+        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://raw.githubusercontent.com/tqdo/stock_website/main/finsheet.json"/>
+        <bt:Url id="Functions.Page.Url" DefaultValue="https://www.contoso.com/dist/functions.html"/>
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://www.contoso.com/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://www.contoso.com/taskpane.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GetStarted.Title" DefaultValue="Add-in successfully added"/>
+        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Sidebar"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="To view the sidebar which has our add-in instruction, go to tab Home and click 'Show Sidebar'"/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to show the sidebar"/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

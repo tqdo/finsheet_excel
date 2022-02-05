@@ -1,0 +1,29 @@
+<div id="etf" style="display: none">
+    <div style="position: relative; margin: 15px 0px 5px 0;">
+        <div class="" style="text-align: center; font-size: 12px; margin-left: -10px; ">Click <a style="color: #2cbd54" href="https://docs.google.com/spreadsheets/d/19NY30n2XdQf5_Y5h3G8dyV7Mlpz9MhR9_RqzhEaolqQ/edit#gid=0" >here</a> to see the full list of supported ETFs</div>
+        <div style="position: relative; display: inline-block; width: 90%; margin-top: 10px" >
+            <i class="fas fa-search icon_all_metrics_popup_input"></i>
+            <input class="all_metrics_popup_input " placeholder="ETF Lookup..." onfocus="onFocusNewEtf()" oninput="changeNewEtf('etf')" onblur="onBlurNewEtf()" id="etf_input">
+        </div>
+
+        <div class='filter_suggestions standard_dropdown' style="display: none" id="etf_dropdown">
+            <div class='all_etf' style="min-height: 15px; overflow: auto" >
+
+            </div>
+        </div>
+
+        <div class="each_main_section" style="min-height: 200px">
+            <div class="etf_wrap" style="display: none">
+                <div class="candle_argument" >
+                    <div class="candle_argument_name" style="font-weight: bold">ETF Symbol</div>
+                    <div class="candle_argument_explain" id="etf_result" style="color: #2cbd54; font-weight: bold"></div>
+                </div>
+
+                <div class="candle_argument">
+                    <div class="candle_argument_name" style="">ETF Full Name</div>
+                    <div class="candle_argument_explain" id="etf_name_result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

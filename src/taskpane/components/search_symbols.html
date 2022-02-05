@@ -1,0 +1,28 @@
+<div style="position: relative; margin: 15px 0px 5px 0;">
+    <!-- Now start symbol lookup -->
+    <!-- <div class="customized_period_wrap" style="height:2px"></div> -->
+    <div style="position: relative; display: inline-block; width: 95%;" >
+        <i class="fas fa-search icon_all_metrics_popup_input"></i>
+        <input class="all_metrics_popup_input " placeholder="Stock Ticker Lookup..." onfocus="onFocusNewSymbol()" oninput="changeNewSymbol()" onblur="onBlurNewSymbol()" id="symbol_input">
+    </div>
+
+    <div class='filter_suggestions standard_dropdown' style="display: none" id="symbol_dropdown">
+        <div class='all_symbols' style="min-height: 15px; overflow: auto" >
+
+        </div>
+    </div>
+
+    <div class="each_main_section" style="min-height: 200px">
+        <div class="symbol_wrap" style="display: none">
+            <div class="candle_argument" >
+                <div class="candle_argument_name" style="font-weight: bold">Stock Ticker</div>
+                <div class="candle_argument_explain" id="symbol_result" style="color: #2cbd54; font-weight: bold"></div>
+            </div>
+
+            <div class="candle_argument">
+                <div class="candle_argument_name" style="">Company Name</div>
+                <div class="candle_argument_explain" id="comp_name_result"></div>
+            </div>
+        </div>
+    </div>
+</div>
