@@ -1,6 +1,6 @@
 <a class="left_bar_icon"   style="margin-bottom: 40px" href="https://finsheet.io" target="_blank"><img src="https://imgur.com/Tyz2vB0.png" style="margin: auto; width: 100%"/></a>
 
-<div id="search_dropdown_wrap">
+<div id="search_dropdown_wrap" class="aaa" onmouseover="showDropdown('search_dropdown')" onmouseout="hideDropdown('search_dropdown')">
     <div class="left_bar_icon" title="Search symbols/metrics" id="search_dropdown_section" onclick="toggleSearchDropdown()"><i class="fas fa-search pointer margin_auto"></i></div>
     <div class='filter_suggestions standard_dropdown dropdown_for_left_bar' style="display: none;   width: 180px;  z-index: 1002;  " id="search_dropdown" >
         <div class='all_refresh_dropdown' style="min-height: 15px; overflow: auto" >
@@ -34,7 +34,7 @@
 
 
 
-<div id="functions_dropdown_wrap">
+<div id="functions_dropdown_wrap" onmouseover="showDropdown('functions_dropdown')" onmouseout="hideDropdown('functions_dropdown')">
     <div class="left_bar_icon" title="Check out the functions" onclick="toggleFunctionsDropdown()" id="functions_dropdown_section"><i class="fas fa-wave-square pointer margin_auto"></i></div>
     <div class='filter_suggestions standard_dropdown dropdown_for_left_bar' style="display: none;  width: 180px;   z-index: 1002;  " id="functions_dropdown" >
         <div class='all_refresh_dropdown' style="min-height: 15px; overflow: auto" >
@@ -55,34 +55,37 @@
             <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('crypto_candles')">
                 FS_CryptoCandles
             </div>
-            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('crypto_profile')">
-                FS_CryptoProfile
-            </div>
-            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>
+<!--            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('crypto_profile')">-->
+<!--                FS_CryptoProfile-->
+<!--            </div>-->
+<!--            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>-->
             <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('forex_candles')">
                 FS_ForexCandles
             </div>
-            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('forex_all_rates')">
-                FS_ForexAllRates
-            </div>
-            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>
+<!--            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('forex_all_rates')">-->
+<!--                FS_ForexAllRates-->
+<!--            </div>-->
+<!--            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>-->
             <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('etf_candles')">
                 FS_EtfCandles
             </div>
-            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('etf_profile')">
-                FS_EtfProfile
-            </div>
+<!--            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('etf_profile')">-->
+<!--                FS_EtfProfile-->
+<!--            </div>-->
 
-            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>
+<!--            <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>-->
             <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('mutual_fund_candles')">
                 FS_MutualFundCandles
             </div>
-            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('mutual_fund_profile')">
-                FS_MutualFundProfile
-            </div>
+<!--            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('mutual_fund_profile')">-->
+<!--                FS_MutualFundProfile-->
+<!--            </div>-->
 
 
             <div style="width: 90%; height: 1px; background: black; margin: 10px auto;"></div>
+            <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('latest')">
+                FS_Latest
+            </div>
             <div class="one_filter_suggestion pointer refresh_dropdown_suggestion"  onmousedown="clickNavigate('streaming')">
                 FS_Streaming
             </div>
@@ -95,7 +98,7 @@
 
 
 
-<div id="refresh_dropdown_wrap">
+<div id="refresh_dropdown_wrap" onmouseover="showDropdown('refresh_dropdown')" onmouseout="hideDropdown('refresh_dropdown')">
     <div class="left_bar_icon" title="Refresh data" onclick="toggleRefreshDropdown()" id="refresh_dropdown_section"><i class="fas fa-sync-alt pointer margin_auto"></i></div>
     <div class='filter_suggestions standard_dropdown dropdown_for_left_bar' style="display: none;  width: 180px;   z-index: 1002;  " id="refresh_dropdown" >
         <div class='all_refresh_dropdown' style="min-height: 15px; overflow: auto" >

@@ -1,5 +1,5 @@
-var link = 'https://acdf-96-234-76-225.ngrok.io'
-var link = 'https://finsheet.io'
+var link = 'https://893c-96-234-76-225.ngrok.io'
+// var link = 'https://finsheet.io'
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
@@ -648,9 +648,12 @@ function clickMetric(key){
   // } else {
   //   $('.currency_section').css({display: 'none'})
   // }
+  var all_formulas = $('.example_formula_section')
+  all_formulas.empty()
+  all_formulas.append(`<div class="one_example_usage_metric">${'=FS_EquityMetrics("AAPL", "' + info_dic.excel + '")'}</div>`)
 
   if(info_dic.default_freq){
-    $('.customized_period_wrap').css({display: 'block'})
+    $('#customized_period_wrap').css({display: 'block'})
 
     var freqs = duplicate(example_freq)
     if(!info_dic.supported_freq.includes('TTM')){freqs[1] = ['Get data for the fiscal year two-year prior', 'FY-2']}
@@ -673,9 +676,21 @@ function clickMetric(key){
         `)
     }
 
+    // Add formulas based on supported freq
+    all_formulas.append(`<div class="one_example_usage_metric">${'=FS_EquityMetrics("AAPL", "' + info_dic.excel + '", "' + info_dic.supported_freq[0] + '")' }</div>`)
+    all_formulas.append(`<div class="one_example_usage_metric">${'=FS_EquityMetrics("AAPL", "' + info_dic.excel + '", "' + info_dic.supported_freq[Math.min(1, info_dic.supported_freq.length - 1)] + (key in analyst_metrics ? '+2")' : '-1")') }</div>`)
+    all_formulas.append(`<div class="one_example_usage_metric">${'=FS_EquityMetrics("AAPL", "' + info_dic.excel + '", "' + info_dic.supported_freq[Math.min(2, info_dic.supported_freq.length - 1)] + '", 3)' }</div>`)
+
   } else {
     $('#customized_period_wrap').css({display: 'none'})
   }
+  $('#caret_custom_metric').removeClass('fa-caret-down').addClass('fa-caret-right')
+  $('.customized_period_section').css('display', 'none')
+
+  $('#caret_example_formula').removeClass('fa-caret-right').addClass('fa-caret-down')
+  $('.example_formula_section').css('display', 'block')
+
+  $('#example_formula_wrap').css('display', 'block')
 
   $("#metric_input").val('')
 }
@@ -690,8 +705,9 @@ function onBlurNewSymbol() {
 
 
 function clickNavigate(which){
+  console.log(which)
   var all_components = ['symbols', 'metrics', 'etf', 'mutual_fund', 'equity_metrics', 'equity_full_financials', 'equity_candles', 'forex_candles', 'forex_all_rates',
-                'crypto_candles', 'crypto_profile', 'etf_candles', 'etf_profile', 'streaming', 'mutual_fund_candles', 'mutual_fund_profile']
+                'crypto_candles', 'crypto_profile', 'etf_candles', 'etf_profile', 'streaming', 'mutual_fund_candles', 'mutual_fund_profile', 'latest']
   for(var name of all_components){
     if(which == name){
       $("#" + which).css({ display: "block" });
@@ -1571,6 +1587,34 @@ function changeNewMutualFund(){
     })} else {window.pushNoti("Network Error", 3000, "error")}
   })
 }
-$("#search_dropdown_wrap").on("mouseover", function() {$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
-$("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
-$("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});
+
+function clickCustomPeriod(){
+  if($('#caret_custom_metric').attr('class').includes('right')){
+    $('#caret_custom_metric').removeClass('fa-caret-right').addClass('fa-caret-down')
+    $('.customized_period_section').css('display', 'block')
+  } else {
+    $('#caret_custom_metric').removeClass('fa-caret-down').addClass('fa-caret-right')
+    $('.customized_period_section').css('display', 'none')
+  }
+}
+
+function clickExampleFormula(){
+  if($('#caret_example_formula').attr('class').includes('right')){
+    $('#caret_example_formula').removeClass('fa-caret-right').addClass('fa-caret-down')
+    $('.example_formula_section').css('display', 'block')
+  } else {
+    $('#caret_example_formula').removeClass('fa-caret-down').addClass('fa-caret-right')
+    $('.example_formula_section').css('display', 'none')
+  }
+}
+
+
+function showDropdown(which){
+  $('#' + which).css('display', 'block')
+}
+function hideDropdown(which){
+  $('#' + which).css('display', 'none')
+}
+// $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
+// $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
+// $("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});

@@ -562,3 +562,10 @@ input[type="date"] {
     margin-top: -30px;
 }
 
+#search_dropdown_wrap:hover > #search_dropdown {
+    display: block;
+}
+
+.one_example_usage_metric{
+    margin-bottom: 7px;
+}

@@ -79,8 +79,9 @@
                     "type": "string"
                 },
                 {
-                    "description": "From.",
+                    "description": "From (optional).",
                     "name": "from",
+                    "optional": true,
                     "type": "string"
                 },
                 {
@@ -110,8 +111,9 @@
                     "type": "string"
                 },
                 {
-                    "description": "From.",
+                    "description": "From (optional).",
                     "name": "from",
+                    "optional": true,
                     "type": "string"
                 },
                 {
@@ -141,8 +143,9 @@
                     "type": "string"
                 },
                 {
-                    "description": "From.",
+                    "description": "From (optional).",
                     "name": "from",
+                    "optional": true,
                     "type": "string"
                 },
                 {
@@ -172,8 +175,41 @@
                     "type": "string"
                 },
                 {
-                    "description": "From.",
+                    "description": "From (optional).",
                     "name": "from",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "To (optional).",
+                    "name": "to",
+                    "optional": true,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_MUTUALFUNDCANDLES",
+            "name": "FS_MutualFundCandles",
+            "parameters": [
+                {
+                    "description": "Mutual Fund Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Resolution.",
+                    "name": "resolution",
+                    "type": "string"
+                },
+                {
+                    "description": "From (optional).",
+                    "name": "from",
+                    "optional": true,
                     "type": "string"
                 },
                 {
@@ -235,9 +271,39 @@
             }
         },
         {
-            "description": "Stream Real-time price for Stocks, Forex, Cryptos and ETFs.",
+            "id": "FS_MUTUALFUNDPROFILE",
+            "name": "FS_MutualFundProfile",
+            "parameters": [
+                {
+                    "description": "Mutual Fund symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_LATEST",
+            "name": "FS_Latest",
+            "parameters": [
+                {
+                    "description": "Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "description": "Stream Real-time price for Stocks, Cryptos, Forex, ETFs and Mutual Funds.",
             "id": "FS_STREAMING",
-            "name": "Fs_Streaming",
+            "name": "FS_Streaming",
             "options": {
                 "stream": true
             },

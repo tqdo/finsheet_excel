@@ -22,10 +22,18 @@
         </div>
         <!-- Customized Period section  -->
         <div class="customized_period_wrap" style="display: none" id="customized_period_wrap">
-            <div class="bigger" style="font-weight: normal; font-size: 13px; font-weight: bold; " >
-                Examples of Custom Periods
+            <div class="bigger pointer" style="font-weight: normal; font-size: 13px; font-weight: bold; " onclick="clickCustomPeriod()">
+                <i class="fas fa-caret-right" id="caret_custom_metric"></i> Examples of Custom Periods
             </div>
-            <div class="customized_period_section" style="margin-top: 10px; display: block"></div>
+            <div class="customized_period_section" style="margin-top: 10px; display: none"></div>
+        </div>
+
+        <!-- Example Formulas section  -->
+        <div class="customized_period_wrap" style="display: none; margin-bottom: 15px" id="example_formula_wrap">
+            <div class="bigger pointer" style="font-weight: normal; font-size: 13px; font-weight: bold; " onclick="clickExampleFormula()">
+                <i class="fas fa-caret-down" id="caret_example_formula"></i> Examples Usages
+            </div>
+            <div class="example_formula_section" style="margin-top: 10px; display: block"></div>
         </div>
     </div>
 </div>

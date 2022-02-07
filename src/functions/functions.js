@@ -183,14 +183,10 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
 
   var current_time = Date.parse(new Date()) / 1000
   //// Check from
-  if(!from && to){return [["If you provide 'to', from' cannot be empty"]]}
+  if(!from){return [["'from' cannot be empty"]]}
 
-  // if both from and to are not provided
-  if(!from){
-    from = current_time
-  }
   // Handle unix time
-  else if(typeof from == 'number' || !isNaN(from)){
+  if(typeof from == 'number' || !isNaN(from)){
     from = Math.round(from)
   }
   // Now convert string/Date object or whatever input user gives.
@@ -212,10 +208,10 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
     to = Date.parse(to) / 1000
     if(isNaN(to) || to < 0) return [["Invalid 'to'"]]
   }
-  if(to <from){return [["'to' cannot be before 'from'"]]}
+  if(to <=from){return [["'to' cannot be before 'from'"]]}
 
   //// Send and get data
-  var prepare = { ticker: symbol, resolution: resolution, from: from, to: to, api_key: api_key, properties: JSON.stringify(properties) , which: which, latest_only: from === current_time ? 'y' : 'n'}
+  var prepare = { ticker: symbol, resolution: resolution, from: from, to: to, api_key: api_key, properties: JSON.stringify(properties) , which: which, }
 
 
   //// Now get data
@@ -234,13 +230,27 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
   if (!data.c) { return [['No data']] }
   if(data.c.constructor === Array){
     for(var i=0;i<data.c.length;i++){
-      data_to_return.push([new Date(data.t[i] * 1000), data.c[i], data.o[i], data.h[i], data.l[i], data.v[i]])
+      data_to_return.push([
+        data.t && data.t[i] ? new Date(data.t[i] * 1000) : '',
+        data.c[i] ? data.c[i] : '',
+        data.o && data.o[i] ? data.o[i] : '',
+        data.h && data.h[i] ? data.h[i] : '',
+        data.l && data.l[i] ? data.l[i] : '',
+        data.v && data.v[i] ? data.v[i] : '',
+      ])
     }
   } else { // This result is from Quote (get the latest)
-    data_to_return.push([new Date(data.t  * 1000), data.c , data.o , data.h , data.l , data.v ])
+    data_to_return.push([
+      data.t ?  new Date(data.t  * 1000) : '',
+      data.c ? data.c : '' ,
+      data.o ? data.o : '' ,
+      data.h ? data.h : '' ,
+      data.l ? data.l : '' ,
+      data.v  ? data.v : ''
+    ])
   }
-
   if (data_to_return.length < 2) { return [['No data']] }
+  console.log(data_to_return)
   return data_to_return
 }
 
@@ -248,7 +258,7 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
  * @customfunction FS_EQUITYCANDLES FS_EquityCandles
  * @param symbol {string} Stock Symbol.
  * @param resolution {string} Resolution.
- * @param [from] {string} From (optional).
+ * @param from {string} From (optional).
  * @param [to] {string} To (optional).
  * @returns {string[][]} Result array.
  * ...
@@ -261,7 +271,7 @@ async function FS_EquityCandles(symbol, resolution, from= undefined, to = undefi
  * @customfunction FS_FOREXCANDLES FS_ForexCandles
  * @param symbol {string} Forex Symbol.
  * @param resolution {string} Resolution.
- * @param [from] {string} From (optional).
+ * @param from {string} From (optional).
  * @param [to] {string} To (optional).
  * @returns {string[][]} Result array.
  * ...
@@ -274,7 +284,7 @@ async function FS_ForexCandles(symbol, resolution, from= undefined, to = undefin
  * @customfunction FS_CRYPTOCANDLES FS_CryptoCandles
  * @param symbol {string} Crypto Symbol.
  * @param resolution {string} Resolution.
- * @param [from] {string} From (optional).
+ * @param from {string} From (optional).
  * @param [to] {string} To (optional).
  * @returns {string[][]} Result array.
  * ...
@@ -287,7 +297,7 @@ async function FS_CryptoCandles(symbol, resolution, from= undefined, to = undefi
  * @customfunction FS_ETFCANDLES FS_EtfCandles
  * @param symbol {string} Etf Symbol.
  * @param resolution {string} Resolution.
- * @param [from] {string} From (optional).
+ * @param from {string} From (optional).
  * @param [to] {string} To (optional).
  * @returns {string[][]} Result array.
  * ...
@@ -297,8 +307,21 @@ async function FS_EtfCandles(symbol, resolution, from= undefined, to = undefined
 }
 
 /**
+ * @customfunction FS_MUTUALFUNDCANDLES FS_MutualFundCandles
+ * @param symbol {string} Mutual Fund Symbol.
+ * @param resolution {string} Resolution.
+ * @param from {string} From (optional).
+ * @param [to] {string} To (optional).
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_MutualFundCandles(symbol, resolution, from= undefined, to = undefined, ){
+  return candlesHelper(symbol, resolution, from, to , "mutual_fund" )
+}
+
+/**
  * @customfunction FS_FOREXALLRATES FS_ForexAllRates
- * @param [base_currency] {string} base_currency (optional).
+ * @param base_currency {string} base_currency.
  * @returns {string[][]} Result array.
  * ...
  */
@@ -322,6 +345,7 @@ async function FS_ForexAllRates(base_currency="USD", ){
   for(var key of Object.keys(data)){
     data_to_return.push([key, data[key]])
   }
+  console.log(data_to_return)
   return data_to_return
 }
 
@@ -370,12 +394,13 @@ async function FS_CryptoProfile(symbol, ){
       data_to_return.push([map_name_crypto_profile[key], data[key]])
     }
   }
+  console.log(data_to_return)
   return data_to_return
 }
 
 
 var map_name_etf_profile = {
-  "assetClass": "Equity",
+  "assetClass": "Asset Class",
   "aum": "AUM",
   "avgVolume": "Avg Volume",
   "cusip": "CUSIP",
@@ -427,12 +452,93 @@ async function FS_EtfProfile(symbol, ){
       data_to_return.push([map_name_etf_profile[key], data[key]])
     }
   }
+  console.log(data_to_return)
+  return data_to_return
+}
+
+var map_name_mutual_fund_profile = {
+  "benchmark": "Benchmark",
+  "beta": 'Beta',
+  "category": "Category",
+
+  "description": 'Description',
+  "expenseRatio": 'Expense Ratio',
+
+  "fundFamily": "Fund Family",
+  "inceptionDate": "Inception Date",
+  "investmentSegment": "Investment Segment",
+
+  "name": "Full Name",
+
+  "totalNav": "Total NAV",
+  "turnover": "Turnover"
+}
+
+/**
+ * @customfunction FS_MUTUALFUNDPROFILE FS_MutualFundProfile
+ * @param symbol {string} Mutual Fund symbol.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_MutualFundProfile(symbol, ){
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if(!symbol){return [["Symbol cannot be empty"]]}
+  if(typeof symbol !== 'string'){return [['Symbol has to be a string']]}
+  symbol = symbol.toUpperCase()
+
+  //// Now get data
+  var prepare = {symbol: symbol, api_key: api_key, which: "mutual_fund_profile"}
+  const url = link + "/excel/asset_profile?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    throw new Error(response.statusText)
+  }
+  var json = await response.json()
+  // console.log(json)
+  if('message' in json){return [[json.message]]}
+  var data = json.data.profile
+  var data_to_return = []
+  if(json.data.symbol){data_to_return = [['Symbol', json.data.symbol]]}
+  for(var key of Object.keys(map_name_mutual_fund_profile)){
+    if(data[key]){
+      data_to_return.push([map_name_mutual_fund_profile[key], data[key]])
+    }
+  }
+  console.log(data_to_return)
   return data_to_return
 }
 
 
+/**
+ * @customfunction FS_LATEST FS_Latest
+ * @param symbol {string} Symbol.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_Latest(symbol, ){
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if(!symbol){return [["Symbol cannot be empty"]]}
+  if(typeof symbol !== 'string'){return [['Symbol has to be a string']]}
+  symbol = symbol.toUpperCase()
 
+  //// Now get data
+  var prepare = {ticker: symbol, api_key: api_key, }
+  const url = link + "/excel/latest?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
 
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    throw new Error(response.statusText)
+  }
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+
+  return [[json.data]]
+}
 
 ////// Websocket
 
@@ -483,7 +589,7 @@ window.have_not_set_interval_change_color = true
 connect()
 
 /**
- * Stream Real-time price for Stocks, Forex, Cryptos and ETFs.
+ * Stream Real-time price for Stocks, Cryptos, Forex, ETFs and Mutual Funds.
  * @customfunction FS_STREAMING FS_Streaming
  * @param symbol {string}  Symbol.
  * @param {CustomFunctions.StreamingInvocation<string>} invocation * ...
