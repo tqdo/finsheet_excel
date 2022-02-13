@@ -479,7 +479,7 @@ input[type="date"] {
     border: 1px solid #afafaf;
     cursor: pointer
 }
-
+.bold{font-weight: bold}
 .refresh_dropdown_suggestion:hover{
     background: #f8f8f8 !important
 }

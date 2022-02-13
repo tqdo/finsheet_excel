@@ -229,7 +229,7 @@
             "name": "FS_ForexAllRates",
             "parameters": [
                 {
-                    "description": "base_currency (optional).",
+                    "description": "base_currency.",
                     "name": "base_currency",
                     "optional": true,
                     "type": "string"

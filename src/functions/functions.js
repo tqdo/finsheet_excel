@@ -1,6 +1,7 @@
 ﻿async function equityHelper(symbol, metric, period = undefined, limit = undefined) {
   // return [["Please login using the sidebar"]];
   // console.log(123)
+
   if (period == null) { period = undefined}
   if (limit == null) { limit = undefined }
   var api_key = readCookie("finsheet_api_key");
@@ -18,11 +19,14 @@
   if (typeof ticker !== "string") {
     return [["Symbol has to be a string"]];
   }
+  if(ticker.includes(",") || ticker.includes(";")){return ["Invalid symbol"]}
+
   ticker = ticker.toUpperCase();
   if (!metric) {
     return [["Metric cannot be empty"]];
   }
   metric = metric.toLowerCase();
+
   if (!(metric in map_excel_name_to_id) && !["bs", "cf", "ic"].includes(metric)) {
     return [["Unsupported metric"]];
   }
@@ -111,7 +115,7 @@
         [ticker]
     );
   }
-  prepare = { ...prepare, ...{ ticker: ticker, metric: id, freq: freq, api_key: api_key, limit: limit } };
+  prepare = { ...prepare, ...{ ticker: ticker, metric: id, freq: freq, api_key: api_key, limit: limit , is_full_statement: is_full_statement ? "y" : "n" } };
   if (id == 206) {
     prepare["is_latest_price"] = "1";
   }
@@ -123,6 +127,7 @@
     throw new Error(response.statusText)
   }
   var json = await response.json()
+  console.log(json)
   if('message' in json){return [[json.message]]}
   return handle_receive_AR_EQUITY(json, is_full_statement, id);
 }
@@ -176,6 +181,7 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
   if (!api_key) { return [["Please login using the sidebar"]] }
   if (!symbol) { return [["Symbol cannot be empty"]] }
   if (typeof symbol !== 'string') { return [['Symbol has to be a string']] }
+  if(symbol.includes(",") || symbol.includes(";")){return ["Invalid symbol"]}
   symbol = symbol.toUpperCase()
 
   if (!(resolution in valid_resolution)) { return [['Invalid resolution']] }

@@ -3,7 +3,8 @@
     <!-- <div class="customized_period_wrap" style="height:2px"></div> -->
     <div style="position: relative; display: inline-block; width: 95%;" >
         <i class="fas fa-search icon_all_metrics_popup_input"></i>
-        <input class="all_metrics_popup_input " placeholder="Stock Ticker Lookup..." onfocus="onFocusNewSymbol()" oninput="changeNewSymbol()" onblur="onBlurNewSymbol()" id="symbol_input">
+        <input class="all_metrics_popup_input " autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+               placeholder="Stock Ticker Lookup..." onfocus="onFocusNewSymbol()" oninput="changeNewSymbol()" onblur="onBlurNewSymbol()" id="symbol_input">
     </div>
 
     <div class='filter_suggestions standard_dropdown' style="display: none" id="symbol_dropdown">

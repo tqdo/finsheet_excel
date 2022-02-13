@@ -1,4 +1,4 @@
-var link = 'https://893c-96-234-76-225.ngrok.io'
+var link = 'https://b607-96-234-76-225.ngrok.io'
 // var link = 'https://finsheet.io'
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
@@ -637,10 +637,18 @@ function clickMetric(key){
   // }
 
   if(show_unit){
-    $('.unit_section').css({display: 'inline-block'})
+    $('.unit_section').css({display: 'block'})
   } else {
     $('.unit_section').css({display: 'none'})
   }
+
+  var show_note_future_period_section = key in analyst_metrics
+  if(show_note_future_period_section){
+    $('.note_future_period_section').css({display: 'block'})
+  } else {
+    $('.note_future_period_section').css({display: 'none'})
+  }
+
 
   // if(show_currency){
   //   $('.currency_section').css({display: 'inline-block'})
@@ -1251,9 +1259,9 @@ function isValidFreq_returnCleanString(string, supported_freq = ["FY", "TTM", "Q
 
 function handle_receive_AR_EQUITY(json, is_full_statement, id) {
   if ("message" in json) {
-    return [[json.message ? json.message : 'Something went wrong']];
+    return [[json.message ? json.message : 'Something went wrong, please try again']];
   }
-  //  Logger.log(json.data)
+   console.log(json.data)
 
   ///// Deal with data
   if (!json || !json.data) {
@@ -1268,11 +1276,16 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id) {
     // If only has 1 value in json.data meaning not series, simply return it
     if (Object.keys(json.data).length == 1) {
       for (var key of Object.keys(json.data)) {
+        if(key=== "39_-1"){return  [["No data"]];}
         return [[json.data[key]]];
       }
     }
 
     ///// Now deal with series for standard metric (need to figure out appropriate date header). MAY HANDLE IN GO
+    var numYearLimit = parseInt(json.numYearLimit)
+    var earliest_second = Math.floor(Date.now() / 1000) - numYearLimit * 365 * 24 * 60 * 60
+    console.log(numYearLimit, earliest_second)
+
     var index_value_arr = [];
     var freq_to_lookup_date;
     for (var key of Object.keys(json.data)) {
@@ -1285,6 +1298,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id) {
           // This is the previous-period value (ex: 146_FY-1, 146_TTM-1)
           var temp_arr = arr[1].split("-");
           freq_to_lookup_date = temp_arr[0] === "FY" ? "annual" : "ttm";
+          console.log(temp_arr[1])
           index_value_arr.push([temp_arr[1], json.data[key]]);
         }
       }
@@ -1304,6 +1318,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id) {
     } catch (e) {
       return [["No data"]];
     }
+    console.log(dic_all_dates)
     if (!dic_all_dates[freq_to_lookup_date]) {
       return [["No data"]];
     }
@@ -1312,7 +1327,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id) {
     var data_to_return = [[], []];
     for (var small_arr of index_value_arr) {
       var index = small_arr[0];
-      if (index < dates_array.length) {
+      if (index < dates_array.length && Date.parse(dates_array[index]) / 1000 >= earliest_second ){
         data_to_return[0].push(dates_array[index]);
         data_to_return[1].push(small_arr[1]);
       }
@@ -1618,3 +1633,4 @@ function hideDropdown(which){
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
 // $("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});
+
