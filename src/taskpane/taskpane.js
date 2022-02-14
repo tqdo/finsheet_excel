@@ -379,7 +379,6 @@ function readCookie(name) {
   // }
   // return null;
 
-  console.log('new')
   const cookie = localStorage.getItem(name);
   return cookie
 
@@ -713,9 +712,9 @@ function onBlurNewSymbol() {
 
 
 function clickNavigate(which){
-  console.log(which)
   var all_components = ['symbols', 'metrics', 'etf', 'mutual_fund', 'equity_metrics', 'equity_full_financials', 'equity_candles', 'forex_candles', 'forex_all_rates',
-                'crypto_candles', 'crypto_profile', 'etf_candles', 'etf_profile', 'streaming', 'mutual_fund_candles', 'mutual_fund_profile', 'latest']
+                'crypto_candles', 'crypto_profile', 'etf_candles', 'etf_profile', 'streaming', 'mutual_fund_candles', 'mutual_fund_profile', 'latest',
+    'pattern_recognition', 'support_resistance', 'aggregate_indicators', 'technical_indicators']
   for(var name of all_components){
     if(which == name){
       $("#" + which).css({ display: "block" });
@@ -1261,7 +1260,6 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id) {
   if ("message" in json) {
     return [[json.message ? json.message : 'Something went wrong, please try again']];
   }
-   console.log(json.data)
 
   ///// Deal with data
   if (!json || !json.data) {
@@ -1284,7 +1282,6 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id) {
     ///// Now deal with series for standard metric (need to figure out appropriate date header). MAY HANDLE IN GO
     var numYearLimit = parseInt(json.numYearLimit)
     var earliest_second = Math.floor(Date.now() / 1000) - numYearLimit * 365 * 24 * 60 * 60
-    console.log(numYearLimit, earliest_second)
 
     var index_value_arr = [];
     var freq_to_lookup_date;
@@ -1298,7 +1295,6 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id) {
           // This is the previous-period value (ex: 146_FY-1, 146_TTM-1)
           var temp_arr = arr[1].split("-");
           freq_to_lookup_date = temp_arr[0] === "FY" ? "annual" : "ttm";
-          console.log(temp_arr[1])
           index_value_arr.push([temp_arr[1], json.data[key]]);
         }
       }
@@ -1318,7 +1314,6 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id) {
     } catch (e) {
       return [["No data"]];
     }
-    console.log(dic_all_dates)
     if (!dic_all_dates[freq_to_lookup_date]) {
       return [["No data"]];
     }
@@ -1343,7 +1338,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id) {
       data = [json.data];
     }
     if (Object.keys(data[0]).length < 1) {
-      return "No data";
+      return [["No data"]];
     }
 
     // Reverse data to show old years first
@@ -1504,19 +1499,16 @@ function stop_streaming(){
 
 var sheet_name_map = {};
 function changeColorStreaming(e) {
-  console.log(13)
   return Excel.run(function (context) {
     var ss = context.workbook.worksheets;
     ss.load("items");
     return context.sync().then(async function () {
-      console.log("edit", e);
       ss.items.forEach(function (sheet) {
         sheet_name_map[sheet.id] = sheet.name;
       });
       var sheet_id = e.worksheetId;
       var cell_being_edit = e.address;
       var ticker = e.details.valueAfter
-      console.log(e.details)
     })
   })
 }
@@ -1562,7 +1554,6 @@ function changeNewEtf(){
   if(!input){ return}
   fetch("https://valueinvesting.io/get_some_etfs?val=" + input).then(function(response){
     if (response.ok) {return response.json().then(function (json) {
-      console.log(json);
       for(var dic of json.data){
         all_symbols.append(
             `<div class="one_filter_suggestion pointer" id="${dic.tickers}" onmousedown="clickEtf('${dic.tickers + '__' +  dic.comp_name}')"><div style="display: inline; color: #2cbd54">${dic.tickers}</div>${' - ' + dic.comp_name}</div>`
@@ -1593,7 +1584,6 @@ function changeNewMutualFund(){
   if(!input){ return}
   fetch(link + "/search_symbols?which=mutual_fund&val=" + input).then(function(response){
     if (response.ok) {return response.json().then(function (json) {
-      console.log(json);
       for(var dic of json.data){
         all_symbols.append(
             `<div class="one_filter_suggestion pointer" id="${dic.tickers}" onmousedown="clickMutualFund('${dic.tickers + '__' +  dic.comp_name}')"><div style="display: inline; color: #2cbd54">${dic.tickers}</div>${' - ' + dic.comp_name}</div>`

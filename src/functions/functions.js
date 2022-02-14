@@ -122,12 +122,15 @@
   //// Now get data
   const url = link + "/excel/standard?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
-  //Expect that status code is in 200-299 range
+
   if (!response.ok) {
-    throw new Error(response.statusText)
+    var error = await response.text()
+    console.log("err", error)
+    try{return [[JSON.parse(error).error]]}
+    catch (e) {return [['Rate limit reached. Please try again later.']]}
   }
   var json = await response.json()
-  console.log(json)
+  console.log(response, json)
   if('message' in json){return [[json.message]]}
   return handle_receive_AR_EQUITY(json, is_full_statement, id);
 }
@@ -226,8 +229,10 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    throw new Error(response.statusText)
+    var error = await response.text()
+    return [[JSON.parse(error).error]]
   }
+
   var json = await response.json()
   if('message' in json){return [[json.message]]}
   var data = json.data
@@ -256,7 +261,6 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
     ])
   }
   if (data_to_return.length < 2) { return [['No data']] }
-  console.log(data_to_return)
   return data_to_return
 }
 
@@ -342,7 +346,7 @@ async function FS_ForexAllRates(base_currency="USD", ){
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    throw new Error(response.statusText)
+    return [["No data"]]
   }
   var json = await response.json()
   if('message' in json){return [[json.message]]}
@@ -351,7 +355,6 @@ async function FS_ForexAllRates(base_currency="USD", ){
   for(var key of Object.keys(data)){
     data_to_return.push([key, data[key]])
   }
-  console.log(data_to_return)
   return data_to_return
 }
 
@@ -389,7 +392,7 @@ async function FS_CryptoProfile(symbol, ){
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    throw new Error(response.statusText)
+    return [["No data"]]
   }
   var json = await response.json()
   if('message' in json){return [[json.message]]}
@@ -400,7 +403,6 @@ async function FS_CryptoProfile(symbol, ){
       data_to_return.push([map_name_crypto_profile[key], data[key]])
     }
   }
-  console.log(data_to_return)
   return data_to_return
 }
 
@@ -445,8 +447,10 @@ async function FS_EtfProfile(symbol, ){
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    throw new Error(response.statusText)
+    var error = await response.text()
+    return [[JSON.parse(error).error]]
   }
+
   var json = await response.json()
   // console.log(json)
   if('message' in json){return [[json.message]]}
@@ -458,7 +462,6 @@ async function FS_EtfProfile(symbol, ){
       data_to_return.push([map_name_etf_profile[key], data[key]])
     }
   }
-  console.log(data_to_return)
   return data_to_return
 }
 
@@ -500,8 +503,10 @@ async function FS_MutualFundProfile(symbol, ){
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    throw new Error(response.statusText)
+    var error = await response.text()
+    return [[JSON.parse(error).error]]
   }
+
   var json = await response.json()
   // console.log(json)
   if('message' in json){return [[json.message]]}
@@ -513,7 +518,6 @@ async function FS_MutualFundProfile(symbol, ){
       data_to_return.push([map_name_mutual_fund_profile[key], data[key]])
     }
   }
-  console.log(data_to_return)
   return data_to_return
 }
 
@@ -538,8 +542,10 @@ async function FS_Latest(symbol, ){
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    throw new Error(response.statusText)
+    var error = await response.text()
+    return [[JSON.parse(error).error]]
   }
+
   var json = await response.json()
   if('message' in json){return [[json.message]]}
 
@@ -550,12 +556,14 @@ async function FS_Latest(symbol, ){
 
 
 function connect(first_symbol) {
-  window.socket = new WebSocket('wss://' + link.slice(8,) + '/ws')
+  var api_key = readCookie("finsheet_api_key");
+  window.socket = new WebSocket('wss://' + link.slice(8,) + '/ws?api_key=' + api_key)
 
   window.socket.onopen = function() {
     console.log('Socket open')
     if(first_symbol){
       window.socket.send(JSON.stringify({symbol: first_symbol, "type": "subscribe",}))
+      window.can_call_streaming = true
     }
   };
 
@@ -569,14 +577,20 @@ function connect(first_symbol) {
   };
 
   window.socket.onclose = function(e) {
-    console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+    console.log(12, e)
     setTimeout(function() {
-      window.have_not_reconnect_websocket = false
-      connect();
+      if(e.code === 1000){
+        window.have_not_reconnect_websocket = false
+        connect();
+      } else {
+        window.can_call_streaming = false
+      }
+
     }, 1000);
   };
 
   window.socket.onerror = function(err) {
+    console.log(err)
     console.error('Socket encountered error: ', err.message, 'Closing socket');
     window.socket.close();
   };
@@ -591,6 +605,8 @@ window.Should_Update_Streaming = true
 window.have_not_reconnect_websocket = true
 window.have_not_add_on_calculated_trigger = true
 window.have_not_set_interval_change_color = true
+
+window.can_call_streaming = true
 
 connect()
 
@@ -704,7 +720,6 @@ async function FS_Streaming(symbol, invocation ){
   });
 
 
-  console.log('crypto')
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return "Please login using the sidebar" }
   if (!symbol) { return "Symbol cannot be empty" }
@@ -719,13 +734,19 @@ async function FS_Streaming(symbol, invocation ){
     // console.log(0)
     let msg = {symbol: symbol,   type: "subscribe"}
     window.socket.send(JSON.stringify(msg))
+    window.can_call_streaming = true
     // console.log(3)
   }
 
   const timer = setInterval(() => {
-    const result = window.BigSymbolPriceMap[symbol];
-    // console.log(invocation)
-    invocation.setResult(result);
+    if(window.can_call_streaming){
+      const result = window.BigSymbolPriceMap[symbol];
+      // console.log(invocation)
+      invocation.setResult(result);
+    } else {
+      invocation.setResult('You need a Plus or Pro membership to stream real-time price.');
+    }
+
   }, 500);
 
   invocation.onCanceled = () => {
