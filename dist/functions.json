@@ -79,7 +79,7 @@
                     "type": "string"
                 },
                 {
-                    "description": "From (optional).",
+                    "description": "From.",
                     "name": "from",
                     "optional": true,
                     "type": "string"
@@ -111,7 +111,7 @@
                     "type": "string"
                 },
                 {
-                    "description": "From (optional).",
+                    "description": "From.",
                     "name": "from",
                     "optional": true,
                     "type": "string"
@@ -143,7 +143,7 @@
                     "type": "string"
                 },
                 {
-                    "description": "From (optional).",
+                    "description": "From.",
                     "name": "from",
                     "optional": true,
                     "type": "string"
@@ -175,7 +175,7 @@
                     "type": "string"
                 },
                 {
-                    "description": "From (optional).",
+                    "description": "From.",
                     "name": "from",
                     "optional": true,
                     "type": "string"
@@ -207,7 +207,7 @@
                     "type": "string"
                 },
                 {
-                    "description": "From (optional).",
+                    "description": "From.",
                     "name": "from",
                     "optional": true,
                     "type": "string"
@@ -315,6 +315,108 @@
                 }
             ],
             "result": {
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_PATTERNRECOGNITION",
+            "name": "FS_PatternRecognition",
+            "parameters": [
+                {
+                    "description": "Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Resolution.",
+                    "name": "resolution",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_SUPPORTRESISTANCE",
+            "name": "FS_SupportResistance",
+            "parameters": [
+                {
+                    "description": "Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Resolution.",
+                    "name": "resolution",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_AGGREGATEINDICATORS",
+            "name": "FS_AggregateIndicators",
+            "parameters": [
+                {
+                    "description": "Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Resolution.",
+                    "name": "resolution",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_TECHNICALINDICATORS",
+            "name": "FS_TechnicalIndicators",
+            "parameters": [
+                {
+                    "description": "Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Resolution.",
+                    "name": "resolution",
+                    "type": "string"
+                },
+                {
+                    "description": "Indicator name.",
+                    "name": "indicator",
+                    "type": "string"
+                },
+                {
+                    "description": "From.",
+                    "name": "from",
+                    "type": "string"
+                },
+                {
+                    "description": "To (optional).",
+                    "name": "to",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Indicator fields (optional).",
+                    "name": "indicator_fields",
+                    "optional": true,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
                 "type": "string"
             }
         }

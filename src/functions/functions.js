@@ -268,7 +268,7 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
  * @customfunction FS_EQUITYCANDLES FS_EquityCandles
  * @param symbol {string} Stock Symbol.
  * @param resolution {string} Resolution.
- * @param from {string} From (optional).
+ * @param from {string} From.
  * @param [to] {string} To (optional).
  * @returns {string[][]} Result array.
  * ...
@@ -281,7 +281,7 @@ async function FS_EquityCandles(symbol, resolution, from= undefined, to = undefi
  * @customfunction FS_FOREXCANDLES FS_ForexCandles
  * @param symbol {string} Forex Symbol.
  * @param resolution {string} Resolution.
- * @param from {string} From (optional).
+ * @param from {string} From.
  * @param [to] {string} To (optional).
  * @returns {string[][]} Result array.
  * ...
@@ -294,7 +294,7 @@ async function FS_ForexCandles(symbol, resolution, from= undefined, to = undefin
  * @customfunction FS_CRYPTOCANDLES FS_CryptoCandles
  * @param symbol {string} Crypto Symbol.
  * @param resolution {string} Resolution.
- * @param from {string} From (optional).
+ * @param from {string} From.
  * @param [to] {string} To (optional).
  * @returns {string[][]} Result array.
  * ...
@@ -307,7 +307,7 @@ async function FS_CryptoCandles(symbol, resolution, from= undefined, to = undefi
  * @customfunction FS_ETFCANDLES FS_EtfCandles
  * @param symbol {string} Etf Symbol.
  * @param resolution {string} Resolution.
- * @param from {string} From (optional).
+ * @param from {string} From.
  * @param [to] {string} To (optional).
  * @returns {string[][]} Result array.
  * ...
@@ -320,7 +320,7 @@ async function FS_EtfCandles(symbol, resolution, from= undefined, to = undefined
  * @customfunction FS_MUTUALFUNDCANDLES FS_MutualFundCandles
  * @param symbol {string} Mutual Fund Symbol.
  * @param resolution {string} Resolution.
- * @param from {string} From (optional).
+ * @param from {string} From.
  * @param [to] {string} To (optional).
  * @returns {string[][]} Result array.
  * ...
@@ -754,3 +754,324 @@ async function FS_Streaming(symbol, invocation ){
   };
 }
 
+
+
+
+/**
+ * @customfunction FS_PATTERNRECOGNITION FS_PatternRecognition
+ * @param symbol {string} Symbol.
+ * @param resolution {string} Resolution.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_PatternRecognition(symbol, resolution,){
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if (!symbol) { return [["Symbol cannot be empty"]] }
+  if (typeof symbol !== 'string') { return [['Symbol has to be a string']] }
+  if(symbol.includes(",") || symbol.includes(";")){return ["Invalid symbol"]}
+  symbol = symbol.toUpperCase()
+
+  if (!(resolution in valid_resolution)) { return [['Invalid resolution']] }
+  if (resolution in lower_res) { resolution = resolution.toUpperCase() }
+
+  var prepare = {api_key : api_key, symbol: symbol, resolution: resolution, which: 'pattern_recognition'}
+  console.log(0, prepare)
+  const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    var error = await response.text()
+    try{return [[JSON.parse(error).error]]}
+    catch (e) {return [["No data"]]}
+  }
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  try {
+    var data = json.data
+    var data_to_return = []
+    var max_len = 1
+    for(var dic of data){
+      if(!dic.patternname || !dic.symbol){continue}
+      var one_result = [['Pattern Name',dic.patternname ]]
+      for(var key of Object.keys(dic)){
+        if(key !== 'patternname' && key !== 'symbol'){
+          one_result.push([capFirst(key), dic[key]])
+        }
+      }
+
+      if(one_result.length > max_len){
+        max_len = one_result.length
+      }
+      data_to_return.push(one_result)
+    }
+    for(var i=0;i<data_to_return.length; i++){
+      const number_to_add = max_len - data_to_return[i].length
+      for(var j=0; j< number_to_add; j++){
+        data_to_return[i].push(['',''])
+        console.log(data_to_return[i].length)
+      }
+    }
+    if (data_to_return.length < 1 ){return  [['No data']]}
+    var final = []
+    for(var i=0;i<data_to_return[0].length; i++){
+      var arr = []
+      for(var temp of data_to_return){
+        arr = arr.concat(temp[i])
+      }
+      final.push(arr)
+    }
+    return final
+  } catch (e) {
+    return [['No data']]
+  }
+
+}
+
+/**
+ * @customfunction FS_SUPPORTRESISTANCE FS_SupportResistance
+ * @param symbol {string} Symbol.
+ * @param resolution {string} Resolution.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_SupportResistance(symbol, resolution,) {
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) {
+    return [["Please login using the sidebar"]]
+  }
+  if (!symbol) {
+    return [["Symbol cannot be empty"]]
+  }
+  if (typeof symbol !== 'string') {
+    return [['Symbol has to be a string']]
+  }
+  if (symbol.includes(",") || symbol.includes(";")) {
+    return ["Invalid symbol"]
+  }
+  symbol = symbol.toUpperCase()
+
+  if (!(resolution in valid_resolution)) {
+    return [['Invalid resolution']]
+  }
+  if (resolution in lower_res) {
+    resolution = resolution.toUpperCase()
+  }
+
+  var prepare = {api_key: api_key, symbol: symbol, resolution: resolution, which: 'support_resistance'}
+
+  const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    var error = await response.text()
+    try {
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [["No data"]]
+    }
+  }
+  var json = await response.json()
+  if ('message' in json) {
+    return [[json.message]]
+  }
+  var data = json.data
+  // var data_to_return = []
+  // for(var i of data){
+  //   data_to_return.push([i])
+  // }
+  try {
+    return data.length < 1 ? [['No data']] : [data]
+  } catch (e) {
+    return [['No data']]
+  }
+}
+
+
+/**
+ * @customfunction FS_AGGREGATEINDICATORS FS_AggregateIndicators
+ * @param symbol {string} Symbol.
+ * @param resolution {string} Resolution.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_AggregateIndicators(symbol, resolution,) {
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) {
+    return [["Please login using the sidebar"]]
+  }
+  if (!symbol) {
+    return [["Symbol cannot be empty"]]
+  }
+  if (typeof symbol !== 'string') {
+    return [['Symbol has to be a string']]
+  }
+  if (symbol.includes(",") || symbol.includes(";")) {
+    return ["Invalid symbol"]
+  }
+  symbol = symbol.toUpperCase()
+
+  if (!(resolution in valid_resolution)) {
+    return [['Invalid resolution']]
+  }
+  if (resolution in lower_res) {
+    resolution = resolution.toUpperCase()
+  }
+
+  var prepare = {api_key: api_key, symbol: symbol, resolution: resolution, which: 'aggregate_indicators'}
+
+  const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    var error = await response.text()
+    try {
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [["No data"]]
+    }
+  }
+  var json = await response.json()
+  if ('message' in json) {
+    return [[json.message]]
+  }
+  var data = json.data
+  try{
+    console.log(data.trend.trending)
+    return [
+      ['Buy', data.technicalAnalysis.count.buy],
+      ['Neutral', data.technicalAnalysis.count.neutral],
+      ['Sell', data.technicalAnalysis.count.sell],
+      ['Aggregate signal', data.technicalAnalysis.signal],
+      ['ADX reading', data.trend.adx],
+      ['Trending', data.trend.trending.toString()],
+    ]
+  } catch (e) {
+    return [['No data']]
+  }
+}
+
+
+/**
+ * @customfunction FS_TECHNICALINDICATORS FS_TechnicalIndicators
+ * @param symbol {string} Symbol.
+ * @param resolution {string} Resolution.
+ * @param indicator {string} Indicator name.
+ * @param from {string} From.
+ * @param [to] {string} To (optional).
+ * @param [indicator_fields] {string} Indicator fields (optional).
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=undefined, indicator_fields="{}") {
+  if (to == null) { to = undefined }
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if (!symbol) { return [["Symbol cannot be empty"]] }
+  if (typeof symbol !== 'string') { return [['Symbol has to be a string']] }
+  if(symbol.includes(",") || symbol.includes(";")){return ["Invalid symbol"]}
+  symbol = symbol.toUpperCase()
+
+  if (!(resolution in valid_resolution)) { return [['Invalid resolution']] }
+  if (resolution in lower_res) { resolution = resolution.toUpperCase() }
+
+  if (typeof indicator !== 'string') { return [['Indicator has to be a string']] }
+  indicator = indicator.toUpperCase()
+
+  var current_time = Date.parse(new Date()) / 1000
+  //// Check from
+  if(!from){return [["'from' cannot be empty"]]}
+
+  // Handle unix time
+  if(typeof from == 'number' || !isNaN(from)){
+    from = Math.round(from)
+  }
+  // Now convert string/Date object or whatever input user gives.
+  else{
+    from = Date.parse(from) / 1000
+    if(isNaN(from) || from < 0) return [["Invalid 'from'"]]
+  }
+
+  //// Check to
+  if(to == '' || to === undefined){
+    to = current_time
+  }
+  // Handle unix time
+  else if(typeof to == 'number' || !isNaN(to)){
+    to = Math.round(to)
+  }
+  // Now convert string/Date object or whatever input user gives.
+  else{
+    to = Date.parse(to) / 1000
+    if(isNaN(to) || to < 0) return [["Invalid 'to'"]]
+  }
+  if(to <=from){return [["'to' has to be after 'from'"]]}
+
+  var prepare = {}
+  try{
+    var indicator_fields_dic = JSON.parse(indicator_fields.replaceAll("'", '"'))
+    for(var key of Object.keys(indicator_fields_dic)){
+      indicator_fields_dic[key] = indicator_fields_dic[key].toString()
+    }
+    prepare = { symbol: symbol, resolution: resolution, from: from, to: to, api_key: api_key, indicator: indicator, indicator_fields: JSON.stringify(indicator_fields_dic), which: 'technical_indicators'}
+  } catch (e) {
+    return [["Invalid 'indicator_fields'"]]
+  }
+
+  console.log('prepare', prepare)
+  //// Now send get data
+  const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    var error = await response.text()
+    try {
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [["No data"]]
+    }
+  }
+
+  var json = await response.json()
+  console.log(json)
+  if('message' in json){return [[json.message]]}
+  try {
+    var data = json.data
+
+
+    if (!data.c) { return [['No data']] }
+    var standard_columns = {t:1, c:1, o:1, h:1, l:1, v:1, s:1}
+    var new_columns = []
+    var data_to_return = [['Period', 'Close', 'Open', 'High', 'Low', 'Volume']]
+    for(var key of Object.keys(data)){
+      if(!standard_columns[key]){
+        new_columns.push(key)
+        data_to_return[0].push(capFirst(key))
+      }
+    }
+
+    for(var i=0;i<data.c.length;i++){
+      var arr = [
+        data.t && data.t[i] ? new Date(data.t[i] * 1000) : '',
+        data.c[i] ? data.c[i] : '',
+        data.o && data.o[i] ? data.o[i] : '',
+        data.h && data.h[i] ? data.h[i] : '',
+        data.l && data.l[i] ? data.l[i] : '',
+        data.v && data.v[i] ? data.v[i] : '',
+      ]
+      for(key of new_columns){
+        arr.push(data[key] && data[key][i] !== null && data[key][i] !== undefined ? data[key][i] : '')
+      }
+      data_to_return.push(arr)
+    }
+    if (data_to_return.length < 2) { return [['No data']] }
+    return data_to_return
+  } catch (e) {
+    return [['No data']]
+  }
+
+}

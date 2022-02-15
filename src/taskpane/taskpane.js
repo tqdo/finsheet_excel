@@ -1620,6 +1620,11 @@ function showDropdown(which){
 function hideDropdown(which){
   $('#' + which).css('display', 'none')
 }
+
+function capFirst(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
 // $("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});
