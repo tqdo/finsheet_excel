@@ -148,6 +148,7 @@ async function FS_EquityMetrics(symbol, metric, period = undefined, limit = unde
   if(!metric){return [["Metric cannot be empty"]]}
   metric = metric.toLowerCase()
   if(!(metric in map_excel_name_to_id) ){return [["Unsupported metric"]]}
+  if(!symbol){return [['']]}
   return equityHelper(symbol, metric, period , limit )
 }
 
@@ -180,6 +181,7 @@ var properties = ["close", "open", "high", "low", "volume"]
 
 async function candlesHelper(symbol, resolution, from, to = undefined, which="stock" ) {
   if (to == null) { to = undefined }
+  console.log(from, to)
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if (!symbol) { return [["Symbol cannot be empty"]] }
@@ -196,6 +198,9 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
 
   // Handle unix time
   if(typeof from == 'number' || !isNaN(from)){
+    if(from < 73000){
+      from = (from -25569)*86400
+    }
     from = Math.round(from)
   }
   // Now convert string/Date object or whatever input user gives.
@@ -210,6 +215,9 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
   }
   // Handle unix time
   else if(typeof to == 'number' || !isNaN(to)){
+    if(to < 73000){
+      to = (to -25569)*86400
+    }
     to = Math.round(to)
   }
   // Now convert string/Date object or whatever input user gives.
@@ -217,8 +225,8 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
     to = Date.parse(to) / 1000
     if(isNaN(to) || to < 0) return [["Invalid 'to'"]]
   }
-  if(to <=from){return [["'to' cannot be before 'from'"]]}
-
+  if(to <=from){return [["'to' has to be after 'from'"]]}
+  console.log(from ,to)
   //// Send and get data
   var prepare = { ticker: symbol, resolution: resolution, from: from, to: to, api_key: api_key, properties: JSON.stringify(properties) , which: which, }
 
@@ -237,26 +245,26 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
   if('message' in json){return [[json.message]]}
   var data = json.data
 
-  var data_to_return = [['Period', 'Close', 'Open', 'High', 'Low', 'Volume']]
+  var data_to_return = [['Period',  'Open', 'High', 'Low','Close', 'Volume']]
   if (!data.c) { return [['No data']] }
   if(data.c.constructor === Array){
     for(var i=0;i<data.c.length;i++){
       data_to_return.push([
         data.t && data.t[i] ? new Date(data.t[i] * 1000) : '',
-        data.c[i] ? data.c[i] : '',
         data.o && data.o[i] ? data.o[i] : '',
         data.h && data.h[i] ? data.h[i] : '',
         data.l && data.l[i] ? data.l[i] : '',
+        data.c[i] ? data.c[i] : '',
         data.v && data.v[i] ? data.v[i] : '',
       ])
     }
   } else { // This result is from Quote (get the latest)
     data_to_return.push([
       data.t ?  new Date(data.t  * 1000) : '',
-      data.c ? data.c : '' ,
       data.o ? data.o : '' ,
       data.h ? data.h : '' ,
       data.l ? data.l : '' ,
+      data.c ? data.c : '' ,
       data.v  ? data.v : ''
     ])
   }
@@ -531,7 +539,7 @@ async function FS_MutualFundProfile(symbol, ){
 async function FS_Latest(symbol, ){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
-  if(!symbol){return [["Symbol cannot be empty"]]}
+  if(!symbol){return [[""]]}
   if(typeof symbol !== 'string'){return [['Symbol has to be a string']]}
   symbol = symbol.toUpperCase()
 
@@ -822,6 +830,7 @@ async function FS_PatternRecognition(symbol, resolution,){
       }
       final.push(arr)
     }
+    console.log(final)
     return final
   } catch (e) {
     return [['No data']]
@@ -940,7 +949,7 @@ async function FS_AggregateIndicators(symbol, resolution,) {
   }
   var data = json.data
   try{
-    console.log(data.trend.trending)
+
     return [
       ['Buy', data.technicalAnalysis.count.buy],
       ['Neutral', data.technicalAnalysis.count.neutral],
@@ -962,11 +971,11 @@ async function FS_AggregateIndicators(symbol, resolution,) {
  * @param indicator {string} Indicator name.
  * @param from {string} From.
  * @param [to] {string} To (optional).
- * @param [indicator_fields] {string} Indicator fields (optional).
+ * @param [indicator_fields] {any[][]} Indicator fields (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=undefined, indicator_fields="{}") {
+async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=undefined, indicator_fields=[]) {
   if (to == null) { to = undefined }
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
@@ -979,7 +988,7 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
   if (resolution in lower_res) { resolution = resolution.toUpperCase() }
 
   if (typeof indicator !== 'string') { return [['Indicator has to be a string']] }
-  indicator = indicator.toUpperCase()
+  indicator = indicator.toLowerCase()
 
   var current_time = Date.parse(new Date()) / 1000
   //// Check from
@@ -987,6 +996,9 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
 
   // Handle unix time
   if(typeof from == 'number' || !isNaN(from)){
+    if(from < 73000){
+      from = (from -25569)*86400
+    }
     from = Math.round(from)
   }
   // Now convert string/Date object or whatever input user gives.
@@ -1001,6 +1013,9 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
   }
   // Handle unix time
   else if(typeof to == 'number' || !isNaN(to)){
+    if(to < 73000){
+      to = (to -25569)*86400
+    }
     to = Math.round(to)
   }
   // Now convert string/Date object or whatever input user gives.
@@ -1012,13 +1027,13 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
 
   var prepare = {}
   try{
-    var indicator_fields_dic = JSON.parse(indicator_fields.replaceAll("'", '"'))
-    for(var key of Object.keys(indicator_fields_dic)){
-      indicator_fields_dic[key] = indicator_fields_dic[key].toString()
+    var indicator_fields_dic = {}
+    for(let arr of indicator_fields){
+      indicator_fields_dic[arr[0].toString()] = arr[1].toString()
     }
     prepare = { symbol: symbol, resolution: resolution, from: from, to: to, api_key: api_key, indicator: indicator, indicator_fields: JSON.stringify(indicator_fields_dic), which: 'technical_indicators'}
   } catch (e) {
-    return [["Invalid 'indicator_fields'"]]
+    return [["Invalid indicator_fields"]]
   }
 
   console.log('prepare', prepare)
@@ -1046,7 +1061,7 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
     if (!data.c) { return [['No data']] }
     var standard_columns = {t:1, c:1, o:1, h:1, l:1, v:1, s:1}
     var new_columns = []
-    var data_to_return = [['Period', 'Close', 'Open', 'High', 'Low', 'Volume']]
+    var data_to_return = [['Period',  'Open', 'High', 'Low','Close', 'Volume']]
     for(var key of Object.keys(data)){
       if(!standard_columns[key]){
         new_columns.push(key)
@@ -1057,10 +1072,10 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
     for(var i=0;i<data.c.length;i++){
       var arr = [
         data.t && data.t[i] ? new Date(data.t[i] * 1000) : '',
-        data.c[i] ? data.c[i] : '',
         data.o && data.o[i] ? data.o[i] : '',
         data.h && data.h[i] ? data.h[i] : '',
         data.l && data.l[i] ? data.l[i] : '',
+        data.c[i] ? data.c[i] : '',
         data.v && data.v[i] ? data.v[i] : '',
       ]
       for(key of new_columns){
@@ -1069,6 +1084,7 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
       data_to_return.push(arr)
     }
     if (data_to_return.length < 2) { return [['No data']] }
+    console.log(data_to_return)
     return data_to_return
   } catch (e) {
     return [['No data']]

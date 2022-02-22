@@ -334,6 +334,8 @@ var map_metrics = {
 }
 
 delete map_metrics['17']
+map_metrics['30'].can_be_column = ''
+map_metrics['30'].can_be_filter = ''
 
 var analyst_metrics = {"232": 1, "233": 1, "234": 1, "235": 1, "236": 1, "237": 1, "238": 1, "239": 1, "266": 1, "267": 1, "268": 1,
   "328": 1, "329": 1, "330": 1, "331": 1, "332": 1, "333": 1, "334": 1, "325": 1,}
@@ -347,10 +349,36 @@ for (var key of Object.keys(map_metrics)) {
   }
 }
 /* global console, document, Excel, Office */
-
 $(document).ready(function () {
-  if (readCookie("finsheet_api_key")) {
+  let cookie = readCookie("finsheet_api_key")
+  console.log(cookie)
+  if (cookie) {
     $("#if_have_api_key").css({ display: "flex" });
+    fetch(link + "/checkcoupon?api_key=" + cookie, {
+      method: "GET",
+      headers: {"Content-Type": "text/plain"},
+    }).then(function (res) {
+      res.json().then(function (myJson) {
+        // console.log(myJson)
+        window.show_coupon = 1-parseInt(myJson["have_used_coupon"]) > 0 && !myJson.is_paid_user
+            && myJson["create_at"] && Math.abs((new Date()) - (new Date(myJson["create_at"].slice(0,10)))) / 36e5 > 72
+        if(window.show_coupon){
+          document.getElementById('header_coupon').innerHTML = `
+                            <div class="alert alert-dismissible" role="alert"
+                 style="width: 100%; background-color: #222222; padding: 8px 14px 8px 14px;position: fixed; bottom: 0; margin-left: -8px;
+                        color: white;
+                        font-size: 14px;
+                        margin-bottom: 0;">
+                        <span>
+                        Get your first month 30% off for any plan.  <a
+                                href="https://finsheet.io/account" style="color: white;cursor: pointer"><b><u style="color: #0e8e32">Redeem offer!</u></b></a>
+                        </span>
+            </div>
+                `
+        }
+      })
+    })
+
   } else {
     $("#api_key_input_div").css({ display: "flex" });
   }
@@ -1491,6 +1519,8 @@ function stop_streaming(){
         await context.sync();
       });
       $(document).ready(function (){
+
+
         refresh_all_sheets_js()
       })
     }
