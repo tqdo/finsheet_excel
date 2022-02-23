@@ -420,6 +420,47 @@
                 "dimensionality": "matrix",
                 "type": "string"
             }
+        },
+        {
+            "id": "FS_ESG",
+            "name": "FS_ESG",
+            "parameters": [
+                {
+                    "description": "Stock symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_EARNINGSQUALITY",
+            "name": "FS_EarningsQuality",
+            "parameters": [
+                {
+                    "description": "Stock symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Frequency (annual or quarterly).",
+                    "name": "freq",
+                    "type": "string"
+                },
+                {
+                    "description": "Limit.",
+                    "name": "limit",
+                    "optional": true,
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
         }
     ]
 }

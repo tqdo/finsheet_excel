@@ -1511,6 +1511,7 @@ function stop_streaming(){
 (function () {
   Office.onReady((info) => {
     if (info.host === Office.HostType.Excel) {
+      console.log(35)
       Excel.run(async (context) => {
 
         var ss = context.workbook.worksheets;
@@ -1520,8 +1521,8 @@ function stop_streaming(){
       });
       $(document).ready(function (){
 
-
-        refresh_all_sheets_js()
+        console.log(34)
+        // refresh_all_sheets_js()
       })
     }
   });

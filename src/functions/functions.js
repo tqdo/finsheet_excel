@@ -237,8 +237,13 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    var error = await response.text()
-    return [[JSON.parse(error).error]]
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+
   }
 
   var json = await response.json()
@@ -354,7 +359,12 @@ async function FS_ForexAllRates(base_currency="USD", ){
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    return [["No data"]]
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
   }
   var json = await response.json()
   if('message' in json){return [[json.message]]}
@@ -400,7 +410,12 @@ async function FS_CryptoProfile(symbol, ){
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    return [["No data"]]
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
   }
   var json = await response.json()
   if('message' in json){return [[json.message]]}
@@ -455,8 +470,12 @@ async function FS_EtfProfile(symbol, ){
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    var error = await response.text()
-    return [[JSON.parse(error).error]]
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
   }
 
   var json = await response.json()
@@ -511,8 +530,12 @@ async function FS_MutualFundProfile(symbol, ){
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    var error = await response.text()
-    return [[JSON.parse(error).error]]
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
   }
 
   var json = await response.json()
@@ -550,8 +573,12 @@ async function FS_Latest(symbol, ){
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
-    var error = await response.text()
-    return [[JSON.parse(error).error]]
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
   }
 
   var json = await response.json()
@@ -1090,4 +1117,172 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
     return [['No data']]
   }
 
+}
+
+
+//// Alternative data
+var esg_map = {
+  'womenManagementPercentage': 'Women Management Percentage',
+  'adultContent': 'Adult Content',
+  'alcoholic': 'Alcoholic',
+  'animalTesting': 'Animal Testing',
+  'antitrust': 'Antitrust',
+  'asianEmployeePercentage': 'Asian Employee Percentage',
+  'asianManagementPercentage': 'Asian Management Percentage',
+  'blackEmployeePercentage': 'Black Employee Percentage',
+  'blackManagementPercentage': 'Black Management Percentage',
+  'carbonReductionPolicy': 'Carbon Reduction Policy',
+  'catholic': 'Catholic',
+  'climateStrategy': 'Climate Strategy',
+  'co2EmissionScope1': 'Co2 Emission Scope1',
+  'co2EmissionScope2': 'Co2 Emission Scope2',
+  'co2EmissionScope3': 'Co2 Emission Scope3',
+  'co2EmissionTotal': 'Co2 Emission Total',
+  'coalEnergy': 'Coal Energy',
+  'ecofriendlyPackaging': 'Eco-friendly Packaging',
+  'environmentalReporting': 'Environmental Reporting',
+  'firearms': 'Firearms',
+  'fuelEfficiencyConsumption': 'Fuel Efficiency Consumption',
+  'furLeather': 'Fur Leather',
+  'gambling': 'Gambling',
+  'gmo': 'Gmo',
+  'hazardousSubstances': 'Hazardous Substances',
+  'hispanicLatinoEmployeePercentage': 'Hispanic Latino Employee Percentage',
+  'hispanicLatinoManagementPercentage': 'Hispanic Latino Management Percentage',
+  'humanRightsPolicy': 'Human Rights Policy',
+  'militaryContract': 'Military Contract',
+  'nuclear': 'Nuclear',
+  'palmOil': 'Palm Oil',
+  'pesticides': 'Pesticides',
+  'privacyPolicy': 'Privacy Policy',
+  'recallPolicySafety': 'Recall Policy Safety',
+  'recyclingPolicy': 'Recycling Policy',
+  'stakeholderEngagement': 'Stakeholder Engagement',
+  'sustainableForestryPolicy': 'Sustainable Forestry Policy',
+  'tobacco': 'Tobacco',
+  'totalWomenPercentage': 'Total Women Percentage',
+  'waterEfficiencyConsumption': 'Water Efficiency Consumption',
+  'weapons': 'Weapons',
+  'whiteEmployeePercentage': 'White Employee Percentage',
+  'whiteManagementPercentage': 'White Management Percentage',
+  'workplaceHealthSafety': 'Workplace Health Safety',
+  'environmentScore': 'Environment Score',
+  'governanceScore': 'Governance Score',
+  'socialScore': 'Social Score',
+  'totalESGScore': 'Total ESG Score'
+}
+/**
+ * @customfunction FS_ESG FS_ESG
+ * @param symbol {string} Stock symbol.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_ESG(symbol, ){
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if(!symbol){return [["Symbol cannot be empty"]]}
+  if(typeof symbol !== 'string'){return [['Symbol has to be a string']]}
+  symbol = symbol.toUpperCase()
+
+  //// Now get data
+  var prepare = {symbol: symbol, api_key: api_key, }
+  const url = link + "/excel/alternative/esg?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+  }
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data
+  var data_to_return = []
+  for(var key of Object.keys(data)){
+    if(key === 'data'){
+      try {
+        for(var key2 of Object.keys(data[key])){
+          data_to_return.push([capFirst(key2.split(/(?=[A-Z])/).join(' ')), data[key][key2]])
+        }
+      } catch (e) {}
+    } else{
+      if(key === 'symbol'){continue}
+      var name = key === 'totalESGScore' ? 'Total ESG Score' : capFirst(key.split(/(?=[A-Z])/).join(' '))
+      data_to_return.push([name, data[key]])
+    }
+  }
+  console.log(data_to_return)
+  return data_to_return
+}
+
+
+
+/**
+ * @customfunction FS_EARNINGSQUALITY FS_EarningsQuality
+ * @param symbol {string} Stock symbol.
+ * @param freq {string} Frequency (annual or quarterly).
+ * @param [limit] {number} Limit.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_EarningsQuality(symbol, freq, limit){
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if(!symbol){return [["Symbol cannot be empty"]]}
+  if(typeof symbol !== 'string'){return [['Symbol has to be a string']]}
+  symbol = symbol.toUpperCase()
+
+  if(typeof freq !== 'string' || !['annual', 'quarterly'].includes(freq.toLowerCase())){return [['Invalid frequency']]}
+
+  if(!limit){limit = 100}
+  if(typeof  limit !== "number"){return [['Limit has to be a number']]}
+
+  //// Now get data
+  var prepare = {symbol: symbol, api_key: api_key, freq : freq}
+  const url = link + "/excel/alternative/earnings_quality?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+  }
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data.data
+  var no_used_name = {period: 1, score: 1, letterScore: 1}
+  var names = {}
+  var store_data = {}
+  var c = 0
+  for(var dic of data){
+    if(!dic.period){continue}
+    c += 1
+    for(var key of Object.keys(dic)){
+      if(!(key in no_used_name)){
+        names[key] = 1
+      }
+      if(key in store_data ){
+        store_data[key].push(dic[key])
+      } else if (!(key in store_data)){
+        store_data[key] = [dic[key]]
+      }
+    }
+    if(c=== limit){break }
+  }
+  if(Object.keys(store_data).length < 1){return [['No data']]}
+  names = ['period'].concat(Object.keys(names)).concat(['score', 'letterScore'])
+  var data_to_return = []
+  for(var name of names){
+    data_to_return.push([capFirst(name.split(/(?=[A-Z])/).join(' '))].concat([].concat(store_data[name]).reverse()))
+  }
+  data_to_return[0][0] = ''
+  return data_to_return
 }
