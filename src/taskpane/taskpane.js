@@ -1656,6 +1656,141 @@ function capFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function getArrayDepth(value) {
+  return Array.isArray(value) ?
+      1 + Math.max(...value.map(getArrayDepth)) :
+      0;
+}
+
+function handleErrorApi(data){
+  for(var word of ['err', 'error', 'errors']){
+    if(word in data){
+      return [[JSON.stringify(data[word])]]
+    }
+  }
+  return [['No data']]
+}
+
+function handleApiDataExpandColumn(data, prefix){
+  var matrix = []
+  if(typeof data === 'object' && data.constructor !== Array){
+    if(Object.keys(data).length < 1){return [prefix, '']}
+    for(let key of Object.keys(data)){
+      matrix.push(handleApiDataExpandColumn(data[key], prefix + '_' + key))
+    }
+  }
+  else if (data.constructor === Array){
+    if(data.length < 1){return [prefix, '']}
+    for(let i=0;i<data.length; i++){
+      matrix.push(handleApiDataExpandColumn(data[i], prefix +'[' + i + ']'))
+    }
+  }
+  else {
+    return [prefix, data ? data : '']
+  }
+  return matrix
+}
+
+function flatHelper(input, depth = 1, stack = [])
+{
+  for (let item of input)
+  {
+    if (item instanceof Array && depth > 0)
+    {
+      flatHelper(item, depth - 1, stack);
+    }
+    else {
+      stack.push(item);
+    }
+  }
+
+  return stack;
+}
+
+function flattenArray(data) {
+  var res = []
+  for (var arr of data) { // Each arr is a row
+    var one_row = []
+    for (var item of arr) { // In each item, the first one is column name, second is value
+      if(getArrayDepth(item) > 1){
+        // one_row = one_row.concat(item.flat(Math.max(getArrayDepth(item) - 2, 0)))
+        one_row = one_row.concat(flatHelper(item,Math.max(getArrayDepth(item) - 2, 0)))
+
+        // console.log(item, item.flat(Math.max(getArrayDepth(item) - 2, 0)),
+        //     Math.max(getArrayDepth(item) - 2, 0), duplicate(one_row))
+      } else {
+        one_row.push(item)
+      }
+    }
+    res.push(one_row)
+  }
+
+  // // If depth of each component array is only 1, wrap it so that depth of resis 3
+  // for(var i=0;i<res.length; i++ ){
+  //   if(getArrayDepth(res[i]) < 2){
+  //     res[i] = [res[i]]
+  //   }
+  // }
+  return res
+}
+
+function rotateDataAfterExpandRow(data){
+  var colnames = []
+  var colnames_dic = {}
+  var i=-1
+  var res = []
+  for(var arr of data){ // Each arr is a row
+    i+=1
+    var row_data = []
+    for(var item of arr){  // In each item, the first one is column name, second is value
+      if(!item || item.length < 2){continue}
+      var this_col_name = item[0]
+      if(i === 0){
+        colnames.push(this_col_name)
+        colnames_dic[this_col_name] = 1
+      } else if(!(this_col_name in colnames_dic)){
+        continue
+      }
+
+      row_data.push(item[1])
+    }
+    res.push(row_data)
+  }
+  res = [colnames].concat(res)
+  return res
+}
+
+function blowUpDimension(data, rows){
+  if(!data || data.length<1){return data}
+
+  const cols = data[0].length
+
+  const nestedArray = Array.from({ length: rows }, () =>
+      Array.from({ length: cols }, () => '')
+  );
+
+  for(var i=0;i<data.length;i++){
+    for(var j=0;j<data[0].length; j++){
+      nestedArray[i][j] = data[i][j]
+    }
+  }
+
+  return nestedArray
+}
+
+function concatHorizontally(data){
+  if(!data){return data}
+
+  var res = []
+  for(var j=0;j<data[0].length;j++){
+    var one_row = []
+    for(var i=0;i<data.length;i++){
+      one_row = one_row.concat(data[i][j])
+    }
+    res.push(one_row)
+  }
+  return res
+}
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
 // $("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});

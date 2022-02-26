@@ -1215,7 +1215,6 @@ async function FS_ESG(symbol, ){
       data_to_return.push([name, data[key]])
     }
   }
-  console.log(data_to_return)
   return data_to_return
 }
 
@@ -1285,4 +1284,165 @@ async function FS_EarningsQuality(symbol, freq, limit){
   }
   data_to_return[0][0] = ''
   return data_to_return
+}
+
+
+/**
+ * @customfunction FS_API FS_Api
+ * @param provider {string} Provider name.
+ * @param endpoint {string} Endpoint name.
+ * @param [parameters] {any[][]} Parameters.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_Api(provider, endpoint, parameters=[]) {
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if (!provider) { return [["Provider name cannot be empty"]] }
+  if (typeof provider !== 'string') { return [['Provider name to be a string']] }
+  provider = provider.toLowerCase()
+
+  if (!endpoint) { return [["Endpoint name cannot be empty"]] }
+  if (typeof endpoint !== 'string') { return [['Endpoint name to be a string']] }
+
+  if(!parameters){parameters = []}
+  var input_parameters_dic = {}
+  try{
+    for(let arr of parameters){
+      input_parameters_dic[arr[0].toString()] = arr[1].toString()
+    }
+  } catch (e) {return [['Invalid parameters']]}
+
+  var check_values = checkValidProviderEndpoint(provider, endpoint)
+  if(check_values[2] !== ""){return [[check_values[2]]]}
+
+  var base_url = check_values[1], endpoint_dic = check_values[0]
+  var endpoint_url = endpoint_dic.url
+  var return_structure = endpoint_dic.return_is_list ? 'list' : 'dic'
+
+  var params = endpoint_dic.params ? endpoint_dic.params : {}
+  var final_params = {}
+  for(var param of Object.keys(params)){
+    if(params[param].required && !(param in input_parameters_dic)){
+      return [['Missing parameter "' + param + '"']]
+    }
+    if(params[param].replace_2dots){ // Handle cases like /prices/:currency_pair/buy
+      endpoint_url = endpoint_url.replace(':' + param, input_parameters_dic[param])
+    } else if(param in input_parameters_dic){
+      var transformInputFunction = params[param].transformInput
+      final_params[param] = transformInputFunction ? transformInputFunction(input_parameters_dic[param]) : input_parameters_dic[param]
+    }
+  }
+  console.log(12, final_params)
+  var prepare = {api_key: api_key, base_url: base_url, endpoint_url: endpoint_url, params: JSON.stringify(final_params), return_structure: return_structure}
+  //// Now send get data
+  const url = link + "/excel/api?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    var error = await response.text()
+    try {
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [["No data"]]
+    }
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data
+  console.log(data)
+  try{
+    if('err' in data || 'error' in data || 'errors' in data){
+      return handleErrorApi(data)
+    }
+  } catch(e){}
+  if('data' in data){data = data.data}
+  if(!data){return [['No data']]}
+
+
+  var final = [['No data']]
+  // Handle case big returned data is an object
+  if(typeof data === 'object' && data.constructor !== Array){
+    var blocks_of_data = []
+    var max_height = 0
+    for(var key of Object.keys(data)){
+      var used_data = data[key]
+      var res = []
+
+      // Expand row (if is an array or a dic with >15 keys)
+      if((typeof used_data === 'object' && Object.keys(used_data).length > 15) || used_data.constructor === Array){
+        // used_data = used_data.slice(0,2)
+
+        let pre_store = []
+        for(let key2 of Object.keys(used_data)){
+          let prefix = used_data.constructor !== Array ? key + '_' + key2 : key //+'[' + key2 + ']'
+          pre_store.push(handleApiDataExpandColumn(used_data[key2],prefix))
+        }
+        pre_store = flattenArray(pre_store)
+
+        if(used_data.constructor === Array && used_data.length < 1){
+          pre_store = [[[key, '']]]
+        }
+
+
+        // This one check where case in which dic has value immediately, so depth is 1, meaning can ignore column
+        if(getArrayDepth(pre_store[0])<2){
+          res = pre_store
+        } else {
+          res = rotateDataAfterExpandRow(pre_store)
+        }
+        // console.log(  pre_store, res)
+      }
+
+      // Expand column
+      else {
+        res = handleApiDataExpandColumn(used_data, key)
+
+        // If just a value (text or string)
+        if(typeof used_data !== 'object'){
+          res = [[[key, used_data]]]
+        }else if(Object.keys(used_data).length < 1 || typeof used_data !== 'object' ){
+          res = [[[key, '']]]
+        }
+        res = rotateDataAfterExpandRow(res)
+        // console.log(res)
+      }
+
+      max_height = Math.max(max_height, res.length)
+      blocks_of_data.push(res)
+    }
+
+    // Fill in missing blocks so that they all have the same height and concat them horizontally
+    var blown_up = []
+    for(var re of blocks_of_data){
+      blown_up.push(blowUpDimension(re, max_height))
+    }
+    final = concatHorizontally(blown_up)
+  }
+
+  // Handle case returned data is an array
+  else if (data.constructor === Array){
+    let pre_store = []
+    for(let key2 of Object.keys(data)){
+      let prefix = ''
+      pre_store.push(handleApiDataExpandColumn(data[key2],prefix))
+    }
+    pre_store = flattenArray(pre_store)
+
+    if(data.length < 1){
+      return [['No data']]
+    }
+
+    final = rotateDataAfterExpandRow(pre_store)
+  }
+
+  //If returned data is just text return it
+  else {
+    return [[JSON.stringify(data)]]
+  }
+
+  if(endpoint_dic.transformOutput){try{final = endpoint_dic.transformOutput(final)} catch (e) {}}
+  return final
 }

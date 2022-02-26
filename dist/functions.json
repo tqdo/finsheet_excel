@@ -461,6 +461,33 @@
                 "dimensionality": "matrix",
                 "type": "string"
             }
+        },
+        {
+            "id": "FS_API",
+            "name": "FS_Api",
+            "parameters": [
+                {
+                    "description": "Provider name.",
+                    "name": "provider",
+                    "type": "string"
+                },
+                {
+                    "description": "Endpoint name.",
+                    "name": "endpoint",
+                    "type": "string"
+                },
+                {
+                    "description": "Parameters.",
+                    "dimensionality": "matrix",
+                    "name": "parameters",
+                    "optional": true,
+                    "type": "any"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
         }
     ]
 }

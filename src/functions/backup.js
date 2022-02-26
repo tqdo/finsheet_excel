@@ -377,3 +377,17 @@ async function FS_CRYPTOSTREAMING(symbol,  ){
 }
 
 
+
+function flattenHelper(arr, save){
+    // console.log(arr, getArrayDepth(arr))
+    if(getArrayDepth(arr) < 2){
+        return arr
+    }
+    var res = []
+    for(let i of arr){
+        // console.log(i)
+        // console.log(flattenHelper(i))
+        res.push(flattenHelper(i, ))
+    }
+    return res
+}
