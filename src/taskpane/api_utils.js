@@ -141,5 +141,62 @@ var big_api_map = {
                 symbol : {},
             }
         },
+    },
+
+    kraken: {
+        "base_url": "https://api.kraken.com/0",
+        "Get Server Time": {
+            url: '/public/Time'
+        },
+        "Get System Status": {
+            url: '/public/SystemStatus'
+        },
+        "Get Asset Info": {
+            url: '/public/Assets',
+            params: {
+                asset:{}
+            }
+        },
+        "Get Tradable Asset Pairs": {
+            url: '/public/AssetPairs',
+            params: {
+                pair:{}
+            }
+        },
+        "Get Ticker Information": {
+            url: '/public/Ticker',
+            params: {
+                pair:{required: true}
+            }
+        },
+        "Get OHLC Data": {
+            url: '/public/OHLC',
+            params: {
+                pair:{required: true},
+                interval: {default: 1440},
+                since: {}
+            }
+        },
+        "Get Order Book": {
+            url: '/public/Depth',
+            params: {
+                pair:{required: true},
+                count: {}
+            }
+        },
+        "Get Recent Trades": {
+            url: '/public/Trades',
+            params: {
+                pair:{required: true},
+                since: {}
+            }
+        },
+        "Get Recent Spreads": {
+            url: '/public/Spread',
+            params: {
+                pair:{required: true},
+                since: {}
+            }
+        },
     }
 }

@@ -1662,13 +1662,18 @@ function getArrayDepth(value) {
       0;
 }
 
-function handleErrorApi(data){
-  for(var word of ['err', 'error', 'errors']){
-    if(word in data){
-      return [[JSON.stringify(data[word])]]
+function convertDicToArray(dic, prefix){
+  var res = []
+  for(var key2 of Object.keys(dic)){
+    if(dic[key2].constructor === Array){
+      res.push({'': key2, data: dic[key2]})
+    } else if(typeof dic[key2] === 'object'){
+      res.push({...{'': key2}, ...dic[key2]})
+    } else {
+      return dic
     }
   }
-  return [['No data']]
+  return res
 }
 
 function handleApiDataExpandColumn(data, prefix){

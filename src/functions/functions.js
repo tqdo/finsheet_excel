@@ -1331,6 +1331,8 @@ async function FS_Api(provider, endpoint, parameters=[]) {
     } else if(param in input_parameters_dic){
       var transformInputFunction = params[param].transformInput
       final_params[param] = transformInputFunction ? transformInputFunction(input_parameters_dic[param]) : input_parameters_dic[param]
+    } else if(params[param].default){
+      final_params[param] = params[param].default.toString()
     }
   }
   console.log(12, final_params)
@@ -1354,11 +1356,16 @@ async function FS_Api(provider, endpoint, parameters=[]) {
   var data = json.data
   console.log(data)
   try{
-    if('err' in data || 'error' in data || 'errors' in data){
-      return handleErrorApi(data)
+    for(var word of ['err', 'error', 'errors']){
+      if(data[word] && !(typeof data[word] === 'object' && Object.keys(data[word]).length < 1)){
+          return [[JSON.stringify(data[word])]]
+      }
     }
   } catch(e){}
+
+  delete data.err; delete data.error; delete data.errors
   if('data' in data){data = data.data}
+  else if('result' in data){data = data.result}
   if(!data){return [['No data']]}
 
 
@@ -1375,6 +1382,11 @@ async function FS_Api(provider, endpoint, parameters=[]) {
       if((typeof used_data === 'object' && Object.keys(used_data).length > 15) || used_data.constructor === Array){
         // used_data = used_data.slice(0,2)
 
+        // If a dict, transform to array to keep things consistent
+        if(used_data.constructor !== Array){
+          used_data = convertDicToArray(used_data, key)
+        }
+
         let pre_store = []
         for(let key2 of Object.keys(used_data)){
           let prefix = used_data.constructor !== Array ? key + '_' + key2 : key //+'[' + key2 + ']'
@@ -1386,9 +1398,10 @@ async function FS_Api(provider, endpoint, parameters=[]) {
           pre_store = [[[key, '']]]
         }
 
-
+        console.log(12, pre_store)
         // This one check where case in which dic has value immediately, so depth is 1, meaning can ignore column
         if(getArrayDepth(pre_store[0])<2){
+          console.log(35)
           res = pre_store
         } else {
           res = rotateDataAfterExpandRow(pre_store)
@@ -1398,16 +1411,26 @@ async function FS_Api(provider, endpoint, parameters=[]) {
 
       // Expand column
       else {
-        res = handleApiDataExpandColumn(used_data, key)
+
 
         // If just a value (text or string)
         if(typeof used_data !== 'object'){
-          res = [[[key, used_data]]]
+          res = [[key], [used_data]]
         }else if(Object.keys(used_data).length < 1 || typeof used_data !== 'object' ){
-          res = [[[key, '']]]
+          res = [[key], ['']]
         }
-        res = rotateDataAfterExpandRow(res)
-        // console.log(res)
+
+        // Common object
+        else {
+          var pre_store = handleApiDataExpandColumn(used_data, key)
+          console.log(pre_store)
+          if(getArrayDepth(pre_store[0])<2){
+            res = pre_store
+          } else {
+            res = rotateDataAfterExpandRow(res)
+          }
+        }
+        console.log(res)
       }
 
       max_height = Math.max(max_height, res.length)
