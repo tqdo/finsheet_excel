@@ -1663,7 +1663,6 @@ function getArrayDepth(value) {
 }
 
 function convertDicToArray(dic, prefix){
-  console.log(dic)
   var res = []
   for(var key2 of Object.keys(dic)){
     if(dic[key2].constructor === Array){
@@ -1703,7 +1702,7 @@ function helperHandleData(data, prefix, save){
   else {
     save.push([prefix, data ? data : ''])
   }
-  console.log(34)
+  // console.log(34)
 }
 // function handleApiDataExpandColumn(data, prefix){
 //   var matrix = []

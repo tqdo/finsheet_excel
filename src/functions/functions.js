@@ -1385,19 +1385,21 @@ async function FS_Api(provider, endpoint, parameters=[]) {
     for(var key of Object.keys(data)){
       var used_data = data[key]
       var res = []
+      console.log(key)
 
-      console.log(1, used_data, used_data['1CR'])
+      if(!used_data){
+        res = [[key], ['']]
+      }
+
       // Expand row (if is an array or a dic with >15 keys)
-      if((typeof used_data === 'object' && Object.keys(used_data).length > 15) || used_data.constructor === Array) {
+      else if((typeof used_data === 'object' && Object.keys(used_data).length > 15) || used_data.constructor === Array) {
         // used_data = used_data.slice(0,1)
         // used_data = {'1CR': used_data['1CR']}
 
-        console.log(2, key)
         // If a dict, transform to array to keep things consistent
         if (used_data.constructor !== Array) {
           used_data = convertDicToArray(used_data, key)
         }
-        console.log(used_data)
         let pre_store = []
         for (let key2 of Object.keys(used_data)) {
           var prefix
@@ -1414,10 +1416,8 @@ async function FS_Api(provider, endpoint, parameters=[]) {
               prefix = key
             }
           }
-          console.log(prefix)
           pre_store.push(handleApiDataExpandColumn(used_data[key2], prefix))
         }
-        console.log(key, data, used_data, pre_store)
 
         // pre_store = flattenArray(pre_store)
 
@@ -1426,13 +1426,15 @@ async function FS_Api(provider, endpoint, parameters=[]) {
         }
 
         res = rotateDataAfterExpandRow(pre_store)
+        console.log(key, data, used_data, pre_store, res)
+
       }
       // Expand column
       else {
         // If just a value (text or string)
         if(typeof used_data !== 'object'){
           res = [[key], [used_data]]
-        }else if(Object.keys(used_data).length < 1 || typeof used_data !== 'object' ){
+        }else if( Object.keys(used_data).length < 1 || typeof used_data !== 'object' ){
           res = [[key], ['']]
         }
 
