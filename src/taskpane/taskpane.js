@@ -1663,6 +1663,7 @@ function getArrayDepth(value) {
 }
 
 function convertDicToArray(dic, prefix){
+  console.log(dic)
   var res = []
   for(var key2 of Object.keys(dic)){
     if(dic[key2].constructor === Array){
@@ -1670,31 +1671,59 @@ function convertDicToArray(dic, prefix){
     } else if(typeof dic[key2] === 'object'){
       res.push({...{'': key2}, ...dic[key2]})
     } else {
-      return dic
+      res.push({[prefix]: key2, value: dic[key2]})
     }
   }
   return res
 }
 
 function handleApiDataExpandColumn(data, prefix){
-  var matrix = []
-  if(typeof data === 'object' && data.constructor !== Array){
-    if(Object.keys(data).length < 1){return [prefix, '']}
+  var save = []
+  helperHandleData(data, prefix, save)
+  return save
+}
+
+function helperHandleData(data, prefix, save){
+  // console.log(data)
+  // console.log(typeof data === 'object' && data.constructor !== Array && )
+  // console.log(data !== null && data !== undefined && data.constructor === Array)
+
+  if(data !== null && data !== undefined && typeof data === 'object' && data.constructor !== Array ){
+    if(Object.keys(data).length < 1){save.push([prefix, ''])}
     for(let key of Object.keys(data)){
-      matrix.push(handleApiDataExpandColumn(data[key], prefix + '_' + key))
+      helperHandleData(data[key], (prefix ? prefix + '_' : '') + key, save)
     }
   }
-  else if (data.constructor === Array){
+  else if (data !== null && data !== undefined && data.constructor === Array){
     if(data.length < 1){return [prefix, '']}
     for(let i=0;i<data.length; i++){
-      matrix.push(handleApiDataExpandColumn(data[i], prefix +'[' + i + ']'))
+      helperHandleData(data[i], prefix +'[' + i + ']', save)
     }
   }
   else {
-    return [prefix, data ? data : '']
+    save.push([prefix, data ? data : ''])
   }
-  return matrix
+  console.log(34)
 }
+// function handleApiDataExpandColumn(data, prefix){
+//   var matrix = []
+//   if(typeof data === 'object' && data.constructor !== Array){
+//     if(Object.keys(data).length < 1){return [prefix, '']}
+//     for(let key of Object.keys(data)){
+//       matrix.push(handleApiDataExpandColumn(data[key], prefix + '_' + key))
+//     }
+//   }
+//   else if (data.constructor === Array){
+//     if(data.length < 1){return [prefix, '']}
+//     for(let i=0;i<data.length; i++){
+//       matrix.push(handleApiDataExpandColumn(data[i], prefix +'[' + i + ']'))
+//     }
+//   }
+//   else {
+//     return [prefix, data ? data : '']
+//   }
+//   return matrix
+// }
 
 function flatHelper(input, depth = 1, stack = [])
 {

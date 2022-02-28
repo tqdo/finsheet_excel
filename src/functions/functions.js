@@ -1364,10 +1364,18 @@ async function FS_Api(provider, endpoint, parameters=[]) {
   } catch(e){}
 
   delete data.err; delete data.error; delete data.errors
-  if('data' in data){data = data.data}
-  else if('result' in data){data = data.result}
+  if('data' in data && endpoint_dic.go_down_1_level){data = data.data}
+  else if('result' in data && endpoint_dic.go_down_1_level){data = data.result}
   if(!data){return [['No data']]}
 
+  // Go up so that the code to treat dic as array work
+  if(endpoint_dic.go_up_1_level){
+    data = {data: data}
+  }
+  // Handle special function
+  if(endpoint_dic.specialHandleFunction){
+    return endpoint_dic.specialHandleFunction(data)
+  }
 
   var final = [['No data']]
   // Handle case big returned data is an object
@@ -1378,41 +1386,49 @@ async function FS_Api(provider, endpoint, parameters=[]) {
       var used_data = data[key]
       var res = []
 
+      console.log(1, used_data, used_data['1CR'])
       // Expand row (if is an array or a dic with >15 keys)
-      if((typeof used_data === 'object' && Object.keys(used_data).length > 15) || used_data.constructor === Array){
-        // used_data = used_data.slice(0,2)
+      if((typeof used_data === 'object' && Object.keys(used_data).length > 15) || used_data.constructor === Array) {
+        // used_data = used_data.slice(0,1)
+        // used_data = {'1CR': used_data['1CR']}
 
+        console.log(2, key)
         // If a dict, transform to array to keep things consistent
-        if(used_data.constructor !== Array){
+        if (used_data.constructor !== Array) {
           used_data = convertDicToArray(used_data, key)
         }
-
+        console.log(used_data)
         let pre_store = []
-        for(let key2 of Object.keys(used_data)){
-          let prefix = used_data.constructor !== Array ? key + '_' + key2 : key //+'[' + key2 + ']'
-          pre_store.push(handleApiDataExpandColumn(used_data[key2],prefix))
+        for (let key2 of Object.keys(used_data)) {
+          var prefix
+          if(endpoint_dic.go_up_1_level){
+            if(used_data.constructor !== Array){
+              prefix = key2
+            } else {
+              prefix = ''
+            }
+          } else {
+            if(used_data.constructor !== Array){
+              prefix = key + '_' + key2
+            } else {
+              prefix = key
+            }
+          }
+          console.log(prefix)
+          pre_store.push(handleApiDataExpandColumn(used_data[key2], prefix))
         }
-        pre_store = flattenArray(pre_store)
+        console.log(key, data, used_data, pre_store)
 
-        if(used_data.constructor === Array && used_data.length < 1){
+        // pre_store = flattenArray(pre_store)
+
+        if (used_data.constructor === Array && used_data.length < 1) {
           pre_store = [[[key, '']]]
         }
 
-        console.log(12, pre_store)
-        // This one check where case in which dic has value immediately, so depth is 1, meaning can ignore column
-        if(getArrayDepth(pre_store[0])<2){
-          console.log(35)
-          res = pre_store
-        } else {
-          res = rotateDataAfterExpandRow(pre_store)
-        }
-        // console.log(  pre_store, res)
+        res = rotateDataAfterExpandRow(pre_store)
       }
-
       // Expand column
       else {
-
-
         // If just a value (text or string)
         if(typeof used_data !== 'object'){
           res = [[key], [used_data]]
@@ -1422,15 +1438,15 @@ async function FS_Api(provider, endpoint, parameters=[]) {
 
         // Common object
         else {
-          var pre_store = handleApiDataExpandColumn(used_data, key)
-          console.log(pre_store)
-          if(getArrayDepth(pre_store[0])<2){
-            res = pre_store
-          } else {
-            res = rotateDataAfterExpandRow(res)
-          }
+          // // If a dict, transform to array to keep things consistent
+          // if (used_data.constructor !== Array) {
+          //   console.log(234)
+          //   used_data = convertDicToArray(used_data, key)
+          // }
+          var pre_store = [handleApiDataExpandColumn(used_data, key)]
+          res = rotateDataAfterExpandRow(pre_store)
         }
-        console.log(res)
+        // console.log(key, data[key], used_data, pre_store, res)
       }
 
       max_height = Math.max(max_height, res.length)

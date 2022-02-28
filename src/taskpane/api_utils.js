@@ -19,6 +19,7 @@ var big_api_map = {
             params: {
                 currency: {}
             },
+            go_down_1_level: true,
         },
         "Get buy price": {
             url: "/prices/:currency_pair/buy",
@@ -28,6 +29,7 @@ var big_api_map = {
                     replace_2dots: true
                 }
             },
+            go_down_1_level: true,
         },
         "Get sell price": {
             url: "/prices/:currency_pair/sell",
@@ -37,6 +39,7 @@ var big_api_map = {
                     replace_2dots: true
                 }
             },
+            go_down_1_level: true,
         },
         "Get spot price": {
             url: "/prices/:currency_pair/spot",
@@ -46,9 +49,11 @@ var big_api_map = {
                     replace_2dots: true
                 }
             },
+            go_down_1_level: true,
         },
         "Get current time": {
             url: "/time",
+            go_down_1_level: true,
         },
     },
 
@@ -167,7 +172,8 @@ var big_api_map = {
             url: '/public/Ticker',
             params: {
                 pair:{required: true}
-            }
+            },
+            go_down_1_level: true,
         },
         "Get OHLC Data": {
             url: '/public/OHLC',
@@ -175,27 +181,107 @@ var big_api_map = {
                 pair:{required: true},
                 interval: {default: 1440},
                 since: {}
-            }
+            },
+            go_down_1_level: true,
         },
         "Get Order Book": {
             url: '/public/Depth',
             params: {
                 pair:{required: true},
                 count: {}
-            }
+            },
+            go_down_1_level: true,
         },
         "Get Recent Trades": {
             url: '/public/Trades',
             params: {
                 pair:{required: true},
                 since: {}
-            }
+            },
+            go_down_1_level: true,
         },
         "Get Recent Spreads": {
             url: '/public/Spread',
             params: {
                 pair:{required: true},
                 since: {}
+            },
+            go_down_1_level: true,
+        },
+    },
+
+    poloniex: {
+        "base_url": "https://poloniex.com/public",
+        "Return Ticker": {
+            url: '',
+            go_up_1_level: true,
+            params:{
+                command: {default: 'returnTicker'}
+            }
+        },
+        "Return 24h Volume": {
+            url: '',
+            params:{
+                command: {default: 'return24hVolume'}
+            },
+            specialHandleFunction: (data) => {
+                var res = [['', "First currency's volume", "Second currency's volume"]]
+                for(var key of Object.keys(data)){
+                    if(!key.includes('total')){
+                        var arr = [key]
+                        for(var key2 of Object.keys(data[key])){
+                            arr.push(data[key][key2])
+                        }
+                        res.push(arr)
+                    } else {
+                        res.push([key, data[key], ''])
+                    }
+                }
+                return res
+            },
+        },
+
+        "Return Order Book": {
+            url: '',
+            params: {
+                currencyPair: {default: "all"},
+                depth: {},
+                command: {default: 'returnOrderBook'}
+            }
+        },
+        "Return Trade History": {
+            url: '',
+            params: {
+                currencyPair: {required: true},
+                start: {},
+                end: {},
+                command: {default: 'returnTradeHistory'}
+            }
+        },
+        "Return Chart Data": {
+            url: '',
+            params: {
+                currencyPair: {required: true},
+                start: {required: true},
+                end: {required: true},
+                period: {required: true},
+                command: {default: 'returnChartData'}
+
+            }
+        },
+        "Return Currencies": {
+            url: '',
+            params: {
+                includeMultiChainCurrencies: {},
+                command: {default: 'returnCurrencies'}
+            },
+            go_up_1_level: true,
+        },
+        "Return Loan Order": {
+            url: '',
+            params: {
+                currency: {required: true},
+                command: {default: 'returnLoanOrders'}
             }
         },
     }
