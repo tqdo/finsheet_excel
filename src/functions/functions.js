@@ -1470,7 +1470,7 @@ async function FS_Api(provider, endpoint, parameters=[]) {
       let prefix = ''
       pre_store.push(handleApiDataExpandColumn(data[key2],prefix))
     }
-    pre_store = flattenArray(pre_store)
+    // pre_store = flattenArray(pre_store)
 
     if(data.length < 1){
       return [['No data']]
@@ -1485,5 +1485,6 @@ async function FS_Api(provider, endpoint, parameters=[]) {
   }
 
   if(endpoint_dic.transformOutput){try{final = endpoint_dic.transformOutput(final)} catch (e) {}}
+
   return final
 }

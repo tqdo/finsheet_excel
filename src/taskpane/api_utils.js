@@ -183,6 +183,13 @@ var big_api_map = {
                 since: {}
             },
             go_down_1_level: true,
+            transformOutput: (matrix) => {
+                var arr = ['time', 'open', 'high', 'low', 'close', 'vwap', 'volume', 'count']
+                for(var i=0;i<arr.length;i++){
+                    matrix[0][i] = matrix[0][i].split('[')[0] + '_' + arr[i]
+                }
+                return matrix
+            }
         },
         "Get Order Book": {
             url: '/public/Depth',
@@ -199,6 +206,13 @@ var big_api_map = {
                 since: {}
             },
             go_down_1_level: true,
+            transformOutput: (matrix) => {
+                var arr = ['price', 'volume', 'time', 'buy/sell','limit', 'miscellaneous']
+                for(var i=0;i<arr.length;i++){
+                    matrix[0][i] = matrix[0][i].split('[')[0] + '_' + arr[i]
+                }
+                return matrix
+            }
         },
         "Get Recent Spreads": {
             url: '/public/Spread',
@@ -207,6 +221,13 @@ var big_api_map = {
                 since: {}
             },
             go_down_1_level: true,
+            transformOutput: (matrix) => {
+                var arr = ['time', 'bid', 'ask']
+                for(var i=0;i<arr.length;i++){
+                    matrix[0][i] = matrix[0][i].split('[')[0] + '_' + arr[i]
+                }
+                return matrix
+            }
         },
     },
 
@@ -323,6 +344,10 @@ var big_api_map = {
                 symbol: {required: true}
             },
             go_down_1_level: true,
+            transformOutput: (matrix) => {
+                matrix[0][0] = 'askPrice';matrix[0][1] = 'askSize';matrix[0][2] = 'bidsPrice';matrix[0][3] = 'bidsSize';
+                return matrix
+            }
         },
         "Get Trade Histories": {
             url: '/api/v1/market/histories',
@@ -331,7 +356,7 @@ var big_api_map = {
             },
             go_down_1_level: true,
         },
-        "Get Candles": {
+        "Get Candlesticks": {
             url: '/api/v1/market/candles',
             params: {
                 symbol: {required: true},
@@ -340,6 +365,13 @@ var big_api_map = {
                 endAt: {}
             },
             go_down_1_level: true,
+            transformOutput: (matrix) => {
+                var arr = ['time', 'open','close', 'high', 'low',  'volume', 'amount']
+                for(var i=0;i<arr.length;i++){
+                    matrix[0][i] =  arr[i]
+                }
+                return matrix
+            }
         },
         "Get Currencies": {
             url: '/api/v1/currencies',
@@ -366,7 +398,7 @@ var big_api_map = {
         },
 
 
-        "Get Market Price": {
+        "Get Mark Price": {
             url: '/api/v1/mark-price/:symbol/current',
             params: {
                 symbol: {
@@ -411,7 +443,7 @@ var big_api_map = {
                 }
             }
         },
-        "Candles": {
+        "Candlesticks": {
             url: '/v2/candles/:symbol/:time_frame',
             params:{
                 symbol:{
@@ -422,6 +454,13 @@ var big_api_map = {
                     required: true,
                     replace_2dots: true
                 }
+            },
+            transformOutput: (matrix) => {
+                var arr = ['time', 'open', 'high', 'low', 'close', 'volume',]
+                for(var i=0;i<arr.length;i++){
+                    matrix[0][i] =  arr[i]
+                }
+                return matrix
             }
         },
         "Current Order Book": {
@@ -473,279 +512,378 @@ var big_api_map = {
         },
     },
 
-    okex: {
+    okex:{
         "base_url": "https://www.okx.com",
-        "Trading Pairs": {
-            url: '/api/spot/v3/instruments',
+        "Get Tickers":{
+            url: '/api/v5/market/tickers',
+            params:{
+                instType: {required: true},
+                uly: {}
+            },
+            go_down_1_level: true
         },
-        "Order Book": {
-            url: '/api/spot/v3/instruments/:instrument_id/book',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-                size: {},
-                depth: {},
+        "Get Ticker":{
+            url: '/api/v5/market/ticker',
+            params:{
+                instId: {required: true},
+            },
+            go_down_1_level: true
+        },
+        "Get Index Tickers":{
+            url: '/api/v5/market/index-tickers',
+            params:{
+                instId: {required: true}
+            },
+            go_down_1_level: true
+        },
+        "Get Order Book":{
+            url: '/api/v5/market/books',
+            params:{
+                instId: {required: true},
+                sz: {default: 1}
+            },
+            go_down_1_level: true,
+        },
+        "Get Candlesticks":{
+            url: '/api/v5/market/history-candles',
+            params:{
+                instId: {required: true},
+                bar: {},
+                after:{},
+                before:{},
+                limit:{}
+            },
+            go_down_1_level: true,
+            transformOutput: (matrix) => {
+                matrix[0][0] = 'timestamp'; matrix[0][1] = 'open';matrix[0][2] = 'high';
+                matrix[0][3] = 'low';matrix[0][4] = 'close';matrix[0][5] = 'volume';matrix[0][6] = 'volumeCcy';
+                return matrix
+            }
+
+        },
+        "Get Index Candlesticks":{
+            url: '/api/v5/market/index-candles',
+            params:{
+                instId: {required: true},
+                bar: {},
+                after:{},
+                before:{},
+                limit:{}
+            },
+            go_down_1_level: true,
+            transformOutput: (matrix) => {
+                matrix[0][0] = 'timestamp'; matrix[0][1] = 'open';matrix[0][2] = 'high';
+                matrix[0][3] = 'low';matrix[0][4] = 'close';
+                return matrix
             }
         },
-        "Ticker Information": {
-            url: '/api/spot/v3/instruments/ticker',
-        },
-        "Trading Pair Information": {
-            url: '/api/spot/v3/instruments/:instrument_id/ticker',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
+        "Get Mark Price Candlesticks":{
+            url: '/api/v5/market/mark-price-candles',
+            params:{
+                instId: {required: true},
+                bar: {},
+                after:{},
+                before:{},
+                limit:{}
+            },
+            go_down_1_level: true,
+            transformOutput: (matrix) => {
+                matrix[0][0] = 'timestamp'; matrix[0][1] = 'open';matrix[0][2] = 'high';
+                matrix[0][3] = 'low';matrix[0][4] = 'close';
+                return matrix
             }
         },
-        "Filled Orders": {
-            url: '/api/spot/v3/instruments/:instrument_id/trades',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
+        "Get Trades":{
+            url: '/api/v5/market/trades',
+            params:{
+                instId: {required: true},
                 limit: {}
+            },
+            go_down_1_level: true
+        },
+        "Get 24h Volume":{
+            url: '/api/v5/market/platform-24-volume',
+            go_down_1_level: true
+        },
+        "Get Oracle":{
+            url: '/api/v5/market/open-oracle',
+            go_down_1_level: true
+        },
+        "Get Exchange Rate":{
+            url: '/api/v5/market/exchange-rate',
+            go_down_1_level: true
+        },
+        "Get Index Components":{
+            url: '/api/v5/market/index-components',
+            params:{
+                index: {required: true},
+            },
+            go_down_1_level: true
+        },
+        "Get Instruments":{
+            url: '/api/v5/public/instruments',
+            params:{
+                instType: {required: true},
+                uly: {},
+                instId:{},
+            },
+            go_down_1_level: true
+        },
+        "Get Delivery History":{
+            url: '/api/v5/public/delivery-exercise-history',
+            params:{
+                instType: {required: true},
+                uly: {required: true},
+                after:{},
+                before:{},
+                limit:{}
+            },
+            go_down_1_level: true
+        },
+        "Get Open Interest":{
+            url: '/api/v5/public/open-interest',
+            params:{
+                instType: {required: true},
+                uly: {},
+                instId:{},
+            },
+            go_down_1_level: true
+        },
+        "Get Funding Rate":{
+            url: '/api/v5/public/funding-rate',
+            params:{
+                instId: {required: true},
+            },
+            go_down_1_level: true
+        },
+        "Get Funding Rate History":{
+            url: '/api/v5/public/funding-rate-history',
+            params:{
+                instId: {required: true},
+                after:{},
+                before:{},
+                limit:{}
+            },
+            go_down_1_level: true
+        },
+        "Get Limit Price":{
+            url: '/api/v5/public/price-limit',
+            params:{
+                instId: {required: true},
+            },
+            go_down_1_level: true
+        },
+        "Get Option Market Data":{
+            url: '/api/v5/public/opt-summary',
+            params:{
+                uly: {required: true},
+                expTime:{},
+            },
+            go_down_1_level: true
+        },
+        "Get Estimated Delivery Price":{
+            url: '/api/v5/public/estimated-price',
+            params:{
+                instId: {required: true},
+            },
+            go_down_1_level: true
+        },
+        "Get Discount Rate & Interest-free Quota":{
+            url: '/api/v5/public/discount-rate-interest-free-quota',
+            params:{
+                discountLv:{},
+                ccy:{}
+            },
+            go_down_1_level: true
+        },
+        "Get System Time":{
+            url: '/api/v5/public/time',
+            go_down_1_level: true
+        },
+        "Get Liquidation Orders":{
+            url: '/api/v5/public/liquidation-orders',
+            params:{
+                instType: {required: true},
+                mgnMode:{},
+                instId:{},
+                ccy:{},
+                uly:{},
+                alias:{},
+                state:{},
+                before:{},
+                after:{},
+                limit:{},
+            },
+            go_down_1_level: true
+        },
+        "Get Mark Price":{
+            url: '/api/v5/public/mark-price',
+            params:{
+                instId: {},
+                instType: {required: true},
+                uly: {}
+            },
+            go_down_1_level: true
+        },
+        "Get Position Tiers":{
+            url: '/api/v5/public/position-tiers',
+            params:{
+                instType: {required: true},
+                tdMode: {default: 'cross', },
+                instId:{},
+                uly:{required: true},
+                tier: {}
+            },
+            go_down_1_level: true
+        },
+        "Get Interest Rate & Loan Quota":{
+            url: '/api/v5/public/interest-rate-loan-quota',
+            go_down_1_level: true
+        },
+        "Get Underlying":{
+            url: '/api/v5/public/underlying',
+            params:{
+                instType: {required: true},
+            },
+            go_down_1_level: true
+        },
+        "Get Support Coins":{
+            url: '/api/v5/rubik/stat/trading-data/support-coin',
+            go_down_1_level: true
+        },
+        "Get Taker Volume":{
+            url: '/api/v5/rubik/stat/taker-volume',
+            params:{
+                instType: {required: true},
+                ccy: {required: true},
+                begin:{},
+                end:{},
+                period: {}
+            },
+            go_down_1_level: true,
+            transformOutput : (matrix) => {
+                matrix[0][0] = 'timestamp'; matrix[0][1] = 'sellVol';matrix[0][2] = 'buyVol';
+                return matrix
             }
         },
-        "Market Data": {
-            url: '/api/spot/v3/instruments/:instrument_id/candles',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-                start: {},
-                end: {},
-                granularity: {}
+        "Get Margin Lending Ratio":{
+            url: '/api/v5/rubik/stat/margin/loan-ratio',
+            params:{
+                ccy: {required: true},
+                begin:{},
+                end:{},
+                period: {}
+            },
+            go_down_1_level: true,
+            transformOutput : (matrix) => {
+                matrix[0][0] = 'timestamp'; matrix[0][1] = 'ratio';
+                return matrix
             }
         },
-        "Historical Market Data": {
-            url: '/api/spot/v3/instruments/:instrument_id:/history/candles',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-                start: {},
-                end: {},
-                granularity: {},
-                limit: {}
+        "Get Long/Short Ratio":{
+            url: '/api/v5/rubik/stat/contracts/long-short-account-ratio',
+            params:{
+                ccy: {required: true},
+                begin:{},
+                end:{},
+                period: {}
+            },
+            go_down_1_level: true,
+            transformOutput : (matrix) => {
+                matrix[0][0] = 'timestamp'; matrix[0][1] = 'ratio';
+                return matrix
             }
         },
-        "Margin Mark Price": {
-            url: '/api/margin/v3/instruments/:instrument_id/mark_price',
+        "Get Contracts Open Interest & Volume":{
+            url: '/api/v5/rubik/stat/contracts/open-interest-volume',
+            go_down_1_level: true,
             params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
+                ccy: {required: true},
+                begin:{},
+                end:{},
+                period: {}
+            },
+            transformOutput : (matrix) => {
+                matrix[0][0] = 'timestamp'; matrix[0][1] = 'openInterest';matrix[0][2] = 'vol';
+                return matrix
+            }
+        },
+        "Get Options Open Interest & Volume":{
+            url: '/api/v5/rubik/stat/option/open-interest-volume',
+            params:{
+                ccy: {required: true},
+                period: {}
+            },
+            go_down_1_level: true,
+            transformOutput : (matrix) => {
+                matrix[0][0] = 'timestamp'; matrix[0][1] = 'openInterest';matrix[0][2] = 'vol';
+                return matrix
+            }
+        },
+        "Get Put/Call Ratio":{
+            url: '/api/v5/rubik/stat/option/open-interest-volume-ratio',
+            params:{
+                ccy: {required: true},
+                period: {}
+            },
+            go_down_1_level: true,
+            transformOutput : (matrix) => {
+                matrix[0][0] = 'timestamp'; matrix[0][1] = 'openInterestRatio';matrix[0][2] = 'volRatio';
+                return matrix
+            }
+        },
+        "Get Open Interest & Volume (Expiry)":{
+            url: '/api/v5/rubik/stat/option/open-interest-volume-expiry',
+            params:{
+                ccy: {required: true},
+                period: {}
+            },
+            go_down_1_level: true,
+            transformOutput : (matrix) => {
+                matrix[0][0] = 'timestamp'; matrix[0][1] = 'expiryDate';matrix[0][2] = 'callOpenInterest';
+                matrix[0][3] = 'putOpenInterest'; matrix[0][4] = 'callVol';matrix[0][5] = 'putVolume';
+
+                return matrix
+            }
+        },
+        "Get Open Interest & Volume (Strike)":{
+            url: '/api/v5/rubik/stat/option/open-interest-volume-strike',
+            go_down_1_level: true,
+            params: {
+                ccy: {required: true},
+                expTime:{required: true},
+                period: {}
+            },
+            transformOutput : (matrix) => {
+                matrix[0][0] = 'timestamp'; matrix[0][1] = 'strike';matrix[0][2] = 'callOpenInterest';
+                matrix[0][3] = 'putOpenInterest'; matrix[0][4] = 'callVol';matrix[0][5] = 'putVolume';
+
+                return matrix
+            }
+        },
+        "Get Taker Flow":{
+            url: '/api/v5/rubik/stat/option/taker-block-volume',
+            params:{
+                ccy: {required: true},
+                period: {}
+            },
+            go_down_1_level: true,
+            transformOutput : (data) => {
+                const matrix = Array.from({ length: 7 }, () =>
+                    Array.from({ length: 2 }, () => '')
+                );
+                data = data.slice(1, data.length)
+                matrix[0][0] = 'timestamp'; matrix[0][1] = data[0][0];
+                matrix[1][0] = 'callBuyVol'; matrix[1][1] = data[1][0];
+                matrix[2][0] = 'callSellVol';matrix[2][1] = data[2][0];
+                matrix[3][0] = 'putBuyVol'; matrix[3][1] = data[3][0];
+                matrix[4][0] = 'putSellVol';matrix[4][1] = data[4][0];
+                matrix[5][0] = 'callBlockVol';matrix[5][1] = data[5][0];
+                matrix[6][0] = 'putBlockVol';matrix[6][1] = data[6][0];
+
+                return matrix
             }
         },
 
-
-
-        "Futures Order Book": {
-            url: '/api/futures/v3/instruments/:instrument_id/book',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-                size: {},
-                depth: {},
-            }
-        },
-        "Futures Ticker": {
-            url: '/api/futures/v3/instruments/ticker',
-        },
-        "Futures Token Information": {
-            url: '/api/futures/v3/instruments/:instrument_id/ticker',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-            }
-        },
-        "Futures Filled Orders": {
-            url: '/api/futures/v3/instruments/:instrument_id/trades',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-                limit: {}
-            }
-        },
-        "Futures Market Data": {
-            url: '/api/futures/v3/instruments/:instrument_id/candles',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-                start: {},
-                end: {},
-                granularity: {}
-            }
-        },
-        "Future Indices": {
-            url: '/api/futures/v3/instruments/:instrument_id/index',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-            }
-        },
-        "Futures Exchange Rates": {
-            url: '/api/futures/v3/rate',
-        },
-        "Futures Estimated Delivery Price": {
-            url: '/api/futures/v3/instruments/estimated_price',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-            }
-        },
-        "Futures Open Interests": {
-            url: '/api/futures/v3/instruments/:instrument_id/open_interest',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-            }
-        },
-        "Futures Price Limit": {
-            url: '/api/futures/v3/instruments/:instrument_id/price_limit',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-            }
-        },
-
-
-        "Futures Mark Price": {
-            url: '/api/futures/v3/instruments/estimated_price',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-            }
-        },
-        "Futures Liquidated Orders": {
-            url: '/api/futures/v3/instruments/<instrument_id>/liquidation',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-                status:{required: true},
-                limit: {},
-                from: {},
-                to: {}
-            }
-        },
-
-
-
-
-
-        "Swap Order Book": {
-            url: '/api/swap/v3/instruments/:instrument_id/book',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-                size: {},
-                depth: {},
-            }
-        },
-        "Swap Ticker": {
-            url: '/api/swap/v3/instruments/ticker',
-        },
-        "Swap Token Information": {
-            url: '/api/swap/v3/instruments/:instrument_id/ticker',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-            }
-        },
-        "Swap Filled Orders": {
-            url: '/api/swap/v3/instruments/:instrument_id/trades',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-                limit: {}
-            }
-        },
-        "Swap Market Data": {
-            url: '/api/swap/v3/instruments/:instrument_id/candles',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-                start: {},
-                end: {},
-                granularity: {}
-            }
-        },
-        "Swap Indices": {
-            url: '/api/swap/v3/instruments/:instrument_id/index',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-            }
-        },
-        "Swap Exchange Rates": {
-            url: '/api/swap/v3/rate',
-        },
-        "Swap Current Price Limits": {
-            url: '/api/swap/v3/instruments/<instrument_id>/price_limit',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-            }
-        },
-        "Swap Open Interests": {
-            url: '/api/swap/v3/instruments/:instrument_id/open_interest',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-            }
-        },
-        "Swap Liquidated Orders": {
-            url: '/api/swap/v3/instruments/<instrument_id>/liquidation',
-            params: {
-                instrument_id: {
-                    required: true,
-                    replace_2dots: true
-                },
-            }
-        },
-
-
-    },
+    }
 }

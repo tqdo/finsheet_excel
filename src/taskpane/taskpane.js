@@ -1773,6 +1773,7 @@ function rotateDataAfterExpandRow(data){
   var i=-1
   var res = []
   for(var arr of data){ // Each arr is a row
+    console.log(arr)
     i+=1
     var row_data = []
     for(var item of arr){  // In each item, the first one is column name, second is value
@@ -1787,6 +1788,14 @@ function rotateDataAfterExpandRow(data){
 
       row_data.push(item[1])
     }
+
+    // Fill 0 to match the length of the first row
+    if(i>0){
+      var n = Math.max(0, res[0].length - row_data.length)
+      let padding = new Array(n); for (let j=0; j<n; ++j) padding[j] = '';
+      row_data = row_data.concat(padding)
+    }
+
     res.push(row_data)
   }
   res = [colnames].concat(res)
