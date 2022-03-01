@@ -1773,7 +1773,6 @@ function rotateDataAfterExpandRow(data){
   var i=-1
   var res = []
   for(var arr of data){ // Each arr is a row
-    console.log(arr)
     i+=1
     var row_data = []
     for(var item of arr){  // In each item, the first one is column name, second is value
