@@ -1484,7 +1484,7 @@ var big_api_map = {
             }
         },
         "Get Candlesticks": {
-            url: '/markets/:marketSymbol/candles/trade/:candleInterval/historical/:startYear/:startMonth/:startDay',
+            url: '/markets/:marketSymbol/candles/trade/:candleInterval/recent',
             params: {
                 marketSymbol: {
                     required: true,
@@ -1493,19 +1493,7 @@ var big_api_map = {
                 candleInterval: {
                     required: true,
                     replace_2dots: true
-                },
-                startYear: {
-                    required: true,
-                    replace_2dots: true
-                },
-                startMonth: {
-                    required: true,
-                    replace_2dots: true
-                },
-                startDay: {
-                    required: true,
-                    replace_2dots: true
-                },
+                }
             }
         },
     },
@@ -1992,7 +1980,8 @@ var big_api_map = {
             url: '/quote/bucketed',
             params: {
                 reverse: {default: 'true'},
-                symbol: {required: true}
+                symbol: {required: true},
+                binSize: {required: true}
             }
         },
         "Historical Settlement Data": {
@@ -2002,13 +1991,13 @@ var big_api_map = {
             }
         },
         "Exchange Statistics": {
-            url: '/stat',
+            url: '/stats',
             params: {
                 reverse: {default: 'true'}
             }
         },
         "Historical Exchange Statistics": {
-            url: '/stat/history',
+            url: '/stats/history',
             params: {
                 reverse: {default: 'true'}
             }
@@ -2019,11 +2008,22 @@ var big_api_map = {
                 reverse: {default: 'true'},
             }
         },
-        "Previous Trades in Time Bucket": {
-            url: '/trade/butketed',
+        // "Previous Trades in Time Bucket": {
+        //     url: '/trade/bucketed',
+        //     params: {
+        //         reverse: {default: 'true'},
+        //     }
+        // },
+    },
+
+    bitmex: {
+        "base_url": "https://www.bitmex.com/api/v1",
+        "Swap Funding History": {
+            url: '/funding',
             params: {
-                reverse: {default: 'true'},
+                reverse: {default: 'true'}
             }
         },
+
     },
 }
