@@ -1338,22 +1338,55 @@ async function FS_Api(provider, endpoint, parameters=[]) {
   console.log(12, final_params)
   var prepare = {api_key: api_key, base_url: base_url, endpoint_url: endpoint_url, params: JSON.stringify(final_params), return_structure: return_structure}
   //// Now send get data
-  const url = link + "/excel/api?" + new URLSearchParams(prepare).toString()
-  const response = await fetch(url);
+  var data
+  // If needs authentication, call golang
+  if(endpoint_dic.need_authentication || providers_need_server[provider]){
+    const url = link + "/excel/api?" + new URLSearchParams(prepare).toString()
+    const response = await fetch(url);
 
-  //Expect that status code is in 200-299 range
-  if (!response.ok) {
-    var error = await response.text()
-    try {
-      return [[JSON.parse(error).error]]
-    } catch (e) {
-      return [["No data"]]
+    //Expect that status code is in 200-299 range
+    if (!response.ok) {
+      var error = await response.text()
+      try {
+        return [[JSON.parse(error).error]]
+      } catch (e) {
+        return [["No data"]]
+      }
     }
+
+    var json = await response.json()
+    if('message' in json){return [[json.message]]}
+    data = json.data
   }
 
-  var json = await response.json()
-  if('message' in json){return [[json.message]]}
-  var data = json.data
+  // Otherwise just call Golang to check whether this user can call API, then call API locally
+  else {
+    var url = link + "/excel/check_can_call_api?" + new URLSearchParams(prepare).toString()
+    var response = await fetch(url);
+
+    //Expect that status code is in 200-299 range
+    if (!response.ok) {
+      var error = await response.text()
+      try {
+        return [[JSON.parse(error).error]]
+      } catch (e) {
+        return [["No data"]]
+      }
+    }
+
+    var json = await response.json()
+    data = json.data
+    if(data !== "good"){
+      return [["You don't have access to this function"]]
+    }
+    // Now call API directly to get data
+    url = base_url + endpoint_url + '?' + new URLSearchParams(final_params).toString()
+    console.log(1, url)
+    response = await fetch(url);
+    json = await response.json()
+    data = json
+  }
+
   console.log(data)
   try{
     for(var word of ['err', 'error', 'errors']){

@@ -6,6 +6,9 @@ function checkValidProviderEndpoint(provider, endpoint_name){
     return [second_dic, first_dic.base_url, ""]
 }
 
+var providers_need_server = {
+    kraken: 1, kucoin:1, okex: 1, hitbtc: 1, bitfinex: 1, bittrex: 1, bitmex: 1,
+}
 
 
 var big_api_map = {
@@ -2016,14 +2019,4 @@ var big_api_map = {
         // },
     },
 
-    bitmex: {
-        "base_url": "https://www.bitmex.com/api/v1",
-        "Swap Funding History": {
-            url: '/funding',
-            params: {
-                reverse: {default: 'true'}
-            }
-        },
-
-    },
 }
