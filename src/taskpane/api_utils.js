@@ -8,62 +8,161 @@ function checkValidProviderEndpoint(provider, endpoint_name){
 
 var providers_need_server = {
     kraken: 1, kucoin:1, okex: 1, hitbtc: 1, bitfinex: 1, bittrex: 1, bitmex: 1,
+
+    oanda: 1,
 }
 
 
 var big_api_map = {
     coinbase: {
+        "doc_url":  'https://developers.coinbase.com/api/v2',
+        'provider_description': 'Coinbase Global, Inc., branded Coinbase, is an American company that operates a cryptocurrency exchange platform. Coinbase operates remote-first, and lacks an official physical headquarters',
         "base_url": "https://api.coinbase.com/v2",
         "Get currencies": {
             url: "/currencies",
+            doc_url: 'https://developers.coinbase.com/api/v2#get-currencies',
+            description:'List known currencies. Currency codes will conform to the ISO 4217 standard where possible. Currencies which have or had no representation in ISO 4217 may use a custom code (e.g. BTC).',
+            sample_response: '{\n' +
+                '  "data": [\n' +
+                '    {\n' +
+                '      "id": "AED",\n' +
+                '      "name": "United Arab Emirates Dirham",\n' +
+                '      "min_size": "0.01000000"\n' +
+                '    },\n' +
+                '    {\n' +
+                '      "id": "AFN",\n' +
+                '      "name": "Afghan Afghani",\n' +
+                '      "min_size": "0.01000000"\n' +
+                '    },\n' +
+                '    {\n' +
+                '      "id": "ALL",\n' +
+                '      "name": "Albanian Lek",\n' +
+                '      "min_size": "0.01000000"\n' +
+                '    },\n' +
+                '    {\n' +
+                '      "id": "AMD",\n' +
+                '      "name": "Armenian Dram",\n' +
+                '      "min_size": "0.01000000"\n' +
+                '    },\n' +
+                '    ...\n' +
+                '  }\n' +
+                '}'
         },
         "Get exchange rates": {
             url:    "/exchange-rates",
+            doc_url: 'https://developers.coinbase.com/api/v2#get-exchange-rates',
             params: {
-                currency: {}
+                currency: {default: 'USD', type: 'string', description: 'Base currency'}
             },
             go_down_1_level: true,
+            description: 'Get current exchange rates. Default base currency is USD but it can be defined as any supported currency. Returned rates will define the exchange rate for one unit of the base currency.',
+            sample_response: '{\n' +
+                '  "data": {\n' +
+                '    "currency": "BTC",\n' +
+                '    "rates": {\n' +
+                '      "AED": "36.73",\n' +
+                '      "AFN": "589.50",\n' +
+                '      "ALL": "1258.82",\n' +
+                '      "AMD": "4769.49",\n' +
+                '      "ANG": "17.88",\n' +
+                '      "AOA": "1102.76",\n' +
+                '      "ARS": "90.37",\n' +
+                '      "AUD": "12.93",\n' +
+                '      "AWG": "17.93",\n' +
+                '      "AZN": "10.48",\n' +
+                '      "BAM": "17.38",\n' +
+                '      ...\n' +
+                '    }\n' +
+                '  }\n' +
+                '}'
+
         },
         "Get buy price": {
             url: "/prices/:currency_pair/buy",
+            doc_url: 'https://developers.coinbase.com/api/v2#get-buy-price',
+            description: 'Get the total price to buy one cryptocurrency.',
             params: {
                 currency_pair: {
                     required: true,
-                    replace_2dots: true
+                    replace_2dots: true,
+                    type: 'string'
                 }
             },
             go_down_1_level: true,
+            sample_response: '{\n' +
+                '  "data": {\n' +
+                '    "amount": "1020.25",\n' +
+                '    "currency": "USD"\n' +
+                '  }\n' +
+                '}'
         },
         "Get sell price": {
             url: "/prices/:currency_pair/sell",
+            doc_url:'https://developers.coinbase.com/api/v2#get-sell-price',
+            description: 'Get the total price to sell one cryptocurrency.',
             params: {
                 currency_pair: {
                     required: true,
-                    replace_2dots: true
+                    replace_2dots: true,
+                    type: 'string'
                 }
             },
             go_down_1_level: true,
+            sample_response: '{\n' +
+                '  "data": {\n' +
+                '    "amount": "1010.25",\n' +
+                '    "currency": "USD"\n' +
+                '  }\n' +
+                '}'
         },
         "Get spot price": {
             url: "/prices/:currency_pair/spot",
+            doc_url:'https://developers.coinbase.com/api/v2#get-spot-price',
+            description: 'Get the current market price for a cryptocurrency. This is usually somewhere in between the buy and sell price.',
             params: {
                 currency_pair: {
                     required: true,
-                    replace_2dots: true
+                    replace_2dots: true,
+                    type: 'string'
+                },
+                date: {
+                    type: 'string'
+,                   description: 'Specify date for historic spot price in format YYYY-MM-DD (UTC)'
                 }
             },
             go_down_1_level: true,
+            sample_response: '{\n' +
+                '  "data": {\n' +
+                '    "amount": "1010.25",\n' +
+                '    "currency": "USD"\n' +
+                '  }\n' +
+                '}'
         },
         "Get current time": {
             url: "/time",
+            doc_url: 'https://developers.coinbase.com/api/v2#get-current-time',
+            description: 'Get the API server time.',
             go_down_1_level: true,
+            sample_response: '{\n' +
+                '  "data": {\n' +
+                '    "iso": "2015-06-23T18:02:51Z",\n' +
+                '    "epoch": 1435082571\n' +
+                '  }\n' +
+                '}'
         },
     },
 
     binance: {
         "base_url": "https://api.binance.com",
+        "provider_description": 'Binance is a cryptocurrency exchange which is the largest exchange in the world in terms of daily trading volume of cryptocurrencies',
+        "doc_url": 'https://binance-docs.github.io/apidocs/spot/en/',
         "Check Server Time": {
-            url: '/api/v3/time'
+            url: '/api/v3/time',
+            doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#check-server-time',
+            description: 'Test connectivity to the Rest API and get the current server time.',
+            sample_response: '{\n' +
+                '  "serverTime": 1499827319559\n' +
+                '}'
         },
         "Exchange Information": {
             url: "/api/v3/exchangeInfo",
@@ -71,15 +170,81 @@ var big_api_map = {
                 symbols: {
                     transformInput: function (symbols){
                         return JSON.stringify(symbols.split(","))
-                    }
+                    },
+                    type: 'string'
                 }
             },
+            doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#exchange-information',
+            description: 'Current exchange trading rules and symbol information',
+            sample_response: '{\n' +
+                '  "timezone": "UTC",\n' +
+                '  "serverTime": 1565246363776,\n' +
+                '  "rateLimits": [\n' +
+                '    {\n' +
+                '      ...' +
+                '    }\n' +
+                '  ],\n' +
+                '  "exchangeFilters": [\n' +
+                '    ...' +
+                '  ],\n' +
+                '  "symbols": [\n' +
+                '    {\n' +
+                '      "symbol": "ETHBTC",\n' +
+                '      "status": "TRADING",\n' +
+                '      "baseAsset": "ETH",\n' +
+                '      "baseAssetPrecision": 8,\n' +
+                '      "quoteAsset": "BTC",\n' +
+                '      "quotePrecision": 8,\n' +
+                '      "quoteAssetPrecision": 8,\n' +
+                '      "orderTypes": [\n' +
+                '        "LIMIT",\n' +
+                '        "LIMIT_MAKER",\n' +
+                '        "MARKET",\n' +
+                '        "STOP_LOSS",\n' +
+                '        "STOP_LOSS_LIMIT",\n' +
+                '        "TAKE_PROFIT",\n' +
+                '        "TAKE_PROFIT_LIMIT"\n' +
+                '      ],\n' +
+                '      "icebergAllowed": true,\n' +
+                '      "ocoAllowed": true,\n' +
+                '      "quoteOrderQtyMarketAllowed": true,\n' +
+                '      "allowTrailingStop": false,\n' +
+                '      "isSpotTradingAllowed": true,\n' +
+                '      "isMarginTradingAllowed": true,\n' +
+                '      "filters": [\n' +
+                '        //These are defined in the Filters section.\n' +
+                '        //All filters are optional\n' +
+                '      ],\n' +
+                '      "permissions": [\n' +
+                '         "SPOT",\n' +
+                '         "MARGIN"\n' +
+                '      ]\n' +
+                '    }\n' +
+                '  ]\n' +
+                '}'
         },
         "Order Book":{
             url: '/api/v3/depth',
+            doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#order-book',
+            description: 'Get order book.',
+            sample_response: '{\n' +
+                '  "lastUpdateId": 1027024,\n' +
+                '  "bids": [\n' +
+                '    [\n' +
+                '      "4.00000000",     // PRICE\n' +
+                '      "431.00000000"    // QTY\n' +
+                '    ]\n' +
+                '  ],\n' +
+                '  "asks": [\n' +
+                '    [\n' +
+                '      "4.00000200",\n' +
+                '      "12.00000000"\n' +
+                '    ]\n' +
+                '  ]\n' +
+                '}',
             params: {
-                symbol : {required: true},
-                limit :{}
+                symbol : {required: true, type: 'string'},
+                limit :{type: 'number', default: 100, description: 'Default 100; max 5000. If limit > 5000, then the response will truncate to 5000.'}
             },
             transformOutput: (matrix) => {
                 matrix[0][0] = 'askPrice'; matrix[0][1] = 'askQuantity';matrix[0][2] = 'bidsPrice';matrix[0][3] = 'bidsQuantity';
@@ -89,33 +254,62 @@ var big_api_map = {
         "Recent Trades List":{
             url: '/api/v3/trades',
             params: {
-                symbol : {required: true},
-                limit :{}
-            }
+                symbol : {required: true, type: 'string'},
+                limit :{type: 'number', description: 'Default 500; max 1000.', default: 500}
+            },
+            doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#recent-trades-list',
+            description: 'Get recent trades.',
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "id": 28457,\n' +
+                '    "price": "4.00000100",\n' +
+                '    "qty": "12.00000000",\n' +
+                '    "quoteQty": "48.000012",\n' +
+                '    "time": 1499865549590,\n' +
+                '    "isBuyerMaker": true,\n' +
+                '    "isBestMatch": true\n' +
+                '  }\n' +
+                ']',
         },
         "Aggregate Trades List":{
             url: '/api/v3/aggTrades',
             params: {
-                symbol : {required: true},
-                startTime:{},
-                endTime: {},
-                limit :{}
+                symbol : {required: true, type: 'string'},
+                fromId: {type: 'number', description: 'id to get aggregate trades from INCLUSIVE.'},
+                startTime:{type: 'number', description: 'Timestamp in ms to get aggregate trades from INCLUSIVE.'},
+                endTime: {type: 'number', description: 'Timestamp in ms to get aggregate trades until INCLUSIVE.'},
+                limit :{type: 'number', description: 'Default 500; max 1000.', default: 500}
             },
             transformOutput: (matrix) => {
                 matrix[0][0] = 'isBestMatch'; matrix[0][1] = 'timestamp';matrix[0][2] = 'aggregateTradeId';
                 matrix[0][3] = 'firstTradeId';matrix[0][4] = 'lastTradeId';matrix[0][5] = 'isBuyerMaker';
                 matrix[0][6] = 'price';matrix[0][7] = 'quantity';
                 return matrix
-            }
+            },
+            doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#compressed-aggregate-trades-list',
+            description: 'Get compressed, aggregate trades. Trades that fill at the time, from the same order, with the same price will have the quantity aggregated. \n' +
+            '\n If startTime and endTime are sent, time between startTime and endTime must be less than 1 hour. \n If fromId, startTime, and endTime are not sent, the most recent aggregate trades will be returned.',
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "a": 26129,         // Aggregate tradeId\n' +
+                '    "p": "0.01633102",  // Price\n' +
+                '    "q": "4.70443515",  // Quantity\n' +
+                '    "f": 27781,         // First tradeId\n' +
+                '    "l": 27781,         // Last tradeId\n' +
+                '    "T": 1498793709153, // Timestamp\n' +
+                '    "m": true,          // Was the buyer the maker?\n' +
+                '    "M": true           // Was the trade the best price match?\n' +
+                '  }\n' +
+                ']',
         },
         "Candlestick Data": {
             url: '/api/v3/klines',
             params: {
-                symbol : {required: true},
-                interval : {required: true},
-                startTime:{},
-                endTime: {},
-                limit :{}
+                symbol : {required: true, type: 'string'},
+                interval : {required: true, type: 'enum', possible: ['1h', '30m', '15m', '5m', '1m', '1d', '1w', '1m']},
+                startTime:{type: 'number'},
+                endTime: {type: 'number'},
+                limit :{type: 'number', description: 'Default 500; max 1000.', default: 500}
             },
             transformOutput: (matrix) => {
                 matrix[0][0] = 'openTime'; matrix[0][1] = 'open';matrix[0][2] = 'high';
@@ -123,67 +317,367 @@ var big_api_map = {
                 matrix[0][6] = 'closeTime';matrix[0][7] = 'quoteAssetVolume';matrix[0][8] = 'numberOfTrades';
                 matrix[0][9] = 'baseAssetVolume'; matrix[0][10] = 'quoteAssetVolume';matrix[0][11] = 'ignore';
                 return matrix
-            }
+            },
+            doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#kline-candlestick-data',
+            description: 'Kline/candlestick bars for a symbol. Klines are uniquely identified by their open time. \n' +
+                'If startTime and endTime are not sent, the most recent klines are returned.',
+            sample_response: '[\n' +
+                '  [\n' +
+                '    1499040000000,      // Open time\n' +
+                '    "0.01634790",       // Open\n' +
+                '    "0.80000000",       // High\n' +
+                '    "0.01575800",       // Low\n' +
+                '    "0.01577100",       // Close\n' +
+                '    "148976.11427815",  // Volume\n' +
+                '    1499644799999,      // Close time\n' +
+                '    "2434.19055334",    // Quote asset volume\n' +
+                '    308,                // Number of trades\n' +
+                '    "1756.87402397",    // Taker buy base asset volume\n' +
+                '    "28.46694368",      // Taker buy quote asset volume\n' +
+                '    "17928899.62484339" // Ignore.\n' +
+                '  ]\n' +
+                ']',
         },
         "Current Average Price":{
             url: '/api/v3/avgPrice',
             params: {
-                symbol : {required: true},
-            }
+                symbol : {required: true, type: 'string'},
+            },
+            doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#current-average-price',
+            description: 'Current average price for a symbol.',
+            sample_response: '{\n' +
+                '  "mins": 5,\n' +
+                '  "price": "9.35751834"\n' +
+                '}',
         },
         "24hr Ticker Price Change Statistics":{
             url: '/api/v3/ticker/24hr',
             params: {
-                symbol : {required: true},
-            }
+                symbol : {required: true, type: 'string'},
+            },
+            doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#24hr-ticker-price-change-statistics',
+            description: '24 hour rolling window price change statistics.',
+            sample_response: '{\n' +
+                '  "symbol": "BNBBTC",\n' +
+                '  "priceChange": "-94.99999800",\n' +
+                '  "priceChangePercent": "-95.960",\n' +
+                '  "weightedAvgPrice": "0.29628482",\n' +
+                '  "prevClosePrice": "0.10002000",\n' +
+                '  "lastPrice": "4.00000200",\n' +
+                '  "lastQty": "200.00000000",\n' +
+                '  "bidPrice": "4.00000000",\n' +
+                '  "bidQty": "100.00000000",\n' +
+                '  "askPrice": "4.00000200",\n' +
+                '  "askQty": "100.00000000",\n' +
+                '  "openPrice": "99.00000000",\n' +
+                '  "highPrice": "100.00000000",\n' +
+                '  "lowPrice": "0.10000000",\n' +
+                '  "volume": "8913.30000000",\n' +
+                '  "quoteVolume": "15.30000000",\n' +
+                '  "openTime": 1499783499040,\n' +
+                '  "closeTime": 1499869899040,\n' +
+                '  "firstId": 28385,   // First tradeId\n' +
+                '  "lastId": 28460,    // Last tradeId\n' +
+                '  "count": 76         // Trade count\n' +
+                '}',
         },
         "Symbol Price Ticker":{
             url: '/api/v3/ticker/price',
             params: {
-                symbol : {},
-            }
+                symbol : {type: 'string'},
+            },
+            doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#symbol-price-ticker',
+            description: 'Latest price for a symbol. If the symbol is not sent, prices for all symbols will be returned in an array',
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "symbol": "LTCBTC",\n' +
+                '    "price": "4.00000200"\n' +
+                '  },\n' +
+                '  {\n' +
+                '    "symbol": "ETHBTC",\n' +
+                '    "price": "0.07946600"\n' +
+                '  }\n' +
+                ' ...' +
+                ']',
         },
         "Symbol Order Book Ticker":{
             url: '/api/v3/ticker/bookTicker',
             params: {
-                symbol : {},
-            }
+                symbol : {type: 'string'},
+            },
+            doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#symbol-order-book-ticker',
+            description: 'Best price/qty on the order book for a symbol. f the symbol is not sent, bookTickers for all symbols will be returned in an array.',
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "symbol": "LTCBTC",\n' +
+                '    "bidPrice": "4.00000000",\n' +
+                '    "bidQty": "431.00000000",\n' +
+                '    "askPrice": "4.00000200",\n' +
+                '    "askQty": "9.00000000"\n' +
+                '  },\n' +
+                '  {\n' +
+                '    "symbol": "ETHBTC",\n' +
+                '    "bidPrice": "0.07946700",\n' +
+                '    "bidQty": "9.00000000",\n' +
+                '    "askPrice": "100000.00000000",\n' +
+                '    "askQty": "1000.00000000"\n' +
+                '  }\n' +
+                '  ...' +
+                ']',
         },
     },
 
     kraken: {
         "base_url": "https://api.kraken.com/0",
+        "provider_description": 'Kraken is a United States-based cryptocurrency exchange and bank, founded in 2011. The exchange provides trading between cryptocurrency and fiat currencies, and provides price information to Bloomberg Terminal.',
+        "doc_url": 'https://docs.kraken.com/rest/',
+
         "Get Server Time": {
-            url: '/public/Time'
+            url: '/public/Time',
+            doc_url: 'https://docs.kraken.com/rest/#operation/getServerTime',
+            description: 'Get the server\'s time.',
+            sample_response: '{\n' +
+                '  "error": [],\n' +
+                '  "result": {\n' +
+                '    "unixtime": 1616336594,\n' +
+                '    "rfc1123": "Sun, 21 Mar 21 14:23:14 +0000"\n' +
+                '  }\n' +
+                '}'
         },
         "Get System Status": {
-            url: '/public/SystemStatus'
+            url: '/public/SystemStatus',
+            doc_url: 'https://docs.kraken.com/rest/#operation/getSystemStatus',
+            description: 'Get the current system status or trading mode.',
+            sample_response: '{\n' +
+                '  "error": [],\n' +
+                '  "result": {\n' +
+                '    "status": "online",\n' +
+                '    "timestamp": "2021-03-21T15:33:02Z"\n' +
+                '  }\n' +
+                '}'
         },
         "Get Asset Info": {
             url: '/public/Assets',
             params: {
-                asset:{}
-            }
+                asset:{type: 'string', description: 'Comma delimited list of assets to get info on (ex: asset=XBT,ETH).'}
+            },
+            doc_url: 'https://docs.kraken.com/rest/#operation/getAssetInfo',
+            description: 'Get information about the assets that are available for deposit, withdrawal, trading and staking.',
+            sample_response: '{\n' +
+                '  "error": [],\n' +
+                '  "result": {\n' +
+                '    "XXBT": {\n' +
+                '      "aclass": "currency",\n' +
+                '      "altname": "XBT",\n' +
+                '      "decimals": 10,\n' +
+                '      "display_decimals": 5\n' +
+                '    },\n' +
+                '    "ZEUR": {\n' +
+                '      "aclass": "currency",\n' +
+                '      "altname": "EUR",\n' +
+                '      "decimals": 4,\n' +
+                '      "display_decimals": 2\n' +
+                '    },\n' +
+                '    "ZUSD": {\n' +
+                '      "aclass": "currency",\n' +
+                '      "altname": "USD",\n' +
+                '      "decimals": 4,\n' +
+                '      "display_decimals": 2\n' +
+                '    }\n' +
+                '  }\n' +
+                '}'
         },
         "Get Tradable Asset Pairs": {
             url: '/public/AssetPairs',
             params: {
-                pair:{}
-            }
+                pair:{type: 'string', description: 'Asset pairs to get data for (ex: pair=XXBTCZUSD,XETHXXBT)'},
+                info: {type: 'enum', possible: ['info', 'leverage', 'fees', 'margin'], description: 'Info to retrieve'}
+            },
+            doc_url: 'https://docs.kraken.com/rest/#operation/getTradableAssetPairs',
+            description: 'Get tradable asset pairs.',
+            sample_response: '{\n' +
+                '  "error": [],\n' +
+                '  "result": {\n' +
+                '    "XETHXXBT": {\n' +
+                '      "altname": "ETHXBT",\n' +
+                '      "wsname": "ETH/XBT",\n' +
+                '      "aclass_base": "currency",\n' +
+                '      "base": "XETH",\n' +
+                '      "aclass_quote": "currency",\n' +
+                '      "quote": "XXBT",\n' +
+                '      "lot": "unit",\n' +
+                '      "pair_decimals": 5,\n' +
+                '      "lot_decimals": 8,\n' +
+                '      "lot_multiplier": 1,\n' +
+                '      "leverage_buy": [\n' +
+                '        2,\n' +
+                '        3,\n' +
+                '      ],\n' +
+                '      "leverage_sell": [\n' +
+                '        2,\n' +
+                '        3,\n' +
+                '      ],\n' +
+                '      "fees": [\n' +
+                '        [\n' +
+                '          0,\n' +
+                '          0.26\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          50000,\n' +
+                '          0.24\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          100000,\n' +
+                '          0.22\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          250000,\n' +
+                '          0.2\n' +
+                '        ],\n' +
+                '      ],\n' +
+                '      "fees_maker": [\n' +
+                '        [\n' +
+                '          0,\n' +
+                '          0.16\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          50000,\n' +
+                '          0.14\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          100000,\n' +
+                '          0.12\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          250000,\n' +
+                '          0.1\n' +
+                '        ],\n' +
+                '      ],\n' +
+                '      "fee_volume_currency": "ZUSD",\n' +
+                '      "margin_call": 80,\n' +
+                '      "margin_stop": 40,\n' +
+                '      "ordermin": "0.005"\n' +
+                '    },\n' +
+                '    "XXBTZUSD": {\n' +
+                '      "altname": "XBTUSD",\n' +
+                '      "wsname": "XBT/USD",\n' +
+                '      "aclass_base": "currency",\n' +
+                '      "base": "XXBT",\n' +
+                '      "aclass_quote": "currency",\n' +
+                '      "quote": "ZUSD",\n' +
+                '      "lot": "unit",\n' +
+                '      "pair_decimals": 1,\n' +
+                '      "lot_decimals": 8,\n' +
+                '      "lot_multiplier": 1,\n' +
+                '      "leverage_buy": [\n' +
+                '        2,\n' +
+                '        3,\n' +
+                '      ],\n' +
+                '      "leverage_sell": [\n' +
+                '        2,\n' +
+                '        3,\n' +
+                '      ],\n' +
+                '      "fees": [\n' +
+                '        [\n' +
+                '          0,\n' +
+                '          0.26\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          50000,\n' +
+                '          0.24\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          100000,\n' +
+                '          0.22\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          250000,\n' +
+                '          0.2\n' +
+                '        ],\n' +
+                '      ],\n' +
+                '      "fees_maker": [\n' +
+                '        [\n' +
+                '          0,\n' +
+                '          0.16\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          50000,\n' +
+                '          0.14\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          100000,\n' +
+                '          0.12\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          250000,\n' +
+                '          0.1\n' +
+                '        ],\n' +
+                '      ],\n' +
+                '      "fee_volume_currency": "ZUSD",\n' +
+                '      "margin_call": 80,\n' +
+                '      "margin_stop": 40,\n' +
+                '      "ordermin": "0.0002"\n' +
+                '    }\n' +
+                '  }\n' +
+                '}'
         },
         "Get Ticker Information": {
             url: '/public/Ticker',
             params: {
-                pair:{required: true}
+                pair:{required: true, description: 'Asset pair to get data for (ex: pair=XBTUSD)', type: 'string'}
             },
             go_down_1_level: true,
+            doc_url: 'https://docs.kraken.com/rest/#operation/getTickerInformation',
+            description: 'Get ticker information.',
+            sample_response: '{\n' +
+                '  "error": [],\n' +
+                '  "result": {\n' +
+                '    "XXBTZUSD": {\n' +
+                '      "a": [\n' +
+                '        "52609.60000",\n' +
+                '        "1",\n' +
+                '        "1.000"\n' +
+                '      ],\n' +
+                '      "b": [\n' +
+                '        "52609.50000",\n' +
+                '        "1",\n' +
+                '        "1.000"\n' +
+                '      ],\n' +
+                '      "c": [\n' +
+                '        "52641.10000",\n' +
+                '        "0.00080000"\n' +
+                '      ],\n' +
+                '      "v": [\n' +
+                '        "1920.83610601",\n' +
+                '        "7954.00219674"\n' +
+                '      ],\n' +
+                '      "p": [\n' +
+                '        "52389.94668",\n' +
+                '        "54022.90683"\n' +
+                '      ],\n' +
+                '      "t": [\n' +
+                '        23329,\n' +
+                '        80463\n' +
+                '      ],\n' +
+                '      "l": [\n' +
+                '        "51513.90000",\n' +
+                '        "51513.90000"\n' +
+                '      ],\n' +
+                '      "h": [\n' +
+                '        "53219.90000",\n' +
+                '        "57200.00000"\n' +
+                '      ],\n' +
+                '      "o": "52280.40000"\n' +
+                '    }\n' +
+                '  }\n' +
+                '}'
         },
         "Get OHLC Data": {
             url: '/public/OHLC',
             params: {
-                pair:{required: true},
-                interval: {default: 1440},
-                since: {}
+                pair:{required: true, type: 'string', description: 'Asset pair to get data for (ex: pair=XBTUSD)'},
+                interval: {type: 'enum', description: 'Time frame interval in minutes', possible: [1, 5, 15, 30, 60, 240, 1440, 10080, 21600] },
+                since: {type: 'number', description: 'Return committed OHLC data since given ID (ex: since=1548111600)'}
             },
             go_down_1_level: true,
             transformOutput: (matrix) => {
@@ -192,21 +686,114 @@ var big_api_map = {
                     matrix[0][i] = matrix[0][i].split('[')[0] + '_' + arr[i]
                 }
                 return matrix
-            }
+            },
+            doc_url: 'https://docs.kraken.com/rest/#operation/getOHLCData',
+            description: 'Get OHLC data. Note: the last entry in the OHLC array is for the current, not-yet-committed frame and will always be present, regardless of the value of since.',
+            sample_response: '{\n' +
+                '  "error": [],\n' +
+                '  "result": {\n' +
+                '    "XXBTZUSD": [\n' +
+                '      [\n' +
+                '        1616662740,\n' +
+                '        "52591.9",\n' +
+                '        "52599.9",\n' +
+                '        "52591.8",\n' +
+                '        "52599.9",\n' +
+                '        "52599.1",\n' +
+                '        "0.11091626",\n' +
+                '        5\n' +
+                '      ],\n' +
+                '      [\n' +
+                '        1616662800,\n' +
+                '        "52600.0",\n' +
+                '        "52674.9",\n' +
+                '        "52599.9",\n' +
+                '        "52665.2",\n' +
+                '        "52643.3",\n' +
+                '        "2.49035996",\n' +
+                '        30\n' +
+                '      ],\n' +
+                '      [\n' +
+                '        1616662860,\n' +
+                '        "52677.7",\n' +
+                '        "52686.4",\n' +
+                '        "52602.1",\n' +
+                '        "52609.5",\n' +
+                '        "52634.5",\n' +
+                '        "1.25810675",\n' +
+                '        20\n' +
+                '      ],\n' +
+                '      [\n' +
+                '        1616662920,\n' +
+                '        "52603.9",\n' +
+                '        "52627.5",\n' +
+                '        "52601.2",\n' +
+                '        "52616.4",\n' +
+                '        "52614.0",\n' +
+                '        "3.42391799",\n' +
+                '        23\n' +
+                '      ],\n' +
+                '      [\n' +
+                '        1616662980,\n' +
+                '        "52601.2",\n' +
+                '        "52601.2",\n' +
+                '        "52599.9",\n' +
+                '        "52599.9",\n' +
+                '        "52599.9",\n' +
+                '        "0.43748934",\n' +
+                '        7\n' +
+                '      ]\n' +
+                '    ],\n' +
+                '    "last": 1616662920\n' +
+                '  }\n' +
+                '}'
         },
         "Get Order Book": {
             url: '/public/Depth',
             params: {
-                pair:{required: true},
-                count: {}
+                pair:{required: true, type: 'string', description: 'Asset pair to get data for (ex: pair=XBTUSD)'},
+                count: {type: 'number', description: 'maximum number of asks/bids. Can take value between 1 and 500', default: 100}
             },
             go_down_1_level: true,
+            doc_url: 'https://docs.kraken.com/rest/#operation/getOrderBook',
+            description: 'Get order book.',
+            sample_response: '{\n' +
+                '  "error": [],\n' +
+                '  "result": {\n' +
+                '    "XXBTZUSD": {\n' +
+                '      "asks": [\n' +
+                '        [\n' +
+                '          "52523.00000",\n' +
+                '          "1.199",\n' +
+                '          1616663113\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          "52536.00000",\n' +
+                '          "0.300",\n' +
+                '          1616663112\n' +
+                '        ]\n' +
+                '      ],\n' +
+                '      "bids": [\n' +
+                '        [\n' +
+                '          "52522.90000",\n' +
+                '          "0.753",\n' +
+                '          1616663112\n' +
+                '        ],\n' +
+                '        [\n' +
+                '          "52522.80000",\n' +
+                '          "0.006",\n' +
+                '          1616663109\n' +
+                '        ]\n' +
+                '      ]\n' +
+                '    }\n' +
+                '  }\n' +
+                '}'
         },
         "Get Recent Trades": {
             url: '/public/Trades',
             params: {
-                pair:{required: true},
-                since: {}
+                pair:{required: true, type: 'string', description: 'Asset pair to get data for (ex: pair=XBTUSD)'},
+                since: {type: 'number', description: 'Return trade data since given timestamp (ex: since=1548111600)'}
             },
             go_down_1_level: true,
             transformOutput: (matrix) => {
@@ -215,13 +802,49 @@ var big_api_map = {
                     matrix[0][i] = matrix[0][i].split('[')[0] + '_' + arr[i]
                 }
                 return matrix
-            }
+            },
+            doc_url: 'https://docs.kraken.com/rest/#operation/getRecentTrades',
+            description: 'Returns the last 1000 trades by default\n' +
+                '\n',
+            sample_response: '{\n' +
+                '  "error": [],\n' +
+                '  "result": {\n' +
+                '    "XXBTZUSD": [\n' +
+                '      [\n' +
+                '        "52478.90000",\n' +
+                '        "0.00640000",\n' +
+                '        1616663618.0362,\n' +
+                '        "b",\n' +
+                '        "m",\n' +
+                '        ""\n' +
+                '      ],\n' +
+                '      [\n' +
+                '        "52490.50000",\n' +
+                '        "0.01169993",\n' +
+                '        1616663618.0377,\n' +
+                '        "b",\n' +
+                '        "m",\n' +
+                '        ""\n' +
+                '      ],\n' +
+                '      [\n' +
+                '        "52478.80000",\n' +
+                '        "0.04107375",\n' +
+                '        1616663622.1366,\n' +
+                '        "b",\n' +
+                '        "m",\n' +
+                '        ""\n' +
+                '      ]\n' +
+                '    ],\n' +
+                '    "last": "1616663622136576459"\n' +
+                '  }\n' +
+                '}'
         },
         "Get Recent Spreads": {
             url: '/public/Spread',
             params: {
-                pair:{required: true},
-                since: {}
+                pair:{required: true, type: 'string', description: 'Asset pair to get data for (ex: pair=XBTUSD)'},
+                since: {type: 'number', description: 'Return spread data since given timestamp (ex: since=1548122302)'}
+
             },
             go_down_1_level: true,
             transformOutput: (matrix) => {
@@ -230,7 +853,32 @@ var big_api_map = {
                     matrix[0][i] = matrix[0][i].split('[')[0] + '_' + arr[i]
                 }
                 return matrix
-            }
+            },
+            doc_url: 'https://docs.kraken.com/rest/#operation/getRecentSpreads',
+            description: 'Ger recent spread' ,
+            sample_response: '{\n' +
+                '  "error": [],\n' +
+                '  "result": {\n' +
+                '    "XXBTZUSD": [\n' +
+                '      [\n' +
+                '        1548120550,\n' +
+                '        "3538.70000",\n' +
+                '        "3541.50000"\n' +
+                '      ],\n' +
+                '      [\n' +
+                '        1548120551,\n' +
+                '        "3538.80000",\n' +
+                '        "3541.50000"\n' +
+                '      ],\n' +
+                '      [\n' +
+                '        1548120554,\n' +
+                '        "3538.80000",\n' +
+                '        "3541.40000"\n' +
+                '      ]\n' +
+                '    ],\n' +
+                '    "last": 1548122302\n' +
+                '  }\n' +
+                '}'
         },
     },
 
@@ -2019,4 +2667,37 @@ var big_api_map = {
         // },
     },
 
+
+
+
+
+    oanda: {
+        "base_url": "https://api-fxtrade.oanda.com",
+        "Get Candlesticks": {
+            url: '/v3/instruments/:instrument/candles',
+            params: {
+                instrument: {required: true, replace_2dots: true},
+                price: {default: 'B'},
+                dailyAlignment: {default: 17},
+                from: {required: true},
+                to: {required: true},
+                granularity: {default: 'D'},
+                count: {default: 500}
+            }
+        },
+        "Get Position Book": {
+            url: '/v3/instruments/:instrument/positionBook',
+            params: {
+                instrument: {required: true, replace_2dots: true},
+                time: {}
+            }
+        },
+        "Get Order Book": {
+            url: '/v3/instruments/:instrument/orderBook',
+            params: {
+                instrument: {required: true, replace_2dots: true},
+                time: {}
+            }
+        },
+    },
 }

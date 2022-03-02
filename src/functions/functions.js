@@ -1383,8 +1383,31 @@ async function FS_Api(provider, endpoint, parameters=[]) {
     url = base_url + endpoint_url + '?' + new URLSearchParams(final_params).toString()
     console.log(1, url)
     response = await fetch(url);
-    json = await response.json()
-    data = json
+
+    // If not OK meaning this provider has some issue with CORS, call from server instead
+    if (!response.ok) {
+      console.log('need server')
+      const url = link + "/excel/api?" + new URLSearchParams(prepare).toString()
+      const response = await fetch(url);
+
+      //Expect that status code is in 200-299 range
+      if (!response.ok) {
+        var error = await response.text()
+        try {
+          return [[JSON.parse(error).error]]
+        } catch (e) {
+          return [["No data"]]
+        }
+      }
+
+      var json = await response.json()
+      if('message' in json){return [[json.message]]}
+      data = json.data
+    } else {
+      json = await response.json()
+      data = json
+    }
+
   }
 
   console.log(data)
