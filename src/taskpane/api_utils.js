@@ -3879,7 +3879,7 @@ var big_api_map = {
                 '\n' +
                 '[["tAMPF0:USTF0",1596124822000,null,0.896,0.771995,null,1396531.67460709,null,1596153600000,0.0001056,6,null,-0.01381344,null,null,0.7664,null,null,246502.09001551,null,null,null,null,0.3]]'
         },
-        },
+
         "Get Derivatives Status History": {
             url: '/v2/status/deriv/:symbol/hist',
             params: {
@@ -4220,54 +4220,176 @@ var big_api_map = {
 
     bittrex: {
         "base_url": "https://api.bittrex.com/v3",
+        "provider_description": 'Bittrex is a leading cryptocurrency exchange that provides the widest selection of cryptocurrencies like Bitcoin & Ethereum in the US.',
+        "doc_url": 'https://bittrex.github.io/api/v3',
         "Get Currencies": {
             url: '/currencies',
+            doc_url: 'https://bittrex.github.io/api/v3#operation--currencies-get',
+            description: 'List currencies',
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "symbol": "string",\n' +
+                '    "name": "string",\n' +
+                '    "coinType": "string",\n' +
+                '    "status": "string",\n' +
+                '    "minConfirmations": "integer (int32)",\n' +
+                '    "notice": "string",\n' +
+                '    "txFee": "number (double)",\n' +
+                '    "logoUrl": "string",\n' +
+                '    "prohibitedIn": [\n' +
+                '      "string"\n' +
+                '    ],\n' +
+                '    "baseAddress": "string",\n' +
+                '    "associatedTermsOfService": [\n' +
+                '      "string"\n' +
+                '    ],\n' +
+                '    "tags": [\n' +
+                '      "string"\n' +
+                '    ]\n' +
+                '  }\n' +
+                ']'
         },
         "Get List of Markets": {
             url: '/markets',
+            doc_url: 'https://bittrex.github.io/api/v3#operation--markets-get',
+            description: 'List markets',
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "symbol": "string",\n' +
+                '    "baseCurrencySymbol": "string",\n' +
+                '    "quoteCurrencySymbol": "string",\n' +
+                '    "minTradeSize": "number (double)",\n' +
+                '    "precision": "integer (int32)",\n' +
+                '    "status": "string",\n' +
+                '    "createdAt": "string (date-time)",\n' +
+                '    "notice": "string",\n' +
+                '    "prohibitedIn": [\n' +
+                '      "string"\n' +
+                '    ],\n' +
+                '    "associatedTermsOfService": [\n' +
+                '      "string"\n' +
+                '    ],\n' +
+                '    "tags": [\n' +
+                '      "string"\n' +
+                '    ]\n' +
+                '  }\n' +
+                ']'
         },
         "Get Markets' 24h Summary": {
             url: '/markets/summaries',
+            doc_url: 'https://bittrex.github.io/api/v3#operation--markets-summaries-get',
+            description: 'List summaries of the last 24 hours of activity for all markets.',
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "symbol": "string",\n' +
+                '    "high": "number (double)",\n' +
+                '    "low": "number (double)",\n' +
+                '    "volume": "number (double)",\n' +
+                '    "quoteVolume": "number (double)",\n' +
+                '    "percentChange": "number (double)",\n' +
+                '    "updatedAt": "string (date-time)"\n' +
+                '  }\n' +
+                ']'
         },
         "Get All Tickers": {
             url: '/markets/tickers',
+            doc_url: 'https://bittrex.github.io/api/v3#operation--markets-tickers-get',
+            description: 'List tickers for all markets.',
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "symbol": "string",\n' +
+                '    "lastTradeRate": "number (double)",\n' +
+                '    "bidRate": "number (double)",\n' +
+                '    "askRate": "number (double)"\n' +
+                '  }\n' +
+                ']'
         },
         "Get Ticker": {
             url: '/markets/:marketSymbol/ticker',
             params: {
-                marketSymbol: {
-                    required: true,
-                    replace_2dots: true
-                }
-            }
+                marketSymbol: {required: true, replace_2dots: true, type: string, description: 'symbol of market to retrieve ticker for'}
+            },
+            doc_url: 'https://bittrex.github.io/api/v3#operation--markets--marketSymbol--ticker-get',
+            description: 'Retrieve the ticker for a specific market.',
+            sample_response: '{\n' +
+                '  "symbol": "string",\n' +
+                '  "lastTradeRate": "number (double)",\n' +
+                '  "bidRate": "number (double)",\n' +
+                '  "askRate": "number (double)"\n' +
+                '}'
         },
         "Get Tickers of a Market": {
             url: '/markets/:marketSymbol',
             params: {
-                marketSymbol: {
-                    required: true,
-                    replace_2dots: true
-                }
-            }
+                marketSymbol: {required: true, replace_2dots: true, type: string, description: 'symbol of market to retrieve'}
+            },
+            doc_url: 'https://bittrex.github.io/api/v3#operation--markets--marketSymbol--get',
+            description: 'Retrieve information for a specific market.',
+            sample_response: '{\n' +
+                '  "symbol": "string",\n' +
+                '  "baseCurrencySymbol": "string",\n' +
+                '  "quoteCurrencySymbol": "string",\n' +
+                '  "minTradeSize": "number (double)",\n' +
+                '  "precision": "integer (int32)",\n' +
+                '  "status": "string",\n' +
+                '  "createdAt": "string (date-time)",\n' +
+                '  "notice": "string",\n' +
+                '  "prohibitedIn": [\n' +
+                '    "string"\n' +
+                '  ],\n' +
+                '  "associatedTermsOfService": [\n' +
+                '    "string"\n' +
+                '  ],\n' +
+                '  "tags": [\n' +
+                '    "string"\n' +
+                '  ]\n' +
+                '}'
         },
         "Get a Market's 24h Summary": {
             url: '/markets/:marketSymbol/summary',
             params: {
                 marketSymbol: {
-                    required: true,
+                    required: true, type: string, description: 'symbol of market to retrieve summary for',
                     replace_2dots: true
                 }
-            }
+            },
+            doc_url: 'https://bittrex.github.io/api/v3#operation--markets--marketSymbol--summary-get',
+            description: 'Retrieve summary of the last 24 hours of activity for a specific market.',
+            sample_response: '{\n' +
+                '  "symbol": "string",\n' +
+                '  "high": "number (double)",\n' +
+                '  "low": "number (double)",\n' +
+                '  "volume": "number (double)",\n' +
+                '  "quoteVolume": "number (double)",\n' +
+                '  "percentChange": "number (double)",\n' +
+                '  "updatedAt": "string (date-time)"\n' +
+                '}'
         },
         "Get Order Book": {
             url: '/markets/:marketSymbol/orderbook',
             params: {
                 marketSymbol: {
                     required: true,
-                    replace_2dots: true
+                    replace_2dots: true, type: string, description: 'symbol of market to retrieve order book for'
                 },
-                depth: {}
-            }
+                depth: {description: 'maximum depth of order book to return', possible: [1, 25, 500], default: 25}
+            },
+            doc_url: 'https://bittrex.github.io/api/v3#operation--markets--marketSymbol--orderbook-get',
+            description: 'Retrieve the order book for a specific market.',
+            sample_response: '{\n' +
+                '  "bid": [\n' +
+                '    {\n' +
+                '      "quantity": "number (double)",\n' +
+                '      "rate": "number (double)"\n' +
+                '    }\n' +
+                '  ],\n' +
+                '  "ask": [\n' +
+                '    {\n' +
+                '      "quantity": "number (double)",\n' +
+                '      "rate": "number (double)"\n' +
+                '    }\n' +
+                '  ]\n' +
+                '}'
         },
 
         "Get Trades": {
@@ -4275,35 +4397,72 @@ var big_api_map = {
             params: {
                 marketSymbol: {
                     required: true,
-                    replace_2dots: true
+                    replace_2dots: true, type: string, description: 'symbol of market to retrieve recent trades for'
                 }
-            }
+            },
+            doc_url: 'https://bittrex.github.io/api/v3#operation--markets--marketSymbol--trades-get',
+            description: 'Retrieve the recent trades for a specific market.',
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "id": "string (uuid)",\n' +
+                '    "executedAt": "string (date-time)",\n' +
+                '    "quantity": "number (double)",\n' +
+                '    "rate": "number (double)",\n' +
+                '    "takerSide": "string"\n' +
+                '  }\n' +
+                ']'
         },
         "Get Candlesticks": {
             url: '/markets/:marketSymbol/candles/trade/:candleInterval/recent',
             params: {
                 marketSymbol: {
                     required: true,
-                    replace_2dots: true
+                    replace_2dots: true, type: string, description:'symbol of market to retrieve candles for'
                 },
                 candleInterval: {
                     required: true,
-                    replace_2dots: true
+                    replace_2dots: true, possible:['MINUTE_1', 'MINUTE_5', 'HOUR_1', 'DAY_1'], description: 'desired time interval between candles'
                 }
-            }
+            },
+            doc_url: 'https://bittrex.github.io/api/v3#operation--markets--marketSymbol--candles--candleType---candleInterval--recent-get',
+            description: 'Retrieve recent candles for a specific market and candle interval. The maximum age of the returned candles depends on the interval as follows: (MINUTE_1: 1 day, MINUTE_5: 1 day, HOUR_1: 31 days, DAY_1: 366 days). Candles for intervals without any trading activity will match the previous close and volume will be zero.',
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "startsAt": "string (date-time)",\n' +
+                '    "open": "number (double)",\n' +
+                '    "high": "number (double)",\n' +
+                '    "low": "number (double)",\n' +
+                '    "close": "number (double)",\n' +
+                '    "volume": "number (double)",\n' +
+                '    "quoteVolume": "number (double)"\n' +
+                '  }\n' +
+                ']'
         },
     },
 
     huobi: {
         "base_url": "https://api.huobi.pro",
+        "provider_description": 'Huobi is a Seychelles-based cryptocurrency exchange. Founded in China, the company now has offices in Hong Kong, South Korea, Japan and the United States. In August 2018 it became a publicly listed Hong Kong company.',
+        "doc_url": 'https://huobiapi.github.io/docs/spot/v1/en',
         "Get Market Status": {
             url: '/v2/market-status',
-            go_down_1_level: true
+            go_down_1_level: true,
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-market-status',
+            description: 'The endpoint returns current market status\n' +
+                'The enum values of market status includes: 1 - normal (order submission & cancellation are allowed)，2 - halted (order submission & cancellation are prohibited)，3 - cancel-only(order submission is prohibited but order cancellation is allowed).\n' +
+                'Halt reason includes: 2 - emergency maintenance，3 - schedule maintenance.',
+            sample_response: '{\n' +
+                '    "code": 200,\n' +
+                '    "message": "success",\n' +
+                '    "data": {\n' +
+                '        "marketStatus": 1\n' +
+                '    }\n' +
+                '}'
         },
         "Get All Symbols": {
             url: '/v2/settings/common/symbols',
             params: {
-                ts: {}
+                ts: {type: number, description: 'UNIX timestamp to get incremental data'}
             },
             go_down_1_level: true,
             transformOutput: (matrix) => {
@@ -4348,13 +4507,55 @@ var big_api_map = {
                     }
                 }
                 return matrix
-            }
+            },
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-all-supported-trading-symbol-v2',
+            description: 'Get all Supported Trading Symbol',
+            sample_response: '{\n' +
+                '    "status":"ok",\n' +
+                '    "data":[\n' +
+                '        {\n' +
+                '            "tags": "",\n' +
+                '            "state": "online",\n' +
+                '            "wr": "1.5",\n' +
+                '            "sc": "ethusdt",\n' +
+                '            "p": [\n' +
+                '                {\n' +
+                '                    "id": 9,\n' +
+                '                    "name": "Grayscale",\n' +
+                '                    "weight": 91\n' +
+                '                }\n' +
+                '            ],\n' +
+                '            "bcdn": "ETH",\n' +
+                '            "qcdn": "USDT",\n' +
+                '            "elr": null,\n' +
+                '            "tpp": 2,\n' +
+                '            "tap": 4,\n' +
+                '            "fp": 8,\n' +
+                '            "smlr": null,\n' +
+                '            "flr": null,\n' +
+                '            "whe": false,\n' +
+                '            "cd": false,\n' +
+                '            "te": true,\n' +
+                '            "sp": "main",\n' +
+                '            "d": null,\n' +
+                '            "bc": "eth",\n' +
+                '            "qc": "usdt",\n' +
+                '            "toa": 1514779200000,\n' +
+                '            "ttp": 8,\n' +
+                '            "w": 999400000,\n' +
+                '            "lr": 5,\n' +
+                '            "dn": "ETH/USDT"\n' +
+                '        }\n' +
+                '    ],\n' +
+                '    "ts":"1641870869718",\n' +
+                '    "full":1\n' +
+                '}'
         },
         "Get All Currencies": {
             url: '/v2/settings/common/currencies',
             go_down_1_level: true,
             params: {
-                ts: {}
+                ts: {type: number, description: 'UNIX timestamp to get incremental data'}
             },
             transformOutput: (matrix) => {
                 var dic = {
@@ -4399,12 +4600,49 @@ var big_api_map = {
                     }
                 }
                 return matrix
-            }
+            },
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-all-supported-currencies-v2',
+            description: 'Get all Supported Currencies',
+            sample_response: '{\n' +
+                '    "status":"ok",\n' +
+                '    "data":[\n' +
+                '        {\n' +
+                '            "tags":"",\n' +
+                '            "cawt":false,\n' +
+                '            "fc":12,\n' +
+                '            "sc":12,\n' +
+                '            "dma":"1",\n' +
+                '            "wma":"10",\n' +
+                '            "ft":"eth",\n' +
+                '            "whe":false,\n' +
+                '            "cd":false,\n' +
+                '            "qc":true,\n' +
+                '            "sp":"8",\n' +
+                '            "wp":6,\n' +
+                '            "fn":"Tether USDT",\n' +
+                '            "at":1,\n' +
+                '            "cc":"usdt",\n' +
+                '            "v":true,\n' +
+                '            "de":true,\n' +
+                '            "wed":true,\n' +
+                '            "w":10006,\n' +
+                '            "state":"online",\n' +
+                '            "dn":"USDT",\n' +
+                '            "dd":"Please don’t deposit any other digital assets except USDT to the above address. Otherwise, you may lose your assets permanently. !>_<!Depositing to the above address requires confirmations of the entire network. It will arrive after 12 confirmations, and it will be available to withdraw after 12 confirmations. !>_<!Minimum deposit amount: 1 USDT. Any deposits less than the minimum will not be credited or refunded.!>_<!Your deposit address won’t change often. If there are any changes, we will notify you via announcement or email.!>_<!Please make sure that your computer and browser are secure and your information is protected from being tampered or leaked.",\n' +
+                '            "svd":null,\n' +
+                '            "swd":null,\n' +
+                '            "sdd":null,\n' +
+                '            "wd":"Minimum withdrawal amount: 10 USDT (ERC20). !>_<!To ensure the safety of your funds, your withdrawal request will be manually reviewed if your security strategy or password is changed. Please wait for phone calls or emails from our staff.!>_<!Please make sure that your computer and browser are secure and your information is protected from being tampered or leaked."\n' +
+                '        }\n' +
+                '    ],\n' +
+                '    "ts":"1641869938436",\n' +
+                '    "full":1\n' +
+                '}'
         },
         "Get Currencies Settings": {
             url: '/v1/settings/common/currencys',
             params: {
-                ts: {}
+                ts: {type: number, description: 'UNIX timestamp to get incremental data'}
             },
             go_down_1_level: true,
             transformOutput: (matrix) => {
@@ -4458,12 +4696,58 @@ var big_api_map = {
                     }
                 }
                 return matrix
-            }
+            },
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-currencys-settings',
+            description: 'Get Currencys Settings',
+            sample_response: '{\n' +
+                '    "status":"ok",\n' +
+                '    "data":[\n' +
+                '        {\n' +
+                '            "tags":"",\n' +
+                '            "name":"usdt",\n' +
+                '            "state":"online",\n' +
+                '            "cawt":false,\n' +
+                '            "fc":12,\n' +
+                '            "sc":12,\n' +
+                '            "sp":"8",\n' +
+                '            "iqc":true,\n' +
+                '            "ct":"eth",\n' +
+                '            "de":true,\n' +
+                '            "we":true,\n' +
+                '            "cd":false,\n' +
+                '            "oe":1,\n' +
+                '            "v":true,\n' +
+                '            "whe":false,\n' +
+                '            "wet":1609430400000,\n' +
+                '            "det":1609430400000,\n' +
+                '            "cp":"all",\n' +
+                '            "vat":1508839200000,\n' +
+                '            "ss":[\n' +
+                '                "INSTITUTION",\n' +
+                '                "MINEPOOL",\n' +
+                '                "OTC"\n' +
+                '            ],\n' +
+                '            "fn":"Tether USDT",\n' +
+                '            "wp":6,\n' +
+                '            "w":10006,\n' +
+                '            "dma":"1",\n' +
+                '            "wma":"10",\n' +
+                '            "dn":"USDT",\n' +
+                '            "dd":"Please don’t deposit any other digital assets except USDT to the above address. Otherwise, you may lose your assets permanently. !>_<!Depositing to the above address requires confirmations of the entire network. It will arrive after 12 confirmations, and it will be available to withdraw after 12 confirmations. !>_<!Minimum deposit amount: 1 USDT. Any deposits less than the minimum will not be credited or refunded.!>_<!Your deposit address won’t change often. If there are any changes, we will notify you via announcement or email.!>_<!Please make sure that your computer and browser are secure and your information is protected from being tampered or leaked.",\n' +
+                '            "svd":null,\n' +
+                '            "swd":null,\n' +
+                '            "sdd":null,\n' +
+                '            "wd":"Minimum withdrawal amount: 10 USDT (ERC20). !>_<!To ensure the safety of your funds, your withdrawal request will be manually reviewed if your security strategy or password is changed. Please wait for phone calls or emails from our staff.!>_<!Please make sure that your computer and browser are secure and your information is protected from being tampered or leaked."\n' +
+                '        }\n' +
+                '    ],\n' +
+                '    "ts":"1641872721891",\n' +
+                '    "full":1\n' +
+                '}'
         },
         "Get Symbols Settings": {
             url: '/v1/settings/common/symbols',
             params: {
-                ts: {}
+                ts: {type: number, description: 'UNIX timestamp to get incremental data'}
             },
             go_down_1_level: true,
             transformOutput: (matrix) => {
@@ -4516,14 +4800,53 @@ var big_api_map = {
                     }
                 }
                 return matrix
-            }
+            },
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-symbols-setting',
+            description: 'Get Symbols Settings',
+            sample_response: '{\n' +
+                '    "status":"ok",\n' +
+                '    "data":[\n' +
+                '        {\n' +
+                '            "symbol":"agldusdt",\n' +
+                '            "tags":"",\n' +
+                '            "state":"online",\n' +
+                '            "bcdn":"AGLD",\n' +
+                '            "qcdn":"USDT",\n' +
+                '            "elr":null,\n' +
+                '            "tm":"PRO",\n' +
+                '            "sn":"AGLD/USDT",\n' +
+                '            "ve":true,\n' +
+                '            "dl":false,\n' +
+                '            "te":true,\n' +
+                '            "ce":true,\n' +
+                '            "cd":false,\n' +
+                '            "tet":1630668600000,\n' +
+                '            "we":false,\n' +
+                '            "toa":1630668600000,\n' +
+                '            "tca":1893470400000,\n' +
+                '            "voa":1630666800000,\n' +
+                '            "vca":1893470400000,\n' +
+                '            "bc":"agld",\n' +
+                '            "qc":"usdt",\n' +
+                '            "sp":"innovation",\n' +
+                '            "d":null,\n' +
+                '            "tpp":4,\n' +
+                '            "tap":4,\n' +
+                '            "fp":8,\n' +
+                '            "w":950000000,\n' +
+                '            "ttp":8\n' +
+                '        }\n' +
+                '    ],\n' +
+                '    "ts":"1641880066563",\n' +
+                '    "full":1\n' +
+                '}'
         },
         "Get Market Symbols Settings": {
             url: '/v1/settings/common/market-symbols',
             go_down_1_level: true,
             params: {
-                ts: {},
-                symbols: {}
+                ts: {type: number, description: 'UNIX timestamp to get incremental data'},
+                symbols: {type: string, description: 'symbols. NA means all symbols, multiple symbols separated with comma'}
             },
             transformOutput: (matrix) => {
                 var dic = {
@@ -4570,14 +4893,48 @@ var big_api_map = {
                     }
                 }
                 return matrix
-            }
+            },
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-market-symbols-setting',
+            description: 'Get Market Symbols Settings',
+            sample_response: '{\n' +
+                '    "status": "ok",\n' +
+                '    "data": [\n' +
+                '        {\n' +
+                '            "symbol": "btcusdt",\n' +
+                '            "state": "online",\n' +
+                '            "bc": "btc",\n' +
+                '            "qc": "usdt",\n' +
+                '            "pp": 2,\n' +
+                '            "ap": 6,\n' +
+                '            "sp": "main",\n' +
+                '            "vp": 8,\n' +
+                '            "minoa": 0.0001,\n' +
+                '            "maxoa": 1000,\n' +
+                '            "minov": 5,\n' +
+                '            "lominoa": 0.0001,\n' +
+                '            "lomaxoa": 1000,\n' +
+                '            "lomaxba": 1000,\n' +
+                '            "lomaxsa": 1000,\n' +
+                '            "smminoa": 0.0001,\n' +
+                '            "smmaxoa": 100,\n' +
+                '            "bmmaxov": 1000000,\n' +
+                '            "lr": 5,\n' +
+                '            "smlr": 3,\n' +
+                '            "flr": 3,\n' +
+                '            "at": "enabled",\n' +
+                '            "tags": "activities"\n' +
+                '        }\n' +
+                '    ],\n' +
+                '    "ts": "1641880897191",\n' +
+                '    "full": 1\n' +
+                '}'
         },
         "Get Chain Information": {
             url: '/v1/settings/common/chains',
             params: {
-                ts: {},
-                currency: {},
-                'show-desc': {}
+                ts: {type: number, description: 'UNIX timestamp to get incremental data'},
+                currency: {type: string},
+                'show-desc': {description: 'show desc, 0: no, 1: all, 2: suspend deposit/withdrawal and chain exchange', possible: [0,1,2]}
             },
             go_down_1_level: true,
             transformOutput: (matrix) => {
@@ -4629,43 +4986,207 @@ var big_api_map = {
                     }
                 }
                 return matrix
-            }
+            },
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-chains-information',
+            description: 'Get Chains Information',
+            sample_response: '{\n' +
+                '    "status": "ok",\n' +
+                '    "data": [\n' +
+                '        {\n' +
+                '            "chain": "hrc20nft",\n' +
+                '            "currency": "nft",\n' +
+                '            "code": "hrc20nft",\n' +
+                '            "ct": "live",\n' +
+                '            "ac": "eth",\n' +
+                '            "default": 0,\n' +
+                '            "dma": "160298",\n' +
+                '            "wma": "160298",\n' +
+                '            "de": true,\n' +
+                '            "we": true,\n' +
+                '            "wp": 6,\n' +
+                '            "ft": "eth",\n' +
+                '            "dn": "HECO",\n' +
+                '            "fn": "",\n' +
+                '            "awt": false,\n' +
+                '            "adt": false,\n' +
+                '            "ao": false,\n' +
+                '            "fc": 10,\n' +
+                '            "sc": 20,\n' +
+                '            "v": true,\n' +
+                '            "sda": "",\n' +
+                '            "swa": "",\n' +
+                '            "deposit-tips-desc": "Minimum deposit amount:160298\\nAny deposits less than the minimum amount will not be credited or refunded.",\n' +
+                '            "withdraw-desc": "Minimum withdrawal amount: 160298 NFT(HECO). !>_<!To ensure the safety of your funds, your withdrawal request will be manually reviewed if your security strategy or password is changed. Please wait for phone calls or emails from our staff.!>_<!Please make sure that your computer and browser are secure and your information is protected from being tampered or leaked.",\n' +
+                '            "suspend-deposit-desc": "",\n' +
+                '            "suspend-withdraw-desc": "",\n' +
+                '            "replace-chain-info-desc": "",\n' +
+                '            "replace-chain-notification-desc": "",\n' +
+                '            "replace-chain-popup-desc": ""\n' +
+                '        }\n' +
+                '    ],\n' +
+                '    "ts": "1641880897191",\n' +
+                '    "full": 1\n' +
+                '}'
         },
         "Get Currency and Chains": {
             url: '/v2/reference/currencies',
             params: {
-                currency: {},
-                authorizedUser: {}
+                currency: {type: string, description: 'btc, ltc, bch, eth, etc ...(available currencies in Huobi Global)'},
             },
             go_down_1_level: true,
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#apiv2-currency-amp-chains',
+            description: 'Query static reference information for each currency, as well as its corresponding chain(s).',
+            sample_response: '{\n' +
+                '    "code":200,\n' +
+                '    "data":[\n' +
+                '        {\n' +
+                '            "chains":[\n' +
+                '                {\n' +
+                '                    "chain":"trc20usdt",\n' +
+                '                    "displayName":"",\n' +
+                '                    "baseChain": "TRX",\n' +
+                '                    "baseChainProtocol": "TRC20",\n' +
+                '                    "isDynamic": false,\n' +
+                '                    "depositStatus":"allowed",\n' +
+                '                    "maxTransactFeeWithdraw":"1.00000000",\n' +
+                '                    "maxWithdrawAmt":"280000.00000000",\n' +
+                '                    "minDepositAmt":"100",\n' +
+                '                    "minTransactFeeWithdraw":"0.10000000",\n' +
+                '                    "minWithdrawAmt":"0.01",\n' +
+                '                    "numOfConfirmations":999,\n' +
+                '                    "numOfFastConfirmations":999,\n' +
+                '                    "withdrawFeeType":"circulated",\n' +
+                '                    "withdrawPrecision":5,\n' +
+                '                    "withdrawQuotaPerDay":"280000.00000000",\n' +
+                '                    "withdrawQuotaPerYear":"2800000.00000000",\n' +
+                '                    "withdrawQuotaTotal":"2800000.00000000",\n' +
+                '                    "withdrawStatus":"allowed"\n' +
+                '                }\n' +
+                '            ],\n' +
+                '            "currency":"usdt",\n' +
+                '            "instStatus":"normal"\n' +
+                '        }\n' +
+                '    ]\n' +
+                '}'
         },
         "Get Candlesticks": {
             url: '/market/history/kline',
             go_down_1_level: true,
             params: {
-                period: {required: true},
-                symbol: {required: true},
-                size: {}
+                period: {required: true, description: 'The period of each candle', possible: ['1min', '5min', '15min', '30min', '60min', '4hour', '1day', '1mon', '1week', '1year']},
+                symbol: {required: true, description: 'A supported trading symbol, e.g. btcusdt, bccbtcn (to retrieve candlesticks for ETP NAV, symbol = ETP trading symbol + suffix \'nav\'，for example: btc3lusdtnav)'},
+                size: {description: 'The number of data returns. Can be from 1 to 2000', type: number, default: 150}
             },
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-klines-candles',
+            description: 'This endpoint retrieves all klines in a specific range.',
+            sample_response: '{\n' +
+                '    "ch": "market.btcusdt.kline.5min",\n' +
+                '    "status": "ok",\n' +
+                '    "ts": 1629769247172,\n' +
+                '    "data": [\n' +
+                '        {\n' +
+                '            "id": 1629769200,\n' +
+                '            "open": 49056.37,\n' +
+                '            "close": 49025.51,\n' +
+                '            "low": 49022.86,\n' +
+                '            "high": 49056.38,\n' +
+                '            "amount": 3.946281917950917,\n' +
+                '            "vol": 193489.67275732,\n' +
+                '            "count": 196\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "id": 1629768900,\n' +
+                '            "open": 48994.61,\n' +
+                '            "close": 49056.37,\n' +
+                '            "low": 48966.72,\n' +
+                '            "high": 49072.46,\n' +
+                '            "amount": 30.72223099519689,\n' +
+                '            "vol": 1505870.732227976,\n' +
+                '            "count": 1504\n' +
+                '        }\n' +
+                '    ]\n' +
+                '}'
         },
         "Get Latest Aggregated Ticker": {
             url: '/market/detail/merged',
             params: {
-                symbol: {required: true},
+                symbol: {required: true, description: 'A supported trading symbol, e.g. btcusdt, bccbtc'},
             },
-            go_down_1_level: true
+            go_down_1_level: true,
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-latest-aggregated-ticker',
+            description: 'This endpoint retrieves the latest ticker with some important 24h aggregated market data.',
+            sample_response: '{\n' +
+                '    "ch": "market.btcusdt.detail.merged",\n' +
+                '    "status": "ok",\n' +
+                '    "ts": 1629788763750,\n' +
+                '    "tick": {\n' +
+                '        "id": 272156789143,\n' +
+                '        "version": 272156789143,\n' +
+                '        "open": 50080.0,\n' +
+                '        "close": 49820.92,\n' +
+                '        "low": 48767.0,\n' +
+                '        "high": 50500.0,\n' +
+                '        "amount": 12055.365781937457,\n' +
+                '        "vol": 5.985618685709001E8,\n' +
+                '        "count": 420573,\n' +
+                '        "bid": [\n' +
+                '            49819.48,\n' +
+                '            2.58112\n' +
+                '        ],\n' +
+                '        "ask": [\n' +
+                '            49819.49,\n' +
+                '            0.002411\n' +
+                '        ]\n' +
+                '    }\n' +
+                '}'
         },
         "Get Latest Tickers for All Pairs": {
             url: '/market/tickers',
-            go_down_1_level: true
+            go_down_1_level: true,
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-latest-tickers-for-all-pairs',
+            description: 'This endpoint retrieves the latest tickers for all supported pairs.',
+            sample_response: '{\n' +
+                '    "status":"ok",\n' +
+                '    "ts":1629789355531,\n' +
+                '    "data":[\n' +
+                '        {\n' +
+                '            "symbol":"smtusdt",\n' +
+                '            "open":0.004659,     \n' +
+                '            "high":0.004696,     \n' +
+                '            "low":0.0046,        \n' +
+                '            "close":0.00468,     \n' +
+                '            "amount":36551302.17544405,\n' +
+                '            "vol":170526.0643855023,\n' +
+                '            "count":1709,\n' +
+                '            "bid":0.004651,\n' +
+                '            "bidSize":54300.341,\n' +
+                '            "ask":0.004679,\n' +
+                '            "askSize":1923.4879\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "symbol":"ltcht",\n' +
+                '            "open":12.795626,\n' +
+                '            "high":12.918053,\n' +
+                '            "low":12.568926,\n' +
+                '            "close":12.918053,\n' +
+                '            "amount":1131.801675005825,\n' +
+                '            "vol":14506.9381937385,\n' +
+                '            "count":923,\n' +
+                '            "bid":12.912687,\n' +
+                '            "bidSize":0.1068,\n' +
+                '            "ask":12.927032,\n' +
+                '            "askSize":5.3228\n' +
+                '        }\n' +
+                '    ]\n' +
+                '}'
         },
         "Get Market Depth": {
             url: '/market/depth',
             go_down_1_level: true,
             params: {
-                depth: {},
-                symbol: {required: true},
-                type: {default: 'step0'}
+                depth: {description: 'The number of market depth to return on each side', possible: [5, 10, 20], default: 20},
+                symbol: {required: true, description: 'The trading symbol to query'},
+                type: {default: 'step0', description: 'Market depth aggregation level, details below', possible: ['step0', 'step1', 'step2', 'step3', 'step4', 'step5']}
             },
             specialHandleFunction: (data) => {
                 var ask = data.tick.asks
@@ -4675,134 +5196,538 @@ var big_api_map = {
                     res.push([ask[i][0], ask[i][1], bids[i][0], bids[i][1]])
                 }
                 return res
-            }
+            },
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-market-depth',
+            description: 'This endpoint retrieves the current order book of a specific pair.',
+            sample_response: '{\n' +
+                '    "ch": "market.btcusdt.depth.step0",\n' +
+                '    "status": "ok",\n' +
+                '    "ts": 1629790438801,\n' +
+                '    "tick": {\n' +
+                '        "ts": 1629790438215,\n' +
+                '        "version": 136107114472,\n' +
+                '        "bids": [\n' +
+                '            [\n' +
+                '                49790.87,\n' +
+                '                0.779876\n' +
+                '            ],\n' +
+                '            [\n' +
+                '                49785.9,\n' +
+                '                1.82E-4\n' +
+                '            ]\n' +
+                '        ],\n' +
+                '        "asks": [\n' +
+                '            [\n' +
+                '                49790.88,\n' +
+                '                2.980472\n' +
+                '            ],\n' +
+                '            [\n' +
+                '                49790.89,\n' +
+                '                0.006613\n' +
+                '            ]\n' +
+                '        ]\n' +
+                '    }\n' +
+                '}'
         },
         "Get Last Trade": {
             url: '/market/trade',
             params: {
-                symbol: {required: true},
+                symbol: {required: true, description: 'The trading symbol to query'},
             },
-            go_down_1_level: true
+            go_down_1_level: true,
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-the-last-trade',
+            description: 'This endpoint retrieves the latest trade with its price, volume, and direction.',
+            sample_response: '{\n' +
+                '    "ch": "market.btcusdt.trade.detail",\n' +
+                '    "status": "ok",\n' +
+                '    "ts": 1629792192037,\n' +
+                '    "tick": {\n' +
+                '        "id": 136107843051,\n' +
+                '        "ts": 1629792191928,\n' +
+                '        "data": [\n' +
+                '            {\n' +
+                '                "id": 136107843051348400221001656,\n' +
+                '                "ts": 1629792191928,\n' +
+                '                "trade-id": 102517374388,\n' +
+                '                "amount": 0.028416,\n' +
+                '                "price": 49806.0,\n' +
+                '                "direction": "buy"\n' +
+                '            },\n' +
+                '            {\n' +
+                '                "id": 136107843051348400229813302,\n' +
+                '                "ts": 1629792191928,\n' +
+                '                "trade-id": 102517374387,\n' +
+                '                "amount": 0.025794,\n' +
+                '                "price": 49806.0,\n' +
+                '                "direction": "buy"\n' +
+                '            }\n' +
+                '        ]\n' +
+                '    }\n' +
+                '}'
         },
         "Get Recent Trades": {
             url: '/market/history/trade',
             go_down_1_level: true,
             params: {
-                symbol: {required: true},
-                size: {}
+                symbol: {required: true, description: 'The trading symbol to query'},
+                size: {type: 'number', description: 'The number of data returns', default: 1}
             },
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-the-most-recent-trades',
+            description: 'This endpoint retrieves the most recent trades with their price, volume, and direction.',
+            sample_response: '{\n' +
+                '    "ch": "market.btcusdt.trade.detail",\n' +
+                '    "status": "ok",\n' +
+                '    "ts": 1629793657842,\n' +
+                '    "data": [\n' +
+                '        {\n' +
+                '            "id": 136108764379,\n' +
+                '            "ts": 1629793656939,\n' +
+                '            "data": [\n' +
+                '                {\n' +
+                '                    "id": 136108764379348400430265987,\n' +
+                '                    "ts": 1629793656939,\n' +
+                '                    "trade-id": 102517381182,\n' +
+                '                    "amount": 1.24E-4,\n' +
+                '                    "price": 49656.4,\n' +
+                '                    "direction": "buy"\n' +
+                '                }\n' +
+                '            ]\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "id": 136108763320,\n' +
+                '            "ts": 1629793656198,\n' +
+                '            "data": [\n' +
+                '                {\n' +
+                '                    "id": 136108763320348400439066863,\n' +
+                '                    "ts": 1629793656198,\n' +
+                '                    "trade-id": 102517381181,\n' +
+                '                    "amount": 0.01125,\n' +
+                '                    "price": 49655.0,\n' +
+                '                    "direction": "buy"\n' +
+                '                },\n' +
+                '                {\n' +
+                '                    "id": 136108763320348400429773626,\n' +
+                '                    "ts": 1629793656198,\n' +
+                '                    "trade-id": 102517381180,\n' +
+                '                    "amount": 8.3E-4,\n' +
+                '                    "price": 49651.35,\n' +
+                '                    "direction": "buy"\n' +
+                '                }\n' +
+                '            ]\n' +
+                '        }\n' +
+                '    ]\n' +
+                '}'
         },
         "Get Last 24h Market Summary": {
             url: '/market/detail/',
             go_down_1_level: true,
             params: {
-                symbol: {required: true},
+                symbol: {required: true, description: 'The trading symbol to query'},
             },
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-the-last-24h-market-summary',
+            description: 'This endpoint retrieves the summary of trading in the market for the last 24 hours.',
+            sample_response: '{\n' +
+                '    "ch": "market.btcusdt.detail",\n' +
+                '    "status": "ok",\n' +
+                '    "ts": 1629795484817,\n' +
+                '    "tick": {\n' +
+                '        "id": 272164011416,\n' +
+                '        "low": 48767.0,\n' +
+                '        "high": 50500.0,\n' +
+                '        "open": 50266.89,\n' +
+                '        "close": 49728.71,\n' +
+                '        "vol": 6.010379336834868E8,\n' +
+                '        "amount": 12110.642402972368,\n' +
+                '        "version": 272164011416,\n' +
+                '        "count": 420452\n' +
+                '    }\n' +
+                '}'
+        },
+
+        "Get Real Time NAV": {
+            url: '/market/etp',
+            go_down_1_level: true,
+            params: {
+                symbol: {required: true, description: 'ETP trading symbol'},
+            },
+            doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-real-time-nav',
+            description: 'This endpoint returns real time NAV for ETP.',
+            sample_response: '{\n' +
+                '    "ch":"market.btc3lusdt.etp",\n' +
+                '    "status":"ok",\n' +
+                '    "ts":1597890198849,\n' +
+                '    "tick":{\n' +
+                '        "actualLeverage":2.988538205272293,\n' +
+                '        "nav":17.463067985747816,\n' +
+                '        "outstanding":98338.57818006596,\n' +
+                '        "symbol":"btc3lusdt",\n' +
+                '        "navTime":1597890198525,\n' +
+                '        "basket":[\n' +
+                '            {\n' +
+                '                "amount":0.004438693860243208,\n' +
+                '                "currency":"btc"\n' +
+                '            },\n' +
+                '            {\n' +
+                '                "amount":-34.725977870927,\n' +
+                '                "currency":"usdt"\n' +
+                '            }\n' +
+                '        ]\n' +
+                '    }\n' +
+                '}'
         },
     },
 
     bitmex: {
         "base_url": "https://www.bitmex.com/api/v1",
+        "provider_description": 'BitMEX is a cryptocurrency exchange and derivative trading platform. It is owned and operated by HDR Global Trading Limited, which is registered in the Seychelles.',
+        "doc_url": 'https://www.bitmex.com/api/explorer/#/',
         "Swap Funding History": {
             url: '/funding',
             params: {
-                reverse: {default: 'true'}
-            }
+                symbol: {description: 'Instrument symbol. Send a bare series (e.g. XBT) to get data for the nearest expiring contract in that series.\n' +
+                        'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual'},
+                count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
+                reverse: {default: 'true', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
+                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+            },
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Funding/Funding_get',
+            description: 'Get funding history' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "timestamp": "2022-03-03T14:45:37.373Z",\n' +
+                '    "symbol": "string",\n' +
+                '    "fundingInterval": "2022-03-03T14:45:37.373Z",\n' +
+                '    "fundingRate": 0,\n' +
+                '    "fundingRateDaily": 0\n' +
+                '  }\n' +
+                ']'
         },
         "All Instruments": {
             url: '/instrument',
             params: {
-                reverse: {default: 'true'}
-            }
+                symbol: {description: 'Instrument symbol. Send a bare series (e.g. XBT) to get data for the nearest expiring contract in that series.\n' +
+                        'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual'},
+                count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
+                reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
+                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+
+            },
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Instrument/Instrument_get',
+            description: 'This returns all instruments and indices, including those that have settled or are unlisted. Use this endpoint if you want to query for individual instruments or use a complex filter' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "symbol": "string",\n' +
+                '    "rootSymbol": "string",\n' +
+                '    "state": "string",\n' +
+                '    "typ": "string",\n' +
+                '    "listing": "2022-03-03T14:45:37.378Z",\n' +
+                '    "front": "2022-03-03T14:45:37.378Z",\n' +
+                '    ...\n' +
+                '    "markMethod": "string",\n' +
+                '    "markPrice": 0,\n' +
+                '    "indicativeTaxRate": 0,\n' +
+                '    "indicativeSettlePrice": 0,\n' +
+                '    "optionUnderlyingPrice": 0,\n' +
+                '    "settledPriceAdjustmentRate": 0,\n' +
+                '    "settledPrice": 0,\n' +
+                '    "timestamp": "2022-03-03T14:45:37.378Z"\n' +
+                '  }\n' +
+                ']'
         },
         "Active or Expired <24h Instruments": {
             url: '/instrument/active',
-            params: {
-                reverse: {default: 'true'}
-            }
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Instrument/Instrument_getActive',
+            description: 'Get all active instruments and instruments that have expired in <24hrs' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "symbol": "string",\n' +
+                '    "rootSymbol": "string",\n' +
+                '    "state": "string",\n' +
+                '    "typ": "string",\n' +
+                '    "listing": "2022-03-03T14:45:37.378Z",\n' +
+                '    "front": "2022-03-03T14:45:37.378Z",\n' +
+                '    ...\n' +
+                '    "markMethod": "string",\n' +
+                '    "markPrice": 0,\n' +
+                '    "indicativeTaxRate": 0,\n' +
+                '    "indicativeSettlePrice": 0,\n' +
+                '    "optionUnderlyingPrice": 0,\n' +
+                '    "settledPriceAdjustmentRate": 0,\n' +
+                '    "settledPrice": 0,\n' +
+                '    "timestamp": "2022-03-03T14:45:37.378Z"\n' +
+                '  }\n' +
+                ']'
         },
         "All Active Contract Series & Interval Pairs": {
             url: '/instrument/activeIntervals',
-            params: {
-                reverse: {default: 'true'}
-            }
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Instrument/Instrument_getActiveIntervals',
+            description: 'This endpoint is useful for determining which pairs are live. It returns two arrays of strings. The first is intervals, such as ["XBT:perpetual", "XBT:quarterly", "XBT:biquarterly", "ETH:quarterly", ...]. These identifiers are usable in any query\'s symbol param. The second array is the current resolution of these intervals. Results are mapped at the same index.' ,
+            sample_response: '{\n' +
+                '  "intervals": [\n' +
+                '    "string"\n' +
+                '  ],\n' +
+                '  "symbols": [\n' +
+                '    "string"\n' +
+                '  ]\n' +
+                '}'
         },
         "Composite Index": {
             url: '/instrument/compositeIndex',
             params: {
-                reverse: {default: 'true'},
-                symbol: {required: true}
-            }
+                symbol: {description: 'The composite index symbol.', required: true},
+                count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
+                reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
+                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+
+            },
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Instrument/Instrument_getCompositeIndex',
+            description: 'Composite indices are built from multiple external price sources.\n' +
+                '\n' +
+                'Use this endpoint to get the underlying prices of an index. For example, send a symbol of .BXBT to get the ticks and weights of the constituent exchanges that build the ".BXBT" index.\n' +
+                '\n' +
+                'A tick with reference "BMI" and weight null is the composite index tick.' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "timestamp": "2022-03-03T14:45:37.397Z",\n' +
+                '    "symbol": "string",\n' +
+                '    "indexSymbol": "string",\n' +
+                '    "indexMultiplier": 0,\n' +
+                '    "reference": "string",\n' +
+                '    "lastPrice": 0,\n' +
+                '    "sourcePrice": 0,\n' +
+                '    "conversionIndex": "string",\n' +
+                '    "conversionIndexPrice": 0,\n' +
+                '    "weight": 0,\n' +
+                '    "logged": "2022-03-03T14:45:37.397Z"\n' +
+                '  }\n' +
+                ']'
         },
         "All Price Indices": {
             url: '/instrument/indices',
-            params: {
-                reverse: {default: 'true'}
-            }
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Instrument/Instrument_getIndices',
+            description: 'Get all price indices' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "symbol": "string",\n' +
+                '    "rootSymbol": "string",\n' +
+                '    "state": "string",\n' +
+                '    "typ": "string",\n' +
+                '    "listing": "2022-03-03T14:45:37.400Z",\n' +
+                '    "front": "2022-03-03T14:45:37.400Z",\n' +
+                '    "expiry": "2022-03-03T14:45:37.400Z",\n' +
+                '    "settle": "2022-03-03T14:45:37.400Z",\n' +
+                '    "listedSettle": "2022-03-03T14:45:37.400Z",\n' +
+                '    "relistInterval": "2022-03-03T14:45:37.400Z",\n' +
+                '    "inverseLeg": "string",\n' +
+                '    "sellLeg": "string",\n' +
+                '    ...\n' +
+                '    "fairPrice": 0,\n' +
+                '    "markMethod": "string",\n' +
+                '    "markPrice": 0,\n' +
+                '    "indicativeTaxRate": 0,\n' +
+                '    "indicativeSettlePrice": 0,\n' +
+                '    "optionUnderlyingPrice": 0,\n' +
+                '    "settledPriceAdjustmentRate": 0,\n' +
+                '    "settledPrice": 0,\n' +
+                '    "timestamp": "2022-03-03T14:45:37.400Z"\n' +
+                '  }\n' +
+                ']'
         },
         "Summary of Exchange Statistics in USD": {
             url: '/instrument/usdVolume',
             params: {
-                reverse: {default: 'true'}
-            }
+                symbol: {description: 'Filter by symbol.'}
+            },
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Instrument/Instrument_getUsdVolume',
+            description: 'Get a summary of exchange statistics in USD' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "symbol": "string",\n' +
+                '    "currency": "string",\n' +
+                '    "turnover24h": 0,\n' +
+                '    "turnover30d": 0,\n' +
+                '    "turnover365d": 0,\n' +
+                '    "turnover": 0\n' +
+                '  }\n' +
+                ']'
         },
         "Insurance Fund Data": {
             url: '/insurance',
             params: {
-                reverse: {default: 'true'}
-            }
+                symbol: {description: 'Instrument symbol. Send a bare series (e.g. XBT) to get data for the nearest expiring contract in that series.\n' +
+                        'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual'},
+                count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
+                reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
+                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+            },
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Insurance/Insurance_get',
+            description: 'Get insurance fund history.' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "currency": "string",\n' +
+                '    "timestamp": "2022-03-03T14:45:37.407Z",\n' +
+                '    "walletBalance": 0\n' +
+                '  }\n' +
+                ']'
         },
         "Active Liquidations": {
             url: '/liquidation',
             params: {
-                reverse: {default: 'true'}
-            }
+                symbol: {description: 'Instrument symbol. Send a bare series (e.g. XBT) to get data for the nearest expiring contract in that series.\n' +
+                        'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual'},
+                count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
+                reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
+                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+            },
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Liquidation/Liquidation_get',
+            description: 'Get liquidation orders.' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "id": 0\n' +
+                '  }\n' +
+                ']'
         },
         "Book Order": {
             url: '/orderBook/L2',
             params: {
-                reverse: {default: 'true'},
-                symbol: {required: true}
-            }
+                symbol: {required: true, description: 'Instrument symbol. Send a series (e.g. XBT) to get data for the nearest contract in that series.'},
+                depth:{type: 'number', description: 'Orderbook depth per side. Send 0 for full depth.', default: 25},
+
+            },
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/OrderBook/OrderBook_getL2',
+            description: 'Get current orderbook in vertical format' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "id": 0\n' +
+                '  }\n' +
+                ']'
         },
         "Quotes": {
             url: '/quote',
             params: {
-                reverse: {default: 'true'},
-                symbol: {required: true}
-            }
+                symbol: {description: 'Instrument symbol. Send a bare series (e.g. XBT) to get data for the nearest expiring contract in that series.\n' +
+                        'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual', },
+                count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
+                reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
+                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+            },
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Quote/Quote_get',
+            description: 'Get quotes' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "timestamp": "2022-03-03T14:45:37.500Z",\n' +
+                '    "symbol": "string",\n' +
+                '    "bidSize": 0,\n' +
+                '    "bidPrice": 0,\n' +
+                '    "askPrice": 0,\n' +
+                '    "askSize": 0\n' +
+                '  }\n' +
+                ']'
         },
         "Previous Quotes in Time Buckets": {
             url: '/quote/bucketed',
             params: {
-                reverse: {default: 'true'},
-                symbol: {required: true},
-                binSize: {required: true}
-            }
+                symbol: {description: 'Instrument symbol. Send a bare series (e.g. XBT) to get data for the nearest expiring contract in that series.\n' +
+                        'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual', },
+                count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
+                reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
+                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+                binSize: {required: true, description: 'Time interval to bucket by', possible: ['1m','5m','1h','1d']},
+                partial: {description: 'If true, will send in-progress (incomplete) bins for the current time period.', possible: ['true', 'false'], default: 'false'}
+            },
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Quote/Quote_getBucketed',
+            description: 'Get previous quotes in time buckets' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "timestamp": "2022-03-03T14:45:37.503Z",\n' +
+                '    "symbol": "string",\n' +
+                '    "bidSize": 0,\n' +
+                '    "bidPrice": 0,\n' +
+                '    "askPrice": 0,\n' +
+                '    "askSize": 0\n' +
+                '  }\n' +
+                ']'
         },
         "Historical Settlement Data": {
             url: '/settlement',
             params: {
-                reverse: {default: 'true'}
-            }
+                symbol: {description: 'Instrument symbol. Send a bare series (e.g. XBT) to get data for the nearest expiring contract in that series.\n' +
+                        'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual', },
+                count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
+                reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
+                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+            },
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Settlement/Settlement_get',
+            description: 'Get settlement history' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "id": 0\n' +
+                '  }\n' +
+                ']'
         },
         "Exchange Statistics": {
             url: '/stats',
-            params: {
-                reverse: {default: 'true'}
-            }
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Stats/Stats_get',
+            description: 'Get exchange-wide and per-series turnover and volume statistics.' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "rootSymbol": "string",\n' +
+                '    "currency": "string",\n' +
+                '    "volume24h": 0,\n' +
+                '    "turnover24h": 0,\n' +
+                '    "openInterest": 0,\n' +
+                '    "openValue": 0\n' +
+                '  }\n' +
+                ']'
         },
         "Historical Exchange Statistics": {
             url: '/stats/history',
-            params: {
-                reverse: {default: 'true'}
-            }
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Stats/Stats_history',
+            description: 'Get historical exchange-wide and per-series turnover and volume statistics' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "date": "2022-03-03T14:45:37.518Z",\n' +
+                '    "rootSymbol": "string",\n' +
+                '    "currency": "string",\n' +
+                '    "volume": 0,\n' +
+                '    "turnover": 0\n' +
+                '  }\n' +
+                ']'
         },
         "All Trades": {
             url: '/trade',
             params: {
-                reverse: {default: 'true'},
-            }
+                symbol: {description: 'Instrument symbol. Send a bare series (e.g. XBT) to get data for the nearest expiring contract in that series.\n' +
+                        'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual', },
+                count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
+                reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
+                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+            },
+            doc_url: 'https://www.bitmex.com/api/explorer/#!/Trade/Trade_get',
+            description: 'Get trades. Please note that indices (symbols starting with .) post trades at intervals to the trade feed. These have a size of 0 and are used only to indicate a changing price.' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "timestamp": "2022-03-03T14:45:37.525Z",\n' +
+                '    "symbol": "string",\n' +
+                '    "side": "string",\n' +
+                '    "size": 0,\n' +
+                '    "price": 0,\n' +
+                '    "tickDirection": "string",\n' +
+                '    "trdMatchID": "string",\n' +
+                '    "grossValue": 0,\n' +
+                '    "homeNotional": 0,\n' +
+                '    "foreignNotional": 0\n' +
+                '  }\n' +
+                ']'
         },
         // "Previous Trades in Time Bucket": {
         //     url: '/trade/bucketed',
