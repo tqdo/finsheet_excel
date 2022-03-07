@@ -5737,37 +5737,4 @@ var big_api_map = {
         // },
     },
 
-
-
-
-
-    oanda: {
-        "base_url": "https://api-fxtrade.oanda.com",
-        "Get Candlesticks": {
-            url: '/v3/instruments/:instrument/candles',
-            params: {
-                instrument: {required: true, replace_2dots: true},
-                price: {default: 'B'},
-                dailyAlignment: {default: 17},
-                from: {required: true},
-                to: {required: true},
-                granularity: {default: 'D'},
-                count: {default: 500}
-            }
-        },
-        "Get Position Book": {
-            url: '/v3/instruments/:instrument/positionBook',
-            params: {
-                instrument: {required: true, replace_2dots: true},
-                time: {}
-            }
-        },
-        "Get Order Book": {
-            url: '/v3/instruments/:instrument/orderBook',
-            params: {
-                instrument: {required: true, replace_2dots: true},
-                time: {}
-            }
-        },
-    },
 }
