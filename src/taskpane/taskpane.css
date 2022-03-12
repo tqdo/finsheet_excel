@@ -533,14 +533,19 @@ input[type="date"] {
     color: black;
     display: flex;
     width: 100%;
-    margin-top: 20px;
-    padding: 5px 0;
+    margin-top: 10px;
+    padding: 10px 0;
 }
 
 .left_bar_icon:hover{
     /* color: white */
 }
-
+.left_bar_different_green{
+    background: #107c41;
+}
+.left_bar_different_green .left_bar_icon{
+    color: white;
+}
 .margin_auto{
     margin: auto
 }
@@ -559,7 +564,7 @@ input[type="date"] {
 
 .dropdown_for_left_bar{
     margin-left: 23px;
-    margin-top: -30px;
+    margin-top: -40px;
 }
 
 .one_example_usage_metric{

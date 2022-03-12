@@ -354,6 +354,8 @@ $(document).ready(function () {
   console.log(cookie)
   if (cookie) {
     $("#if_have_api_key").css({ display: "flex" });
+    setTimeout(() => {$('#functions_dropdown_wrap').addClass('left_bar_different_green')}, 200)
+
     fetch(link + "/checkcoupon?api_key=" + cookie, {
       method: "GET",
       headers: {"Content-Type": "text/plain"},
@@ -752,6 +754,12 @@ function clickNavigate(which){
   }
   $('#functions_dropdown').css({display: 'none'})
   $('#search_dropdown').css({display: 'none'})
+
+  if(['symbols', 'metrics', 'etf', 'mutual_fund'].includes(which)){
+    makeDifferentGreen('search_dropdown_wrap')
+  } else {
+    makeDifferentGreen('functions_dropdown_wrap')
+  }
 }
 
 
@@ -1641,6 +1649,19 @@ function clickExampleFormula(){
   } else {
     $('#caret_example_formula').removeClass('fa-caret-down').addClass('fa-caret-right')
     $('.example_formula_section').css('display', 'none')
+  }
+}
+
+var possible_different_green_id = {search_dropdown_wrap: 1, functions_dropdown_wrap:1, console_left_bar: 1}
+function makeDifferentGreen(which){
+  console.log(3, which)
+  for(var w of Object.keys(possible_different_green_id)){
+    if(w === which){
+      $('#' + w).addClass('left_bar_different_green')
+    } else {
+      console.log(w)
+      $('#' + w).removeClass('left_bar_different_green')
+    }
   }
 }
 
