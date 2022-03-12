@@ -46,7 +46,7 @@ var big_api_map = {
                 '      "min_size": "0.01000000"\n' +
                 '    },\n' +
                 '    ...\n' +
-                '  }\n' +
+                '  ]\n' +
                 '}'
         },
         "Get exchange rates": {
@@ -128,7 +128,7 @@ var big_api_map = {
                 },
                 date: {
                     type: 'string'
-,                   description: 'Specify date for historic spot price in format YYYY-MM-DD (UTC)'
+                    ,                   description: 'Specify date for historic spot price in format YYYY-MM-DD (UTC)'
                 }
             },
             go_down_1_level: true,
@@ -289,7 +289,7 @@ var big_api_map = {
             },
             doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#compressed-aggregate-trades-list',
             description: 'Get compressed, aggregate trades. Trades that fill at the time, from the same order, with the same price will have the quantity aggregated. \n' +
-            '\n If startTime and endTime are sent, time between startTime and endTime must be less than 1 hour. \n If fromId, startTime, and endTime are not sent, the most recent aggregate trades will be returned.',
+                '\n If startTime and endTime are sent, time between startTime and endTime must be less than 1 hour. \n If fromId, startTime, and endTime are not sent, the most recent aggregate trades will be returned.',
             sample_response: '[\n' +
                 '  {\n' +
                 '    "a": 26129,         // Aggregate tradeId\n' +
@@ -307,7 +307,7 @@ var big_api_map = {
             url: '/api/v3/klines',
             params: {
                 symbol : {required: true, type: 'string'},
-                interval : {required: true, type: 'enum', possible: ['1h', '30m', '15m', '5m', '1m', '1d', '1w', '1m']},
+                interval : {required: true, type: 'enum', possible: ['1m','5m', '15m','30m', '1h', '1d', '1w', '1M']},
                 startTime:{type: 'number'},
                 endTime: {type: 'number'},
                 limit :{type: 'number', description: 'Default 500; max 1000.', default: 500}
@@ -460,7 +460,7 @@ var big_api_map = {
         "Get Asset Info": {
             url: '/public/Assets',
             params: {
-                asset:{type: 'string', description: 'Comma delimited list of assets to get info on (ex: asset=XBT,ETH).'}
+                asset:{type: 'string', description: 'Comma delimited list of assets to get info on (e.g. asset=XBT,ETH).'}
             },
             doc_url: 'https://docs.kraken.com/rest/#operation/getAssetInfo',
             description: 'Get information about the assets that are available for deposit, withdrawal, trading and staking.',
@@ -491,7 +491,7 @@ var big_api_map = {
         "Get Tradable Asset Pairs": {
             url: '/public/AssetPairs',
             params: {
-                pair:{type: 'string', description: 'Asset pairs to get data for (ex: pair=XXBTCZUSD,XETHXXBT)'},
+                pair:{type: 'string', description: 'Asset pairs to get data for (e.g. pair=XXBTCZUSD,XETHXXBT)'},
                 info: {type: 'enum', possible: ['info', 'leverage', 'fees', 'margin'], description: 'Info to retrieve'}
             },
             doc_url: 'https://docs.kraken.com/rest/#operation/getTradableAssetPairs',
@@ -625,11 +625,22 @@ var big_api_map = {
         "Get Ticker Information": {
             url: '/public/Ticker',
             params: {
-                pair:{required: true, description: 'Asset pair to get data for (ex: pair=XBTUSD)', type: 'string'}
+                pair:{required: true, description: 'Asset pair to get data for (e.g. pair=XBTUSD)', type: 'string'}
             },
             go_down_1_level: true,
             doc_url: 'https://docs.kraken.com/rest/#operation/getTickerInformation',
             description: 'Get ticker information.',
+            response_attributes: {
+                a: 'Ask [price, whole lot volume, lot volume]',
+                b: "Bid [price, whole lot volume, lot volume]",
+                c: 'Last trade closed [price, lot volume]',
+                v: 'Volume [today, last 24 hours]',
+                p: 'Volume weighted average price [today, last 24 hours]',
+                t: 'Number of trades [today, last 24 hours]',
+                l: 'Low [today, last 24 hours]',
+                h: 'High [today, last 24 hours]',
+                o: 'Today\'s opening price'
+            },
             sample_response: '{\n' +
                 '  "error": [],\n' +
                 '  "result": {\n' +
@@ -676,9 +687,9 @@ var big_api_map = {
         "Get OHLC Data": {
             url: '/public/OHLC',
             params: {
-                pair:{required: true, type: 'string', description: 'Asset pair to get data for (ex: pair=XBTUSD)'},
+                pair:{required: true, type: 'string', description: 'Asset pair to get data for (e.g. pair=XBTUSD)'},
                 interval: {type: 'enum', description: 'Time frame interval in minutes', possible: [1, 5, 15, 30, 60, 240, 1440, 10080, 21600] },
-                since: {type: 'number', description: 'Return committed OHLC data since given ID (ex: since=1548111600)'}
+                since: {type: 'number', description: 'Return committed OHLC data since given ID (e.g. since=1548111600)'}
             },
             go_down_1_level: true,
             transformOutput: (matrix) => {
@@ -690,6 +701,10 @@ var big_api_map = {
             },
             doc_url: 'https://docs.kraken.com/rest/#operation/getOHLCData',
             description: 'Get OHLC data. Note: the last entry in the OHLC array is for the current, not-yet-committed frame and will always be present, regardless of the value of since.',
+            response_attributes: {
+                last: 'ID to be used as since when polling for new, committed OHLC data',
+                'pair*': 'Array of tick data arrays [time, open, high, low, close, vwap, volume, count]'
+            },
             sample_response: '{\n' +
                 '  "error": [],\n' +
                 '  "result": {\n' +
@@ -752,12 +767,16 @@ var big_api_map = {
         "Get Order Book": {
             url: '/public/Depth',
             params: {
-                pair:{required: true, type: 'string', description: 'Asset pair to get data for (ex: pair=XBTUSD)'},
+                pair:{required: true, type: 'string', description: 'Asset pair to get data for (e.g. pair=XBTUSD)'},
                 count: {type: 'number', description: 'maximum number of asks/bids. Can take value between 1 and 500', default: 100}
             },
             go_down_1_level: true,
             doc_url: 'https://docs.kraken.com/rest/#operation/getOrderBook',
             description: 'Get order book.',
+            response_attributes: {
+                asks: 'Ask side array of entries [price>, volume, timestamp]',
+                bids: 'Bid side array of entries [price, volume, timestamp]'
+            },
             sample_response: '{\n' +
                 '  "error": [],\n' +
                 '  "result": {\n' +
@@ -793,8 +812,8 @@ var big_api_map = {
         "Get Recent Trades": {
             url: '/public/Trades',
             params: {
-                pair:{required: true, type: 'string', description: 'Asset pair to get data for (ex: pair=XBTUSD)'},
-                since: {type: 'number', description: 'Return trade data since given timestamp (ex: since=1548111600)'}
+                pair:{required: true, type: 'string', description: 'Asset pair to get data for (e.g. pair=XBTUSD)'},
+                since: {type: 'number', description: 'Return trade data since given timestamp (e.g. since=1548111600)'}
             },
             go_down_1_level: true,
             transformOutput: (matrix) => {
@@ -807,6 +826,11 @@ var big_api_map = {
             doc_url: 'https://docs.kraken.com/rest/#operation/getRecentTrades',
             description: 'Returns the last 1000 trades by default\n' +
                 '\n',
+
+            response_attributes :{
+                last: 'ID to be used as since when polling for new trade data',
+                'pair*' : 'Array of trade entries [price, volume time, buy/sell, market/limit, miscellaneous]'
+            },
             sample_response: '{\n' +
                 '  "error": [],\n' +
                 '  "result": {\n' +
@@ -843,8 +867,8 @@ var big_api_map = {
         "Get Recent Spreads": {
             url: '/public/Spread',
             params: {
-                pair:{required: true, type: 'string', description: 'Asset pair to get data for (ex: pair=XBTUSD)'},
-                since: {type: 'number', description: 'Return spread data since given timestamp (ex: since=1548122302)'}
+                pair:{required: true, type: 'string', description: 'Asset pair to get data for (e.g. pair=XBTUSD)'},
+                since: {type: 'number', description: 'Return spread data since given timestamp (e.g. since=1548122302)'}
 
             },
             go_down_1_level: true,
@@ -857,6 +881,10 @@ var big_api_map = {
             },
             doc_url: 'https://docs.kraken.com/rest/#operation/getRecentSpreads',
             description: 'Ger recent spread' ,
+            response_attributes :{
+                last: 'ID to be used as since when polling for new spread data',
+                'pair*' : 'Array of spread entries [time, bid, ask]'
+            },
             sample_response: '{\n' +
                 '  "error": [],\n' +
                 '  "result": {\n' +
@@ -1119,7 +1147,7 @@ var big_api_map = {
         "Return Loan Order": {
             url: '',
             params: {
-                currency: {required: true, type: 'string', description: 'currency (ex: BTC)'},
+                currency: {required: true, type: 'string', description: 'currency (e.g. BTC)'},
                 command: {default: 'returnLoanOrders', append_to_url: true}
             },
             doc_url: 'https://docs.poloniex.com/#returnloanorders',
@@ -1261,7 +1289,7 @@ var big_api_map = {
         "Get 24hr Stats": {
             url: '/api/v1/market/stats',
             params: {
-                symbol: {required: true, type: 'string', description: 'symbol (ex: BTC-USDT)'}
+                symbol: {required: true, type: 'string', description: 'symbol (e.g. BTC-USDT)'}
             },
             go_down_1_level: true,
             doc_url: 'https://docs.kucoin.com/#get-24hr-stats',
@@ -1303,7 +1331,7 @@ var big_api_map = {
         "Get Aggregated Order Book": {
             url: '/api/v1/market/orderbook/level2_100',
             params: {
-                symbol: {required: true, type: 'string', description: 'symbol (ex: BTC-USDT)'}
+                symbol: {required: true, type: 'string', description: 'symbol (e.g. BTC-USDT)'}
             },
             go_down_1_level: true,
             transformOutput: (matrix) => {
@@ -1324,7 +1352,7 @@ var big_api_map = {
         "Get Trade Histories": {
             url: '/api/v1/market/histories',
             params: {
-                symbol: {required: true, type: 'string', description: 'symbol (ex: BTC-USDT)'}
+                symbol: {required: true, type: 'string', description: 'symbol (e.g. BTC-USDT)'}
             },
             go_down_1_level: true,
             doc_url: 'https://docs.kucoin.com/#get-trade-histories',
@@ -1349,7 +1377,7 @@ var big_api_map = {
         "Get Candlesticks": {
             url: '/api/v1/market/candles',
             params: {
-                symbol: {required: true, type: 'string', description: 'symbol (ex: BTC-USDT)'},
+                symbol: {required: true, type: 'string', description: 'symbol (e.g. BTC-USDT)'},
                 type: {
                     required: true,
                     type: 'enum',
@@ -1433,7 +1461,7 @@ var big_api_map = {
                     required: true,
                     replace_2dots: true,
                     type: 'string',
-                    description: 'currency (ex: BTC)'
+                    description: 'currency (e.g. BTC)'
                 },
                 chain: {type: 'string', description: 'Support for querying the chain of currency, return the currency details of all chains by default.'}
             },
@@ -1466,7 +1494,7 @@ var big_api_map = {
             url: '/api/v1/prices',
             params: {
                 base: {type: 'string', default: 'USD', description: 'Ticker symbol of a base currency,eg.USD,EUR. Default is USD'},
-                currencies: {type: 'string', description: 'Comma-separated cryptocurrencies to be converted into fiat, e.g.: BTC,ETH, etc. Default to return the fiat price of all currencies.'}
+                currencies: {type: 'string', description: 'Comma-separated cryptocurrencies to be converted into fiat, e.g. BTC,ETH, etc. Default to return the fiat price of all currencies.'}
             },
             go_down_1_level: true,
             go_up_1_level: true,
@@ -1491,7 +1519,7 @@ var big_api_map = {
                 symbol: {
                     required: true,
                     replace_2dots: true,
-                    type: 'string', description: 'symbol (ex: USDT-BTC)'
+                    type: 'string', description: 'symbol (e.g. USDT-BTC)'
                 },
             },
             go_down_1_level: true,
@@ -1536,7 +1564,7 @@ var big_api_map = {
         "Symbol Details": {
             url: '/v1/symbols/details/:symbol',
             params:{
-                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (ex: BTCUSD)'}
+                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (e.g. BTCUSD)'}
             },
             doc_url: 'https://docs.gemini.com/rest-api/#symbol-details',
             description: 'This endpoint retrieves extra detail on supported symbols, such as minimum order size, tick size, quote increment and more.',
@@ -1554,7 +1582,7 @@ var big_api_map = {
         "Ticker": {
             url: '/v1/pubticker/:symbol',
             params:{
-                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (ex: BTCUSD)'}
+                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (e.g. BTCUSD)'}
             },
             doc_url: 'https://docs.gemini.com/rest-api/#ticker',
             description: 'This endpoint retrieves information about recent trading activity for the symbol.',
@@ -1572,7 +1600,7 @@ var big_api_map = {
         "Ticker V2": {
             url: '/v2/ticker/:symbol',
             params:{
-                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (ex: BTCUSD)'}
+                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (e.g. BTCUSD)'}
             },
             doc_url: 'https://docs.gemini.com/rest-api/#ticker-v2',
             description: 'This endpoint retrieves information about recent trading activity for the provided symbol.',
@@ -1595,7 +1623,7 @@ var big_api_map = {
         "Candlesticks": {
             url: '/v2/candles/:symbol/:time_frame',
             params:{
-                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (ex: BTCUSD)'},
+                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (e.g. BTCUSD)'},
                 time_frame:{required: true, replace_2dots: true, description: 'Time range for each candle', type: 'enum', possible: ['1m', '5m', '15m', '30m', '1hr', '6hr', '1day']}
             },
             transformOutput: (matrix) => {
@@ -1609,12 +1637,12 @@ var big_api_map = {
             description: 'This endpoint retrieves time-intervaled data for the provided symbol.',
             sample_response: '[\n' +
                 '    [\n' +
-                '     1559755800000,\n' +
-                '     7781.6,\n' +
-                '     7820.23,\n' +
-                '     7776.56,\n' +
-                '     7819.39,\n' +
-                '     34.7624802159\n' +
+                '     1559755800000,  // Time in milliseconds\n' +
+                '     7781.6, // Open price\n' +
+                '     7820.23, // High price\n' +
+                '     7776.56, // Low price\n' +
+                '     7819.39 // Close price,\n' +
+                '     34.7624802159 // Volume\n' +
                 '    ],\n' +
                 '    [1559755800000,\n' +
                 '    7781.6,\n' +
@@ -1628,7 +1656,7 @@ var big_api_map = {
         "Current Order Book": {
             url: '/v1/book/:symbol',
             params:{
-                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (ex: BTCUSD)'},
+                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (e.g. BTCUSD)'},
                 limit_bids: {type: 'number', description: 'Limit the number of bid (offers to buy) price levels returned. Default is 50. May be 0 to return the full order book on this side.', default: 50},
                 limit_asks: {type: 'number', description: 'Limit the number of ask (offers to sell) price levels returned. Default is 50. May be 0 to return the full order book on this side.', default: 50}
             },
@@ -1655,7 +1683,7 @@ var big_api_map = {
         "Trade History": {
             url: '/v1/trades/:symbol',
             params:{
-                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (ex: BTCUSD)'},
+                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (e.g. BTCUSD)'},
                 timestamp: {type: 'number', description: 'Only return trades after this timestamp. If not present, will show the most recent trades'},
                 limit_trades: {type: 'number', default: 50, description: 'The maximum number of trades to return. The default is 50.'},
                 include_breaks: {type: 'enum', default: 'false', possible: ['true', 'false'], description: 'Whether to display broken trades'}
@@ -1678,7 +1706,7 @@ var big_api_map = {
         "Current Auction": {
             url: '/v1/auction/:symbol',
             params:{
-                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (ex: BTCUSD)'},
+                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (e.g. BTCUSD)'},
             },
             doc_url: 'https://docs.gemini.com/rest-api/#current-auction',
             description: 'Get current auction.',
@@ -1697,7 +1725,7 @@ var big_api_map = {
         "Auction History": {
             url: '/v1/auction/:symbol/history',
             params:{
-                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (ex: BTCUSD)'},
+                symbol:{required: true, replace_2dots: true, type: 'string', description: 'Trading pair symbol (e.g. BTCUSD)'},
                 since: {type:'number', description: 'Only returns auction events after the specified UNIX timestamp. If not present or empty, will show the most recent auction events'},
                 limit_auction_results: {type:'number', description: 'The maximum number of auction events to return. The default is 50.' , default: 50},
                 include_indicative: {type:'enum', possible: ['true', 'false'], description: 'Whether to include publication of indicative prices and quantities. Choose true to explicitly enable, and false to disable.', default: 'true' }
@@ -1765,7 +1793,7 @@ var big_api_map = {
             url: '/api/v5/market/tickers',
             params:{
                 instType: {required: true, type: 'enum', possible: ['SPOT', 'SWAP', 'FUTURE', 'OPTION'],description: 'Instrument type'},
-                uly: {type: 'string', description: 'Underlying (ex: BTC-USD). Only applicable to FUTURES/SWAP/OPTION'}
+                uly: {type: 'string', description: 'Underlying (e.g. BTC-USD). Only applicable to FUTURES/SWAP/OPTION'}
             },
             go_down_1_level: true,
             doc_url: 'https://www.okx.com/docs-v5/en/#rest-api-market-data-get-tickers',
@@ -1871,10 +1899,10 @@ var big_api_map = {
                 '        {\n' +
                 '            "asks": [\n' +
                 '                [\n' +
-                '                    "41006.8",\n' +
-                '                    "0.60038921",\n' +
-                '                    "0",\n' +
-                '                    "1"\n' +
+                '                    "41006.8",    // Depth price\n' +
+                '                    "0.60038921",    // Number of contracts at the price\n' +
+                '                    "0",    // Number of liquidated orders at the price\n' +
+                '                    "1",   // Number of orders at the price \n' +
                 '                ]\n' +
                 '            ],\n' +
                 '            "bids": [\n' +
@@ -1909,19 +1937,19 @@ var big_api_map = {
                 return matrix
             },
             doc_url: 'https://www.okx.com/docs-v5/en/#rest-api-market-data-get-candlesticks-history',
-            description: 'Retrieve the candlestick data.',
+            description: 'Retrieve history candlestick charts from recent years.',
             sample_response: '{\n' +
                 '    "code":"0",\n' +
                 '    "msg":"",\n' +
                 '    "data":[\n' +
                 '     [\n' +
-                '        "1597026383085",\n' +
-                '        "3.721",\n' +
-                '        "3.743",\n' +
-                '        "3.677",\n' +
-                '        "3.708",\n' +
-                '        "8422410",\n' +
-                '        "22698348.04828491"\n' +
+                '        "1597026383085",  // Time in milliseconds\n' +
+                '        "3.721",  // Open price \n' +
+                '        "3.743",  // High price \n' +
+                '        "3.677",  // Low price \n' +
+                '        "3.708",  // Close price \n' +
+                '        "8422410",   // Trading volume, with a unit of contact \n' +
+                '        "22698348.04828491"    // Trading volume, with a unit of currency \n' +
                 '    ],\n' +
                 '    [\n' +
                 '        "1597026383085",\n' +
@@ -1961,11 +1989,11 @@ var big_api_map = {
                 '    "msg":"",\n' +
                 '    "data":[\n' +
                 '     [\n' +
-                '        "1597026383085",\n' +
-                '        "3.721",\n' +
-                '        "3.743",\n' +
-                '        "3.677",\n' +
-                '        "3.708"\n' +
+                '        "1597026383085",   // Time in milliseconds\n' +
+                '        "3.721",  // Open price\n' +
+                '        "3.743",  // High price\n' +
+                '        "3.677",  // Low price\n' +
+                '        "3.708"  // Close price\n' +
                 '    ],\n' +
                 '    [\n' +
                 '        "1597026383085",\n' +
@@ -2002,11 +2030,11 @@ var big_api_map = {
                 '    "msg":"",\n' +
                 '    "data":[\n' +
                 '     [\n' +
-                '        "1597026383085",\n' +
-                '        "3.721",\n' +
-                '        "3.743",\n' +
-                '        "3.677",\n' +
-                '        "3.708"\n' +
+                '        "1597026383085", // Time in milliseconds\n' +
+                '        "3.721", // Open price\n' +
+                '        "3.743",   // High price  \n' +
+                '        "3.677",    // Low price \n' +
+                '        "3.708"    // Close price \n' +
                 '    ],\n' +
                 '    [\n' +
                 '        "1597026383085",\n' +
@@ -2100,7 +2128,7 @@ var big_api_map = {
                 '    "code": "0",\n' +
                 '    "msg": "",\n' +
                 '    "data": [ {\n' +
-                '            "usdCny": "6.44"\n' +
+                '            "usdCny": "6.44"  // Exchange rate \n' +
                 '}]\n' +
                 '}'
         },
@@ -2135,7 +2163,7 @@ var big_api_map = {
             url: '/api/v5/public/instruments',
             params:{
                 instType: {required: true, type: 'enum', possible: ['SPOT', 'SWAP', 'FUTURE', 'OPTION'],description: 'Instrument type'},
-                uly: {type: 'string', description: 'Underlying (ex: BTC-USD). Only applicable to FUTURES/SWAP/OPTION'},
+                uly: {type: 'string', description: 'Underlying (e.g. BTC-USD). Only applicable to FUTURES/SWAP/OPTION'},
                 instId:{type: 'string', description: 'Instrument ID'},
             },
             go_down_1_level: true,
@@ -2167,7 +2195,7 @@ var big_api_map = {
             url: '/api/v5/public/delivery-exercise-history',
             params:{
                 instType: {required: true, type: 'enum', possible: [  'FUTURE', 'OPTION'],description: 'Instrument type'},
-                uly: {type: 'string', description: 'Underlying (ex: BTC-USD). Only applicable to FUTURES/OPTION'},
+                uly: {type: 'string', description: 'Underlying (e.g. BTC-USD). Only applicable to FUTURES/OPTION'},
                 after:{type: 'string', description: 'Pagination of data to return records earlier than the requested timestamp'},
                 before:{type: 'string', description: 'Pagination of data to return records newer than the requested timestamp'},
                 limit:{type: 'number', description: 'Number of results per request. The maximum is 100; The default is 100', default: 100}
@@ -2601,9 +2629,9 @@ var big_api_map = {
                 '    "code": "0",\n' +
                 '    "data": [\n' +
                 '        [\n' +
-                '            "1630425600000",\n' +
-                '            "7596.2651",\n' +
-                '            "7149.4855"\n' +
+                '            "1630425600000",    // Timestamp\n' +
+                '            "7596.2651",    // Sell volume \n' +
+                '            "7149.4855"    // Buy volume \n' +
                 '        ],\n' +
                 '        [\n' +
                 '            "1630339200000",\n' +
@@ -2633,8 +2661,8 @@ var big_api_map = {
                 '    "code": "0",\n' +
                 '    "data": [\n' +
                 '        [\n' +
-                '            "1630492800000",\n' +
-                '            "0.4614"\n' +
+                '            "1630492800000",    // Timestamp\n' +
+                '            "0.4614"    // Margin lending ratio\n' +
                 '        ],\n' +
                 '        [\n' +
                 '            "1630492500000",\n' +
@@ -2663,8 +2691,8 @@ var big_api_map = {
                 '    "code": "0",\n' +
                 '    "data": [\n' +
                 '        [\n' +
-                '            "1630502100000",\n' +
-                '            "1.25"\n' +
+                '            "1630502100000",    // Timestamp\n' +
+                '            "1.25"    // Long/short ratio\n' +
                 '        ]\n' +
                 '    ],\n' +
                 '    "msg": ""\n' +
@@ -2689,9 +2717,9 @@ var big_api_map = {
                 '    "code": "0",\n' +
                 '    "data": [\n' +
                 '        [\n' +
-                '            "1630502400000",\n' +
-                '            "1713028741.6898",\n' +
-                '            "39800873.554"\n' +
+                '            "1630502400000",    // Timestamp\n' +
+                '            "1713028741.6898",    // Open interest\n' +
+                '            "39800873.554"    // Volume\n' +
                 '        ]\n' +
                 '    ],\n' +
                 '    "msg": ""\n' +
@@ -2714,9 +2742,9 @@ var big_api_map = {
                 '    "code": "0",\n' +
                 '    "data": [\n' +
                 '        [\n' +
-                '            "1630368000000",\n' +
-                '            "3458.1000",\n' +
-                '            "78.8000"\n' +
+                '            "1630368000000",    // Timestamp\n' +
+                '            "3458.1000",    // Open interest(coin as the unit)\n' +
+                '            "78.8000"    // Volume（coin as the unit) \n' +
                 '        ]\n' +
                 '    ],\n' +
                 '    "msg": ""\n' +
@@ -2739,9 +2767,9 @@ var big_api_map = {
                 '    "code": "0",\n' +
                 '    "data": [\n' +
                 '        [\n' +
-                '            "1630512000000",\n' +
-                '            "2.7261",\n' +
-                '            "2.3447"\n' +
+                '            "1630512000000",    // Timestamp \n' +
+                '            "2.7261",    // Open interest ratio\n' +
+                '            "2.3447"    // Volume ratio\n' +
                 '        ],\n' +
                 '        [\n' +
                 '            "1630425600000",\n' +
@@ -2771,12 +2799,12 @@ var big_api_map = {
                 '    "code": "0",\n' +
                 '    "data": [\n' +
                 '        [\n' +
-                '            "1630540800000",\n' +
-                '            "20210902",\n' +
-                '            "6.4",\n' +
-                '            "18.4",\n' +
-                '            "0.7",\n' +
-                '            "0.4"\n' +
+                '            "1630540800000",    // Timestamp\n' +
+                '            "20210902",    // Contract expiry date, the format is YYYYMMdd, e.g. 20210623\n' +
+                '            "6.4",    // call open interest (coin as the unit)\n' +
+                '            "18.4",    // put open interest (coin as the unit)\n' +
+                '            "0.7",    // call Volume (coin as the unit)\n' +
+                '            "0.4"    // put Volume (coin as the unit)\n' +
                 '        ],\n' +
                 '        [\n' +
                 '            "1630540800000",\n' +
@@ -2810,12 +2838,12 @@ var big_api_map = {
                 '    "code": "0",\n' +
                 '    "data": [\n' +
                 '        [\n' +
-                '            "1630540800000",\n' +
-                '            "10000",\n' +
-                '            "0",\n' +
-                '            "0.5",\n' +
-                '            "0",\n' +
-                '            "0"\n' +
+                '            "1630540800000",    // Timestamp \n' +
+                '            "10000",    // Strike\n' +
+                '            "0",    // call open interest (coin as the unit)\n' +
+                '            "0.5",    // put open interest (coin as the unit)\n' +
+                '            "0",    // call Volume (coin as the unit)\n' +
+                '            "0"    // put Volume (coin as the unit)\n' +
                 '        ],\n' +
                 '        [\n' +
                 '            "1630540800000",\n' +
@@ -2856,13 +2884,13 @@ var big_api_map = {
             sample_response: '{\n' +
                 '    "code": "0",\n' +
                 '    "data": [\n' +
-                '        "1630512000000",\n' +
-                '        "8.55",\n' +
-                '        "67.3",\n' +
-                '        "16.05",\n' +
-                '        "16.3",\n' +
-                '        "126.4",\n' +
-                '        "40.7"\n' +
+                '        "1630512000000",    // Timestamp \n' +
+                '        "8.55",    // call option buy volume, in settlement currency\n' +
+                '        "67.3",    // call option sell volume, in settlement currency\n' +
+                '        "16.05",    // put option buy volume, in settlement currency\n' +
+                '        "16.3",    // put option sell volume, in settlement currency\n' +
+                '        "126.4",    // call block volume\n' +
+                '        "40.7"    // put block volume\n' +
                 '    ],\n' +
                 '    "msg": ""\n' +
                 '}'
@@ -3079,8 +3107,8 @@ var big_api_map = {
                 '        ],\n' +
                 '        "bid": [\n' +
                 '          [\n' +
-                '            "9777.5",\n' +
-                '            "0.00002"\n' +
+                '            "9777.5",                      // Price\n' +
+                '            "0.00002"                      // Amount\n' +
                 '          ],\n' +
                 '          [\n' +
                 '            "9776.26",\n' +
@@ -3883,7 +3911,7 @@ var big_api_map = {
         "Get Derivatives Status History": {
             url: '/v2/status/deriv/:symbol/hist',
             params: {
-                symbol: {required: true, replace_2dots: true, description: 'The symbol you want information about. (e.g. tBTCF0:USTF0 tETHF0:USTF0, etc.)', type: string},
+                symbol: {required: true, replace_2dots: true, description: 'The symbol you want information about. (e.g. tBTCF0:USTF0, tETHF0:USTF0, etc.)', type: string},
                 start: {type: 'number', description: 'Millisecond start time'},
                 end: {type: 'number', description: 'Millisecond end time'},
                 limit: {type: 'number', description: 'Number of records (Max: 5000)', default: 100},
@@ -4510,6 +4538,45 @@ var big_api_map = {
             },
             doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-all-supported-trading-symbol-v2',
             description: 'Get all Supported Trading Symbol',
+            response_attributes: {
+                status: 'status',
+
+                sc: 'symbol(outside)',
+                dn: 'display name',
+                bc: 'base currency',
+                bcdn: 'base currency display name',
+                qc: 'quote currency',
+                qcdn: 'quote currency display name',
+                state: 'symbol status. unknown，not-online，pre-online，online，suspend，offline，transfer-board，fuse',
+                whe: 'white enabled',
+                cd: 'country disabled',
+                te: 'trade enabled',
+                toa: 'the time trade open at',
+                sp: 'symbol partition',
+                w: 'weight sort',
+                ttp: 'trade total precision',
+                tap: 'trade amount precision',
+                tpp: 'trade price precision',
+                fp: 'fee precision',
+                suspend_desc: 'suspend desc',
+                transfer_board_desc: 'transfer board desc',
+                tags: 'Tags, multiple tags are separated by commas, such as: st, hadax',
+                lr: 'leverage ratio, such as: 3.5, or null if the symbol does not support this leverage ratio',
+                smlr: 'super-margin leverage ratio, such as: 3, or null if the symbol does not support super-margin',
+                flr: 'C2C leverage ratio, such as:3, or null if the symbol does not support C2C',
+                wr: 'withdraw_risk, such as: 3, or null if the symbol does not support super-margin',
+                d: 'direction: 1 for long and 2 for short',
+                elr: 'etp leverage ratio',
+
+                castate: 'not mandatory. The state of the call auction; it will only be displayed when it is in the 1st and 2nd stage of the call auction. Enumeration values: "ca_1", "ca_2"',
+                ca1oa: 'not mandatory. this information is only available for that symbols configured with call auction. The total number of milliseconds since 0:0:0:00,000 on January 1, 1970 UTC to the present.',
+                ca2oa: 'not mandatory. this information is only available for that symbols configured with call auction. The total number of milliseconds since 0:0:0:00,000 on January 1, 1970 UTC to the present.',
+
+                ts: 'timestamp of incremental data',
+                full: 'full data flag: 0 for no and 1 for yes',
+                err_code: 'error code(returned when the interface reports an error)',
+                err_msg: 'error msg(returned when the interface reports an error)',
+            },
             sample_response: '{\n' +
                 '    "status":"ok",\n' +
                 '    "data":[\n' +
@@ -4603,6 +4670,41 @@ var big_api_map = {
             },
             doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-all-supported-currencies-v2',
             description: 'Get all Supported Currencies',
+            response_attributes: {
+                status: 'status',
+
+                cc: 'currency code',
+                dn: 'currency display name',
+                fn: 'currency full name',
+                at: 'asset type, 1 virtual currency 2 fiat currency',
+                wp: 'withdraw precision',
+                ft: 'fee type, eth: Fixed fee, btc: Interval fee husd: Fee charged in proportion',
+                dma: 'deposit min amount',
+                wma: 'withdraw min amount',
+                sp: 'show precision',
+                w: 'weight',
+                qc: 'be quote currency',
+                state: 'symbol state. unkown, not-online, online, offline',
+                v: 'visible or not -- users who have offline currency but have assets can see it',
+                whe: 'white enabled',
+                cd: 'country disabled--users who have country disabled currency but have assets can see it',
+                de: 'deposit enabled',
+                wed: 'withdraw enabled',
+                cawt: 'currency addr with tag',
+                fc: 'fast confirms',
+                sc: 'safe confirms',
+                swd: 'suspend withdraw desc',
+                wd: 'withdraw desc',
+                sdd: 'suspend deposit desc',
+                dd: 'deposit desc',
+                svd: 'suspend visible desc',
+                tags: 'Tags, multiple tags are separated by commas, such as: st, hadax',
+
+                ts: 'timestamp of incremental data',
+                full: 'full data flag: 0 for no and 1 for yes',
+                err_code: 'error code(returned when the interface reports an error)',
+                err_msg: 'error msg(returned when the interface reports an error)',
+            },
             sample_response: '{\n' +
                 '    "status":"ok",\n' +
                 '    "data":[\n' +
@@ -4699,6 +4801,49 @@ var big_api_map = {
             },
             doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-currencys-settings',
             description: 'Get Currencys Settings',
+            response_attributes: {
+                status: 'status',
+
+                name: 'currency name',
+                dn: 'currency display name',
+                vat: 'visible assets timestamp',
+                det: 'deposit enable timestamp',
+                wet: 'withdraw enable timestamp',
+                wp: 'withdraw precision',
+                ct: 'currency type',
+                cp: 'currency partition. INVALID, all(PRO and HADAX), pro, hadax',
+                ss: 'support sites. unknown, spot, otc, futures(coin-m futures), minepool( not supports mulan), institution, swap(coin-m swap), asset(mulan does not support transfer, it is only used for reconciliation, cfd(cfd contract in Japan), chat(Huobi Chat IM), option, linear-swap(usdt-m), custody(funding account in HK), turbine, margin, super-margin',
+                oe: '0: disable, 1: enable',
+                dma: 'deposit min amount',
+                wma: 'withdraw min amount',
+                sp: 'show precision',
+                w: 'weight',
+                qc: 'be quote currency',
+                state: 'currency state. unkown, not-online, online, offline',
+                v: 'visible',
+                whe: 'white enabled',
+                cd: 'country disabled',
+                de: 'deposit enabled',
+                we: 'withdraw enabled',
+                cawt: 'currency addr with tag',
+                cao: 'currency addr oneoff',
+                fc: 'fast confirms',
+                sc: 'safe confirms',
+                swd: 'suspend withdraw desc',
+                wd: 'withdraw desc',
+                sdd: 'suspend deposit desc',
+                dd: 'deposit desc',
+                svd: 'suspend visible desc',
+                tags: 'Tags, multiple tags are separated by commas, such as: st, hadax',
+                fn: 'currency full name',
+
+
+
+                ts: 'timestamp of incremental data',
+                full: 'full data flag: 0 for no and 1 for yes',
+                'err-code': 'error code(returned when the interface reports an error)',
+                'err-msg': 'error msg(returned when the interface reports an error)',
+            },
             sample_response: '{\n' +
                 '    "status":"ok",\n' +
                 '    "data":[\n' +
@@ -4803,6 +4948,48 @@ var big_api_map = {
             },
             doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-symbols-setting',
             description: 'Get Symbols Settings',
+            response_attributes:{
+                status: 'status',
+
+                symbol: 'symbol(outside)',
+                sn: 'symbol name',
+                bc: 'base currency',
+                qc: 'quote currency',
+                state: 'symbol status. unknown，not-online，pre-online，online，suspend，offline，transfer-board，fuse',
+                ve: 'visible',
+                we: 'white enabled',
+                dl: 'delist',
+                cd: 'country disabled',
+                te: 'trade enabled',
+                ce: 'cancel enabled',
+                tet: 'trade enable timestamp',
+                toa: 'the time trade open at',
+                tca: 'the time trade close at',
+                voa: 'visible open at',
+                vca: 'visible close at',
+                sp: 'symbol partition',
+                tm: 'symbol partition',
+                w: 'weight sort',
+                ttp: 'trade total precision',
+                tap: 'trade amount precision',
+                tpp: 'trade price precision',
+                fp: 'fee precision',
+                tags: 'Tags, multiple tags are separated by commas, such as: st, hadax',
+
+                bcdn: 'base currency display name',
+                qcdn: 'quote currency display name',
+                elr: 'etp leverage ratio',
+                castate: 'Not required. The state of the call auction; it will only be displayed when it is in the 1st and 2nd stage of the call auction. Enumeration values: "ca_1", "ca_2"',
+                ca1oa: 'not mandatory. the open time of call auction phase 1, total milliseconds since January 1, 1970 0:0:0:00ms UTC',
+                ca1ca: 'not mandatory. the close time of call auction phase 1, total milliseconds since January 1, 1970 0:0:0:00ms UTC',
+                ca2oa: 'not mandatory. the open time of call auction phase 2, total milliseconds since January 1, 1970 0:0:0:00ms UTC',
+                ca2ca: 'not mandatory. the close time of call auction phase 2, total milliseconds since January 1, 1970 0:0:0:00ms UTC',
+
+                ts: 'timestamp of incremental data',
+                full: 'full data flag: 0 for no and 1 for yes',
+                'err-code': 'error code(returned when the interface reports an error)',
+                'err-msg': 'error msg(returned when the interface reports an error)',
+            },
             sample_response: '{\n' +
                 '    "status":"ok",\n' +
                 '    "data":[\n' +
@@ -4896,6 +5083,50 @@ var big_api_map = {
             },
             doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-market-symbols-setting',
             description: 'Get Market Symbols Settings',
+            response_attributes: {
+                status: 'status',
+
+                symbol: 'symbol(outside)',
+                bc: 'base currency',
+                qc: 'quote currency',
+                state: 'symbol status. unknown，not-online，pre-online，online，suspend，offline，transfer-board，fuse',
+                sp: 'symbol partition',
+                tags: 'Tags, multiple tags are separated by commas, such as: st, hadax',
+                lr: 'leverage ratio of margin symbol, provided by Global',
+                smlr: 'leverage ratio of super-margin symbol, provided by Global',
+                pp: 'price precision',
+                ap: 'amount precision',
+                vp: 'value precision',
+                minoa: 'min order amount',
+                maxoa: 'max order amount',
+                minov: 'min order value',
+                lominoa: 'min amount of limit price order',
+                lomaxoa: 'max amount of limit price order',
+                lomaxba: 'max amount of limit price buy order',
+                lomaxsa: 'max amount of limit price sell order',
+                smminoa: 'min amount of market price sell order',
+                smmaxoa: 'max amount of market price sell order',
+                bmmaxov: 'max amount of market price buy order',
+                blmlt: 'Buy limit must less than',
+                slmgt: 'Sell limit must greater than',
+                msormlt: 'Market sell order rate must less than',
+                mbormlt: 'Market buy order rate must less than',
+                at: 'trading by api interface',
+                u: 'ETP: symbol',
+
+                ct: 'charge time(unix time in millisecond, just for symbols of ETP)',
+                rt: 'rebal time(unix time in millisecond, just for symbols of ETP)',
+                rthr: 'rebal threshold(just for symbols of ETP)',
+                in: 'ETP: init nav',
+                maxov: 'max value of market price order',
+                flr: 'C2C: funding leverage ratio',
+                castate: 'not mandatory. The state of the call auction; it will only be displayed when it is in the 1st and 2nd stage of the call auction. Enumeration values: "ca_1", "ca_2"',
+
+                ts: 'timestamp of incremental data',
+                full: 'full data flag: 0 for no and 1 for yes',
+                'err-code': 'error code(returned when the interface reports an error)',
+                'err-msg': 'error msg(returned when the interface reports an error)',
+            },
             sample_response: '{\n' +
                 '    "status": "ok",\n' +
                 '    "data": [\n' +
@@ -4989,6 +5220,47 @@ var big_api_map = {
             },
             doc_url: 'https://huobiapi.github.io/docs/spot/v1/en/#get-chains-information',
             description: 'Get Chains Information',
+            response_attributes:{
+                'status': 'status',
+
+                'adt': 'has addr deposit tag',
+                'ac': 'address of chain',
+                'ao': 'addr oneoff',
+                'awt': 'addr with tag',
+                'chain': 'chain name',
+                'ct': 'chain type. plain, live, old, new, legal, tooold',
+                'code': 'obsolete, please to use chain',
+                'currency': 'currency',
+                'deposit-desc': 'deposit desc',
+                'de': 'deposit enable',
+                'dma': 'deposit-min-amount, if the amount is less than this amount will be: 1. The small amount will exceed the deposit-min-amount and then be credited 2. The small amount will not be accumulated and will never be credited to the account',
+                'deposit-tips-desc': 'deposit tips desc',
+                'dn': 'display name, general be upper',
+                'fc': 'fast-confirms, when height of the exchange node to that chain tail is greater than this number, the deposit and withdrawal will be not settled to the user account, this deposit order is regarded as an unsafe deposit, and the available amount in the withdrawal and account transfer must be excluded that amount from this order.',
+                'ft': 'fee type',
+                'default': 'is default',
+                'replace-chain-info-desc': 'replace chain info desc',
+                'replace-chain-notification-desc': 'replace chain notification desc',
+                'replace-chain-popup-desc': 'replace chain popup desc',
+                'sc': "safe confirms, When the distance between the height of the current exchange's chain node and the chain tail is greater than this number, the asset management DW will mark this order as a safe deposit, and it will be regarded as the available amount when withdrawing and transferring funds.",
+                'sda': 'suspend deposit announcement',
+                'suspend-deposit-desc': 'suspend deposit desc',
+                'swa': 'suspend withdraw announcement',
+                'suspend-withdraw-desc': 'suspend withdraw desc',
+                'v': 'visible',
+                'withdraw-desc': 'withdraw desc',
+                'we': 'withdraw enable',
+                'wma': 'withdraw min amount, refused to withdraw if less than this amount',
+                'wp': 'withdraw precision, refused to withdraw if greater than this amount',
+
+                'withdraw-tips-desc': 'withdraw tips desc',
+                'suspend-visible-desc': 'suspend visible desc',
+
+                'ts': 'timestamp of incremental data',
+                'full': 'full data flag: 0 for no and 1 for yes',
+                'err-code': 'error code(returned when the interface reports an error)',
+                'err-msg': 'error msg(returned when the interface reports an error)',
+            },
             sample_response: '{\n' +
                 '    "status": "ok",\n' +
                 '    "data": [\n' +
@@ -5208,8 +5480,8 @@ var big_api_map = {
                 '        "version": 136107114472,\n' +
                 '        "bids": [\n' +
                 '            [\n' +
-                '                49790.87,\n' +
-                '                0.779876\n' +
+                '                49790.87,  // price\n' +
+                '                0.779876   // size\n' +
                 '            ],\n' +
                 '            [\n' +
                 '                49785.9,\n' +
@@ -5218,8 +5490,8 @@ var big_api_map = {
                 '        ],\n' +
                 '        "asks": [\n' +
                 '            [\n' +
-                '                49790.88,\n' +
-                '                2.980472\n' +
+                '                49790.88, // price\n' +
+                '                2.980472 // size \n' +
                 '            ],\n' +
                 '            [\n' +
                 '                49790.89,\n' +
@@ -5388,8 +5660,8 @@ var big_api_map = {
                         'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual'},
                 count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
                 reverse: {default: 'true', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
-                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
-                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+                startTime: {type: string, description: 'Starting date filter for results. (e.g. 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (e.g. 2014-12-26 11:00)'},
             },
             doc_url: 'https://www.bitmex.com/api/explorer/#!/Funding/Funding_get',
             description: 'Get funding history' ,
@@ -5410,8 +5682,8 @@ var big_api_map = {
                         'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual'},
                 count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
                 reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
-                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
-                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+                startTime: {type: string, description: 'Starting date filter for results. (e.g. 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (e.g. 2014-12-26 11:00)'},
 
             },
             doc_url: 'https://www.bitmex.com/api/explorer/#!/Instrument/Instrument_get',
@@ -5460,7 +5732,7 @@ var big_api_map = {
                 '  }\n' +
                 ']'
         },
-        "All Active Contract Series & Interval Pairs": {
+        "All Active Contract Series and Interval Pairs": {
             url: '/instrument/activeIntervals',
             doc_url: 'https://www.bitmex.com/api/explorer/#!/Instrument/Instrument_getActiveIntervals',
             description: 'This endpoint is useful for determining which pairs are live. It returns two arrays of strings. The first is intervals, such as ["XBT:perpetual", "XBT:quarterly", "XBT:biquarterly", "ETH:quarterly", ...]. These identifiers are usable in any query\'s symbol param. The second array is the current resolution of these intervals. Results are mapped at the same index.' ,
@@ -5479,8 +5751,8 @@ var big_api_map = {
                 symbol: {description: 'The composite index symbol.', required: true},
                 count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
                 reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
-                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
-                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+                startTime: {type: string, description: 'Starting date filter for results. (e.g. 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (e.g. 2014-12-26 11:00)'},
 
             },
             doc_url: 'https://www.bitmex.com/api/explorer/#!/Instrument/Instrument_getCompositeIndex',
@@ -5561,8 +5833,8 @@ var big_api_map = {
                         'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual'},
                 count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
                 reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
-                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
-                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+                startTime: {type: string, description: 'Starting date filter for results. (e.g. 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (e.g. 2014-12-26 11:00)'},
             },
             doc_url: 'https://www.bitmex.com/api/explorer/#!/Insurance/Insurance_get',
             description: 'Get insurance fund history.' ,
@@ -5581,8 +5853,8 @@ var big_api_map = {
                         'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual'},
                 count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
                 reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
-                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
-                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+                startTime: {type: string, description: 'Starting date filter for results. (e.g. 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (e.g. 2014-12-26 11:00)'},
             },
             doc_url: 'https://www.bitmex.com/api/explorer/#!/Liquidation/Liquidation_get',
             description: 'Get liquidation orders.' ,
@@ -5614,8 +5886,8 @@ var big_api_map = {
                         'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual', },
                 count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
                 reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
-                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
-                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+                startTime: {type: string, description: 'Starting date filter for results. (e.g. 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (e.g. 2014-12-26 11:00)'},
             },
             doc_url: 'https://www.bitmex.com/api/explorer/#!/Quote/Quote_get',
             description: 'Get quotes' ,
@@ -5637,8 +5909,8 @@ var big_api_map = {
                         'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual', },
                 count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
                 reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
-                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
-                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+                startTime: {type: string, description: 'Starting date filter for results. (e.g. 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (e.g. 2014-12-26 11:00)'},
                 binSize: {required: true, description: 'Time interval to bucket by', possible: ['1m','5m','1h','1d']},
                 partial: {description: 'If true, will send in-progress (incomplete) bins for the current time period.', possible: ['true', 'false'], default: 'false'}
             },
@@ -5662,8 +5934,8 @@ var big_api_map = {
                         'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual', },
                 count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
                 reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
-                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
-                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+                startTime: {type: string, description: 'Starting date filter for results. (e.g. 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (e.g. 2014-12-26 11:00)'},
             },
             doc_url: 'https://www.bitmex.com/api/explorer/#!/Settlement/Settlement_get',
             description: 'Get settlement history' ,
@@ -5709,8 +5981,8 @@ var big_api_map = {
                         'You can also send a timeframe, e.g. XBT:quarterly. Timeframes are nearest, daily, weekly, monthly, quarterly, biquarterly, and perpetual', },
                 count:{type: 'number', description: 'Number of results to fetch. Must be a positive integer.', default: 100},
                 reverse: {default: 'false', description: 'If true, will sort results newest first.', possible: ['true', 'false']},
-                startTime: {type: string, description: 'Starting date filter for results. (ex: 2014-12-26 11:00)'},
-                endTime: {type: string, description: 'Ending date filter for results. (ex: 2014-12-26 11:00)'},
+                startTime: {type: string, description: 'Starting date filter for results. (e.g. 2014-12-26 11:00)'},
+                endTime: {type: string, description: 'Ending date filter for results. (e.g. 2014-12-26 11:00)'},
             },
             doc_url: 'https://www.bitmex.com/api/explorer/#!/Trade/Trade_get',
             description: 'Get trades. Please note that indices (symbols starting with .) post trades at intervals to the trade feed. These have a size of 0 and are used only to indicate a changing price.' ,
