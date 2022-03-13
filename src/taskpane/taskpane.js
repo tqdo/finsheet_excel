@@ -744,7 +744,7 @@ function onBlurNewSymbol() {
 function clickNavigate(which){
   var all_components = ['symbols', 'metrics', 'etf', 'mutual_fund', 'equity_metrics', 'equity_full_financials', 'equity_candles', 'forex_candles', 'forex_all_rates',
                 'crypto_candles', 'crypto_profile', 'etf_candles', 'etf_profile', 'streaming', 'mutual_fund_candles', 'mutual_fund_profile', 'latest',
-    'pattern_recognition', 'support_resistance', 'aggregate_indicators', 'technical_indicators']
+    'pattern_recognition', 'support_resistance', 'aggregate_indicators', 'technical_indicators',     'console']
   for(var name of all_components){
     if(which == name){
       $("#" + which).css({ display: "block" });
@@ -757,6 +757,8 @@ function clickNavigate(which){
 
   if(['symbols', 'metrics', 'etf', 'mutual_fund'].includes(which)){
     makeDifferentGreen('search_dropdown_wrap')
+  } else if (which === 'console'){
+    makeDifferentGreen('console_left_bar')
   } else {
     makeDifferentGreen('functions_dropdown_wrap')
   }
@@ -1654,12 +1656,10 @@ function clickExampleFormula(){
 
 var possible_different_green_id = {search_dropdown_wrap: 1, functions_dropdown_wrap:1, console_left_bar: 1}
 function makeDifferentGreen(which){
-  console.log(3, which)
   for(var w of Object.keys(possible_different_green_id)){
     if(w === which){
       $('#' + w).addClass('left_bar_different_green')
     } else {
-      console.log(w)
       $('#' + w).removeClass('left_bar_different_green')
     }
   }
@@ -1852,6 +1852,34 @@ function concatHorizontally(data){
     res.push(one_row)
   }
   return res
+}
+
+window.pushNoti = function toastrNoti(message, duration, type) {
+  if (type === "error") {
+    iziToast.error({
+      title: 'Error',
+      message: message,
+      theme: 'dark',
+      backgroundColor: "#f44242",
+      messageColor: "white",
+      titleColor: "white",
+      position: 'bottomCenter',
+      timeout: duration,
+      class: 'toaster',
+    });
+  } else {
+    iziToast.success({
+      title: 'OK',
+      message: message,
+      theme: 'dark',
+      backgroundColor: "#0e8e32",
+      messageColor: "white",
+      titleColor: "white",
+      position: 'bottomCenter',
+      timeout: duration,
+      class: 'toaster',
+    });
+  }
 }
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});

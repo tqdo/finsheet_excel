@@ -24,6 +24,10 @@
     <script type="text/javascript" src="taskpane.js"></script>
     <script type="text/javascript" src="api_utils.js"></script>
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.3.0/css/iziToast.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.3.0/js/iziToast.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 
     <script>
         $(function(){
@@ -109,6 +113,9 @@
             <div id="aggregate_indicators" style="display: none"></div>
             <div id="technical_indicators" style="display: none"></div>
 
+
+            <div id="console" style="display: none"></div>
+
 <!--            <div id="esg" style="display: none"></div>-->
 <!--            <div id="earnings_quality" style="display: none"></div>-->
 
@@ -121,6 +128,361 @@
     </div>
 
 
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.0.0/jsoneditor.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.0.0/jsoneditor.min.js"></script>
+
+<!--    <script src="https://unpkg.com/browse/class-autobind@0.1.4/lib/autobind.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/class-autobind"></script>-->
+
+
+    <script type="text/babel" >
+        /* @flow */
+
+        // The following React methods should not be automatically bound.
+        const REACT_EXCLUDE_METHODS = {
+            getChildContext: true,
+            render: true,
+            componentWillMount: true,
+            componentDidMount: true,
+            componentWillReceiveProps: true,
+            shouldComponentUpdate: true,
+            componentWillUpdate: true,
+            componentDidUpdate: true,
+            componentWillUnmount: true,
+        };
+
+        function isExcluded(methodName) {
+            return (REACT_EXCLUDE_METHODS[methodName] === true);
+        }
+
+        function isFunction(item) {
+            return (typeof item === 'function');
+        }
+
+        function autobind(instance , proto ) {
+            if (proto == null) {
+                proto = Object.getPrototypeOf(instance);
+            }
+            let propertyNames = Object.getOwnPropertyNames(proto);
+            for (let name of propertyNames) {
+                let value = proto[name];
+                if (isFunction(value) && !isExcluded(name)) {
+                    instance[name] = proto[name].bind(instance);
+                }
+            }
+        }
+
+        class JSON_Display extends React.Component {
+            componentDidMount () {
+                const options = {
+                    mode: 'view',
+                };
+
+                this.jsoneditor = new JSONEditor(this.container, options);
+                this.jsoneditor.set(this.props.json);
+            }
+
+            componentWillUnmount () {
+                if (this.jsoneditor) {
+                    this.jsoneditor.destroy();
+                }
+            }
+
+            componentDidUpdate() {
+                this.jsoneditor.update(this.props.json);
+            }
+
+            render() {
+                return (
+                    <div className="jsoneditor-react-container" ref={elem => this.container = elem} />
+                );
+            }
+        }
+
+        class Console extends React.Component {
+            constructor(props) {
+                super(props);
+                autobind(this);
+                var show_dropdown_providers = {}
+                for(var provider of Object.keys(big_api_map)){
+                    show_dropdown_providers[provider] = 0
+                }
+                this.state={big_loading: false, provider: '', endpoint: '', description: '', original_doc_link: '', finsheet_doc_link: '',  original_api_url: '',
+                    loading_api: false, endpoint_params : {}, sheet_formula: '',  json: {},
+
+                    show_endpoint_params: true, have_click_make_api_call: false,
+
+                    show_dropdown_providers: show_dropdown_providers
+                }
+            }
+            clickProviderLeft(e){
+                var provider = e.currentTarget.id.slice(2,e.currentTarget.id.length)
+                var temp = duplicate(this.state.show_dropdown_providers)
+                temp[provider] = 1- temp[provider]
+                this.setState({show_dropdown_providers: temp})
+            }
+            updateEndpoint(provider, endpoint){
+                var dic = big_api_map[provider][endpoint]
+                var endpoint_params = dic.params ? dic.params : {}
+                for(var param of Object.keys(endpoint_params)){
+                    endpoint_params[param].value = 'default' in endpoint_params[param] ? endpoint_params[param].default : endpoint_params[param].possible ? 'Select a value' : ''
+                    endpoint_params[param].selected = false
+                    endpoint_params[param].show_desc = false
+                }
+
+                var show_dropdown_providers = duplicate(this.state.show_dropdown_providers)
+                show_dropdown_providers[provider] = 1
+                this.setState({big_loading: false, provider: provider,  endpoint:endpoint, description: dic.description,
+                    original_doc_link: dic.doc_url, original_api_url: big_api_map[provider].base_url + dic.url, sheet_formula: '=FS_Api("' + capFirst(provider) + '", "' + endpoint + '")',
+                    show_endpoint_params: true, have_click_make_api_call: false,
+                    endpoint_params: endpoint_params, show_dropdown_providers: show_dropdown_providers, url: window.location.href
+                })
+            }
+
+            componentDidMount() {
+                this.updateEndpoint('coinbase', 'Get currencies')
+            }
+            rebuildFormula(temp, param){
+                var formula = '=FS_Api("' + capFirst(this.state.provider) + '", "' + this.state.endpoint + '", {'
+                for(var para of Object.keys(temp)){
+                    if(temp[para].selected){
+                        if(temp[para].type === 'number'){
+                            formula += '"' + para + '", ' + temp[para].value + '; '
+                        } else {
+                            formula += '"' + para + '", "' + (temp[para].value === 'Select a value' ? '' : temp[para].value) + '"; '
+                        }
+                    }
+                }
+                if(formula.slice(formula.length-1, formula.length) === '{'){
+                    formula = formula.slice(0, formula.length-2) + ')'
+                } else {
+                    formula = formula.slice(0, formula.length-2) + '})'
+                }
+                return formula
+            }
+            tickBox(e){
+                var param = e.currentTarget.id.slice(4, e.currentTarget.id.length)
+                var temp = duplicate(this.state.endpoint_params)
+                temp[param].selected = !temp[param].selected
+
+                this.setState({endpoint_params: temp, sheet_formula: this.rebuildFormula(temp)})
+            }
+            toggleShowEndpointParams(){
+                this.setState((prevState, ) => ({
+                    show_endpoint_params: !prevState.show_endpoint_params,
+                }))
+            }
+            clickCallApi(){
+                var input_parameters_dic = {}
+                for(var param of Object.keys(this.state.endpoint_params)){
+                    if(this.state.endpoint_params[param].required){
+                        if(!this.state.endpoint_params[param].selected || this.state.endpoint_params[param].value === '' || this.state.endpoint_params[param].value === 'Select a value'){
+                            window.pushNoti(param + ' cannot be empty', 3000, 'error')
+                            return
+                        }
+                    }
+
+                    if(this.state.endpoint_params[param].selected){
+                        input_parameters_dic[param] = this.state.endpoint_params[param].value.toString()
+                    }
+                }
+                this.setState({ loading_api: true})
+
+                var provider=this.state.provider
+                var endpoint = this.state.endpoint
+                var api_key = readCookie("finsheet_api_key");
+
+                var check_values = checkValidProviderEndpoint(provider, endpoint)
+                if(check_values[2] !== ""){return [[check_values[2]]]}
+
+                var base_url = check_values[1], endpoint_dic = check_values[0]
+                var endpoint_url = endpoint_dic.url
+                var return_structure = endpoint_dic.return_is_list ? 'list' : 'dic'
+
+                var params = endpoint_dic.params ? endpoint_dic.params : {}
+                var final_params = {}
+                for(var param of Object.keys(params)){
+                    if(params[param].required && !(param in input_parameters_dic)){
+                        return [['Missing parameter "' + param + '"']]
+                    }
+                    if(params[param].replace_2dots){ // Handle cases like /prices/:currency_pair/buy
+                        endpoint_url = endpoint_url.replace(':' + param, input_parameters_dic[param])
+                    } else if(param in input_parameters_dic){
+                        var transformInputFunction = params[param].transformInput
+                        final_params[param] = transformInputFunction ? transformInputFunction(input_parameters_dic[param]) : input_parameters_dic[param]
+                    } else if(params[param].default){
+                        final_params[param] = params[param].default.toString()
+                    }
+                }
+                var prepare = {api_key: api_key, base_url: base_url, endpoint_url: endpoint_url, params: JSON.stringify(final_params), return_structure: return_structure}
+
+
+                var data
+                var thisC = this
+                const url = link + "/excel/api?" + new URLSearchParams(prepare).toString()
+                fetch(url, {}).then(function (response) {
+                    if (response.ok) {
+                        response.json().then(function (result) {
+                            data = result.data
+                            thisC.setState({loading_api: false, json: data, have_click_make_api_call: true,})
+                        })
+                    } else {
+                        window.pushNoti("You need to be a Pro member to use the API Console", 4000, "error")
+                        thisC.setState({loading_api: false})
+                    }
+                })
+
+
+            }
+            onChangeInputParam(e){
+                var param = e.currentTarget.id.slice(6, e.currentTarget.id.length)
+                var temp = duplicate(this.state.endpoint_params)
+                temp[param].value = e.target.value
+                this.setState({endpoint_params: temp, sheet_formula: this.rebuildFormula(temp)})
+            }
+            onChangeSelectParam(e){
+                var param = e.target.id.slice(6, e.target.id.length)
+                var temp = duplicate(this.state.endpoint_params)
+                temp[param].value = e.target.value
+                this.setState({endpoint_params: temp, sheet_formula: this.rebuildFormula(temp)})
+            }
+            doNothing(){
+
+            }
+            chooseEndpoint(e){
+                var arr = e.currentTarget.id.split('@@')
+                var provider = arr[0]
+                var endpoint = arr[1]
+                // this.updateEndpoint(provider, endpoint)
+                this.updateEndpoint(provider, endpoint)
+            }
+            handleMouseOver(e){
+                var param = e.currentTarget.id.slice(2, e.currentTarget.id.length)
+                var temp = duplicate(this.state.endpoint_params)
+                temp[param].show_desc = true
+                this.setState({endpoint_params: temp})
+            }
+            handleMouseOut(e){
+                var param = e.currentTarget.id.slice(2, e.currentTarget.id.length)
+                var temp = duplicate(this.state.endpoint_params)
+                temp[param].show_desc = false
+                this.setState({endpoint_params: temp})
+            }
+
+            render() {
+                if(this.state.big_loading){return <div className="position-relative" style={{minHeight: '100px'}}>
+                    <div className="spinner_ar">
+                        <div className="bounce1"></div>
+                        <div className="bounce2"></div>
+                        <div className="bounce3"></div>
+                    </div>
+                </div>}
+                var first_part = null
+                var params  =[]
+                for(var param of Object.keys(this.state.endpoint_params)){
+                    if(this.state.endpoint_params[param].append_to_url){continue}
+                    var input_box
+                    var is_required = this.state.endpoint_params[param].required
+                    if(this.state.endpoint_params[param].possible){
+                        var options = this.state.endpoint_params[param].default ? [] : [<option value="Select a value"  >Select a value</option>]
+                        for(var val of this.state.endpoint_params[param].possible){
+                            options.push(<option value={val}>{val}</option>)
+                        }
+                        input_box=<select className={'api_param_input pointer'} onChange={this.state.endpoint_params[param].selected ? this.onChangeSelectParam : this.doNothing}
+                                          id={'input_' + param} value={this.state.endpoint_params[param].value} style={{borderRadius: '5px', padding: '3px'}} >{options}</select>
+                    } else {
+                        input_box = <input className={'api_param_input'} value={this.state.endpoint_params[param].value} id={'input_' + param} style={{maxWidth: '95%'}}
+                                           onChange={this.state.endpoint_params[param].selected ? this.onChangeInputParam : this.doNothing} placeholder={this.state.endpoint_params[param].type === 'number' ? 'number': 'string'}/>
+                    }
+                    var show_desc = this.state.endpoint_params[param].show_desc && this.state.endpoint_params[param].description
+                    params.push(<div className={'container'} style={{  paddingTop: '7px', paddingBottom: '7px'}}>
+                        <div className={'row'}>
+                            <div className={'col-1 pointer'} onClick={this.tickBox} id={'box_' + param} style={{fontSize: '1.3rem'}} >{this.state.endpoint_params[param].selected ?
+                                <i className="far fa-check-square" style={{color: '#0e8e32'}}/> : <i className="far fa-square" style={is_required ? {color: '#ff6669'}:{}}/>}</div>
+                            <div className={'col-5 param_title'} style={is_required ? {} : {paddingTop: '3px'}} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} id={'h_' + param}>
+                                {param} {is_required && <div style={{color:'#ff6669', display: 'inline', fontSize: '1.3rem'}}>*</div> }
+                                <div className={'hover_param_desc standard_dropdown'} style={show_desc ? {} : {display: 'none'}}>{this.state.endpoint_params[param].description}</div>
+                            </div>
+                            <div className={'col-6 param_value'} id={'input_' + param}>{input_box}</div>
+                        </div>
+                    </div> )
+                }
+                if(params.length<1){
+                    params = <div style={{display:'flex'}}>
+                        <div className={'margin_auto'} style={{textAlign: 'center', padding: '25px 0'}}>
+                            <i className="fas fa-chalkboard " style={{fontSize: '3rem', display: 'block', color: '#ebebeb'}}/>
+                            <div>This endpoint has no parameter.</div>
+                        </div>
+                    </div>
+                }
+
+                var json
+                if(this.state.loading_api){json = <div style={{minHeight: '200px'}}>
+                    <div className="loader" /></div>}
+                else if(!this.state.have_click_make_api_call){
+                    json = <div style={{display:'flex'}}>
+                        <div className={'margin_auto'} style={{textAlign: 'center', padding: '55px 0'}}>
+                            <i className="fas fa-chalkboard " style={{fontSize: '3rem', display: 'block', color: '#ebebeb'}}/>
+                            <div>Click "Make API call" button to view the output.</div>
+                        </div>
+                    </div>
+                }
+                else{json = <JSON_Display json={this.state.json}/>}
+
+                var second_part = [
+                    <div style={{fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '10px'}}>{capFirst(this.state.provider) + ' | ' + this.state.endpoint}
+                        <a href={link + '/docs/integrations/' + this.state.provider.toLowerCase() + '/' + this.state.endpoint.toLowerCase().replaceAll(' ', '-')} target={'_blank'} style={{float:'right', color: 'black'}}>
+                            <i className="fas fa-book pointer view_doc_from_api_console" title={'View doc'} />
+                        </a>
+                    </div>,
+                    <div style={{}}>{this.state.description}</div>,
+                    <div style={{width: '100%', marginTop: '10px', border: '1px solid #ebebeb'}}>
+                        <div className={'api_gray_bar_title'} >Spreadsheet Formula</div>
+                        <div className={'api_formula'} >{this.state.sheet_formula}</div>
+                        <div className={'api_gray_bar_title'} style={{cursor: 'pointer'}} onClick={this.toggleShowEndpointParams} >Parameters
+                            <i className={"fas fa-chevron-" + (this.state.show_endpoint_params ? 'down' : 'right')} style={{float: 'right', marginTop: '4px', marginRight: '4px'}}/></div>
+                        {this.state.show_endpoint_params && <div style={{borderBottom: '1px solid #ebebeb',}}> {params}</div>}
+
+                        <div className={'container'} style={{margin: '20px 0 10px 0'}}>
+                            <div className={'row'}>
+                                <div className={'col-6'} style={{display: 'flex'}}><div className={'one_api_button pointer ' +(this.state.loading_api ? 'stripes_across' : 'normal_one_api_button')}
+                                                                                        onClick={this.state.loading_api ? this.doNothing : this.clickCallApi}>Make API call</div></div>
+                                <div className={'col-6'} style={{display: 'flex'}}><div className={'one_api_button pointer normal_one_api_button'} title={'Only available in Excel/Google Sheets add-on'}>Import to sheet</div></div>
+                            </div>
+                        </div>
+                        <div className={'api_gray_bar_title'} >Output</div>
+
+                        {json}
+                    </div>,
+
+
+                ]
+
+
+                var final= <div className={''} style={{ maxWidth: window.innerWidth, paddingLeft: '5px', paddingRight: '5px'}}>
+                    <div className={'icon_row'}>
+
+                    </div>
+                    {second_part}
+                </div>
+
+                return (
+                    final
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Console/>,
+            document.getElementById('console'),
+        );
+
+    </script>
 </body>
 
 </html>
