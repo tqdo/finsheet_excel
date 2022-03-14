@@ -321,6 +321,14 @@
                     show_dropdown_providers: show_dropdown_providers
                 }
             }
+            clickImportToSheet(){
+                var params = {}
+                for(var param of Object.keys(this.state.endpoint_params)){
+                    if(!this.state.endpoint_params[param].selected){continue}
+                    params[param] = this.state.endpoint_params[param].type === 'number' ? this.state.endpoint_params[param].value : "'" + this.state.endpoint_params[param].value
+                }
+                actuallyImportToSheet(capFirst(this.state.provider), this.state.endpoint, params)
+            }
             clickProviderLeft(e){
                 var provider = e.currentTarget.id.slice(2,e.currentTarget.id.length)
                 var temp = duplicate(this.state.show_dropdown_providers)
@@ -537,12 +545,11 @@
 
                 var second_part = [
                     <div style={{fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '10px'}}>{capFirst(this.state.provider) + ' | ' + this.state.endpoint}
-                        // <a href={link + '/docs/integrations/' + this.state.provider.toLowerCase() + '/' + this.state.endpoint.toLowerCase().replaceAll(' ', '-')} target={'_blank'} style={{float:'right', color: 'black'}}>
-                        //     <i className="fas fa-book pointer view_doc_from_api_console" title={'View doc'} />
-                        // </a>
+
                     </div>,
                     <div style={{}}>{this.state.description}</div>,
                     <div className={'doc_link'}><b>Doc: </b><a href={link + '/docs/integrations/' + this.state.provider.toLowerCase() + '/' + this.state.endpoint.toLowerCase().replaceAll(' ', '-')} target={'_blank'} style={{color: '#0e8e32'}}>
+                        link</a></div>,
                     <div style={{width: '100%', marginTop: '10px', border: '1px solid #ebebeb'}}>
                         <div className={'api_gray_bar_title'} >Spreadsheet Formula</div>
                         <div className={'api_formula'} >{this.state.sheet_formula}</div>
@@ -554,7 +561,8 @@
                             <div className={'row'}>
                                 <div className={'col-6'} style={{display: 'flex'}}><div className={'one_api_button pointer ' +(this.state.loading_api ? 'stripes_across' : 'normal_one_api_button')}
                                                                                         onClick={this.state.loading_api ? this.doNothing : this.clickCallApi}>Make API call</div></div>
-                                <div className={'col-6'} style={{display: 'flex'}}><div className={'one_api_button pointer normal_one_api_button'} title={'Only available in Excel/Google Sheets add-on'}>Import to sheet</div></div>
+                                <div className={'col-6'} style={{display: 'flex'}}><div className={'one_api_button pointer normal_one_api_button'} title={'Only available in Excel/Google Sheets add-on'}
+                                                                                        onClick={this.clickImportToSheet}>Import to sheet</div></div>
                             </div>
                         </div>
                         <div className={'api_gray_bar_title'} >Output</div>

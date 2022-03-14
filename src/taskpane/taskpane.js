@@ -1892,6 +1892,52 @@ window.stripHtml = function (html) {
   tmp.innerHTML = html;
   return tmp.textContent || tmp.innerText || "";
 }
+
+async function actuallyImportToSheet(provider, endpoint, parameters){
+  await Excel.run(async (context) => {
+    let sheets = context.workbook.worksheets;
+
+    let sheet = sheets.add();
+    return context.sync().then(async function () {
+
+      var content = [
+        ['Provider', capFirst(provider)],
+        ['Endpoint', endpoint],
+        ['', ''],
+      ]
+      let range1 = sheet.getRange("B1:B2");
+      range1.format.fill.color = "#c0e5a6";
+
+      var last_row = 3
+      var formula = '=FS_Api(B1, B2'
+      if(Object.keys(parameters).length>0){
+        formula += ', A4:B'
+      } else {
+        formula += ')'
+      }
+      for(var key of Object.keys(parameters)){
+        content.push([key, parameters[key]])
+        last_row += 1
+      }
+      if(Object.keys(parameters).length>0){
+        formula += last_row + ')'
+        let range2 = sheet.getRange("B4:B" + last_row);
+        range2.format.fill.color = "#c0e5a6";
+
+        content.push(['', ''])
+        last_row += 1
+      }
+      last_row += 1
+      content.push(['Output', formula])
+      var cells = sheet.getRange('A1:B' + last_row)
+      cells.values = content;
+
+      await context.sync();
+
+    })
+  });
+
+}
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
 // $("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});

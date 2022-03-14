@@ -732,6 +732,8 @@ input[type="date"] {
     margin: -8px 0 0 10px;
     z-index: 11;
     background: white;
+    min-width: 100px
+
 }
 .syntax_wrapper pre {
     margin-bottom: 0;
@@ -856,7 +858,7 @@ input[type="date"] {
 .tt-menu {
     left: -34px !important;
     width: 100%;
-    top: 30px !important;
+    top: 32px !important;
     border: none;
     box-shadow: 0 4px 6px rgba(32, 33, 36, 0.28),  0px 0px 10px rgba(32, 33, 36, 0.28);
 }
