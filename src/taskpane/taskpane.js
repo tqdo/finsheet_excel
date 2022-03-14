@@ -348,6 +348,7 @@ for (var key of Object.keys(map_metrics)) {
     map_excel_name_to_id[dic.excel] = key;
   }
 }
+
 /* global console, document, Excel, Office */
 $(document).ready(function () {
   let cookie = readCookie("finsheet_api_key")
@@ -473,6 +474,8 @@ function Login() {
             $("#login_warning").css({ display: "block" });
             $("#if_have_api_key").css({ display: "flex" });
             $("#api_key_input_div").css({ display: "none" });
+
+            setTimeout(() => {$('#functions_dropdown_wrap').addClass('left_bar_different_green')}, 200)
           }
         });
       } else {
@@ -757,10 +760,13 @@ function clickNavigate(which){
 
   if(['symbols', 'metrics', 'etf', 'mutual_fund'].includes(which)){
     makeDifferentGreen('search_dropdown_wrap')
+    $('#header_coupon').removeClass('display_none')
   } else if (which === 'console'){
     makeDifferentGreen('console_left_bar')
+    $('#header_coupon').addClass('display_none')
   } else {
     makeDifferentGreen('functions_dropdown_wrap')
+    $('#header_coupon').removeClass('display_none')
   }
 }
 
@@ -1880,6 +1886,11 @@ window.pushNoti = function toastrNoti(message, duration, type) {
       class: 'toaster',
     });
   }
+}
+window.stripHtml = function (html) {
+  let tmp = document.createElement("DIV");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
 }
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});

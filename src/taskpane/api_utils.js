@@ -6,12 +6,6 @@ function checkValidProviderEndpoint(provider, endpoint_name){
     return [second_dic, first_dic.base_url, ""]
 }
 
-var providers_need_server = {
-    kraken: 1, kucoin:1, okex: 1, hitbtc: 1, bitfinex: 1, bittrex: 1, bitmex: 1,
-
-    oanda: 1,
-}
-
 
 var string = 'string', number = 'number'
 var big_api_map = {
@@ -6012,3 +6006,114 @@ var big_api_map = {
 }
 
 
+var skip_endpoint = {
+    doc_url: 1, base_url:1, provider_description: 1
+}
+
+
+var orders = []
+var paths = {}
+var definitions = {}
+// export var map_url_to_true_endpoint_name = {}
+for(var provider of Object.keys(big_api_map)){
+    orders.push('/' + provider.toLowerCase())
+    paths['/' + provider.toLowerCase()] = {
+        "get": {
+            "summary": capFirst(provider),
+            "description": big_api_map[provider].provider_description,
+            "doc_url": big_api_map[provider].doc_url,
+            "urlId": provider.toLowerCase(),
+            "navHeader": capFirst(provider) ,
+            "title": capFirst(provider)+ ' | Integrations',
+            "section": capFirst(provider),
+        }
+    }
+    for(var endpoint of Object.keys(big_api_map[provider])){
+        if(endpoint in skip_endpoint){continue}
+        var path  = '/' + provider.toLowerCase() + '/' + endpoint.toLowerCase().replaceAll(' ', '-')
+        orders.push(path)
+        var parameters = []
+        if(big_api_map[provider][endpoint].params){
+            for(var param of Object.keys(big_api_map[provider][endpoint].params)){
+                if(big_api_map[provider][endpoint].params[param].append_to_url){continue}
+                parameters.push({
+                    "in": "query",
+                    "name": param,
+                    "description": big_api_map[provider][endpoint].params[param].description ? big_api_map[provider][endpoint].params[param].description : param,
+                    "required": big_api_map[provider][endpoint].params[param].required === true,
+                    "type": big_api_map[provider][endpoint].params[param].type === 'number' ? 'number' : "string"
+                })
+            }
+        }
+
+        // map_url_to_true_endpoint_name[path.slice(1, path.length)] = endpoint
+        paths[path] = {
+            "get": {
+                "summary": capFirst(provider) + ' | ' + endpoint,
+                "description": big_api_map[provider][endpoint].description ? big_api_map[provider][endpoint].description : endpoint,
+                "doc_url": big_api_map[provider][endpoint].doc_url ? big_api_map[provider][endpoint].doc_url : big_api_map[provider].doc_url,
+                "urlId": path.slice(1, path.length),
+                "navHeader": endpoint  ,
+                "title": endpoint+ ' | Integrations',
+                "section": capFirst(provider),
+                "parameters": parameters,
+                "sample_response": big_api_map[provider][endpoint].sample_response
+            }
+        }
+
+        // Add response attributes
+        if(big_api_map[provider][endpoint].response_attributes){
+            paths[path].get['responses'] = {
+                "200": {
+                    "description": "successful operation",
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/" + provider + endpoint
+                        }
+                    }
+                }
+            }
+            var this_definition = {"type": "object", "properties": {}}
+            for(var def_key of Object.keys(big_api_map[provider][endpoint].response_attributes)){
+                this_definition.properties[def_key] = {
+                    "type": "array",
+                    "description": big_api_map[provider][endpoint].response_attributes[def_key],
+                    "items": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            }
+            definitions[provider + endpoint] = this_definition
+
+        }
+    }
+}
+ var intergration_json = {
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Finsheet",
+        "license": {
+            "name": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "finsheet.io",
+    "basePath": "/docs/integrations",
+    "schemes": [
+        "https"
+    ],
+    "securityDefinitions": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "token",
+            "in": "query"
+        }
+    },
+    "extraDocs": [],
+    "orders": orders,
+    "paths": paths,
+    "definitions": definitions
+}
