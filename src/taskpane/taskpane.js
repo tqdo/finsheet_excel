@@ -1898,6 +1898,7 @@ async function actuallyImportToSheet(provider, endpoint, parameters){
     let sheets = context.workbook.worksheets;
 
     let sheet = sheets.add();
+    sheet.activate()
     return context.sync().then(async function () {
 
       var content = [
@@ -1931,6 +1932,10 @@ async function actuallyImportToSheet(provider, endpoint, parameters){
       content.push(['Output', formula])
       var cells = sheet.getRange('A1:B' + last_row)
       cells.values = content;
+
+
+      let active_range = sheet.getRange("B" + last_row);
+      active_range.select();
 
       await context.sync();
 

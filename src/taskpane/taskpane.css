@@ -527,6 +527,8 @@ input[type="date"] {
     min-height: 100vh;
     width: 25px;
     background-color: #0e8e32;
+    position: fixed;
+    z-index: 100;
 }
 
 .left_bar_icon{
@@ -554,7 +556,7 @@ input[type="date"] {
 .main{
     min-height: 100vh;
     width: 100%;
-    margin-left: 8px;
+    margin-left: 28px;
 }
 
 .all_metrics_popup_input:focus{outline: none !important;}
@@ -564,8 +566,9 @@ input[type="date"] {
 }
 
 .dropdown_for_left_bar{
-    margin-left: 23px;
-    margin-top: -40px;
+    margin-left: 26px;
+    margin-top: -43px;
+    z-index: 10000;
 }
 
 .one_example_usage_metric{
@@ -732,7 +735,7 @@ input[type="date"] {
     margin: -8px 0 0 10px;
     z-index: 11;
     background: white;
-    min-width: 100px
+    min-width: 150px
 
 }
 .syntax_wrapper pre {
@@ -927,4 +930,10 @@ input[type="date"] {
 }
 .doc_link{
     margin-top: 10px;
+}
+.api_param_input{
+    padding-left: 5px;
+}
+.hover_white:hover{
+    color: white;
 }

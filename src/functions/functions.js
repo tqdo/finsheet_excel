@@ -137,7 +137,7 @@
 
 /**
  * @customfunction FS_EQUITYMETRICS FS_EquityMetrics
- * @param symbol {string} Stock Symbol.
+ * @param symbol {any[][]} Stock Symbol.
  * @param metric {string} Metric.
  * @param [period] {string} Period (optional).
  * @param [limit] {number} Limit (optional, default to 1).
@@ -149,6 +149,9 @@ async function FS_EquityMetrics(symbol, metric, period = undefined, limit = unde
   metric = metric.toLowerCase()
   if(!(metric in map_excel_name_to_id) ){return [["Unsupported metric"]]}
   if(!symbol){return [['']]}
+  if((symbol.length>1 || (symbol.length>0 && symbol[0].length>1)) && (limit !== null && limit && undefined && limit !== 1)){
+    return [['Limit needs to be blank or 1 if more than 1 symbol is supplied.']]
+  }
   return equityHelper(symbol, metric, period , limit )
 }
 

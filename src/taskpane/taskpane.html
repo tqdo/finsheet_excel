@@ -368,7 +368,7 @@
                     }
                 }
                 if(formula.slice(formula.length-1, formula.length) === '{'){
-                    formula = formula.slice(0, formula.length-2) + ')'
+                    formula = formula.slice(0, formula.length-3) + ')'
                 } else {
                     formula = formula.slice(0, formula.length-2) + '})'
                 }
@@ -517,7 +517,7 @@
                                 {param} {is_required && <div style={{color:'#ff6669', display: 'inline', fontSize: '1.3rem'}}>*</div> }
                                 <div className={'hover_param_desc standard_dropdown'} style={show_desc ? {} : {display: 'none'}}>{this.state.endpoint_params[param].description}</div>
                             </div>
-                            <div className={'col-6 param_value'} id={'input_' + param}>{input_box}</div>
+                            <div className={'col-5 param_value'} id={'input_' + param}>{input_box}</div>
                         </div>
                     </div> )
                 }
