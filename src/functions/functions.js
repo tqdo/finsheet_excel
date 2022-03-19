@@ -137,7 +137,7 @@
 
 /**
  * @customfunction FS_EQUITYMETRICS FS_EquityMetrics
- * @param symbol {any[][]} Stock Symbol.
+ * @param symbol {string} Stock Symbol.
  * @param metric {string} Metric.
  * @param [period] {string} Period (optional).
  * @param [limit] {number} Limit (optional, default to 1).
@@ -149,9 +149,6 @@ async function FS_EquityMetrics(symbol, metric, period = undefined, limit = unde
   metric = metric.toLowerCase()
   if(!(metric in map_excel_name_to_id) ){return [["Unsupported metric"]]}
   if(!symbol){return [['']]}
-  if((symbol.length>1 || (symbol.length>0 && symbol[0].length>1)) && (limit !== null && limit && undefined && limit !== 1)){
-    return [['Limit needs to be blank or 1 if more than 1 symbol is supplied.']]
-  }
   return equityHelper(symbol, metric, period , limit )
 }
 
@@ -1001,11 +998,12 @@ async function FS_AggregateIndicators(symbol, resolution,) {
  * @param indicator {string} Indicator name.
  * @param from {string} From.
  * @param [to] {string} To (optional).
- * @param [indicator_fields] {any[][]} Indicator fields (optional).
+ * @param [parameters] {any[][]} Indicator fields (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=undefined, indicator_fields=[]) {
+async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=undefined, parameters=[]) {
+  var indicator_fields = parameters
   if (to == null) { to = undefined }
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
@@ -1063,7 +1061,7 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
     }
     prepare = { symbol: symbol, resolution: resolution, from: from, to: to, api_key: api_key, indicator: indicator, indicator_fields: JSON.stringify(indicator_fields_dic), which: 'technical_indicators'}
   } catch (e) {
-    return [["Invalid indicator_fields"]]
+    return [["Invalid parameters"]]
   }
 
   console.log('prepare', prepare)

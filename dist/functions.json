@@ -411,7 +411,7 @@
                 {
                     "description": "Indicator fields (optional).",
                     "dimensionality": "matrix",
-                    "name": "indicator_fields",
+                    "name": "parameters",
                     "optional": true,
                     "type": "any"
                 }
