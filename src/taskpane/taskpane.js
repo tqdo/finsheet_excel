@@ -353,7 +353,7 @@ for (var key of Object.keys(map_metrics)) {
 $(document).ready(function () {
   let cookie = readCookie("finsheet_api_key")
   console.log(cookie)
-  if (cookie) {
+  if (cookie || true) {
     $("#if_have_api_key").css({ display: "flex" });
     setTimeout(() => {$('#functions_dropdown_wrap').addClass('left_bar_different_green')}, 200)
 
@@ -381,6 +381,11 @@ $(document).ready(function () {
         }
       })
     })
+
+    // Hide sign-out button if not login yet
+    if(!cookie){
+      $("#sign_out_button").css({ display: "none" });
+    }
 
   } else {
     $("#api_key_input_div").css({ display: "flex" });
@@ -474,6 +479,7 @@ function Login() {
             $("#login_warning").css({ display: "block" });
             $("#if_have_api_key").css({ display: "flex" });
             $("#api_key_input_div").css({ display: "none" });
+            $("#sign_out_button").css({ display: "flex" });
 
             setTimeout(() => {$('#functions_dropdown_wrap').addClass('left_bar_different_green')}, 200)
           }

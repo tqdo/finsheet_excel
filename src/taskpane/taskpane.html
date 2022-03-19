@@ -84,6 +84,9 @@
         <div class="left_green_bar inline_block"></div>
 
         <div class="main inline_block" style="padding-bottom: 40px">
+            <div id="header_login">
+
+            </div>
 
             <div id="symbols" style="display: none"></div>
             <div id="metrics" style="display: none"></div>
@@ -387,6 +390,12 @@
                 }))
             }
             clickCallApi(){
+                var api_key = readCookie("finsheet_api_key");
+                if(!api_key){
+                    window.pushNoti('Please log in before using the API Console', 3000, 'error')
+                    return
+                }
+
                 var input_parameters_dic = {}
                 for(var param of Object.keys(this.state.endpoint_params)){
                     if(this.state.endpoint_params[param].required){
@@ -404,7 +413,6 @@
 
                 var provider=this.state.provider
                 var endpoint = this.state.endpoint
-                var api_key = readCookie("finsheet_api_key");
 
                 var check_values = checkValidProviderEndpoint(provider, endpoint)
                 if(check_values[2] !== ""){return [[check_values[2]]]}
