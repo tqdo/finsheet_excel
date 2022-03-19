@@ -349,24 +349,17 @@ for (var key of Object.keys(map_metrics)) {
   }
 }
 
-/* global console, document, Excel, Office */
-$(document).ready(function () {
-  let cookie = readCookie("finsheet_api_key")
-  console.log(cookie)
-  if (cookie || true) {
-    $("#if_have_api_key").css({ display: "flex" });
-    setTimeout(() => {$('#functions_dropdown_wrap').addClass('left_bar_different_green')}, 200)
-
-    fetch(link + "/checkcoupon?api_key=" + cookie, {
-      method: "GET",
-      headers: {"Content-Type": "text/plain"},
-    }).then(function (res) {
-      res.json().then(function (myJson) {
-        // console.log(myJson)
-        window.show_coupon = 1-parseInt(myJson["have_used_coupon"]) > 0 && !myJson.is_paid_user
-            && myJson["create_at"] && Math.abs((new Date()) - (new Date(myJson["create_at"].slice(0,10)))) / 36e5 > 72
-        if(window.show_coupon){
-          document.getElementById('header_coupon').innerHTML = `
+function checkCoupon(cookie, ){
+  fetch(link + "/checkcoupon?api_key=" + cookie, {
+    method: "GET",
+    headers: {"Content-Type": "text/plain"},
+  }).then(function (res) {
+    res.json().then(function (myJson) {
+      // console.log(myJson)
+      window.show_coupon = 1-parseInt(myJson["have_used_coupon"]) > 0 && !myJson.is_paid_user
+          && myJson["create_at"] && Math.abs((new Date()) - (new Date(myJson["create_at"].slice(0,10)))) / 36e5 > 72
+      if(window.show_coupon ){
+        document.getElementById('header_coupon').innerHTML = `
                             <div class="alert alert-dismissible" role="alert"
                  style="width: 100%; background-color: #222222; padding: 8px 14px 8px 14px;position: fixed; bottom: 0; margin-left: -8px;
                         color: white;
@@ -378,13 +371,23 @@ $(document).ready(function () {
                         </span>
             </div>
                 `
-        }
-      })
+      }
     })
+  })
+}
+/* global console, document, Excel, Office */
+$(document).ready(function () {
+  let cookie = readCookie("finsheet_api_key")
+  if (cookie || true) {
+    // $("#if_have_api_key").css({ display: "flex" });
+    setTimeout(() => {$('#functions_dropdown_wrap').addClass('left_bar_different_green')}, 200)
 
+    checkCoupon(cookie)
     // Hide sign-out button if not login yet
     if(!cookie){
-      $("#sign_out_button").css({ display: "none" });
+      setTimeout(() => {$("#sign_out_button").css({ display: "none" });}, 200)
+    } else {
+      setTimeout(() => {$("#header_login").css({ display: "none" });}, 200)
     }
 
   } else {
@@ -480,7 +483,9 @@ function Login() {
             $("#if_have_api_key").css({ display: "flex" });
             $("#api_key_input_div").css({ display: "none" });
             $("#sign_out_button").css({ display: "flex" });
+            $("#header_login").css({ display: "none" });
 
+            checkCoupon(json.token)
             setTimeout(() => {$('#functions_dropdown_wrap').addClass('left_bar_different_green')}, 200)
           }
         });
