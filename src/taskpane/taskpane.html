@@ -31,38 +31,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.bundle.js"></script>
 
     <script>
+        var pre = location.hostname === "localhost" || location.hostname === "127.0.0.1" ? '' : '/finsheet_excel'
         $(function(){
-            $("#api_key_input_div").load("/src/taskpane/components/login.html");
-            $(".left_green_bar").load("/src/taskpane/components/left_green_bar.html");
+            $("#api_key_input_div").load(pre + "/src/taskpane/components/login.html");
+            $(".left_green_bar").load(pre +"/src/taskpane/components/left_green_bar.html");
 
-            $("#symbols").load("/src/taskpane/components/search_symbols.html");
-            $("#metrics").load("/src/taskpane/components/search_metrics.html");
-            $("#etf").load("/src/taskpane/components/search_etfs.html");
-            $("#mutual_fund").load("/src/taskpane/components/search_mutual_funds.html");
+            $("#symbols").load(pre +"/src/taskpane/components/search_symbols.html");
+            $("#metrics").load(pre +"/src/taskpane/components/search_metrics.html");
+            $("#etf").load(pre +"/src/taskpane/components/search_etfs.html");
+            $("#mutual_fund").load(pre +"/src/taskpane/components/search_mutual_funds.html");
 
-            $("#equity_metrics").load("/src/taskpane/components/fs_equity_metrics.html");
-            $("#equity_full_financials").load("/src/taskpane/components/fs_equity_full_financials.html");
-            $("#equity_candles").load("/src/taskpane/components/fs_equity_candles.html");
+            $("#equity_metrics").load(pre +"/src/taskpane/components/fs_equity_metrics.html");
+            $("#equity_full_financials").load(pre +"/src/taskpane/components/fs_equity_full_financials.html");
+            $("#equity_candles").load(pre +"/src/taskpane/components/fs_equity_candles.html");
 
-            $("#forex_candles").load("/src/taskpane/components/fs_forex_candles.html");
-            $("#forex_all_rates").load("/src/taskpane/components/fs_forex_all_rates.html");
+            $("#forex_candles").load(pre +"/src/taskpane/components/fs_forex_candles.html");
+            $("#forex_all_rates").load(pre +"/src/taskpane/components/fs_forex_all_rates.html");
 
-            $("#crypto_candles").load("/src/taskpane/components/fs_crypto_candles.html");
-            $("#crypto_profile").load("/src/taskpane/components/fs_crypto_profile.html");
+            $("#crypto_candles").load(pre +"/src/taskpane/components/fs_crypto_candles.html");
+            $("#crypto_profile").load(pre +"/src/taskpane/components/fs_crypto_profile.html");
 
-            $("#etf_candles").load("/src/taskpane/components/fs_etf_candles.html");
-            $("#etf_profile").load("/src/taskpane/components/fs_etf_profile.html");
+            $("#etf_candles").load(pre +"/src/taskpane/components/fs_etf_candles.html");
+            $("#etf_profile").load(pre +"/src/taskpane/components/fs_etf_profile.html");
 
-            $("#mutual_fund_candles").load("/src/taskpane/components/fs_mutual_fund_candles.html");
-            $("#mutual_fund_profile").load("/src/taskpane/components/fs_mutual_fund_profile.html");
+            $("#mutual_fund_candles").load(pre +"/src/taskpane/components/fs_mutual_fund_candles.html");
+            $("#mutual_fund_profile").load(pre +"/src/taskpane/components/fs_mutual_fund_profile.html");
 
-            $("#latest").load("/src/taskpane/components/fs_latest.html");
-            $("#streaming").load("/src/taskpane/components/fs_streaming.html");
+            $("#latest").load(pre +"/src/taskpane/components/fs_latest.html");
+            $("#streaming").load(pre +"/src/taskpane/components/fs_streaming.html");
 
-            $("#pattern_recognition").load("/src/taskpane/components/fs_pattern_recognition.html");
-            $("#support_resistance").load("/src/taskpane/components/fs_support_resistance.html");
-            $("#aggregate_indicators").load("/src/taskpane/components/fs_aggregate_indicators.html");
-            $("#technical_indicators").load("/src/taskpane/components/fs_technical_indicators.html");
+            $("#pattern_recognition").load(pre +"/src/taskpane/components/fs_pattern_recognition.html");
+            $("#support_resistance").load(pre +"/src/taskpane/components/fs_support_resistance.html");
+            $("#aggregate_indicators").load(pre +"/src/taskpane/components/fs_aggregate_indicators.html");
+            $("#technical_indicators").load(pre +"/src/taskpane/components/fs_technical_indicators.html");
 
             // $("#esg").load("/src/taskpane/components/fs_esg.html");
             // $("#earnings_quality").load("/src/taskpane/components/fs_earnings_quality.html");
