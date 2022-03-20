@@ -387,7 +387,7 @@ $(document).ready(function () {
     if(!cookie){
       setTimeout(() => {$("#sign_out_button").css({ display: "none" });}, 200)
     } else {
-      setTimeout(() => {$("#header_login").css({ display: "none" });}, 200)
+      setTimeout(() => {$("#header_login").css({ display: "none" });}, 500)
     }
 
   } else {
