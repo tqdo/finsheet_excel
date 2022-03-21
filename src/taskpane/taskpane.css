@@ -735,7 +735,8 @@ input[type="date"] {
     margin: -8px 0 0 10px;
     z-index: 11;
     background: white;
-    min-width: 150px
+    width: 150px;
+    white-space: pre-line;
 
 }
 .syntax_wrapper pre {

@@ -88,7 +88,7 @@
             <div id="header_login">
                 <div class="alert alert-dismissible" role="alert"
                      style="width: 100%; background-color: #222222; padding: 8px 14px 8px 14px; margin-left: -8px; color: white; font-size: 14px; ">
-                        <span><div style="display: inline; color: #0e8e32; cursor: pointer; font-weight: bold" onclick="showApiInputDiv()">Login</div> to begin using Finsheet add-on</span>
+                        <span><div style="display: inline; color: #0e8e32; cursor: pointer; font-weight: bold" onclick="showApiInputDiv()">Login</div>&nbsp; to begin using Finsheet add-on</span>
                 </div>
             </div>
 
@@ -264,7 +264,7 @@
                 searchMaster.bind('typeahead:select', function (ev, suggestion, name) {
                     console.log(suggestion)
                     var arr = suggestion.header.split(' | ')
-                    thisComponent.props.updateEndpoint(arr[0].toLowerCase(), arr[1])
+                    thisComponent.props.updateEndpoint(arr[0], arr[1])
                     searchMaster.typeahead('close')
                     searchMaster.typeahead('val', '')
                 });
@@ -343,6 +343,7 @@
                 this.setState({show_dropdown_providers: temp})
             }
             updateEndpoint(provider, endpoint){
+                console.log(provider)
                 var dic = big_api_map[provider][endpoint]
                 var endpoint_params = dic.params ? dic.params : {}
                 for(var param of Object.keys(endpoint_params)){
@@ -361,7 +362,7 @@
             }
 
             componentDidMount() {
-                this.updateEndpoint('coinbase', 'Get currencies')
+                this.updateEndpoint('Coinbase', 'Get currencies')
             }
             rebuildFormula(temp, param){
                 var formula = '=FS_Api("' + capFirst(this.state.provider) + '", "' + this.state.endpoint + '", {'
@@ -518,6 +519,7 @@
                                           id={'input_' + param} value={this.state.endpoint_params[param].value} style={{borderRadius: '5px', padding: '3px'}} >{options}</select>
                     } else {
                         input_box = <input className={'api_param_input'} value={this.state.endpoint_params[param].value} id={'input_' + param} style={{maxWidth: '95%'}}
+                                           autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
                                            onChange={this.state.endpoint_params[param].selected ? this.onChangeInputParam : this.doNothing} placeholder={this.state.endpoint_params[param].type === 'number' ? 'number': 'string'}/>
                     }
                     var show_desc = this.state.endpoint_params[param].show_desc && this.state.endpoint_params[param].description

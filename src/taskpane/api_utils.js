@@ -1,5 +1,5 @@
 function checkValidProviderEndpoint(provider, endpoint_name){
-    var first_dic = big_api_map[provider.toLowerCase()]
+    var first_dic = big_api_map[provider]
     if(!first_dic){return [{}, "", "Invalid provider"]}
     var second_dic = first_dic[endpoint_name]
     if(!second_dic){return [{}, "", "Invalid endpoint"]}
@@ -9,7 +9,7 @@ function checkValidProviderEndpoint(provider, endpoint_name){
 
 var string = 'string', number = 'number'
 var big_api_map = {
-    coinbase: {
+    Coinbase: {
         "doc_url":  'https://developers.coinbase.com/api/v2',
         'provider_description': 'Coinbase Global, Inc., branded Coinbase, is an American company that operates a cryptocurrency exchange platform. Coinbase operates remote-first, and lacks an official physical headquarters',
         "base_url": "https://api.coinbase.com/v2",
@@ -147,7 +147,7 @@ var big_api_map = {
         },
     },
 
-    binance: {
+    Binance: {
         "base_url": "https://api.binance.com",
         "provider_description": 'Binance is a cryptocurrency exchange which is the largest exchange in the world in terms of daily trading volume of cryptocurrencies',
         "doc_url": 'https://binance-docs.github.io/apidocs/spot/en/',
@@ -422,7 +422,7 @@ var big_api_map = {
         },
     },
 
-    kraken: {
+    Kraken: {
         "base_url": "https://api.kraken.com/0",
         "provider_description": 'Kraken is a United States-based cryptocurrency exchange and bank, founded in 2011. The exchange provides trading between cryptocurrency and fiat currencies, and provides price information to Bloomberg Terminal.',
         "doc_url": 'https://docs.kraken.com/rest/',
@@ -905,7 +905,7 @@ var big_api_map = {
         },
     },
 
-    poloniex: {
+    Poloniex: {
         "base_url": "https://poloniex.com/public",
         "provider_description": 'Launched in January 2014, Poloniex became one of the larger American cryptocurrency trading platforms. After being acquired by Circle in February 2018, Poloniex stopped serving the U.S. market and moved its legal headquarters to Bermuda 18 months later. Shortly thereafter it was acquired by a consortium that included Justin Sun\'s TRON',
         "doc_url": 'https://docs.poloniex.com/',
@@ -1181,7 +1181,7 @@ var big_api_map = {
         },
     },
 
-    kucoin: {
+    Kucoin: {
         "base_url": "https://api.kucoin.com",
         "provider_description": 'KuCoin is a secure cryptocurrency exchange that makes it easier to buy, sell, and store cryptocurrencies like BTC, ETH, KCS, SHIB, DOGE, Gari etc.',
         "doc_url": 'https://docs.kucoin.com/#general',
@@ -1529,7 +1529,7 @@ var big_api_map = {
 
     },
 
-    gemini: {
+    Gemini: {
         "base_url": "https://api.gemini.com",
         "provider_description": 'Gemini Trust Company, LLC is a cryptocurrency exchange and custodian that allows customers to buy, sell, and store digital assets. It is a New York trust company that is regulated by the New York State Department of Financial Services and was founded in 2014 by Cameron and Tyler Winklevoss',
         "doc_url": 'https://docs.gemini.com/rest-api/',
@@ -1779,7 +1779,7 @@ var big_api_map = {
         },
     },
 
-    okex:{
+    Okex:{
         "base_url": "https://www.okx.com",
         "provider_description": 'OKX, formerly known as OKEx, is a Seychelles-based cryptocurrency exchange that provides a platform for trading various cryptocurrencies. Some of exchange\'s core features include spot and derivative trading. It was founded in 2017. OKX is owned by Ok Group which also owns crypto exchange Okcoin',
         "doc_url": 'https://www.okx.com/docs-v5/en/#rest-api',
@@ -2892,7 +2892,7 @@ var big_api_map = {
 
     },
 
-    hitbtc: {
+    Hitbtc: {
         "base_url": "https://api.hitbtc.com",
         "provider_description": 'HitBTC is a leading European bitcoin exchange which provides cryptocurrency trading services to institutionals, merchants and individual traders worldwide.',
         "doc_url": 'https://api.hitbtc.com/',
@@ -3398,7 +3398,7 @@ var big_api_map = {
     },
 
 
-    bitfinex: {
+    Bitfinex: {
         "base_url": "https://api-pub.bitfinex.com",
         "provider_description": 'Bitfinex is a cryptocurrency exchange owned and operated by iFinex Inc registered in the British Virgin Islands.',
         "doc_url": 'https://docs.bitfinex.com/docs/introduction',
@@ -4240,7 +4240,7 @@ var big_api_map = {
         },
     },
 
-    bittrex: {
+    Bittrex: {
         "base_url": "https://api.bittrex.com/v3",
         "provider_description": 'Bittrex is a leading cryptocurrency exchange that provides the widest selection of cryptocurrencies like Bitcoin & Ethereum in the US.',
         "doc_url": 'https://bittrex.github.io/api/v3',
@@ -4462,7 +4462,7 @@ var big_api_map = {
         },
     },
 
-    huobi: {
+    Huobi: {
         "base_url": "https://api.huobi.pro",
         "provider_description": 'Huobi is a Seychelles-based cryptocurrency exchange. Founded in China, the company now has offices in Hong Kong, South Korea, Japan and the United States. In August 2018 it became a publicly listed Hong Kong company.',
         "doc_url": 'https://huobiapi.github.io/docs/spot/v1/en',
@@ -5643,7 +5643,7 @@ var big_api_map = {
         },
     },
 
-    bitmex: {
+    Bitmex: {
         "base_url": "https://www.bitmex.com/api/v1",
         "provider_description": 'BitMEX is a cryptocurrency exchange and derivative trading platform. It is owned and operated by HDR Global Trading Limited, which is registered in the Seychelles.',
         "doc_url": 'https://www.bitmex.com/api/explorer/#/',
@@ -5995,12 +5995,286 @@ var big_api_map = {
                 '  }\n' +
                 ']'
         },
-        // "Previous Trades in Time Bucket": {
-        //     url: '/trade/bucketed',
-        //     params: {
-        //         reverse: {default: 'true'},
-        //     }
-        // },
+    }, // =CONCAT("'",A1,"': `",B1,"`," )
+    '0xAPI': {
+        "doc_url": 'https://0x.org/docs/api#introduction',
+        'provider_description': '0x is important infrastructure for the emerging crypto economy and enables markets to be created that couldn\'t have existed before. As more assets become tokenized, public blockchains provide the opportunity to establish a new financial stack that is more efficient, transparent, and equitable than any system in the past.',
+        "base_url": "https://api.0x.org",
+        "Get Swap Quote": {
+            url: '/swap/v1/quote',
+            doc_url: 'https://0x.org/docs/api#get-swapv1quote',
+            description:  'Get an easy-to-consume quote for buying or selling any token. The return format is a valid unsigned Ethereum transaction and can be submitted directly to an Ethereum node to complete the swap. For transactions where the sellToken is not ETH, you will have to set your allowances. Either a sellAmount or buyAmount is required.',
+            params: {
+                sellToken: {description:'The ERC20 token address or symbol of the token you want to send. "ETH" can be provided as a valid sellToken.'},
+                buyToken: {description:'The ERC20 token address or symbol of the token you want to receive. "ETH" can be provided as a valid buyToken'},
+                sellAmount: {type: 'number', description:'(Optional) The amount of sellToken (in sellToken base units) you want to send.'},
+                buyAmount: {type: 'number',description:'(Optional) The amount of buyToken (in buyToken base units) you want to receive.'},
+                slippagePercentage: {type: 'number',description:'(Optional) The maximum acceptable slippage of the buyToken amount if sellAmount is provided, the maximum acceptable slippage of the sellAmount amount if buyAmount is provided. E.g 0.03 for 3% slippage allowed.'},
+                gasPrice: {type: 'number',description:'(Optional, defaults to ethgasstation "fast") The target gas price (in wei) for the swap transaction. If the price is too low to achieve the quote, an error will be returned.'},
+                takerAddress: {description:'(Optional) The address which will fill the quote. When provided the gas will be estimated and returned and the entire transaction will be validated for success. If the validation fails a Revert Error will be returned in the response.'},
+                excludedSources: {description:'(Optional) Liquidity sources (Uniswap, SushiSwap, 0x, Curve etc) that will not be included in the provided quote. Ex: excludedSources=Uniswap,SushiSwap,Curve.'},
+                includedSources: {description:'(Optional) For now only supports RFQT, which should be used when the integrator only wants RFQT liquidity without any other DEX orders. Requires a particular agreement with the 0x integrations team. This parameter cannot be combined with excludedSources.'},
+                skipValidation: {possible: ['true', 'false'],description:'(Optional) Normally, whenever a takerAddress is provided, the API will validate the quote for the user. When this parameter is set to true, that validation will be skipped. See also here.'},
+                intentOnFilling: {description:'(Optional) Used to enable RFQ-T liquidity. '},
+                feeRecipient: {description:'(Optional) The ETH address that should receive affiliate fees specified with buyTokenPercentageFee.'},
+                buyTokenPercentageFee: {type: 'number',description:'(Optional) The percentage (between 0 - 1.0) of the buyAmount that should be attributed to feeRecipient as affiliate fees. Note that this requires that the feeRecipient parameter is also specified in the request.'},
+                affiliateAddress: {description:'(Optional) An ETH address for which to attribute the trade for tracking and analytics purposes. Note affiliateAddress is only for tracking trades and has no impact on affiliate fees, for affiliate fees use feeRecipient.'},
+            },
+            response_attributes: {
+                'price': `If buyAmount was specified in the request it provides the price of buyToken in sellToken and vice versa. This price does not include the slippage provided in the request above, and therefore represents the best possible price.`,
+                'guaranteedPrice': `The price which must be met or else the entire transaction will revert. This price is influenced by the slippagePercentage parameter. On-chain sources may encounter price movements from quote to settlement.`,
+                'to': `The address of the contract to send call data to.`,
+                'data': `The call data required to be sent to the to contract address.`,
+                'value': `The amount of ether (in wei) that should be sent with the transaction. (Assuming protocolFee is paid in ether).`,
+                'gasPrice': `The gas price (in wei) that should be used to send the transaction. The transaction needs to be sent with this gasPrice or lower for the transaction to be successful.`,
+                'gas': `The estimated gas limit that should be used to send the transaction to guarantee settlement. While a computed estimate is returned in all responses, an accurate estimate will only be returned if a takerAddress is included in the request.`,
+                'estimatedGas': `The estimate for the amount of gas that will actually be used in the transaction. Always less than gas.`,
+                'protocolFee': `The maximum amount of ether that will be paid towards the protocol fee (in wei), and what is used to compute the value field of the transaction.`,
+                'minimumProtocolFee': `The minimum amount of ether that will be paid towards the protocol fee (in wei) during the transaction.`,
+                'buyAmount': `The amount of buyToken (in buyToken units) that would be bought in this swap. Certain on-chain sources do not allow specifying buyAmount, when using buyAmount these sources are excluded.`,
+                'sellAmount': `The amount of sellToken (in sellToken units) that would be sold in this swap. Specifying sellAmount is the recommended way to interact with 0xAPI as it covers all on-chain sources.`,
+                'sources': `The percentage distribution of buyAmount or sellAmount split between each liquidity source. Ex: [{ name: '0x', proportion: "0.8" }, { name: 'Kyber', proportion: "0.2"}, ...]`,
+                'buyTokenAddress': `The ERC20 token address of the token you want to receive in quote.`,
+                'sellTokenAddress': `The ERC20 token address of the token you want to sell with quote.`,
+                'allowanceTarget': `The target contract address for which the user needs to have an allowance in order to be able to complete the swap. For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of 0x0000000000000000000000000000000000000000 is then returned instead.`,
+            },
+            sample_response: '{\n' +
+                '    "price": "198.02566690042823231",\n' +
+                '    "guaranteedPrice": "191.88959851561835913",\n' +
+                '    "to": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
+                '    "data": "0xa6c3bf330000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000007200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000002600000000000000000000000006924a03bb710eaf199ab6ac9f2bb148215ae9b5d000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000119f25fd7ebc6a400000000000000000000000000000000000000000000000000016c7d70543164aa3b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd420c0000000000000000000000000000000000000000000000000000017251c82bed00000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000005e0000000000000000000000000000000000000000000000000000000000000064000000000000000000000000000000000000000000000000000000000000006400000000000000000000000000000000000000000000000000000000000000024f47261b00000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000000000000000000000000000000000000000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010a4ce15149935d8a000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd5dc48b6ed252d3488d46ccd3297146fca393cbbc0053dd77a341c0133d612b7c4a8900000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000003c00000000000000000000000000000000000000000000000000000000000000420000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000001c4dc1600f30000000000000000000000006b175474e89094c44da98b954eedeac495271d0f0000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f800000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000140000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000ae3641dffb712e917b9dc3e6c271b6657ff39818000000000000000000000000000000000000000000000000016345785d8a00000000000000000000000000000000000000000000000000010a4ce15149935d8a00000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000020000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000024f47261b0000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000421c2e80750e2e69ac0e865ae163b236fc3d22632daeb909fc10a1a8ac05e4bd1212709da900d7785a5af9b77ba76a324b744da8e66108f72e61fa927aa5e9433dca0300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010400000000000000000000000000000000000000000000000000000000000000869584cd0000000000000000000000001000000000000000000000000000000000000011000000000000000000000000000000000000000000000000000000005ecd41a5",\n' +
+                '    "value": "10800000000000000",\n' +
+                '    "gas": "605952",\n' +
+                '    "estimatedGas": "504960",\n' +
+                '    "gasPrice": "36000000000",\n' +
+                '    "protocolFee": "10800000000000000",\n' +
+                '    "minimumProtocolFee": "5400000000000000",\n' +
+                '    "buyTokenAddress": "0x6b175474e89094c44da98b954eedeac495271d0f",\n' +
+                '    "sellTokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
+                '    "buyAmount": "19802566690042823231",\n' +
+                '    "sellAmount": "100000000000000000",\n' +
+                '    "estimatedGasTokenRefund": "192000",\n' +
+                '    "sources": [\n' +
+                '        {\n' +
+                '            "name": "0x",\n' +
+                '            "proportion": "1"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "name": "Uniswap",\n' +
+                '            "proportion": "0"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "name": "Eth2Dai",\n' +
+                '            "proportion": "0"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "name": "Kyber",\n' +
+                '            "proportion": "0"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "name": "Curve",\n' +
+                '            "proportion": "0"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "name": "LiquidityProvider",\n' +
+                '            "proportion": "0"\n' +
+                '        }\n' +
+                '    ],\n' +
+                '    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"\n' +
+                '}'
+        },
+        "Get Swap Tokens": {
+            url: '/swap/v1/tokens',
+            doc_url: 'https://www.0x.org/docs/api#get-swapv1tokens',
+            description:  '(Deprecated). Get the tokens with known symbols available for trading in the /swap/v1/quote endpoint. If a token is not returned, it may still be available but not queryable by token symbol.',
+            response_attributes: {
+                'symbol': `The symbol representing the Ethereum token.`,
+                'address': `The smart contract address of the token.`,
+                'name': `A human-friendly name for the token.`,
+                'decimals': `The number of decimals needed to represent the token.`,
+            },
+            sample_response: '{\n' +
+                '    "records": [\n' +
+                '        {\n' +
+                '            "symbol": "DAI",\n' +
+                '            "address": "0x6b175474e89094c44da98b954eedeac495271d0f",\n' +
+                '            "name": "Dai Stablecoin",\n' +
+                '            "decimals": 18\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "symbol": "REP",\n' +
+                '            "address": "0x1985365e9f78359a9B6AD760e32412f4a445E862",\n' +
+                '            "name": "Augur Reputation",\n' +
+                '            "decimals": 18\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "symbol": "WETH",\n' +
+                '            "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
+                '            "name": "Wrapped Ether",\n' +
+                '            "decimals": 18\n' +
+                '        }' +
+                '    ]\n' +
+                '}'
+        },
+        "Get Swap Prices": {
+            url: '/swap/v1/prices',
+            doc_url: 'https://www.0x.org/docs/api#get-swapv1prices',
+            description:  '(Deprecated). Get the amount of sellToken to purchase one unit (not base unit, one unit adjusted by number of decimals for asset) for tokens supported by /swap/v1/* endpoints. If a token is not returned, it may still be available but not queryable by token symbol.',
+            params:{
+                sellToken: {description: '(Optional, defaults to "WETH") The ERC20 token address or symbol of the token you want to get the price of tokens in. "ETH" can be provided as a valid sellToken.', default: 'WETH'}
+            },
+            response_attributes: {
+                'symbol': `The symbol representing the Ethereum token.`,
+                'price': `The price of symbol in sellToken.`,
+            },
+            sample_response: '{\n' +
+                '    "records": [\n' +
+                '        {\n' +
+                '            "symbol": "REP",\n' +
+                '            "price": "12.698115840934444557"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "symbol": "WETH",\n' +
+                '            "price": "230.093517897509429761"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "symbol": "ZRX",\n' +
+                '            "price": "0.279612731616675046"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "symbol": "USDC",\n' +
+                '            "price": "0.997928"\n' +
+                '        }\n' +
+                '    ]\n' +
+                '}'
+        },
+        "Get Swap Price": {
+            url: '/swap/v1/price',
+            doc_url: 'https://www.0x.org/docs/api#get-swapv1price',
+            description:  'Nearly identical to /swap/v1/quote, but with a few key differences. Rather than returning a transaction that can be submitted to an Ethereum node, this resource simply indicates the pricing that would be available for an analogous call to /swap/v1/quote. Intended for use with RFQ-T;',
+            params: {
+                sellToken: {description:'The ERC20 token address or symbol of the token you want to send. "ETH" can be provided as a valid sellToken.'},
+                buyToken: {description:'The ERC20 token address or symbol of the token you want to receive. "ETH" can be provided as a valid buyToken'},
+                sellAmount: {type: 'number', description:'(Optional) The amount of sellToken (in sellToken base units) you want to send.'},
+                buyAmount: {type: 'number',description:'(Optional) The amount of buyToken (in buyToken base units) you want to receive.'},
+                slippagePercentage: {type: 'number',description:'(Optional) The maximum acceptable slippage of the buyToken amount if sellAmount is provided, the maximum acceptable slippage of the sellAmount amount if buyAmount is provided. E.g 0.03 for 3% slippage allowed.'},
+                gasPrice: {type: 'number',description:'(Optional, defaults to ethgasstation "fast") The target gas price (in wei) for the swap transaction. If the price is too low to achieve the quote, an error will be returned.'},
+                takerAddress: {description:'(Optional) The address which will fill the quote. When provided the gas will be estimated and returned and the entire transaction will be validated for success. If the validation fails a Revert Error will be returned in the response.'},
+                excludedSources: {description:'(Optional) Liquidity sources (Uniswap, SushiSwap, 0x, Curve etc) that will not be included in the provided quote. Ex: excludedSources=Uniswap,SushiSwap,Curve.'},
+                includedSources: {description:'(Optional) For now only supports RFQT, which should be used when the integrator only wants RFQT liquidity without any other DEX orders. Requires a particular agreement with the 0x integrations team. This parameter cannot be combined with excludedSources.'},
+                skipValidation: {possible: ['true', 'false'],description:'(Optional) Normally, whenever a takerAddress is provided, the API will validate the quote for the user. When this parameter is set to true, that validation will be skipped. See also here.'},
+                intentOnFilling: {description:'(Optional) Used to enable RFQ-T liquidity. '},
+                feeRecipient: {description:'(Optional) The ETH address that should receive affiliate fees specified with buyTokenPercentageFee.'},
+                buyTokenPercentageFee: {type: 'number',description:'(Optional) The percentage (between 0 - 1.0) of the buyAmount that should be attributed to feeRecipient as affiliate fees. Note that this requires that the feeRecipient parameter is also specified in the request.'},
+                affiliateAddress: {description:'(Optional) An ETH address for which to attribute the trade for tracking and analytics purposes. Note affiliateAddress is only for tracking trades and has no impact on affiliate fees, for affiliate fees use feeRecipient.'},
+            },
+            response_attributes: {
+                'price': `If buyAmount was specified in the request it provides the price of buyToken in sellToken and vice versa. This price does not include the slippage provided in the request above, and therefore represents the best possible price.`,
+                'guaranteedPrice': `The price which must be met or else the entire transaction will revert. This price is influenced by the slippagePercentage parameter. On-chain sources may encounter price movements from quote to settlement.`,
+                'to': `The address of the contract to send call data to.`,
+                'data': `The call data required to be sent to the to contract address.`,
+                'value': `The amount of ether (in wei) that should be sent with the transaction. (Assuming protocolFee is paid in ether).`,
+                'gasPrice': `The gas price (in wei) that should be used to send the transaction. The transaction needs to be sent with this gasPrice or lower for the transaction to be successful.`,
+                'gas': `The estimated gas limit that should be used to send the transaction to guarantee settlement. While a computed estimate is returned in all responses, an accurate estimate will only be returned if a takerAddress is included in the request.`,
+                'estimatedGas': `The estimate for the amount of gas that will actually be used in the transaction. Always less than gas.`,
+                'protocolFee': `The maximum amount of ether that will be paid towards the protocol fee (in wei), and what is used to compute the value field of the transaction.`,
+                'minimumProtocolFee': `The minimum amount of ether that will be paid towards the protocol fee (in wei) during the transaction.`,
+                'buyAmount': `The amount of buyToken (in buyToken units) that would be bought in this swap. Certain on-chain sources do not allow specifying buyAmount, when using buyAmount these sources are excluded.`,
+                'sellAmount': `The amount of sellToken (in sellToken units) that would be sold in this swap. Specifying sellAmount is the recommended way to interact with 0xAPI as it covers all on-chain sources.`,
+                'sources': `The percentage distribution of buyAmount or sellAmount split between each liquidity source. Ex: [{ name: '0x', proportion: "0.8" }, { name: 'Kyber', proportion: "0.2"}, ...]`,
+                'buyTokenAddress': `The ERC20 token address of the token you want to receive in quote.`,
+                'sellTokenAddress': `The ERC20 token address of the token you want to sell with quote.`,
+                'allowanceTarget': `The target contract address for which the user needs to have an allowance in order to be able to complete the swap. For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of 0x0000000000000000000000000000000000000000 is then returned instead.`,
+            },
+            sample_response: '{\n' +
+                '    "price": "198.02566690042823231",\n' +
+                '    "guaranteedPrice": "191.88959851561835913",\n' +
+                '    "to": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
+                '    "data": "0xa6c3bf330000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000007200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000002600000000000000000000000006924a03bb710eaf199ab6ac9f2bb148215ae9b5d000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000119f25fd7ebc6a400000000000000000000000000000000000000000000000000016c7d70543164aa3b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd420c0000000000000000000000000000000000000000000000000000017251c82bed00000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000005e0000000000000000000000000000000000000000000000000000000000000064000000000000000000000000000000000000000000000000000000000000006400000000000000000000000000000000000000000000000000000000000000024f47261b00000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000000000000000000000000000000000000000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010a4ce15149935d8a000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd5dc48b6ed252d3488d46ccd3297146fca393cbbc0053dd77a341c0133d612b7c4a8900000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000003c00000000000000000000000000000000000000000000000000000000000000420000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000001c4dc1600f30000000000000000000000006b175474e89094c44da98b954eedeac495271d0f0000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f800000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000140000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000ae3641dffb712e917b9dc3e6c271b6657ff39818000000000000000000000000000000000000000000000000016345785d8a00000000000000000000000000000000000000000000000000010a4ce15149935d8a00000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000020000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000024f47261b0000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000421c2e80750e2e69ac0e865ae163b236fc3d22632daeb909fc10a1a8ac05e4bd1212709da900d7785a5af9b77ba76a324b744da8e66108f72e61fa927aa5e9433dca0300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010400000000000000000000000000000000000000000000000000000000000000869584cd0000000000000000000000001000000000000000000000000000000000000011000000000000000000000000000000000000000000000000000000005ecd41a5",\n' +
+                '    "value": "10800000000000000",\n' +
+                '    "gas": "605952",\n' +
+                '    "estimatedGas": "504960",\n' +
+                '    "gasPrice": "36000000000",\n' +
+                '    "protocolFee": "10800000000000000",\n' +
+                '    "minimumProtocolFee": "5400000000000000",\n' +
+                '    "buyTokenAddress": "0x6b175474e89094c44da98b954eedeac495271d0f",\n' +
+                '    "sellTokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
+                '    "buyAmount": "19802566690042823231",\n' +
+                '    "sellAmount": "100000000000000000",\n' +
+                '    "estimatedGasTokenRefund": "192000",\n' +
+                '    "sources": [\n' +
+                '        {\n' +
+                '            "name": "0x",\n' +
+                '            "proportion": "1"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "name": "Uniswap",\n' +
+                '            "proportion": "0"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "name": "Eth2Dai",\n' +
+                '            "proportion": "0"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "name": "Kyber",\n' +
+                '            "proportion": "0"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "name": "Curve",\n' +
+                '            "proportion": "0"\n' +
+                '        },\n' +
+                '        {\n' +
+                '            "name": "LiquidityProvider",\n' +
+                '            "proportion": "0"\n' +
+                '        }\n' +
+                '    ],\n' +
+                '    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"\n' +
+                '}'
+        },
+        "Get Swap Sources": {
+            url: '/swap/v1/sources',
+            doc_url: 'https://www.0x.org/docs/api#get-swapv1sources',
+            description:  'Returns the sources enabled for the chain.',
+            response_attributes: {
+                'records': `An array of Liquidity Sources.`,
+            },
+            sample_response: '{\n' +
+                '    "records": [\n' +
+                '        "0x",\n' +
+                '        "Balancer",\n' +
+                '        "Balancer_V2",\n' +
+                '        "Bancor",\n' +
+                '        "Component",\n' +
+                '        "CREAM",\n' +
+                '        "CryptoCom",\n' +
+                '        "Curve",\n' +
+                '        "Curve_V2",\n' +
+                '        "DODO",\n' +
+                '        "DODO_V2",\n' +
+                '        "Eth2Dai",\n' +
+                '        "Kyber",\n' +
+                '        "KyberDMM",\n' +
+                '        "Lido",\n' +
+                '        "Linkswap",\n' +
+                '        "LiquidityProvider",\n' +
+                '        "MakerPsm",\n' +
+                '        "Mooniswap",\n' +
+                '        "mStable",\n' +
+                '        "MultiHop",\n' +
+                '        "Saddle",\n' +
+                '        "Shell",\n' +
+                '        "ShibaSwap",\n' +
+                '        "Smoothy",\n' +
+                '        "SnowSwap",\n' +
+                '        "SushiSwap",\n' +
+                '        "Swerve",\n' +
+                '        "Uniswap",\n' +
+                '        "Uniswap_V2",\n' +
+                '        "Uniswap_V3",\n' +
+                '        "xSigma"\n' +
+                '    ]\n' +
+                '}'
+        },
     },
 
 }

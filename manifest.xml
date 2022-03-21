@@ -5,12 +5,12 @@
   <ProviderName>Finsheet.io</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Finsheet.io"/>
-  <Description DefaultValue="Real-time Stock and Crypto Price | Financial Data"/>
+  <Description DefaultValue="Import Quotes and Financials"/>
   <IconUrl DefaultValue="https://imgur.com/SdA1fEp.png"/>
   <HighResolutionIconUrl DefaultValue="https://imgur.com/PDU2pf1.png"/>
   <SupportUrl DefaultValue="https://alpharesearch.io/excel-addin-support"/>
   <AppDomains>
-    <AppDomain>"https://finsheet.io</AppDomain>
+    <AppDomain>"https://alpharesearch.io</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Workbook"/>
@@ -21,7 +21,7 @@
     </Sets>
   </Requirements>
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://tqdo.github.io/finsheet_excel/dist/taskpane.html"/>
+    <SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/>
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
@@ -88,12 +88,12 @@
         <bt:Image id="Icon.80x80" DefaultValue="https://imgur.com/XFCeWjR.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Functions.Script.Url" DefaultValue="https://tqdo.github.io/finsheet_excel/dist/functions.js"/>
-        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://tqdo.github.io/finsheet_excel/dist/functions.json"/>
-        <bt:Url id="Functions.Page.Url" DefaultValue="https://tqdo.github.io/finsheet_excel/dist/taskpane.html"/>
+        <bt:Url id="Functions.Script.Url" DefaultValue="https://localhost:3000/dist/functions.js"/>
+        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://raw.githubusercontent.com/tqdo/stock_website/main/finsheet.json"/>
+        <bt:Url id="Functions.Page.Url" DefaultValue="https://localhost:3000/dist/functions.html"/>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
-        <bt:Url id="Commands.Url" DefaultValue="https://tqdo.github.io/finsheet_excel/src/commands/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://tqdo.github.io/finsheet_excel/dist/taskpane.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GetStarted.Title" DefaultValue="Add-in successfully added"/>

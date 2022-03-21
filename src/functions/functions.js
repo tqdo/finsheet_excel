@@ -1301,7 +1301,7 @@ async function FS_Api(provider, endpoint, parameters=[]) {
   if (!api_key) { return [["Please login using the sidebar"]] }
   if (!provider) { return [["Provider name cannot be empty"]] }
   if (typeof provider !== 'string') { return [['Provider name to be a string']] }
-  provider = provider.toLowerCase()
+  // provider = provider.toLowerCase()
 
   if (!endpoint) { return [["Endpoint name cannot be empty"]] }
   if (typeof endpoint !== 'string') { return [['Endpoint name to be a string']] }
