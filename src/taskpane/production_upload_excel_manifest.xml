@@ -6,9 +6,9 @@
     <DefaultLocale>en-US</DefaultLocale>
     <DisplayName DefaultValue="Finsheet.io"/>
     <Description DefaultValue="Real-time Stock and Crypto Price | Financial Data"/>
-    <IconUrl DefaultValue="https://imgur.com/SdA1fEp.png"/>
-    <HighResolutionIconUrl DefaultValue="https://imgur.com/PDU2pf1.png"/>
-    <SupportUrl DefaultValue="https://alpharesearch.io/excel-addin-support"/>
+    <IconUrl DefaultValue="https://imgur.com/gD2jWOi.png"/>
+    <HighResolutionIconUrl DefaultValue="https://imgur.com/uv6Xp4H.png"/>
+    <SupportUrl DefaultValue="https://finsheet.io/addin-support-excel"/>
     <AppDomains>
         <AppDomain>"https://finsheet.io</AppDomain>
     </AppDomains>
@@ -83,9 +83,9 @@
         </Hosts>
         <Resources>
             <bt:Images>
-                <bt:Image id="Icon.16x16" DefaultValue="https://imgur.com/SdA1fEp.png"/>
-                <bt:Image id="Icon.32x32" DefaultValue="https://imgur.com/PDU2pf1.png"/>
-                <bt:Image id="Icon.80x80" DefaultValue="https://imgur.com/XFCeWjR.png"/>
+                <bt:Image id="Icon.16x16" DefaultValue="https://imgur.com/gD2jWOi.png"/>
+                <bt:Image id="Icon.32x32" DefaultValue="https://imgur.com/uv6Xp4H.png"/>
+                <bt:Image id="Icon.80x80" DefaultValue="https://imgur.com/4Wm7n7m.png"/>
             </bt:Images>
             <bt:Urls>
                 <bt:Url id="Functions.Script.Url" DefaultValue="https://tqdo.github.io/finsheet_excel/dist/functions.js"/>

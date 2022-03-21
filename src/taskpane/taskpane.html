@@ -495,7 +495,21 @@
                 temp[param].show_desc = false
                 this.setState({endpoint_params: temp})
             }
-
+            showReportProblem(){
+                this.setState({show_report_problem: true})
+            }
+            changeProblemDescribe(e){
+                this.setState({problem_desc: e.target.value})
+            }
+            hideReportProblem(){
+                this.setState({show_report_problem: false, problem_desc: ''})
+            }
+            actuallyReportProblem(){
+                var prepare = {provider: this.state.provider,endpoint: this.state.endpoint, problem: this.state.problem_desc}
+                fetch(link + '/report_problem?'+ new URLSearchParams(prepare).toString())
+                this.setState({show_report_problem: false, problem_desc: ''})
+                window.pushNoti('Thanks, we will look into this.', 3000, 'ok')
+            }
             render() {
                 if(this.state.big_loading){return <div className="position-relative" style={{minHeight: '100px'}}>
                     <div className="spinner_ar">
@@ -559,7 +573,9 @@
 
                 var second_part = [
                     <div style={{fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '10px'}}>{capFirst(this.state.provider) + ' | ' + this.state.endpoint}
-
+                        <div style={{float:'right', color: 'black'}}>
+                            <i className="fas fa-tools pointer view_doc_from_api_console" title={'Report a problem'} onClick={this.showReportProblem} />
+                        </div>
                     </div>,
                     <div style={{}}>{this.state.description}</div>,
                     <div className={'doc_link'}><b>Doc: </b><a href={link + '/docs/integrations/' + this.state.provider.toLowerCase() + '/' + this.state.endpoint.toLowerCase().replaceAll(' ', '-')} target={'_blank'} style={{color: '#0e8e32'}}>
@@ -595,9 +611,26 @@
                     <SearchboxOverlay updateEndpoint={this.updateEndpoint}/>
                     {second_part}
                 </div>
-
+                const padding_style = window.innerWidth > 900 ? {padding: '30px', maxWidth: window.innerWidth} : {maxWidth: window.innerWidth}
+                var popup_report_problem = this.state.show_report_problem && <div className={' spinner_wait_company '} >
+                    <div className="download_popup white_background_popup" style={padding_style}>
+                        <i className="fas fa-times x_reorder" onClick={this.hideReportProblem}/>
+                        <div className={'top_download'}>
+                            <div className={'set_up_once'}>Briefly describe the problem/error</div>
+                        </div>
+                        <div className={'instructions_download'}>
+                            <textarea maxLength={3000} className={'big_input feedback_inp'} placeholder={'Describe the problem of this endpoint'} onChange={this.changeProblemDescribe} value={this.state.problem_desc}/>
+                            <div className={'popup_2_buttons'} style={{  marginRight:'20px',marginTop: '5px', fontSize: '0.8rem'}}>
+                                <div className={'popup_2nd_button inline_block'} onClick={this.actuallyReportProblem}>Submit</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 return (
-                    final
+                    <>
+                        {final}
+                        {popup_report_problem}
+                    </>
                 )
             }
         }

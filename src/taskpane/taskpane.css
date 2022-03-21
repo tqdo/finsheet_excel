@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
  */
@@ -937,3 +937,99 @@ input[type="date"] {
 .api_param_input{
     padding-left: 5px;
 }
+/*For report problem popup*/
+.spinner_wait_company{
+    display: flex;
+    position: fixed;
+    z-index: 106;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(68, 68, 68, .3);
+}
+.download_popup{
+    padding: 20px;
+    /*background-color: var(--popup_background);*/
+    /*border: 2px solid black;*/
+    /*color: var(--text_gray_color);*/
+    width: 600px;
+    display: flex;
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    flex-direction: column;
+}
+.white_background_popup{
+    background-color: white;
+    color: black;
+    margin: auto;
+    text-align: center;
+}
+.x_reorder{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    /*color: white;*/
+    cursor: pointer;
+    z-index: 65;
+}
+.top_download{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    /*margin-top: 60px;*/
+    /*margin-right: 30px;*/
+}
+.set_up_once{
+    vertical-align: center;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #0e8e32;
+    display: inline-block;
+    /*height: 2rem;*/
+}
+.instructions_download{
+    width: 100%;
+    /*margin-top: 15px;*/
+}
+.big_input{
+    /*width: var(--half_width);*/
+    font-size: .9rem;
+    display: inline-block;
+    margin-bottom: auto;
+    margin-top: auto;
+    /*background-color: coral;*/
+    /*background-color: var(--overall_background);*/
+    /*color: white;*/
+    border-radius: 5px;
+    padding-left: 5px;
+    outline: none;
+    /*border: none;*/
+    border: 1px solid #626A72;
+    /*line-height: 1.1rem;*/
+    vertical-align: top;
+    height: 290px;
+}
+.feedback_inp{
+    width: 100% !important;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    height: 150px !important;
+    background: white;
+    color: black
+}
+.popup_2nd_button{
+    /*border: 1px solid black;*/
+    min-width: 72px;
+    min-height: 36px;
+    padding: 9px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    background: #0e8e32;
+    border-radius: 3px;
+    /*font-weight: bold;*/
+}
+/*End report problem*/
