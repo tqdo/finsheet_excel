@@ -1,3 +1,6 @@
+function capFirst(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 function checkValidProviderEndpoint(provider, endpoint_name){
     var first_dic = big_api_map[provider]
     if(!first_dic){return [{}, "", "Invalid provider"]}

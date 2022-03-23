@@ -1,4 +1,7 @@
-﻿async function equityHelper(symbol, metric, period = undefined, limit = undefined) {
+﻿function capFirst(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+async function equityHelper(symbol, metric, period = undefined, limit = undefined) {
   // return [["Please login using the sidebar"]];
   // console.log(123)
 
