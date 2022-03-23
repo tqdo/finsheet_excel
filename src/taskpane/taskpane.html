@@ -195,6 +195,7 @@
             initializeTypeHead() {
                 let searchSource = []
                 var json =  intergration_json
+                console.log(json)
                 json.extraDocs.forEach(function (element, index) {
                     element.subSection.forEach(function (sub, i) {
                         if(!sub['summary'].includes('|')){return}
@@ -620,7 +621,7 @@
                         </div>
                         <div className={'instructions_download'}>
                             <textarea maxLength={3000} className={'big_input feedback_inp'} placeholder={'Briefly describe the problem of this endpoint'} onChange={this.changeProblemDescribe} value={this.state.problem_desc}/>
-                            <div className={'popup_2_buttons'} style={{  marginRight:'20px',marginTop: '5px', fontSize: '0.8rem'}}>
+                            <div className={'popup_2_buttons'} style={{  marginTop: '5px', fontSize: '0.8rem'}}>
                                 <div className={'popup_2nd_button inline_block'} onClick={this.actuallyReportProblem}>Submit</div>
                             </div>
                         </div>
