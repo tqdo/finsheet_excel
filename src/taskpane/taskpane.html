@@ -616,10 +616,10 @@
                     <div className="download_popup white_background_popup" style={padding_style}>
                         <i className="fas fa-times x_reorder" onClick={this.hideReportProblem}/>
                         <div className={'top_download'}>
-                            <div className={'set_up_once'}>Briefly describe the problem/error</div>
+                            <div className={'set_up_once'}>Report a problem</div>
                         </div>
                         <div className={'instructions_download'}>
-                            <textarea maxLength={3000} className={'big_input feedback_inp'} placeholder={'Describe the problem of this endpoint'} onChange={this.changeProblemDescribe} value={this.state.problem_desc}/>
+                            <textarea maxLength={3000} className={'big_input feedback_inp'} placeholder={'Briefly describe the problem of this endpoint'} onChange={this.changeProblemDescribe} value={this.state.problem_desc}/>
                             <div className={'popup_2_buttons'} style={{  marginRight:'20px',marginTop: '5px', fontSize: '0.8rem'}}>
                                 <div className={'popup_2nd_button inline_block'} onClick={this.actuallyReportProblem}>Submit</div>
                             </div>

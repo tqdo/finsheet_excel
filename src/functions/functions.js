@@ -125,12 +125,12 @@
 
   if (!response.ok) {
     var error = await response.text()
-    console.log("err", error)
+    // console.log("err", error)
     try{return [[JSON.parse(error).error]]}
     catch (e) {return [['Rate limit reached. Please try again later.']]}
   }
   var json = await response.json()
-  console.log(response, json)
+  // console.log(response, json)
   if('message' in json){return [[json.message]]}
   return handle_receive_AR_EQUITY(json, is_full_statement, id);
 }

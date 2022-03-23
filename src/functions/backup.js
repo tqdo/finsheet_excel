@@ -280,7 +280,6 @@ async function FS_CryptoCandles(symbol, resolution, from, to = undefined, ){
  * ...
  */
 async function FS_EtfCandles(symbol, resolution, from, to = undefined, ){
-    console.log(3)
     return candlesHelper(symbol, resolution, from, to , "etf" )
 }
 

@@ -6,8 +6,8 @@
     <DefaultLocale>en-US</DefaultLocale>
     <DisplayName DefaultValue="Finsheet.io"/>
     <Description DefaultValue="Real-time Stock and Crypto Price | Financial Data"/>
-    <IconUrl DefaultValue="https://imgur.com/gD2jWOi.png"/>
-    <HighResolutionIconUrl DefaultValue="https://imgur.com/uv6Xp4H.png"/>
+    <IconUrl DefaultValue="https://imgur.com/uv6Xp4H.png"/>
+    <HighResolutionIconUrl DefaultValue="https://imgur.com/ydSfg5H.png"/>
     <SupportUrl DefaultValue="https://finsheet.io/addin-support-excel"/>
     <AppDomains>
         <AppDomain>"https://finsheet.io</AppDomain>
@@ -89,7 +89,7 @@
             </bt:Images>
             <bt:Urls>
                 <bt:Url id="Functions.Script.Url" DefaultValue="https://tqdo.github.io/finsheet_excel/dist/functions.js"/>
-                <bt:Url id="Functions.Metadata.Url" DefaultValue="https://tqdo.github.io/finsheet_excel/dist/functions.json"/>
+                <bt:Url id="Functions.Metadata.Url" DefaultValue="https://raw.githubusercontent.com/tqdo/stock_website/main/finsheet.json"/>
                 <bt:Url id="Functions.Page.Url" DefaultValue="https://tqdo.github.io/finsheet_excel/dist/taskpane.html"/>
                 <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
                 <bt:Url id="Commands.Url" DefaultValue="https://tqdo.github.io/finsheet_excel/src/commands/commands.html"/>
