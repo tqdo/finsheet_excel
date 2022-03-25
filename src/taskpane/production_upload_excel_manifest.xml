@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
-    <Id>8d1b78f7-9bb6-4e29-a45a-c0d5c553c979</Id>
+    <Id>89d7fcac-c840-4ec0-a7ef-bf1f62f68bff</Id>
     <Version>1.0.0.0</Version>
     <ProviderName>Finsheet.io</ProviderName>
     <DefaultLocale>en-US</DefaultLocale>

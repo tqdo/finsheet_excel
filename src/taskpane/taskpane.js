@@ -1,5 +1,6 @@
-var link = 'https://b607-96-234-76-225.ngrok.io'
-var link = 'https://finsheet.io'
+var link = 'https://ad57-71-187-24-225.ngrok.io'
+// var link = 'https://finsheet.io'
+console.log(link)
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
@@ -377,6 +378,10 @@ function checkCoupon(cookie, ){
 }
 /* global console, document, Excel, Office */
 $(document).ready(function () {
+  setTimeout(() => {if (!window.Tawk_API) {
+    $('.hide_chat_widget').css({display: 'none'})
+  }}, 2000);
+
   let cookie = readCookie("finsheet_api_key")
   if (cookie || true) {
     // $("#if_have_api_key").css({ display: "flex" });
@@ -1953,6 +1958,11 @@ async function actuallyImportToSheet(provider, endpoint, parameters){
     })
   });
 
+}
+function hideChatWidget(){
+  $('.hide_chat_widget').css({display: 'none'})
+  window.Tawk_API.minimize();
+  window.Tawk_API.hideWidget();
 }
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});

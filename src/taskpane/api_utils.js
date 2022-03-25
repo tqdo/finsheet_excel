@@ -6845,7 +6845,7 @@ var big_api_map = {
 
 
 var skip_endpoint = {
-    doc_url: 1, base_url:1, provider_description: 1
+    doc_url: 1, base_url:1, provider_description: 1, logo_url: 1
 }
 
 
@@ -6862,7 +6862,7 @@ for(var provider of Object.keys(big_api_map)){
             "doc_url": big_api_map[provider].doc_url,
             "urlId": provider.toLowerCase(),
             "navHeader": capFirst(provider) ,
-            "title": capFirst(provider)+ ' | Integrations',
+            "title": capFirst(provider),
             "section": capFirst(provider),
         }
     }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<b>Test locally:</b>
+
+rm -r ~/Library/Containers/com.microsoft.Excel
+sudo lsof -i :3000
+kill -9 7371
+cd /Users/tuando/Library/Containers/com.microsoft.Excel/Data/Documents/wef
+(If wef does not exist then: mkdir wef)
+open .
+(delete Production manifest if exists)
+npm run dev-server    // Run this in Golang
+(Open Excel)
+
+
+
+
+
+<b>Test production</b>
+
+rm -r ~/Library/Containers/com.microsoft.Excel
+cd /Users/tuando/Library/Containers/com.microsoft.Excel/Data/Documents/wef
+(If wef does not exist then: mkdir wef)
+open .
+(copy Production manifest in here, delete other manifests if exist)
+Open Excel
+
+
+
+
+</html>

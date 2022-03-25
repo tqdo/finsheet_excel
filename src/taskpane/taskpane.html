@@ -131,6 +131,7 @@
             <div id="header_coupon">
 
             </div>
+            <i class="fas fa-times hide_chat_widget" title="Hide the chat widget" onclick="hideChatWidget()"></i>
 
         </div>
     </div>
@@ -506,7 +507,7 @@
                 this.setState({show_report_problem: false, problem_desc: ''})
             }
             actuallyReportProblem(){
-                var prepare = {provider: this.state.provider,endpoint: this.state.endpoint, problem: this.state.problem_desc}
+                var prepare = {provider: this.state.provider,endpoint: this.state.endpoint, problem: this.state.problem_desc, api_key: readCookie('token')}
                 fetch(link + '/report_problem?'+ new URLSearchParams(prepare).toString())
                 this.setState({show_report_problem: false, problem_desc: ''})
                 window.pushNoti('Thanks, we will look into this.', 3000, 'ok')
@@ -575,7 +576,8 @@
                 var second_part = [
                     <div style={{fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '10px'}}>{capFirst(this.state.provider) + ' | ' + this.state.endpoint}
                         <div style={{float:'right', color: 'black'}}>
-                            <i className="fas fa-tools pointer view_doc_from_api_console" title={'Report a problem'} onClick={this.showReportProblem} />
+                            <i className="fas fa-tools pointer view_doc_from_api_console" title={'Report a problem'} style={{marginRight: 0}}
+                               onClick={this.showReportProblem} />
                         </div>
                     </div>,
                     <div style={{}}>{this.state.description}</div>,
@@ -641,6 +643,17 @@
             document.getElementById('console'),
         );
 
+    </script>
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/623b77d82bd26d087e74623f/1fus4o9gl';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
     </script>
 </body>
 
