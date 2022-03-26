@@ -378,9 +378,10 @@ function checkCoupon(cookie, ){
 }
 /* global console, document, Excel, Office */
 $(document).ready(function () {
-  setTimeout(() => {if (!window.Tawk_API) {
-    $('.hide_chat_widget').css({display: 'none'})
-  }}, 2000);
+  setTimeout(() => {
+    // $('.hide_chat_widget').css({display: 'none'})
+    window.Tawk_API.hideWidget()
+  }, 2000);
 
   let cookie = readCookie("finsheet_api_key")
   if (cookie || true) {
@@ -1963,6 +1964,13 @@ function hideChatWidget(){
   $('.hide_chat_widget').css({display: 'none'})
   window.Tawk_API.minimize();
   window.Tawk_API.hideWidget();
+}
+function toggleChat(){
+  if(window.Tawk_API.isChatHidden()){
+    window.Tawk_API.showWidget()
+  } else {
+    window.Tawk_API.hideWidget()
+  }
 }
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});

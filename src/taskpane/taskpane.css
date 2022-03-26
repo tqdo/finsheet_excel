@@ -1035,8 +1035,8 @@ input[type="date"] {
 .hide_chat_widget{
     cursor: pointer;
     position: fixed;
-    right: 20px;
-    bottom: 75px;
+    right: 15px;
+    bottom: 65px;
     color: black;
     z-index: 70000;
     background: white;
