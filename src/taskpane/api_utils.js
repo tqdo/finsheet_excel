@@ -16,6 +16,7 @@ var big_api_map = {
         "doc_url":  'https://developers.coinbase.com/api/v2',
         'provider_description': 'Coinbase Global, Inc., branded Coinbase, is an American company that operates a cryptocurrency exchange platform. Coinbase operates remote-first, and lacks an official physical headquarters',
         "base_url": "https://api.coinbase.com/v2",
+        "logo_url": "https://assets-global.website-files.com/60e4948b205f74054cbc1480/60ec82b315d2a74cb9e29b39_Coinbase.png",
         "Get currencies": {
             url: "/currencies",
             doc_url: 'https://developers.coinbase.com/api/v2#get-currencies',
@@ -154,6 +155,7 @@ var big_api_map = {
         "base_url": "https://api.binance.com",
         "provider_description": 'Binance is a cryptocurrency exchange which is the largest exchange in the world in terms of daily trading volume of cryptocurrencies',
         "doc_url": 'https://binance-docs.github.io/apidocs/spot/en/',
+        "logo_url": "https://assets-global.website-files.com/60e4948b205f74054cbc1480/60ec92d6c853cd2c9183e39d_binance-logo.svg",
         "Check Server Time": {
             url: '/api/v3/time',
             doc_url: 'https://binance-docs.github.io/apidocs/spot/en/#check-server-time',
@@ -429,7 +431,7 @@ var big_api_map = {
         "base_url": "https://api.kraken.com/0",
         "provider_description": 'Kraken is a United States-based cryptocurrency exchange and bank, founded in 2011. The exchange provides trading between cryptocurrency and fiat currencies, and provides price information to Bloomberg Terminal.',
         "doc_url": 'https://docs.kraken.com/rest/',
-
+        "logo_url": "https://assets-global.website-files.com/60e4948b205f74054cbc1480/60f05cc42df82b25089dbaee_Kraken.svg",
         "Get Server Time": {
             url: '/public/Time',
             doc_url: 'https://docs.kraken.com/rest/#operation/getServerTime',
@@ -912,6 +914,8 @@ var big_api_map = {
         "base_url": "https://poloniex.com/public",
         "provider_description": 'Launched in January 2014, Poloniex became one of the larger American cryptocurrency trading platforms. After being acquired by Circle in February 2018, Poloniex stopped serving the U.S. market and moved its legal headquarters to Bermuda 18 months later. Shortly thereafter it was acquired by a consortium that included Justin Sun\'s TRON',
         "doc_url": 'https://docs.poloniex.com/',
+        "logo_url": "https://assets-global.website-files.com/60e4948b205f74054cbc1480/60f05cd1e1e5dcc798fad5b6_poloniex.svg",
+
         "Return Ticker": {
             url: '',
             go_up_1_level: true,
@@ -1188,6 +1192,7 @@ var big_api_map = {
         "base_url": "https://api.kucoin.com",
         "provider_description": 'KuCoin is a secure cryptocurrency exchange that makes it easier to buy, sell, and store cryptocurrencies like BTC, ETH, KCS, SHIB, DOGE, Gari etc.',
         "doc_url": 'https://docs.kucoin.com/#general',
+        "logo_url": "https://assets-global.website-files.com/60e4948b205f74054cbc1480/60ec93c93c826e5abe059314_KuCoin_Shares_Logo.svg",
         "Get Symbols List": {
             url: '/api/v1/symbols',
             params: {
@@ -1536,6 +1541,8 @@ var big_api_map = {
         "base_url": "https://api.gemini.com",
         "provider_description": 'Gemini Trust Company, LLC is a cryptocurrency exchange and custodian that allows customers to buy, sell, and store digital assets. It is a New York trust company that is regulated by the New York State Department of Financial Services and was founded in 2014 by Cameron and Tyler Winklevoss',
         "doc_url": 'https://docs.gemini.com/rest-api/',
+        "logo_url": "https://assets-global.website-files.com/60e4948b205f74054cbc1480/60ec84b4307ad44b41a14457_Gemini.png",
+
         "Symbols": {
             url: '/v1/symbols',
             doc_url: 'https://docs.gemini.com/rest-api/#symbols',
@@ -1786,6 +1793,8 @@ var big_api_map = {
         "base_url": "https://www.okx.com",
         "provider_description": 'OKX, formerly known as OKEx, is a Seychelles-based cryptocurrency exchange that provides a platform for trading various cryptocurrencies. Some of exchange\'s core features include spot and derivative trading. It was founded in 2017. OKX is owned by Ok Group which also owns crypto exchange Okcoin',
         "doc_url": 'https://www.okx.com/docs-v5/en/#rest-api',
+        "logo_url": "https://assets-global.website-files.com/60e4948b205f74054cbc1480/60f05e00d2f8fedef963daa1_OKeX.svg",
+
         "Get Tickers":{
             url: '/api/v5/market/tickers',
             params:{
@@ -2899,6 +2908,8 @@ var big_api_map = {
         "base_url": "https://api.hitbtc.com",
         "provider_description": 'HitBTC is a leading European bitcoin exchange which provides cryptocurrency trading services to institutionals, merchants and individual traders worldwide.',
         "doc_url": 'https://api.hitbtc.com/',
+        "logo_url": "https://assets-global.website-files.com/60e4948b205f74054cbc1480/60ec866725b835245882b35a_hitbtc-seeklogo.com.svg",
+
         "Get Currencies": {
             url: '/api/3/public/currency',
             go_up_1_level: true,
@@ -3405,6 +3416,8 @@ var big_api_map = {
         "base_url": "https://api-pub.bitfinex.com",
         "provider_description": 'Bitfinex is a cryptocurrency exchange owned and operated by iFinex Inc registered in the British Virgin Islands.',
         "doc_url": 'https://docs.bitfinex.com/docs/introduction',
+        "logo_url": "https://assets-global.website-files.com/60e4948b205f74054cbc1480/60ec872a97bd791b13ed7b61_bfx-leaf.jpg",
+
         "Get Tickers": {
             url: '/v2/tickers',
             params: {
@@ -4247,6 +4260,8 @@ var big_api_map = {
         "base_url": "https://api.bittrex.com/v3",
         "provider_description": 'Bittrex is a leading cryptocurrency exchange that provides the widest selection of cryptocurrencies like Bitcoin & Ethereum in the US.',
         "doc_url": 'https://bittrex.github.io/api/v3',
+        "logo_url": "https://assets-global.website-files.com/60e4948b205f74054cbc1480/60f05ce275bb9245794bd607_Bittrex.svg",
+
         "Get Currencies": {
             url: '/currencies',
             doc_url: 'https://bittrex.github.io/api/v3#operation--currencies-get',
@@ -4469,6 +4484,8 @@ var big_api_map = {
         "base_url": "https://api.huobi.pro",
         "provider_description": 'Huobi is a Seychelles-based cryptocurrency exchange. Founded in China, the company now has offices in Hong Kong, South Korea, Japan and the United States. In August 2018 it became a publicly listed Hong Kong company.',
         "doc_url": 'https://huobiapi.github.io/docs/spot/v1/en',
+        "logo_url": "https://assets-global.website-files.com/60e4948b205f74054cbc1480/60ec9321ecd3e5250ae595a5_huobi-token-ht-logo.svg",
+
         "Get Market Status": {
             url: '/v2/market-status',
             go_down_1_level: true,
@@ -5650,6 +5667,8 @@ var big_api_map = {
         "base_url": "https://www.bitmex.com/api/v1",
         "provider_description": 'BitMEX is a cryptocurrency exchange and derivative trading platform. It is owned and operated by HDR Global Trading Limited, which is registered in the Seychelles.',
         "doc_url": 'https://www.bitmex.com/api/explorer/#/',
+        "logo_url": "https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/lsys93ej83czbxinnwp6",
+
         "Swap Funding History": {
             url: '/funding',
             params: {
@@ -6003,6 +6022,7 @@ var big_api_map = {
         "doc_url": 'https://docs.0x.org/introduction/welcome',
         'provider_description': '0x is important infrastructure for the emerging crypto economy and enables markets to be created that couldn\'t have existed before. As more assets become tokenized, public blockchains provide the opportunity to establish a new financial stack that is more efficient, transparent, and equitable than any system in the past.',
         "base_url": "https://api.0x.org",
+        "logo_url": 'https://avatars.githubusercontent.com/u/24832717?s=200&v=4',
         "Get Swap Quote": {
             url: '/swap/v1/quote',
             doc_url: 'https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote',
@@ -6363,6 +6383,8 @@ var big_api_map = {
         "doc_url": 'https://docs.0xtracker.com/',
         'provider_description': 'The leading provider of 0x protocol market data, transparent Ethereum token price index and 0x protocol news aggregator.',
         "base_url": "https://api.0xtracker.com",
+        "logo_url": "https://avatars.githubusercontent.com/u/42436424?s=200&v=4",
+
         "Get App": {
             url: '/apps/:slug',
             doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#app',
@@ -6840,7 +6862,367 @@ var big_api_map = {
                 '  "traderCount": 116\n' +
                 '}'
         },
-    }
+    },
+    Aave: {
+        "doc_url": 'https://aave-api-v2.aave.com/',
+        'provider_description': 'Aave is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers. Depositors provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralised (perpetually) or undercollateralised (one-block liquidity) fashion.',
+        "base_url": "https://aave-api-v2.aave.com",
+        "logo_url": "https://aave.com/favicon64.png",
+        "Get TVL": {
+            url: '/data/tvl',
+            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_tvl',
+            description: 'Gets the combined TVL of all markets and staking contracts' ,
+            sample_response: '{\n' +
+                '  "totalTvl": {\n' +
+                '    "tvlInEth": "2694999.404135708",\n' +
+                '    "tvlInUsd": "3325280801.4152594"\n' +
+                '  },\n' +
+                '  "marketTvls": {\n' +
+                '    "v1": {\n' +
+                '      "tvlInEth": "2694999.404135708",\n' +
+                '      "tvlInUsd": "3325280801.4152594"\n' +
+                '    },\n' +
+                '    "v2": {\n' +
+                '      "tvlInEth": "2694999.404135708",\n' +
+                '      "tvlInUsd": "3325280801.4152594"\n' +
+                '    },\n' +
+                '    "staking": {\n' +
+                '      "stkAave": {\n' +
+                '        "tvlInEth": "2694999.404135708",\n' +
+                '        "tvlInUsd": "3325280801.4152594"\n' +
+                '      },\n' +
+                '      "stkABPT": {\n' +
+                '        "tvlInEth": "2694999.404135708",\n' +
+                '        "tvlInUsd": "3325280801.4152594"\n' +
+                '      }\n' +
+                '    },\n' +
+                '    "updatedAt": "2016-08-29T09:12:33.001Z",\n' +
+                '    "createdAt": "2016-08-29T09:12:33.001Z"\n' +
+                '  }\n' +
+                '}'
+        },
+        "Get Daily Volume 24h": {
+            url: '/data/daily-volume-24-hours',
+            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_daily_volume_24_hours',
+            description: 'Gets the combined volume of the protocol in the last 24 hours window' ,
+            sample_response: '{\n' +
+                '  "totalVolumeInUsd": 2537758161.0711317,\n' +
+                '  "totalVolumeInEth": 1.4578956086436396e+24,\n' +
+                '  "totalBorrowUSD": 93708825.01188761,\n' +
+                '  "totalBorrowETH": 5.383400458392099e+22,\n' +
+                '  "totalRepayETH": 4.5639311177594584e+22,\n' +
+                '  "totalRepayUSD": 79444326.27406068,\n' +
+                '  "totalDepositETH": 6.926962774121884e+23,\n' +
+                '  "totalDepositUSD": 1205776065.6689548,\n' +
+                '  "totalWithdrawalUSD": 1158828944.1162288,\n' +
+                '  "totalWithdrawalETH": 6.657260154699355e+23,\n' +
+                '  "totalStakedETH": 6.926962774121884e+23,\n' +
+                '  "totalStakedUSD": 1205776065.6689548,\n' +
+                '  "totalRedeemedUSD": 1158828944.1162288,\n' +
+                '  "totalRedeemedETH": 6.657260154699355e+23,\n' +
+                '  "reserves": {\n' +
+                '    "v1": [\n' +
+                '      {\n' +
+                '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '        "aToken": "0x4da9b813057d04baef4e5800e36083717b4a0341",\n' +
+                '        "asset": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '        "pool": "0x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '        "symbol": "TUSD",\n' +
+                '        "decimals": 18,\n' +
+                '        "priceInEth": "573034943849483",\n' +
+                '        "borrow": 1031806.6110582352,\n' +
+                '        "deposit": 0,\n' +
+                '        "repay": 1201747.9494428635,\n' +
+                '        "withdrawal": 1000000\n' +
+                '      }\n' +
+                '    ],\n' +
+                '    "v2": [\n' +
+                '      {\n' +
+                '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '        "aToken": "0x4da9b813057d04baef4e5800e36083717b4a0341",\n' +
+                '        "asset": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '        "pool": "0x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '        "symbol": "TUSD",\n' +
+                '        "decimals": 18,\n' +
+                '        "priceInEth": "573034943849483",\n' +
+                '        "borrow": 1031806.6110582352,\n' +
+                '        "deposit": 0,\n' +
+                '        "repay": 1201747.9494428635,\n' +
+                '        "withdrawal": 1000000\n' +
+                '      }\n' +
+                '    ],\n' +
+                '    "stk": [\n' +
+                '      {\n' +
+                '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '        "asset": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '        "symbol": "TUSD",\n' +
+                '        "decimals": 18,\n' +
+                '        "priceInEth": "573034943849483",\n' +
+                '        "stake": 1031806.6110582352,\n' +
+                '        "redeem": 1031806.6110582352\n' +
+                '      }\n' +
+                '    ]\n' +
+                '  }\n' +
+                '}'
+        },
+        "Get Liquidity": {
+            url: '/data/liquidity/v1',
+            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_liquidity_v1',
+            description: 'Returns overall protocol liquidity at a certain date' ,
+            params: {
+                poolId: {description: 'The id of the Aave Lending Pool Addresses Provider (e.g. 0x24a42fd28c976a61d\nf5d00d0599c34c4f90748c8)', required: true},
+                date: {description: 'The date for where we want to get the data from (e.g. 01-01-2020)'}
+            },
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "availableLiquidity": "942194.519059401080866728",\n' +
+                '    "averageStableRate": "100050758739420732058977873",\n' +
+                '    "baseLTVasCollateral": "0.75",\n' +
+                '    "baseVariableBorrowRate": "0",\n' +
+                '    "borrowingEnabled": true,\n' +
+                '    "decimals": 18,\n' +
+                '    "id": "0x0000000000085d4780b73119b644ae5ecd22b3760xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
+                '    "liquidityIndex": "1.01825210810387712252",\n' +
+                '    "liquidityRate": "0.10455997873609331382",\n' +
+                '    "name": "TrueUSD",\n' +
+                '    "optimalUtilisationRate": "0.8",\n' +
+                '    "pool": "0xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
+                '    "price": {\n' +
+                '      "id": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '      "priceInEth": "0.00057794"\n' +
+                '    },\n' +
+                '    "reserveFactor": "0.1",\n' +
+                '    "reserveInterestRateStrategy": "0x0ddec679166c367ae45036c8b2c169c5fb2dcee1",\n' +
+                '    "reserveLiquidationBonus": "0.05",\n' +
+                '      "timestamp": 1612997034,\n' +
+                '      "totalLiquidity": "6248213120765942920753579",\n' +
+                '      "utilizationRate": "0.84920576",\n' +
+                '      "variableBorrowIndex": "1059494494389873906724270151",\n' +
+                '      "variableBorrowRate": "0.22375297880588482699"\n' +
+                '    }\n' +
+                '  }\n' +
+                ']'
+        },
+        "Get Liquidity V2": {
+            url: '/data/liquidity/v2',
+            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_liquidity_v2',
+            description: 'Returns overall protocol liquidity at a certain date' ,
+            params: {
+                poolId: {description: 'The id of the Aave Lending Pool Addresses Provider (e.g. 0x24a42fd28c976a61d\nf5d00d0599c34c4f90748c8)', required: true},
+                date: {description: 'The date for where we want to get the data from (e.g. 01-01-2020)'}
+            },
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "availableLiquidity": "942194.519059401080866728",\n' +
+                '    "averageStableRate": "100050758739420732058977873",\n' +
+                '    "baseLTVasCollateral": "0.75",\n' +
+                '    "baseVariableBorrowRate": "0",\n' +
+                '    "borrowingEnabled": true,\n' +
+                '    "decimals": 18,\n' +
+                '    "id": "0x0000000000085d4780b73119b644ae5ecd22b3760xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
+                '    "liquidityIndex": "1.01825210810387712252",\n' +
+                '    "liquidityRate": "0.10455997873609331382",\n' +
+                '    "name": "TrueUSD",\n' +
+                '    "optimalUtilisationRate": "0.8",\n' +
+                '    "pool": "0xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
+                '    "price": {\n' +
+                '      "id": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '      "priceInEth": "0.00057794"\n' +
+                '    },\n' +
+                '    "reserveFactor": "0.1",\n' +
+                '    "reserveInterestRateStrategy": "0x0ddec679166c367ae45036c8b2c169c5fb2dcee1",\n' +
+                '    "reserveLiquidationBonus": "0.05",\n' +
+                '      "timestamp": 1612997034,\n' +
+                '      "totalLiquidity": "6248213120765942920753579",\n' +
+                '      "utilizationRate": "0.84920576",\n' +
+                '      "variableBorrowIndex": "1059494494389873906724270151",\n' +
+                '      "variableBorrowRate": "0.22375297880588482699"\n' +
+                '    }\n' +
+                '  }\n' +
+                ']'
+        },
+        "Get Staking Pools": {
+            url: '/data/pools',
+            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_pools',
+            description: 'Returns staking pool(stkAAVE, stkABPT) stats' ,
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "liquidity": {\n' +
+                '      "usd": 78179450.32030025,\n' +
+                '      "eth": 44301.64683831359,\n' +
+                '      "native": 163287843.2696208\n' +
+                '    },\n' +
+                '    "price": {\n' +
+                '      "eth": 0.000271310135226434,\n' +
+                '      "usd": 0.4787830419880699\n' +
+                '    },\n' +
+                '    "address": "0xa1116930326D21fB917d5A27F1E9943A9595fb47",\n' +
+                '    "name": "Staked Aave Balance Pool Token",\n' +
+                '    "symbol": "stkABPT",\n' +
+                '    "apy": "5.52",\n' +
+                '    "updatedAt": "2021-02-12T15:19:20.571Z"\n' +
+                '  }\n' +
+                ']'
+        },
+        "Get Governance Leaderboard": {
+            url: '/data/governance-leaderboard',
+            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_governance_leaderboard',
+            description: 'Get top governance participants. By calling this endpoint you will specify the power type in {\'vote\', \'proposition\'} and will receive the top users ranked by voting or proposition power' ,
+            params: {
+                power: {description: 'The type of power to rank users by', required: true, possible: ['vote', 'proposition']},
+                first: {description: 'Number of users to return', type: 'number'},
+                min: {description: 'Minimum number of votes or proposals a user must have participated in', type: 'number'}
+            },
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "address": "0x0000000000000000000000000000000000000000",\n' +
+                '    "votingPower": 120.45,\n' +
+                '    "isVerified": true,\n' +
+                '    "avatar": "https://pbs.twimg.com/profile_images/1362172699192090629/JdD_IZSe_normal.jpg",\n' +
+                '    "name": "John Appleseed",\n' +
+                '    "handle": "jack",\n' +
+                '    "propositionPower": 12.7,\n' +
+                '    "votingWeight": 0.5,\n' +
+                '    "propositionWeight": 0.2,\n' +
+                '    "votingHistory": [\n' +
+                '      {\n' +
+                '        "id": "0x0000000000000000000000000000000000000000",\n' +
+                '        "proposal": {\n' +
+                '          "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '          "title": "Extend Aave Liquidity Incentives",\n' +
+                '          "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8"\n' +
+                '        },\n' +
+                '        "votingPower": 542.34,\n' +
+                '        "support": true,\n' +
+                '        "timestamp": 1590866770\n' +
+                '      }\n' +
+                '    ],\n' +
+                '    "proposalHistory": [\n' +
+                '      {\n' +
+                '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '        "state": "executed",\n' +
+                '        "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '        "aipNumber": 14,\n' +
+                '        "title": "Upgrade Aave V1 repayment for migration tool"\n' +
+                '      }\n' +
+                '    ],\n' +
+                '    "lastUpdateTimestamp": 1611158580,\n' +
+                '    "aaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '    "aavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '    "stkAaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '    "stkAavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '    "aaveBalance": 4,\n' +
+                '    "stkAaveBalance": 0.1\n' +
+                '  }\n' +
+                ']'
+        },
+        "Get Top Voters": {
+            url: '/data/proposa-top-voters',
+            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_proposal_top_voters',
+            description: 'Get top voters for a given proposal. By calling this endpoint you will specify the proposal id and will receive the the top voters both for and against. Return format is [[forTopVoters],[againstTopVoters]]' ,
+            params: {
+                proposal: {description: 'Proposal id', required: true,  },
+            },
+            sample_response: '[\n' +
+                '  [\n' +
+                '    [\n' +
+                '      {\n' +
+                '        "address": "0x0000000000000000000000000000000000000000",\n' +
+                '        "votingPower": 120.45,\n' +
+                '        "isVerified": true,\n' +
+                '        "avatar": "https://pbs.twimg.com/profile_images/1362172699192090629/JdD_IZSe_normal.jpg",\n' +
+                '        "name": "John Appleseed",\n' +
+                '        "handle": "jack",\n' +
+                '        "propositionPower": 12.7,\n' +
+                '        "votingWeight": 0.5,\n' +
+                '        "propositionWeight": 0.2,\n' +
+                '        "votingHistory": [\n' +
+                '          {\n' +
+                '            "id": "0x0000000000000000000000000000000000000000",\n' +
+                '            "proposal": {\n' +
+                '              "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '              "title": "Extend Aave Liquidity Incentives",\n' +
+                '              "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8"\n' +
+                '            },\n' +
+                '            "votingPower": 542.34,\n' +
+                '            "support": true,\n' +
+                '            "timestamp": 1590866770\n' +
+                '          }\n' +
+                '        ],\n' +
+                '        "proposalHistory": [\n' +
+                '          {\n' +
+                '            "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '            "state": "executed",\n' +
+                '            "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '            "aipNumber": 14,\n' +
+                '            "title": "Upgrade Aave V1 repayment for migration tool"\n' +
+                '          }\n' +
+                '        ],\n' +
+                '        "lastUpdateTimestamp": 1611158580,\n' +
+                '        "aaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '        "aavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '        "stkAaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '        "stkAavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '        "aaveBalance": 4,\n' +
+                '        "stkAaveBalance": 0.1\n' +
+                '      }\n' +
+                '    ]\n' +
+                '  ]\n' +
+                ']'
+        },
+        "Governance User Search": {
+            url: '/data/governance-user-search',
+            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_governance_user_search',
+            description: 'Search for individual Aave governance user. By calling this endpoint you will specify the address and will receive governance info for a given user' ,
+            params: {
+                address: {description: 'user wallet address', required: true,  },
+            },
+            sample_response: '{\n' +
+                '  "address": "0x0000000000000000000000000000000000000000",\n' +
+                '  "votingPower": 120.45,\n' +
+                '  "isVerified": true,\n' +
+                '  "avatar": "https://pbs.twimg.com/profile_images/1362172699192090629/JdD_IZSe_normal.jpg",\n' +
+                '  "name": "John Appleseed",\n' +
+                '  "handle": "jack",\n' +
+                '  "propositionPower": 12.7,\n' +
+                '  "votingWeight": 0.5,\n' +
+                '  "propositionWeight": 0.2,\n' +
+                '  "votingHistory": [\n' +
+                '    {\n' +
+                '      "id": "0x0000000000000000000000000000000000000000",\n' +
+                '      "proposal": {\n' +
+                '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '        "title": "Extend Aave Liquidity Incentives",\n' +
+                '        "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8"\n' +
+                '      },\n' +
+                '      "votingPower": 542.34,\n' +
+                '      "support": true,\n' +
+                '      "timestamp": 1590866770\n' +
+                '    }\n' +
+                '  ],\n' +
+                '  "proposalHistory": [\n' +
+                '    {\n' +
+                '      "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '      "state": "executed",\n' +
+                '      "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+                '      "aipNumber": 14,\n' +
+                '      "title": "Upgrade Aave V1 repayment for migration tool"\n' +
+                '    }\n' +
+                '  ],\n' +
+                '  "lastUpdateTimestamp": 1611158580,\n' +
+                '  "aaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '  "aavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '  "stkAaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '  "stkAavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+                '  "aaveBalance": 4,\n' +
+                '  "stkAaveBalance": 0.1,\n' +
+                '  "usersRepresented": [\n' +
+                '    null\n' +
+                '  ]\n' +
+                '}'
+        },
+
+    },
 }
 
 

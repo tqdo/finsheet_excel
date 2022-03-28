@@ -1032,4 +1032,13 @@ input[type="date"] {
     border-radius: 3px;
     /*font-weight: bold;*/
 }
+.hide_chat_widget{
+    cursor: pointer;
+    position: fixed;
+    right: 15px;
+    bottom: 65px;
+    color: black;
+    z-index: 70000;
+    background: white;
+}
 /*End report problem*/
