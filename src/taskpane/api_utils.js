@@ -6018,1211 +6018,1211 @@ var big_api_map = {
                 ']'
         },
     },
-    '0xAPI': {
-        "doc_url": 'https://docs.0x.org/introduction/welcome',
-        'provider_description': '0x is important infrastructure for the emerging crypto economy and enables markets to be created that couldn\'t have existed before. As more assets become tokenized, public blockchains provide the opportunity to establish a new financial stack that is more efficient, transparent, and equitable than any system in the past.',
-        "base_url": "https://api.0x.org",
-        "logo_url": 'https://avatars.githubusercontent.com/u/24832717?s=200&v=4',
-        "Get Swap Quote": {
-            url: '/swap/v1/quote',
-            doc_url: 'https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote',
-            description:  'Get an easy-to-consume quote for buying or selling any token. The return format is a valid unsigned Ethereum transaction and can be submitted directly to an Ethereum node to complete the swap. For transactions where the sellToken is not ETH, you will have to set your allowances. Either a sellAmount or buyAmount is required.',
-            params: {
-                sellToken: {description:'The ERC20 token address or symbol of the token you want to send. "ETH" can be provided as a valid sellToken.'},
-                buyToken: {description:'The ERC20 token address or symbol of the token you want to receive. "ETH" can be provided as a valid buyToken'},
-                sellAmount: {type: 'number', description:'(Optional) The amount of sellToken (in sellToken base units) you want to send.'},
-                buyAmount: {type: 'number',description:'(Optional) The amount of buyToken (in buyToken base units) you want to receive.'},
-                slippagePercentage: {type: 'number',description:'(Optional) The maximum acceptable slippage of the buyToken amount if sellAmount is provided, the maximum acceptable slippage of the sellAmount amount if buyAmount is provided. E.g 0.03 for 3% slippage allowed.'},
-                gasPrice: {type: 'number',description:'(Optional, defaults to ethgasstation "fast") The target gas price (in wei) for the swap transaction. If the price is too low to achieve the quote, an error will be returned.'},
-                takerAddress: {description:'(Optional) The address which will fill the quote. When provided the gas will be estimated and returned and the entire transaction will be validated for success. If the validation fails a Revert Error will be returned in the response.'},
-                excludedSources: {description:'(Optional) Liquidity sources (Uniswap, SushiSwap, 0x, Curve etc) that will not be included in the provided quote. Ex: excludedSources=Uniswap,SushiSwap,Curve.'},
-                includedSources: {description:'(Optional) For now only supports RFQT, which should be used when the integrator only wants RFQT liquidity without any other DEX orders. Requires a particular agreement with the 0x integrations team. This parameter cannot be combined with excludedSources.'},
-                skipValidation: {possible: ['true', 'false'],description:'(Optional) Normally, whenever a takerAddress is provided, the API will validate the quote for the user. When this parameter is set to true, that validation will be skipped. See also here.'},
-                intentOnFilling: {description:'(Optional) Used to enable RFQ-T liquidity. '},
-                feeRecipient: {description:'(Optional) The ETH address that should receive affiliate fees specified with buyTokenPercentageFee.'},
-                buyTokenPercentageFee: {type: 'number',description:'(Optional) The percentage (between 0 - 1.0) of the buyAmount that should be attributed to feeRecipient as affiliate fees. Note that this requires that the feeRecipient parameter is also specified in the request.'},
-                affiliateAddress: {description:'(Optional) An ETH address for which to attribute the trade for tracking and analytics purposes. Note affiliateAddress is only for tracking trades and has no impact on affiliate fees, for affiliate fees use feeRecipient.'},
-            },
-            response_attributes: {
-                'price': `If buyAmount was specified in the request it provides the price of buyToken in sellToken and vice versa. This price does not include the slippage provided in the request above, and therefore represents the best possible price.`,
-                'guaranteedPrice': `The price which must be met or else the entire transaction will revert. This price is influenced by the slippagePercentage parameter. On-chain sources may encounter price movements from quote to settlement.`,
-                'to': `The address of the contract to send call data to.`,
-                'data': `The call data required to be sent to the to contract address.`,
-                'value': `The amount of ether (in wei) that should be sent with the transaction. (Assuming protocolFee is paid in ether).`,
-                'gasPrice': `The gas price (in wei) that should be used to send the transaction. The transaction needs to be sent with this gasPrice or lower for the transaction to be successful.`,
-                'gas': `The estimated gas limit that should be used to send the transaction to guarantee settlement. While a computed estimate is returned in all responses, an accurate estimate will only be returned if a takerAddress is included in the request.`,
-                'estimatedGas': `The estimate for the amount of gas that will actually be used in the transaction. Always less than gas.`,
-                'protocolFee': `The maximum amount of ether that will be paid towards the protocol fee (in wei), and what is used to compute the value field of the transaction.`,
-                'minimumProtocolFee': `The minimum amount of ether that will be paid towards the protocol fee (in wei) during the transaction.`,
-                'buyAmount': `The amount of buyToken (in buyToken units) that would be bought in this swap. Certain on-chain sources do not allow specifying buyAmount, when using buyAmount these sources are excluded.`,
-                'sellAmount': `The amount of sellToken (in sellToken units) that would be sold in this swap. Specifying sellAmount is the recommended way to interact with 0xAPI as it covers all on-chain sources.`,
-                'sources': `The percentage distribution of buyAmount or sellAmount split between each liquidity source. Ex: [{ name: '0x', proportion: "0.8" }, { name: 'Kyber', proportion: "0.2"}, ...]`,
-                'buyTokenAddress': `The ERC20 token address of the token you want to receive in quote.`,
-                'sellTokenAddress': `The ERC20 token address of the token you want to sell with quote.`,
-                'allowanceTarget': `The target contract address for which the user needs to have an allowance in order to be able to complete the swap. For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of 0x0000000000000000000000000000000000000000 is then returned instead.`,
-            },
-            sample_response: '{\n' +
-                '    "price": "198.02566690042823231",\n' +
-                '    "guaranteedPrice": "191.88959851561835913",\n' +
-                '    "to": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
-                '    "data": "0xa6c3bf330000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000007200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000002600000000000000000000000006924a03bb710eaf199ab6ac9f2bb148215ae9b5d000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000119f25fd7ebc6a400000000000000000000000000000000000000000000000000016c7d70543164aa3b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd420c0000000000000000000000000000000000000000000000000000017251c82bed00000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000005e0000000000000000000000000000000000000000000000000000000000000064000000000000000000000000000000000000000000000000000000000000006400000000000000000000000000000000000000000000000000000000000000024f47261b00000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000000000000000000000000000000000000000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010a4ce15149935d8a000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd5dc48b6ed252d3488d46ccd3297146fca393cbbc0053dd77a341c0133d612b7c4a8900000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000003c00000000000000000000000000000000000000000000000000000000000000420000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000001c4dc1600f30000000000000000000000006b175474e89094c44da98b954eedeac495271d0f0000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f800000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000140000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000ae3641dffb712e917b9dc3e6c271b6657ff39818000000000000000000000000000000000000000000000000016345785d8a00000000000000000000000000000000000000000000000000010a4ce15149935d8a00000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000020000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000024f47261b0000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000421c2e80750e2e69ac0e865ae163b236fc3d22632daeb909fc10a1a8ac05e4bd1212709da900d7785a5af9b77ba76a324b744da8e66108f72e61fa927aa5e9433dca0300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010400000000000000000000000000000000000000000000000000000000000000869584cd0000000000000000000000001000000000000000000000000000000000000011000000000000000000000000000000000000000000000000000000005ecd41a5",\n' +
-                '    "value": "10800000000000000",\n' +
-                '    "gas": "605952",\n' +
-                '    "estimatedGas": "504960",\n' +
-                '    "gasPrice": "36000000000",\n' +
-                '    "protocolFee": "10800000000000000",\n' +
-                '    "minimumProtocolFee": "5400000000000000",\n' +
-                '    "buyTokenAddress": "0x6b175474e89094c44da98b954eedeac495271d0f",\n' +
-                '    "sellTokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
-                '    "buyAmount": "19802566690042823231",\n' +
-                '    "sellAmount": "100000000000000000",\n' +
-                '    "estimatedGasTokenRefund": "192000",\n' +
-                '    "sources": [\n' +
-                '        {\n' +
-                '            "name": "0x",\n' +
-                '            "proportion": "1"\n' +
-                '        },\n' +
-                '        {\n' +
-                '            "name": "Uniswap",\n' +
-                '            "proportion": "0"\n' +
-                '        },\n' +
-                '        {\n' +
-                '            "name": "Eth2Dai",\n' +
-                '            "proportion": "0"\n' +
-                '        },\n' +
-                '        {\n' +
-                '            "name": "Kyber",\n' +
-                '            "proportion": "0"\n' +
-                '        },\n' +
-                '        {\n' +
-                '            "name": "Curve",\n' +
-                '            "proportion": "0"\n' +
-                '        },\n' +
-                '        {\n' +
-                '            "name": "LiquidityProvider",\n' +
-                '            "proportion": "0"\n' +
-                '        }\n' +
-                '    ],\n' +
-                '    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"\n' +
-                '}'
-        },
-        "Get Swap Price": {
-            url: '/swap/v1/price',
-            doc_url: 'https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-price',
-            description:  'Nearly identical to /swap/v1/quote, but with a few key differences. Rather than returning a transaction that can be submitted to an Ethereum node, this resource simply indicates the pricing that would be available for an analogous call to /swap/v1/quote. Intended for use with RFQ-T;',
-            params: {
-                sellToken: {description:'The ERC20 token address or symbol of the token you want to send. "ETH" can be provided as a valid sellToken.'},
-                buyToken: {description:'The ERC20 token address or symbol of the token you want to receive. "ETH" can be provided as a valid buyToken'},
-                sellAmount: {type: 'number', description:'(Optional) The amount of sellToken (in sellToken base units) you want to send.'},
-                buyAmount: {type: 'number',description:'(Optional) The amount of buyToken (in buyToken base units) you want to receive.'},
-                slippagePercentage: {type: 'number',description:'(Optional) The maximum acceptable slippage of the buyToken amount if sellAmount is provided, the maximum acceptable slippage of the sellAmount amount if buyAmount is provided. E.g 0.03 for 3% slippage allowed.'},
-                gasPrice: {type: 'number',description:'(Optional, defaults to ethgasstation "fast") The target gas price (in wei) for the swap transaction. If the price is too low to achieve the quote, an error will be returned.'},
-                takerAddress: {description:'(Optional) The address which will fill the quote. When provided the gas will be estimated and returned and the entire transaction will be validated for success. If the validation fails a Revert Error will be returned in the response.'},
-                excludedSources: {description:'(Optional) Liquidity sources (Uniswap, SushiSwap, 0x, Curve etc) that will not be included in the provided quote. Ex: excludedSources=Uniswap,SushiSwap,Curve.'},
-                includedSources: {description:'(Optional) For now only supports RFQT, which should be used when the integrator only wants RFQT liquidity without any other DEX orders. Requires a particular agreement with the 0x integrations team. This parameter cannot be combined with excludedSources.'},
-                skipValidation: {possible: ['true', 'false'],description:'(Optional) Normally, whenever a takerAddress is provided, the API will validate the quote for the user. When this parameter is set to true, that validation will be skipped. See also here.'},
-                intentOnFilling: {description:'(Optional) Used to enable RFQ-T liquidity. '},
-                feeRecipient: {description:'(Optional) The ETH address that should receive affiliate fees specified with buyTokenPercentageFee.'},
-                buyTokenPercentageFee: {type: 'number',description:'(Optional) The percentage (between 0 - 1.0) of the buyAmount that should be attributed to feeRecipient as affiliate fees. Note that this requires that the feeRecipient parameter is also specified in the request.'},
-                affiliateAddress: {description:'(Optional) An ETH address for which to attribute the trade for tracking and analytics purposes. Note affiliateAddress is only for tracking trades and has no impact on affiliate fees, for affiliate fees use feeRecipient.'},
-            },
-            response_attributes: {
-                'price': `If buyAmount was specified in the request it provides the price of buyToken in sellToken and vice versa. This price does not include the slippage provided in the request above, and therefore represents the best possible price.`,
-                'guaranteedPrice': `The price which must be met or else the entire transaction will revert. This price is influenced by the slippagePercentage parameter. On-chain sources may encounter price movements from quote to settlement.`,
-                'to': `The address of the contract to send call data to.`,
-                'data': `The call data required to be sent to the to contract address.`,
-                'value': `The amount of ether (in wei) that should be sent with the transaction. (Assuming protocolFee is paid in ether).`,
-                'gasPrice': `The gas price (in wei) that should be used to send the transaction. The transaction needs to be sent with this gasPrice or lower for the transaction to be successful.`,
-                'gas': `The estimated gas limit that should be used to send the transaction to guarantee settlement. While a computed estimate is returned in all responses, an accurate estimate will only be returned if a takerAddress is included in the request.`,
-                'estimatedGas': `The estimate for the amount of gas that will actually be used in the transaction. Always less than gas.`,
-                'protocolFee': `The maximum amount of ether that will be paid towards the protocol fee (in wei), and what is used to compute the value field of the transaction.`,
-                'minimumProtocolFee': `The minimum amount of ether that will be paid towards the protocol fee (in wei) during the transaction.`,
-                'buyAmount': `The amount of buyToken (in buyToken units) that would be bought in this swap. Certain on-chain sources do not allow specifying buyAmount, when using buyAmount these sources are excluded.`,
-                'sellAmount': `The amount of sellToken (in sellToken units) that would be sold in this swap. Specifying sellAmount is the recommended way to interact with 0xAPI as it covers all on-chain sources.`,
-                'sources': `The percentage distribution of buyAmount or sellAmount split between each liquidity source. Ex: [{ name: '0x', proportion: "0.8" }, { name: 'Kyber', proportion: "0.2"}, ...]`,
-                'buyTokenAddress': `The ERC20 token address of the token you want to receive in quote.`,
-                'sellTokenAddress': `The ERC20 token address of the token you want to sell with quote.`,
-                'allowanceTarget': `The target contract address for which the user needs to have an allowance in order to be able to complete the swap. For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of 0x0000000000000000000000000000000000000000 is then returned instead.`,
-            },
-            sample_response: '{\n' +
-                '    "price": "198.02566690042823231",\n' +
-                '    "guaranteedPrice": "191.88959851561835913",\n' +
-                '    "to": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
-                '    "data": "0xa6c3bf330000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000007200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000002600000000000000000000000006924a03bb710eaf199ab6ac9f2bb148215ae9b5d000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000119f25fd7ebc6a400000000000000000000000000000000000000000000000000016c7d70543164aa3b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd420c0000000000000000000000000000000000000000000000000000017251c82bed00000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000005e0000000000000000000000000000000000000000000000000000000000000064000000000000000000000000000000000000000000000000000000000000006400000000000000000000000000000000000000000000000000000000000000024f47261b00000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000000000000000000000000000000000000000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010a4ce15149935d8a000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd5dc48b6ed252d3488d46ccd3297146fca393cbbc0053dd77a341c0133d612b7c4a8900000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000003c00000000000000000000000000000000000000000000000000000000000000420000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000001c4dc1600f30000000000000000000000006b175474e89094c44da98b954eedeac495271d0f0000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f800000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000140000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000ae3641dffb712e917b9dc3e6c271b6657ff39818000000000000000000000000000000000000000000000000016345785d8a00000000000000000000000000000000000000000000000000010a4ce15149935d8a00000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000020000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000024f47261b0000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000421c2e80750e2e69ac0e865ae163b236fc3d22632daeb909fc10a1a8ac05e4bd1212709da900d7785a5af9b77ba76a324b744da8e66108f72e61fa927aa5e9433dca0300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010400000000000000000000000000000000000000000000000000000000000000869584cd0000000000000000000000001000000000000000000000000000000000000011000000000000000000000000000000000000000000000000000000005ecd41a5",\n' +
-                '    "value": "10800000000000000",\n' +
-                '    "gas": "605952",\n' +
-                '    "estimatedGas": "504960",\n' +
-                '    "gasPrice": "36000000000",\n' +
-                '    "protocolFee": "10800000000000000",\n' +
-                '    "minimumProtocolFee": "5400000000000000",\n' +
-                '    "buyTokenAddress": "0x6b175474e89094c44da98b954eedeac495271d0f",\n' +
-                '    "sellTokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
-                '    "buyAmount": "19802566690042823231",\n' +
-                '    "sellAmount": "100000000000000000",\n' +
-                '    "estimatedGasTokenRefund": "192000",\n' +
-                '    "sources": [\n' +
-                '        {\n' +
-                '            "name": "0x",\n' +
-                '            "proportion": "1"\n' +
-                '        },\n' +
-                '        {\n' +
-                '            "name": "Uniswap",\n' +
-                '            "proportion": "0"\n' +
-                '        },\n' +
-                '        {\n' +
-                '            "name": "Eth2Dai",\n' +
-                '            "proportion": "0"\n' +
-                '        },\n' +
-                '        {\n' +
-                '            "name": "Kyber",\n' +
-                '            "proportion": "0"\n' +
-                '        },\n' +
-                '        {\n' +
-                '            "name": "Curve",\n' +
-                '            "proportion": "0"\n' +
-                '        },\n' +
-                '        {\n' +
-                '            "name": "LiquidityProvider",\n' +
-                '            "proportion": "0"\n' +
-                '        }\n' +
-                '    ],\n' +
-                '    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"\n' +
-                '}'
-        },
-        "Get Swap Sources": {
-            url: '/swap/v1/sources',
-            doc_url: 'https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-sources',
-            description:  'Returns the sources enabled for the chain.',
-            response_attributes: {
-                'records': `An array of Liquidity Sources.`,
-            },
-            sample_response: '{\n' +
-                '    "records": [\n' +
-                '        "0x",\n' +
-                '        "Balancer",\n' +
-                '        "Balancer_V2",\n' +
-                '        "Bancor",\n' +
-                '        "Component",\n' +
-                '        "CREAM",\n' +
-                '        "CryptoCom",\n' +
-                '        "Curve",\n' +
-                '        "Curve_V2",\n' +
-                '        "DODO",\n' +
-                '        "DODO_V2",\n' +
-                '        "Eth2Dai",\n' +
-                '        "Kyber",\n' +
-                '        "KyberDMM",\n' +
-                '        "Lido",\n' +
-                '        "Linkswap",\n' +
-                '        "LiquidityProvider",\n' +
-                '        "MakerPsm",\n' +
-                '        "Mooniswap",\n' +
-                '        "mStable",\n' +
-                '        "MultiHop",\n' +
-                '        "Saddle",\n' +
-                '        "Shell",\n' +
-                '        "ShibaSwap",\n' +
-                '        "Smoothy",\n' +
-                '        "SnowSwap",\n' +
-                '        "SushiSwap",\n' +
-                '        "Swerve",\n' +
-                '        "Uniswap",\n' +
-                '        "Uniswap_V2",\n' +
-                '        "Uniswap_V3",\n' +
-                '        "xSigma"\n' +
-                '    ]\n' +
-                '}'
-        },
-
-        "Get Orderbook": {
-            url: '/orderbook/v1',
-            doc_url: 'https://docs.0x.org/0x-api-orderbook/api-references/get-orderbook-v1',
-            description:  'Retrieves the orderbook for a given asset pair.',
-            params:{
-                'baseToken' : {description: `The address of makerToken or takerToken designated as the base currency in the currency pair calculation of price.`},
-                'quoteToken' : {description: `The address of makerToken or takerToken designated as the quote currency in the currency pair calculation of price.`},
-            },
-            response_attributes: {
-                'bids' :  `Paginated collection of SRA signed orders (below) where takerToken is equal to baseToken.`,
-
-                'asks' :  `Paginated collection of SRA signed orders (below) where makerToken is equal to baseToken.`,
-                'order' :  `Raw signed order.`,
-
-                'metaData' :  `Object where optional meta-data will be included, such as the orderHash and remainingFillableTakerAmount.`,
-            },
-            sample_response: '"bids": {\n' +
-                '        "total": 2,\n' +
-                '        "page": 1,\n' +
-                '        "perPage": 20,\n' +
-                '        "records": [\n' +
-                '            {\n' +
-                '                "order": {\n' +
-                '                    "signature": {\n' +
-                '                        "signatureType": 3,\n' +
-                '                        "r": "0xd471903a58c8af8e04606fdffef66d8dc820e8ad0bfc8da38df9e75774ce2145",\n' +
-                '                        "s": "0x7c98326b5cae57af19406f651b53e1d18cc687c956d4b5d49e63cc5ecde0b235",\n' +
-                '                        "v": 27\n' +
-                '                    },\n' +
-                '                    "sender": "0x0000000000000000000000000000000000000000",\n' +
-                '                    "maker": "0x56eb0ad2dc746540fab5c02478b31e2aa9ddc38c",\n' +
-                '                    "taker": "0x0000000000000000000000000000000000000000",\n' +
-                '                    "takerTokenFeeAmount": "0",\n' +
-                '                    "makerAmount": "100000000",\n' +
-                '                    "takerAmount": "10000000",\n' +
-                '                    "makerToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
-                '                    "takerToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",\n' +
-                '                    "salt": "46180318074336470317559353922611974059818459041810314650988282984048441965273",\n' +
-                '                    "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
-                '                    "feeRecipient": "0x0000000000000000000000000000000000000000",\n' +
-                '                    "expiry": "1614959239",\n' +
-                '                    "chainId": 1,\n' +
-                '                    "pool": "0x0000000000000000000000000000000000000000000000000000000000000000"\n' +
-                '                },\n' +
-                '                "metaData": {\n' +
-                '                    "orderHash": "0x0ffda2f9d9f41144bb063100403f926efa2ee5bacd9af00716175f00b030ff36",\n' +
-                '                    "remainingFillableTakerAmount": "10000000",\n' +
-                '                    "createdAt": "2021-03-05T15:32:18.473Z"\n' +
-                '                }\n' +
-                '            }\n' +
-                '        ]\n' +
-                '    },\n' +
-                '    "asks": {\n' +
-                '        "total": 2,\n' +
-                '        "page": 1,\n' +
-                '        "perPage": 20,\n' +
-                '        "records": [\n' +
-                '            {\n' +
-                '                "order": {\n' +
-                '                    "signature": {\n' +
-                '                        "signatureType": 3,\n' +
-                '                        "r": "0x5edf42008a5b379d44857634ffb6c0ef64a8884763bbbe8eecaca14f1b9670e9",\n' +
-                '                        "s": "0x6ed1c68cd18e2ede793f6cb7fdd5391c559cf59c2cc0876a7479e4ff7459a79a",\n' +
-                '                        "v": 28\n' +
-                '                    },\n' +
-                '                    "sender": "0x0000000000000000000000000000000000000000",\n' +
-                '                    "maker": "0x56eb0ad2dc746540fab5c02478b31e2aa9ddc38c",\n' +
-                '                    "taker": "0x0000000000000000000000000000000000000000",\n' +
-                '                    "takerTokenFeeAmount": "0",\n' +
-                '                    "makerAmount": "10000000",\n' +
-                '                    "takerAmount": "2000000000000000000000",\n' +
-                '                    "makerToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",\n' +
-                '                    "takerToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
-                '                    "salt": "56970174968746324800967727809155263811357634174793941230224490280738761530883",\n' +
-                '                    "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
-                '                    "feeRecipient": "0x0000000000000000000000000000000000000000",\n' +
-                '                    "expiry": "1614959117",\n' +
-                '                    "chainId": 1,\n' +
-                '                    "pool": "0x0000000000000000000000000000000000000000000000000000000000000000"\n' +
-                '                },\n' +
-                '                "metaData": {\n' +
-                '                    "orderHash": "0xf8b4d85e98d7dc41bb6b9b200aafe7a2b479f59d6ca5288fa990124a23f2056a",\n' +
-                '                    "remainingFillableTakerAmount": "2000000000000000000000",\n' +
-                '                    "createdAt": "2021-03-05T15:30:17.127Z"\n' +
-                '                }\n' +
-                '            }\n' +
-                '        ]\n' +
-                '    }'
-        },
-        "Get Orderbook Order Hash": {
-            url: '/orderbook/v1/order/:orderHash',
-            doc_url: 'https://docs.0x.org/0x-api-orderbook/api-references/get-orderbook-v1-order-orderhash',
-            description:  'Retrieves a specific order by orderHash.',
-            params:{
-                'orderHash' : {description: `The hash of the desired signed order.`, replace_2dots: true, required: true},
-            },
-            response_attributes: {
-                'order' :  `Raw signed order.`,
-                'metaData' :  `Object where optional meta-data will be included, such as the orderHash and remainingFillableTakerAmount.`,
-            },
-            sample_response: '{\n' +
-                '    "order": {\n' +
-                '        "signature": {\n' +
-                '            "signatureType": 3,\n' +
-                '            "r": "0x260e3ade4c5e995074e51c5e6031a7f9ac4c466923cf636a52da5618733ca733",\n' +
-                '            "s": "0x0ad43fef82c1deaa740905d76fd6201960b034dbaebda9ae55a28276fffda5b4",\n' +
-                '            "v": 27\n' +
-                '        },\n' +
-                '        "sender": "0x0000000000000000000000000000000000000000",\n' +
-                '        "maker": "0x56eb0ad2dc746540fab5c02478b31e2aa9ddc38c",\n' +
-                '        "taker": "0x0000000000000000000000000000000000000000",\n' +
-                '        "takerTokenFeeAmount": "0",\n' +
-                '        "makerAmount": "100000000000000",\n' +
-                '        "takerAmount": "2000000000000000000000",\n' +
-                '        "makerToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
-                '        "takerToken": "0xe41d2489571d322189246dafa5ebde1f4699f498",\n' +
-                '        "salt": "6783702559744797318323886303764333477871845949851321622397911580758640049826",\n' +
-                '        "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
-                '        "feeRecipient": "0x0000000000000000000000000000000000000000",\n' +
-                '        "expiry": "1614957869",\n' +
-                '        "chainId": 1,\n' +
-                '        "pool": "0x0000000000000000000000000000000000000000000000000000000000000000"\n' +
-                '    },\n' +
-                '    "metaData": {\n' +
-                '        "orderHash": "0xd56098f729763f53b338c723be01ffdb8a1ff9dd8d323c9021ff1d8e29635fca",\n' +
-                '        "remainingFillableTakerAmount": "2000000000000000000000",\n' +
-                '        "createdAt": "2021-03-05T15:09:28.611Z"\n' +
-                '    }\n' +
-                '}'
-        },
-        "Get Orderbook Fee Recipients": {
-            url: '/orderbook/v1/fee_recipients',
-            doc_url: 'https://docs.0x.org/0x-api-orderbook/api-references/get-orderbook-v1-fee_recipients',
-            description:  'Retrieves a list of valid feeRecipient addresses.',
-            response_attributes: {
-                'record(s)': `A valid Ethereum address(s).`,
-            },
-            sample_response: '{\n' +
-                '    "total": 1,\n' +
-                '    "page": 1,\n' +
-                '    "perPage": 20,\n' +
-                '    "records": ["0x0000000000000000000000000000000000000000"]\n' +
-                '}'
-        },
-    },
-    '0xTracker': {
-        "doc_url": 'https://docs.0xtracker.com/',
-        'provider_description': 'The leading provider of 0x protocol market data, transparent Ethereum token price index and 0x protocol news aggregator.',
-        "base_url": "https://api.0xtracker.com",
-        "logo_url": "https://avatars.githubusercontent.com/u/42436424?s=200&v=4",
-
-        "Get App": {
-            url: '/apps/:slug',
-            doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#app',
-            description:  'Returns the details and stats of a single app.',
-            params:{
-                'slug' : {description: `Slug of the app to fetch. (e.g.: matcha)`, replace_2dots: true, required: true},
-                'statsPeriodTo' : {description: `End of the time period for which to return stats. Should be used as an alternative to the statsPeriod parameter. Must be in the format YYYY-MM-DD.`,  },
-                'statsPeriodFrom' : {description: `Start of the time period for which to return stats. Should be used as an alternative to the statsPeriod parameter. Must be in the format YYYY-MM-DD.`,  },
-                'statsPeriod' : {description: `The time period for which to return stats. Valid values are: "day", "week", "month", "year" and "all". Default value is "day"`, default: 'day', possible: ["day", "week", "month", "year" , "all"]  },
-            },
-            sample_response: '{\n' +
-                '    "categories": [\n' +
-                '        "dex-aggregator",\n' +
-                '        "relayer"\n' +
-                '    ],\n' +
-                '    "description": "Built by the 0x core team \u2013 Matcha is a DEX aggregator built on top of 0x API which allows users to easily swap tokens and place limit orders.",\n' +
-                '    "id": "5067df8b-f9cd-4a34-aee1-38d607100145",\n' +
-                '    "logoUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/matcha.png",\n' +
-                '    "name": "Matcha",\n' +
-                '    "stats": {\n' +
-                '        "activeTraders": 808,\n' +
-                '        "activeTradersChange": 19.174041297935105,\n' +
-                '        "avgTradeSize": 60230.98896439627,\n' +
-                '        "avgTradeSizeChange": 55.88229155059747,\n' +
-                '        "tradeCount": {\n' +
-                '            "relayed": 73,\n' +
-                '            "total": 1207\n' +
-                '        },\n' +
-                '        "tradeCountChange": {\n' +
-                '            "relayed": 108.57142857142857,\n' +
-                '            "total": 20.33898305084746\n' +
-                '        },\n' +
-                '        "tradeVolume": {\n' +
-                '            "relayed": 10889677.034785688,\n' +
-                '            "total": 72698803.6800263\n' +
-                '        },\n' +
-                '        "tradeVolumeChange": {\n' +
-                '            "relayed": 5910.600207842618,\n' +
-                '            "total": 87.58716440834611\n' +
-                '        }\n' +
-                '    },\n' +
-                '    "urlSlug": "matcha",\n' +
-                '    "websiteUrl": "https://matcha.xyz"\n' +
-                '}'
-        },
-        "Get Apps": {
-            url: '/apps',
-            doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#apps',
-            description:  'Returns a paginated collection of active apps and their associated stats for the specified time period.',
-            params:{
-                'sortDirection' : {description: 'The direction in which to sort results Valid values are "asc" and "desc".Default value is "desc".', default: 'desc', possible: ['asc', 'desc']},
-                'sortBy' : {possible: ["activeTraders", "tradeCount" , "tradeVolume"], default:'tradeVolume', description: `The field by which to sort results. Valid values are: "activeTraders", "tradeCount" and "tradeVolume". Default value is "tradeVolume".`,  },
-                'limit' : {description: `The maximum number of apps to return per page. Default value is 20. Maximum value is 50.`, default: 20, type: 'number' },
-                'page' : {description: `The page of data to return. Default value is 1.`, default: 20, type: 'number' },
-                'statsPeriod' : {description: `The time period for which to return stats. Valid values are: "day", "week", "month", "year" and "all". Default value is "day"`, default: 'day', possible: ["day", "week", "month", "year" , "all"]  },
-            },
-            sample_response: '{\n' +
-                '  "apps": [\n' +
-                '    {\n' +
-                '      "categories": [\n' +
-                '        "relayer"\n' +
-                '      ],\n' +
-                '      "description": "Built by the 0x core team – 0x API makes accessing DEX liquidity easy through the use of smart order routing which aggregates liquidity from 0x Mesh, Kyber, Uniswap, and more.",\n' +
-                '      "id": "052b4862-2142-4532-bdc0-416814b0a5fe",\n' +
-                '      "logoUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/0x-api.png",\n' +
-                '      "name": "0x API",\n' +
-                '      "stats": {\n' +
-                '        "activeTraders": 4857,\n' +
-                '        "activeTradersChange": -16.099499049922265,\n' +
-                '        "tradeCount": {\n' +
-                '          "relayed": 7316,\n' +
-                '          "total": 7316\n' +
-                '        },\n' +
-                '        "tradeCountChange": {\n' +
-                '          "relayed": -14.900546702338024,\n' +
-                '          "total": -14.900546702338024\n' +
-                '        },\n' +
-                '        "tradeVolume": {\n' +
-                '          "relayed": 27118521.443833765,\n' +
-                '          "total": 27118521.443833765\n' +
-                '        },\n' +
-                '        "tradeVolumeChange": {\n' +
-                '          "relayed": 30.176737544737716,\n' +
-                '          "total": 30.176737544737716\n' +
-                '        }\n' +
-                '      },\n' +
-                '      "urlSlug": "0x-api",\n' +
-                '      "websiteUrl": "https://0x.org/api"\n' +
-                '    },\n' +
-                '    // ...\n' +
-                '  ],\n' +
-                '  "page": 1,\n' +
-                '  "pageCount": 1,\n' +
-                '  "limit": 20,\n' +
-                '  "total": 10\n' +
-                '}'
-        },
-        "Get Article": {
-            url: '/articles',
-            doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#apps',
-            description:  'Returns a paged collection of news articles matching the specified parameters. Articles are sorted from most recent to least recent.',
-            params:{
-                'source' : {description: `Slug of an article source to filter by. `, },
-                'page' : {description: `The page of data to return. Default is 1.`,default: 1, type: 'number'  },
-            },
-            sample_response: '{\n' +
-                '    "articles": [\n' +
-                '        {\n' +
-                '            "date": "2022-03-22T11:58:09.000Z",\n' +
-                '            "id": "6239b9e38ff0ad00126c4099",\n' +
-                '            "imageUrl": "https://dexkit.com/wp-content/webpc-passthru.php?src=https://dexkit.com/wp-content/uploads/SuperApp-Latest-Update.png&nocache=1",\n' +
-                '            "slug": "superapp-version-00619-is-here-with-a-lot-of-features",\n' +
-                '            "source": {\n' +
-                '                "imageUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/dex-kit.png",\n' +
-                '                "name": "DexKit Swap",\n' +
-                '                "slug": "dex-kit",\n' +
-                '                "url": "https://swap.dexkit.com"\n' +
-                '            },\n' +
-                '            "summary": "Thinking of those users who want to undertake in the world of decentralized finance but do not have the technical knowledge, DEXKIT developed technologies aimed at easy use and now with universal compatibility. Users can deploy these tools (the aggregator and the NFT custom marketplace) and start their decentralized projects in a simple way, in record time, without the need to hire professionals.",\n' +
-                '            "title": "SuperApp version 0.0.6.19 is here with a lot of features!",\n' +
-                '            "url": "https://dexkit.com/update-superapp-0-0-6-19/"\n' +
-                '        },\n' +
-                '        {\n' +
-                '            "date": "2022-03-21T15:02:19.000Z",\n' +
-                '            "id": "623896248ff0ad00126b4b09",\n' +
-                '            "imageUrl": "https://miro.medium.com/max/1024/0*1MmkXSFTm_D4DzRP",\n' +
-                '            "slug": "superfluid-collateral-for-squeeth-in-the-uniswap-pool",\n' +
-                '            "source": {\n' +
-                '                "imageUrl": "https://resources.0xtracker.com/logos/opyn.png",\n' +
-                '                "name": "Opyn",\n' +
-                '                "slug": "opyn",\n' +
-                '                "url": "https://opyn.co"\n' +
-                '            },\n' +
-                '            "summary": "Superfluid means you get to do more stuff with your collateral. In the squeeth ecosystem this is enabled by allowing Uniswap v3 LPs to be collateral for short squeeth. This means\u00a0that",\n' +
-                '            "title": "Superfluid collateral for squeeth in the Uniswap pool",\n' +
-                '            "url": "https://medium.com/opyn/superfluid-collateral-for-squeeth-in-the-uniswap-pool-3b0585bb94a0?source=rss----850b56baf5d0---4"\n' +
-                '        } \n' +
-                '    ] \n' +
-                '}'
-        },
-        "Get Protocols": {
-            url: '/protocols',
-            doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#protocols',
-            description:  'Returns a paginated collection of protocols matching the specified parameters.',
-            params:{
-                'sortBy' : {description: `The field by which to sort protocols.`, default: 'fillVolume', possible: ['fillCount', 'fillVolume'] },
-                'page' : {description: `The time period for which to return stats. Must be one of: day, week, month, year, all.Default value is day.`,default: 'day', possible: ['day', 'week', 'month', 'year', 'all']  },
-            },
-            sample_response: '{\n' +
-                '  "protocols": [\n' +
-                '    {\n' +
-                '      "stats": {\n' +
-                '        "fillCount": 2026,\n' +
-                '        "fillVolume": 1728911.7356433223,\n' +
-                '        "tradeCount": 1559,\n' +
-                '        "tradeVolume": 1285629.9583338788\n' +
-                '      },\n' +
-                '      "version": 2\n' +
-                '    },\n' +
-                '    {\n' +
-                '      "stats": {\n' +
-                '        "fillCount": 374,\n' +
-                '        "fillVolume": 585201.4918576538,\n' +
-                '        "tradeCount": 357,\n' +
-                '        "tradeVolume": 540775.9960855007\n' +
-                '      },\n' +
-                '      "version": 3\n' +
-                '    }\n' +
-                '  ],\n' +
-                '  "page": 1,\n' +
-                '  "pageCount": 1,\n' +
-                '  "limit": 20,\n' +
-                '  "total": 2\n' +
-                '}'
-        },
-        "Get Token": {
-            url: '/tokens/:address',
-            doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#token',
-            description:  'Returns the full details of a single token.',
-            params:{
-                'address' : {description: `Address of the token to fetch.`,replace_2dots: true, required: true },
-                'statsPeriod' : {description: `The time period for which to return stats. Valid values are: "day", "week", "month", "year" and "all". Default value is "day"`, default: 'day', possible: ["day", "week", "month", "year" , "all"]  },
-            },
-            sample_response: '{\n' +
-                '  "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
-                '  "circulatingSupply": null,\n' +
-                '  "imageUrl": "https://cdn.staticaly.com/gh/TrustWallet/tokens/master/tokens/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png",\n' +
-                '  "lastTrade": {\n' +
-                '    "date": "2020-04-16T19:01:36.000Z",\n' +
-                '    "id": "5e98ac33f3edba0548d57499"\n' +
-                '  },\n' +
-                '  "marketCap": 401979735.10782796,\n' +
-                '  "name": "Wrapped Ether",\n' +
-                '  "price": {\n' +
-                '    "change": 8.77204150486982,\n' +
-                '    "close": 170.87,\n' +
-                '    "high": 174.47853088378906,\n' +
-                '    "last": 170.87,\n' +
-                '    "low": 145.86898803710938,\n' +
-                '    "open": 157.09\n' +
-                '  },\n' +
-                '  "stats": {\n' +
-                '    "fillCount": 3403,\n' +
-                '    "fillVolume": {\n' +
-                '      "token": 29343.563185668743,\n' +
-                '      "USD": 4839232.989858636\n' +
-                '    },\n' +
-                '    "tradeCount": 3064,\n' +
-                '    "tradeVolume": {\n' +
-                '      "token": 25417.591251252252,\n' +
-                '      "USD": 4189388.872657468\n' +
-                '    }\n' +
-                '  },\n' +
-                '  "statsPeriod": "day",\n' +
-                '  "symbol": "WETH",\n' +
-                '  "totalSupply": 2352547.1709944867,\n' +
-                '  "type": "erc-20"\n' +
-                '}'
-        },
-        "Get Traders": {
-            url: '/traders',
-            doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#traders',
-            description:  'Returns a paginated collection of active traders and their associated stats for the specified time period. Traders are returned in order of most fill volume to least fill volume.',
-            params:{
-                'apps' : {description: `A comma-separated list of app IDs to filter the traders by. App IDs can be found by calling the apps endpoint.` },
-
-                'type' : {description: `The type of traders to return. Must be one of: maker, taker.` },
-                'excludeRelayers' : {description: `Whether to exclude relayer taker addresses from the results. Default is true.`, default: 'true', possible: ['true', 'false'] },
-                'limit' : {description: `The maximum number of traders to return per page. Default value is 20. Maximum value is 50.`, default: 20, type: 'number' },
-                'page' : {description: `The page of data to return. Default value is 1.` ,default: 1, type: 'number'},
-
-                'statsPeriodTo' : {description: `End of the time period for which to return stats. Should be used as an alternative to the statsPeriod parameter. Must be in the format YYYY-MM-DD.`,  },
-                'statsPeriodFrom' : {description: `Start of the time period for which to return stats. Should be used as an alternative to the statsPeriod parameter. Must be in the format YYYY-MM-DD.`,  },
-                'statsPeriod' : {description: `The time period for which to return stats. Valid values are: "day", "week", "month", "year" and "all". Default value is "day"`, default: 'day', possible: ["day", "week", "month", "year" , "all"]  },
-            },
-            sample_response: '{\n' +
-                '  "page": 1,\n' +
-                '  "pageCount": 6,\n' +
-                '  "limit": 20,\n' +
-                '  "total": 119,\n' +
-                '  "traders": [\n' +
-                '    {\n' +
-                '      "address": "0x41f8d14c9475444f30a80431c68cf24dc9a8369a",\n' +
-                '      "stats": {\n' +
-                '        "fillCount": {\n' +
-                '          "maker": 0,\n' +
-                '          "taker": 259,\n' +
-                '          "total": 259\n' +
-                '        },\n' +
-                '        "fillVolume": {\n' +
-                '          "maker": 0,\n' +
-                '          "taker": 496613.5857697289,\n' +
-                '          "total": 496613.5857697289\n' +
-                '        }\n' +
-                '      }\n' +
-                '    },\n' +
-                '    // ...\n' +
-                '  ]\n' +
-                '}'
-        },
-        "Get Trade": {
-            url: '/fills/:id',
-            doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#trade',
-            description:  'Returns the full details of a single trade.',
-            params:{
-                'id' : {description: `ID of the trade to fetch.`,replace_2dots: true, required: true },
-            },
-            sample_response: '{\n' +
-                '  "affiliate": null,\n' +
-                '  "apps": [\n' +
-                '    {\n' +
-                '      "id": "a5808078-d297-4fbd-a818-dccd8a5438ed",\n' +
-                '      "logoUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/star-bit.png",\n' +
-                '      "name": "STAR BIT",\n' +
-                '      "type": "relayer",\n' +
-                '      "urlSlug": "star-bit"\n' +
-                '    }\n' +
-                '  ],\n' +
-                '  "assets": [\n' +
-                '    {\n' +
-                '      "amount": "0.023595691875",\n' +
-                '      "bridge": null,\n' +
-                '      "price": {\n' +
-                '        "USD": 186.71999999999997\n' +
-                '      },\n' +
-                '      "tokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
-                '      "tokenImageUrl": "https://cdn.staticaly.com/gh/TrustWallet/tokens/master/tokens/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png",\n' +
-                '      "tokenSymbol": "WETH",\n' +
-                '      "tokenType": "Wrapped Ether",\n' +
-                '      "traderType": "maker",\n' +
-                '      "type": "erc-20"\n' +
-                '    },\n' +
-                '    {\n' +
-                '      "amount": "2041",\n' +
-                '      "bridge": null,\n' +
-                '      "price": {\n' +
-                '        "USD": 0.0021586416398334148\n' +
-                '      },\n' +
-                '      "tokenAddress": "0x503f9794d6a6bb0df8fbb19a2b3e2aeab35339ad",\n' +
-                '      "tokenImageUrl": "https://0xtracker.com/assets/logos/starbit.png",\n' +
-                '      "tokenSymbol": "SBT",\n' +
-                '      "tokenType": "Star Bit Token",\n' +
-                '      "traderType": "taker",\n' +
-                '      "type": "erc-20"\n' +
-                '    }\n' +
-                '  ],\n' +
-                '  "date": "2019-11-04T18:22:03.000Z",\n' +
-                '  "fees": [],\n' +
-                '  "feeRecipient": "0x8124071f810d533ff63de61d0c98db99eeb99d64",\n' +
-                '  "feeRecipientMetadata": {\n' +
-                '    "address": "0x8124071f810d533ff63de61d0c98db99eeb99d64",\n' +
-                '    "imageUrl": null,\n' +
-                '    "isContract": false,\n' +
-                '    "name": null\n' +
-                '  },\n' +
-                '  "id": "5dc06d68ab099b000489d3fe",\n' +
-                '  "makerAddress": "0xda912ecc847b3d98ca882e396e693e485deed518",\n' +
-                '  "maker": {\n' +
-                '    "address": "0xda912ecc847b3d98ca882e396e693e485deed518",\n' +
-                '    "imageUrl": null,\n' +
-                '    "isContract": false,\n' +
-                '    "name": null\n' +
-                '  },\n' +
-                '  "orderHash": "0x9165afe0f746839d2f390972b9a4473910143e6650be48477e7eb0196b607b02",\n' +
-                '  "protocolVersion": 2,\n' +
-                '  "relayer": {\n' +
-                '    "imageUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/star-bit.png",\n' +
-                '    "name": "STAR BIT",\n' +
-                '    "slug": "star-bit"\n' +
-                '  },\n' +
-                '  "senderAddress": "0x0681e844593a051e2882ec897ecd5444efe19ff2",\n' +
-                '  "sender": {\n' +
-                '    "address": "0x0681e844593a051e2882ec897ecd5444efe19ff2",\n' +
-                '    "imageUrl": "https://cdn.staticaly.com/gh/0xTracker/ethereum-address-metadata/master/images/starbit.png",\n' +
-                '    "isContract": false,\n' +
-                '    "name": "StarbitEx"\n' +
-                '  },\n' +
-                '  "status": "successful",\n' +
-                '  "takerAddress": "0x0681e844593a051e2882ec897ecd5444efe19ff2",\n' +
-                '  "taker": {\n' +
-                '    "address": "0x0681e844593a051e2882ec897ecd5444efe19ff2",\n' +
-                '    "imageUrl": "https://cdn.staticaly.com/gh/0xTracker/ethereum-address-metadata/master/images/starbit.png",\n' +
-                '    "isContract": false,\n' +
-                '    "name": "StarbitEx"\n' +
-                '  },\n' +
-                '  "transactionHash": "0xc99fc0a2c65da2d3b94a1cd979afb05317203354a2dc6999c0dde26c61fecd0e",\n' +
-                '  "transactionFrom": {\n' +
-                '    "address": "0x0681E844593A051E2882Ec897ecD5444eFE19FF2",\n' +
-                '    "imageUrl": null,\n' +
-                '    "isContract": null,\n' +
-                '    "name": null\n' +
-                '  },\n' +
-                '  "transactionTo": {\n' +
-                '    "address": "0x080bf510FCbF18b91105470639e9561022937712",\n' +
-                '    "imageUrl": null,\n' +
-                '    "isContract": null,\n' +
-                '    "name": null\n' +
-                '  },\n' +
-                '  "value": {\n' +
-                '    "USD": 4.4057875869\n' +
-                '  }\n' +
-                '}'
-        },
-        "Get Trades": {
-            url: '/fills',
-            doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#trades',
-            description:  'Returns a paginated collection of trades matching the specified parameters.',
-            params:{
-                'apps' : {description: `A comma-separated list of app IDs to filter the traders by. App IDs can be found by calling the apps endpoint.` },
-                'trader' : {description: `Trader address to filter by.` },
-                'sortDirection' : {description: 'The direction in which to sort results Valid values are "asc" and "desc".Default value is "desc".', default: 'desc', possible: ['asc', 'desc']},
-                'sortBy' : {possible: ["activeTraders", "tradeCount" , "tradeVolume"], default:'tradeVolume', description: `The field by which to sort results. Valid values are: "activeTraders", "tradeCount" and "tradeVolume". Default value is "tradeVolume".`,  },
-
-                'valueTo' : {description: 'Maximum trade value (in USD) to filter by.' },
-                'valueFrom' : {description: 'Minimum trade value (in USD) to filter by.' },
-                'protocolVersion' : {description: `Protocol version to filter by.`  },
-
-                'token' : {description: 'Address of a token to filter by.' },
-                'limit' : {description: `The maximum number of traders to return per page. Default value is 20. Maximum value is 50.`, default: 20, type: 'number' },
-                'page' : {description: `The page of data to return. Default value is 1.` ,default: 1, type: 'number'},
-            },
-            sample_response: '{\n' +
-                '    "fills": [\n' +
-                '        {\n' +
-                '          "apps": [\n' +
-                '            {\n' +
-                '              "id": "0a5d5f06-1626-4276-893f-42527e5a4147",\n' +
-                '              "logoUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/tokenlon.png",\n' +
-                '              "name": "Tokenlon",\n' +
-                '              "type": "relayer",\n' +
-                '              "urlSlug": "tokenlon"\n' +
-                '            }\n' +
-                '          ],\n' +
-                '          "assets": [\n' +
-                '            {\n' +
-                '              "amount": "367.191483",\n' +
-                '              "bridge": null,\n' +
-                '              "price": {\n' +
-                '                "USD": 0.9997\n' +
-                '              },\n' +
-                '              "tokenAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",\n' +
-                '              "tokenImageUrl": "https://cdn.staticaly.com/gh/TrustWallet/tokens/master/tokens/0xdac17f958d2ee523a2206206994597c13d831ec7.png",\n' +
-                '              "tokenSymbol": "USDT",\n' +
-                '              "tokenType": "Tether USD",\n' +
-                '              "traderType": "maker",\n' +
-                '              "type": "erc-20"\n' +
-                '            },\n' +
-                '            {\n' +
-                '              "amount": "0.5",\n' +
-                '              "bridge": null,\n' +
-                '              "price": {\n' +
-                '                "USD": 734.1626511102\n' +
-                '              },\n' +
-                '              "tokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
-                '              "tokenImageUrl": "https://cdn.staticaly.com/gh/TrustWallet/tokens/master/tokens/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png",\n' +
-                '              "tokenSymbol": "WETH",\n' +
-                '              "tokenType": "Wrapped Ether",\n' +
-                '              "traderType": "taker",\n' +
-                '              "type": "erc-20"\n' +
-                '            }\n' +
-                '          ],\n' +
-                '          "date": "2020-12-30T14:47:21.000Z",\n' +
-                '          "feeRecipient": "0xd4dff17ccf7ca237e66270cc097ae60dabf8f85b",\n' +
-                '          "id": "5fec93c57f7a4022f922b139",\n' +
-                '          "makerAddress": "0x9c597c4da5e8f052182fe9b3d12af7e61e8d809b",\n' +
-                '          "protocolVersion": 2,\n' +
-                '          "relayer": {\n' +
-                '            "imageUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/tokenlon.png",\n' +
-                '            "name": "Tokenlon",\n' +
-                '            "slug": "tokenlon"\n' +
-                '          },\n' +
-                '          "status": "successful",\n' +
-                '          "takerAddress": "0x8d90113a1e286a5ab3e496fbd1853f265e5913c6",\n' +
-                '          "value": {\n' +
-                '            "USD": 367.0813255551\n' +
-                '          }\n' +
-                '        },\n' +
-                '        // ...\n' +
-                '    ],\n' +
-                '    "limit": 50,\n' +
-                '    "page": 1,\n' +
-                '    "pageCount": 17221,\n' +
-                '    "total": 344408\n' +
-                '}'
-        },
-
-        "Get Network Stats": {
-            url: '/stats/networks',
-            doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#network-stats',
-            description:  'Returns network stats for the specified time period.',
-            params:{
-                'period' : {description: `Time period for which to return stats. Must be one of: day, week, month, year, all. Default value is day.`,default: 'day', possible: ['day', 'week', 'month', 'year', 'all'] },
-            },
-            sample_response: '{\n' +
-                '  "fillCount": 1215,\n' +
-                '  "fillVolume": 1424278.9861453106,\n' +
-                '  "protocolFees": {\n' +
-                '    "ETH": "221.8",\n' +
-                '    "USD": 33270\n' +
-                '  },\n' +
-                '  "tradeCount": 887,\n' +
-                '  "tradeVolume": 1408589.3708279347\n' +
-                '}'
-        },
-        "Get Trader Stats": {
-            url: '/stats/trader',
-            doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#trader-stats',
-            description:  'Returns active trader stats for the specified time period.',
-            params:{
-                'period' : {description: `Time period for which to return stats. Must be one of: day, week, month, year, all. Default value is day.`,default: 'day', possible: ['day', 'week', 'month', 'year', 'all'] },
-            },
-            sample_response: '{\n' +
-                '  "makerCount": 68,\n' +
-                '  "takerCount": 53,\n' +
-                '  "traderCount": 116\n' +
-                '}'
-        },
-    },
-    Aave: {
-        "doc_url": 'https://aave-api-v2.aave.com/',
-        'provider_description': 'Aave is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers. Depositors provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralised (perpetually) or undercollateralised (one-block liquidity) fashion.',
-        "base_url": "https://aave-api-v2.aave.com",
-        "logo_url": "https://aave.com/favicon64.png",
-        "Get TVL": {
-            url: '/data/tvl',
-            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_tvl',
-            description: 'Gets the combined TVL of all markets and staking contracts' ,
-            sample_response: '{\n' +
-                '  "totalTvl": {\n' +
-                '    "tvlInEth": "2694999.404135708",\n' +
-                '    "tvlInUsd": "3325280801.4152594"\n' +
-                '  },\n' +
-                '  "marketTvls": {\n' +
-                '    "v1": {\n' +
-                '      "tvlInEth": "2694999.404135708",\n' +
-                '      "tvlInUsd": "3325280801.4152594"\n' +
-                '    },\n' +
-                '    "v2": {\n' +
-                '      "tvlInEth": "2694999.404135708",\n' +
-                '      "tvlInUsd": "3325280801.4152594"\n' +
-                '    },\n' +
-                '    "staking": {\n' +
-                '      "stkAave": {\n' +
-                '        "tvlInEth": "2694999.404135708",\n' +
-                '        "tvlInUsd": "3325280801.4152594"\n' +
-                '      },\n' +
-                '      "stkABPT": {\n' +
-                '        "tvlInEth": "2694999.404135708",\n' +
-                '        "tvlInUsd": "3325280801.4152594"\n' +
-                '      }\n' +
-                '    },\n' +
-                '    "updatedAt": "2016-08-29T09:12:33.001Z",\n' +
-                '    "createdAt": "2016-08-29T09:12:33.001Z"\n' +
-                '  }\n' +
-                '}'
-        },
-        "Get Daily Volume 24h": {
-            url: '/data/daily-volume-24-hours',
-            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_daily_volume_24_hours',
-            description: 'Gets the combined volume of the protocol in the last 24 hours window' ,
-            sample_response: '{\n' +
-                '  "totalVolumeInUsd": 2537758161.0711317,\n' +
-                '  "totalVolumeInEth": 1.4578956086436396e+24,\n' +
-                '  "totalBorrowUSD": 93708825.01188761,\n' +
-                '  "totalBorrowETH": 5.383400458392099e+22,\n' +
-                '  "totalRepayETH": 4.5639311177594584e+22,\n' +
-                '  "totalRepayUSD": 79444326.27406068,\n' +
-                '  "totalDepositETH": 6.926962774121884e+23,\n' +
-                '  "totalDepositUSD": 1205776065.6689548,\n' +
-                '  "totalWithdrawalUSD": 1158828944.1162288,\n' +
-                '  "totalWithdrawalETH": 6.657260154699355e+23,\n' +
-                '  "totalStakedETH": 6.926962774121884e+23,\n' +
-                '  "totalStakedUSD": 1205776065.6689548,\n' +
-                '  "totalRedeemedUSD": 1158828944.1162288,\n' +
-                '  "totalRedeemedETH": 6.657260154699355e+23,\n' +
-                '  "reserves": {\n' +
-                '    "v1": [\n' +
-                '      {\n' +
-                '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '        "aToken": "0x4da9b813057d04baef4e5800e36083717b4a0341",\n' +
-                '        "asset": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '        "pool": "0x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '        "symbol": "TUSD",\n' +
-                '        "decimals": 18,\n' +
-                '        "priceInEth": "573034943849483",\n' +
-                '        "borrow": 1031806.6110582352,\n' +
-                '        "deposit": 0,\n' +
-                '        "repay": 1201747.9494428635,\n' +
-                '        "withdrawal": 1000000\n' +
-                '      }\n' +
-                '    ],\n' +
-                '    "v2": [\n' +
-                '      {\n' +
-                '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '        "aToken": "0x4da9b813057d04baef4e5800e36083717b4a0341",\n' +
-                '        "asset": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '        "pool": "0x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '        "symbol": "TUSD",\n' +
-                '        "decimals": 18,\n' +
-                '        "priceInEth": "573034943849483",\n' +
-                '        "borrow": 1031806.6110582352,\n' +
-                '        "deposit": 0,\n' +
-                '        "repay": 1201747.9494428635,\n' +
-                '        "withdrawal": 1000000\n' +
-                '      }\n' +
-                '    ],\n' +
-                '    "stk": [\n' +
-                '      {\n' +
-                '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '        "asset": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '        "symbol": "TUSD",\n' +
-                '        "decimals": 18,\n' +
-                '        "priceInEth": "573034943849483",\n' +
-                '        "stake": 1031806.6110582352,\n' +
-                '        "redeem": 1031806.6110582352\n' +
-                '      }\n' +
-                '    ]\n' +
-                '  }\n' +
-                '}'
-        },
-        "Get Liquidity": {
-            url: '/data/liquidity/v1',
-            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_liquidity_v1',
-            description: 'Returns overall protocol liquidity at a certain date' ,
-            params: {
-                poolId: {description: 'The id of the Aave Lending Pool Addresses Provider (e.g. 0x24a42fd28c976a61d\nf5d00d0599c34c4f90748c8)', required: true},
-                date: {description: 'The date for where we want to get the data from (e.g. 01-01-2020)'}
-            },
-            sample_response: '[\n' +
-                '  {\n' +
-                '    "availableLiquidity": "942194.519059401080866728",\n' +
-                '    "averageStableRate": "100050758739420732058977873",\n' +
-                '    "baseLTVasCollateral": "0.75",\n' +
-                '    "baseVariableBorrowRate": "0",\n' +
-                '    "borrowingEnabled": true,\n' +
-                '    "decimals": 18,\n' +
-                '    "id": "0x0000000000085d4780b73119b644ae5ecd22b3760xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
-                '    "liquidityIndex": "1.01825210810387712252",\n' +
-                '    "liquidityRate": "0.10455997873609331382",\n' +
-                '    "name": "TrueUSD",\n' +
-                '    "optimalUtilisationRate": "0.8",\n' +
-                '    "pool": "0xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
-                '    "price": {\n' +
-                '      "id": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '      "priceInEth": "0.00057794"\n' +
-                '    },\n' +
-                '    "reserveFactor": "0.1",\n' +
-                '    "reserveInterestRateStrategy": "0x0ddec679166c367ae45036c8b2c169c5fb2dcee1",\n' +
-                '    "reserveLiquidationBonus": "0.05",\n' +
-                '      "timestamp": 1612997034,\n' +
-                '      "totalLiquidity": "6248213120765942920753579",\n' +
-                '      "utilizationRate": "0.84920576",\n' +
-                '      "variableBorrowIndex": "1059494494389873906724270151",\n' +
-                '      "variableBorrowRate": "0.22375297880588482699"\n' +
-                '    }\n' +
-                '  }\n' +
-                ']'
-        },
-        "Get Liquidity V2": {
-            url: '/data/liquidity/v2',
-            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_liquidity_v2',
-            description: 'Returns overall protocol liquidity at a certain date' ,
-            params: {
-                poolId: {description: 'The id of the Aave Lending Pool Addresses Provider (e.g. 0x24a42fd28c976a61d\nf5d00d0599c34c4f90748c8)', required: true},
-                date: {description: 'The date for where we want to get the data from (e.g. 01-01-2020)'}
-            },
-            sample_response: '[\n' +
-                '  {\n' +
-                '    "availableLiquidity": "942194.519059401080866728",\n' +
-                '    "averageStableRate": "100050758739420732058977873",\n' +
-                '    "baseLTVasCollateral": "0.75",\n' +
-                '    "baseVariableBorrowRate": "0",\n' +
-                '    "borrowingEnabled": true,\n' +
-                '    "decimals": 18,\n' +
-                '    "id": "0x0000000000085d4780b73119b644ae5ecd22b3760xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
-                '    "liquidityIndex": "1.01825210810387712252",\n' +
-                '    "liquidityRate": "0.10455997873609331382",\n' +
-                '    "name": "TrueUSD",\n' +
-                '    "optimalUtilisationRate": "0.8",\n' +
-                '    "pool": "0xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
-                '    "price": {\n' +
-                '      "id": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '      "priceInEth": "0.00057794"\n' +
-                '    },\n' +
-                '    "reserveFactor": "0.1",\n' +
-                '    "reserveInterestRateStrategy": "0x0ddec679166c367ae45036c8b2c169c5fb2dcee1",\n' +
-                '    "reserveLiquidationBonus": "0.05",\n' +
-                '      "timestamp": 1612997034,\n' +
-                '      "totalLiquidity": "6248213120765942920753579",\n' +
-                '      "utilizationRate": "0.84920576",\n' +
-                '      "variableBorrowIndex": "1059494494389873906724270151",\n' +
-                '      "variableBorrowRate": "0.22375297880588482699"\n' +
-                '    }\n' +
-                '  }\n' +
-                ']'
-        },
-        "Get Staking Pools": {
-            url: '/data/pools',
-            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_pools',
-            description: 'Returns staking pool(stkAAVE, stkABPT) stats' ,
-            sample_response: '[\n' +
-                '  {\n' +
-                '    "liquidity": {\n' +
-                '      "usd": 78179450.32030025,\n' +
-                '      "eth": 44301.64683831359,\n' +
-                '      "native": 163287843.2696208\n' +
-                '    },\n' +
-                '    "price": {\n' +
-                '      "eth": 0.000271310135226434,\n' +
-                '      "usd": 0.4787830419880699\n' +
-                '    },\n' +
-                '    "address": "0xa1116930326D21fB917d5A27F1E9943A9595fb47",\n' +
-                '    "name": "Staked Aave Balance Pool Token",\n' +
-                '    "symbol": "stkABPT",\n' +
-                '    "apy": "5.52",\n' +
-                '    "updatedAt": "2021-02-12T15:19:20.571Z"\n' +
-                '  }\n' +
-                ']'
-        },
-        "Get Governance Leaderboard": {
-            url: '/data/governance-leaderboard',
-            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_governance_leaderboard',
-            description: 'Get top governance participants. By calling this endpoint you will specify the power type in {\'vote\', \'proposition\'} and will receive the top users ranked by voting or proposition power' ,
-            params: {
-                power: {description: 'The type of power to rank users by', required: true, possible: ['vote', 'proposition']},
-                first: {description: 'Number of users to return', type: 'number'},
-                min: {description: 'Minimum number of votes or proposals a user must have participated in', type: 'number'}
-            },
-            sample_response: '[\n' +
-                '  {\n' +
-                '    "address": "0x0000000000000000000000000000000000000000",\n' +
-                '    "votingPower": 120.45,\n' +
-                '    "isVerified": true,\n' +
-                '    "avatar": "https://pbs.twimg.com/profile_images/1362172699192090629/JdD_IZSe_normal.jpg",\n' +
-                '    "name": "John Appleseed",\n' +
-                '    "handle": "jack",\n' +
-                '    "propositionPower": 12.7,\n' +
-                '    "votingWeight": 0.5,\n' +
-                '    "propositionWeight": 0.2,\n' +
-                '    "votingHistory": [\n' +
-                '      {\n' +
-                '        "id": "0x0000000000000000000000000000000000000000",\n' +
-                '        "proposal": {\n' +
-                '          "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '          "title": "Extend Aave Liquidity Incentives",\n' +
-                '          "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8"\n' +
-                '        },\n' +
-                '        "votingPower": 542.34,\n' +
-                '        "support": true,\n' +
-                '        "timestamp": 1590866770\n' +
-                '      }\n' +
-                '    ],\n' +
-                '    "proposalHistory": [\n' +
-                '      {\n' +
-                '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '        "state": "executed",\n' +
-                '        "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '        "aipNumber": 14,\n' +
-                '        "title": "Upgrade Aave V1 repayment for migration tool"\n' +
-                '      }\n' +
-                '    ],\n' +
-                '    "lastUpdateTimestamp": 1611158580,\n' +
-                '    "aaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '    "aavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '    "stkAaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '    "stkAavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '    "aaveBalance": 4,\n' +
-                '    "stkAaveBalance": 0.1\n' +
-                '  }\n' +
-                ']'
-        },
-        "Get Top Voters": {
-            url: '/data/proposa-top-voters',
-            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_proposal_top_voters',
-            description: 'Get top voters for a given proposal. By calling this endpoint you will specify the proposal id and will receive the the top voters both for and against. Return format is [[forTopVoters],[againstTopVoters]]' ,
-            params: {
-                proposal: {description: 'Proposal id', required: true,  },
-            },
-            sample_response: '[\n' +
-                '  [\n' +
-                '    [\n' +
-                '      {\n' +
-                '        "address": "0x0000000000000000000000000000000000000000",\n' +
-                '        "votingPower": 120.45,\n' +
-                '        "isVerified": true,\n' +
-                '        "avatar": "https://pbs.twimg.com/profile_images/1362172699192090629/JdD_IZSe_normal.jpg",\n' +
-                '        "name": "John Appleseed",\n' +
-                '        "handle": "jack",\n' +
-                '        "propositionPower": 12.7,\n' +
-                '        "votingWeight": 0.5,\n' +
-                '        "propositionWeight": 0.2,\n' +
-                '        "votingHistory": [\n' +
-                '          {\n' +
-                '            "id": "0x0000000000000000000000000000000000000000",\n' +
-                '            "proposal": {\n' +
-                '              "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '              "title": "Extend Aave Liquidity Incentives",\n' +
-                '              "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8"\n' +
-                '            },\n' +
-                '            "votingPower": 542.34,\n' +
-                '            "support": true,\n' +
-                '            "timestamp": 1590866770\n' +
-                '          }\n' +
-                '        ],\n' +
-                '        "proposalHistory": [\n' +
-                '          {\n' +
-                '            "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '            "state": "executed",\n' +
-                '            "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '            "aipNumber": 14,\n' +
-                '            "title": "Upgrade Aave V1 repayment for migration tool"\n' +
-                '          }\n' +
-                '        ],\n' +
-                '        "lastUpdateTimestamp": 1611158580,\n' +
-                '        "aaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '        "aavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '        "stkAaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '        "stkAavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '        "aaveBalance": 4,\n' +
-                '        "stkAaveBalance": 0.1\n' +
-                '      }\n' +
-                '    ]\n' +
-                '  ]\n' +
-                ']'
-        },
-        "Governance User Search": {
-            url: '/data/governance-user-search',
-            doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_governance_user_search',
-            description: 'Search for individual Aave governance user. By calling this endpoint you will specify the address and will receive governance info for a given user' ,
-            params: {
-                address: {description: 'user wallet address', required: true,  },
-            },
-            sample_response: '{\n' +
-                '  "address": "0x0000000000000000000000000000000000000000",\n' +
-                '  "votingPower": 120.45,\n' +
-                '  "isVerified": true,\n' +
-                '  "avatar": "https://pbs.twimg.com/profile_images/1362172699192090629/JdD_IZSe_normal.jpg",\n' +
-                '  "name": "John Appleseed",\n' +
-                '  "handle": "jack",\n' +
-                '  "propositionPower": 12.7,\n' +
-                '  "votingWeight": 0.5,\n' +
-                '  "propositionWeight": 0.2,\n' +
-                '  "votingHistory": [\n' +
-                '    {\n' +
-                '      "id": "0x0000000000000000000000000000000000000000",\n' +
-                '      "proposal": {\n' +
-                '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '        "title": "Extend Aave Liquidity Incentives",\n' +
-                '        "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8"\n' +
-                '      },\n' +
-                '      "votingPower": 542.34,\n' +
-                '      "support": true,\n' +
-                '      "timestamp": 1590866770\n' +
-                '    }\n' +
-                '  ],\n' +
-                '  "proposalHistory": [\n' +
-                '    {\n' +
-                '      "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '      "state": "executed",\n' +
-                '      "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
-                '      "aipNumber": 14,\n' +
-                '      "title": "Upgrade Aave V1 repayment for migration tool"\n' +
-                '    }\n' +
-                '  ],\n' +
-                '  "lastUpdateTimestamp": 1611158580,\n' +
-                '  "aaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '  "aavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '  "stkAaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '  "stkAavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
-                '  "aaveBalance": 4,\n' +
-                '  "stkAaveBalance": 0.1,\n' +
-                '  "usersRepresented": [\n' +
-                '    null\n' +
-                '  ]\n' +
-                '}'
-        },
-
-    },
+    // '0xAPI': {
+    //     "doc_url": 'https://docs.0x.org/introduction/welcome',
+    //     'provider_description': '0x is important infrastructure for the emerging crypto economy and enables markets to be created that couldn\'t have existed before. As more assets become tokenized, public blockchains provide the opportunity to establish a new financial stack that is more efficient, transparent, and equitable than any system in the past.',
+    //     "base_url": "https://api.0x.org",
+    //     "logo_url": 'https://avatars.githubusercontent.com/u/24832717?s=200&v=4',
+    //     "Get Swap Quote": {
+    //         url: '/swap/v1/quote',
+    //         doc_url: 'https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote',
+    //         description:  'Get an easy-to-consume quote for buying or selling any token. The return format is a valid unsigned Ethereum transaction and can be submitted directly to an Ethereum node to complete the swap. For transactions where the sellToken is not ETH, you will have to set your allowances. Either a sellAmount or buyAmount is required.',
+    //         params: {
+    //             sellToken: {description:'The ERC20 token address or symbol of the token you want to send. "ETH" can be provided as a valid sellToken.'},
+    //             buyToken: {description:'The ERC20 token address or symbol of the token you want to receive. "ETH" can be provided as a valid buyToken'},
+    //             sellAmount: {type: 'number', description:'(Optional) The amount of sellToken (in sellToken base units) you want to send.'},
+    //             buyAmount: {type: 'number',description:'(Optional) The amount of buyToken (in buyToken base units) you want to receive.'},
+    //             slippagePercentage: {type: 'number',description:'(Optional) The maximum acceptable slippage of the buyToken amount if sellAmount is provided, the maximum acceptable slippage of the sellAmount amount if buyAmount is provided. E.g 0.03 for 3% slippage allowed.'},
+    //             gasPrice: {type: 'number',description:'(Optional, defaults to ethgasstation "fast") The target gas price (in wei) for the swap transaction. If the price is too low to achieve the quote, an error will be returned.'},
+    //             takerAddress: {description:'(Optional) The address which will fill the quote. When provided the gas will be estimated and returned and the entire transaction will be validated for success. If the validation fails a Revert Error will be returned in the response.'},
+    //             excludedSources: {description:'(Optional) Liquidity sources (Uniswap, SushiSwap, 0x, Curve etc) that will not be included in the provided quote. Ex: excludedSources=Uniswap,SushiSwap,Curve.'},
+    //             includedSources: {description:'(Optional) For now only supports RFQT, which should be used when the integrator only wants RFQT liquidity without any other DEX orders. Requires a particular agreement with the 0x integrations team. This parameter cannot be combined with excludedSources.'},
+    //             skipValidation: {possible: ['true', 'false'],description:'(Optional) Normally, whenever a takerAddress is provided, the API will validate the quote for the user. When this parameter is set to true, that validation will be skipped. See also here.'},
+    //             intentOnFilling: {description:'(Optional) Used to enable RFQ-T liquidity. '},
+    //             feeRecipient: {description:'(Optional) The ETH address that should receive affiliate fees specified with buyTokenPercentageFee.'},
+    //             buyTokenPercentageFee: {type: 'number',description:'(Optional) The percentage (between 0 - 1.0) of the buyAmount that should be attributed to feeRecipient as affiliate fees. Note that this requires that the feeRecipient parameter is also specified in the request.'},
+    //             affiliateAddress: {description:'(Optional) An ETH address for which to attribute the trade for tracking and analytics purposes. Note affiliateAddress is only for tracking trades and has no impact on affiliate fees, for affiliate fees use feeRecipient.'},
+    //         },
+    //         response_attributes: {
+    //             'price': `If buyAmount was specified in the request it provides the price of buyToken in sellToken and vice versa. This price does not include the slippage provided in the request above, and therefore represents the best possible price.`,
+    //             'guaranteedPrice': `The price which must be met or else the entire transaction will revert. This price is influenced by the slippagePercentage parameter. On-chain sources may encounter price movements from quote to settlement.`,
+    //             'to': `The address of the contract to send call data to.`,
+    //             'data': `The call data required to be sent to the to contract address.`,
+    //             'value': `The amount of ether (in wei) that should be sent with the transaction. (Assuming protocolFee is paid in ether).`,
+    //             'gasPrice': `The gas price (in wei) that should be used to send the transaction. The transaction needs to be sent with this gasPrice or lower for the transaction to be successful.`,
+    //             'gas': `The estimated gas limit that should be used to send the transaction to guarantee settlement. While a computed estimate is returned in all responses, an accurate estimate will only be returned if a takerAddress is included in the request.`,
+    //             'estimatedGas': `The estimate for the amount of gas that will actually be used in the transaction. Always less than gas.`,
+    //             'protocolFee': `The maximum amount of ether that will be paid towards the protocol fee (in wei), and what is used to compute the value field of the transaction.`,
+    //             'minimumProtocolFee': `The minimum amount of ether that will be paid towards the protocol fee (in wei) during the transaction.`,
+    //             'buyAmount': `The amount of buyToken (in buyToken units) that would be bought in this swap. Certain on-chain sources do not allow specifying buyAmount, when using buyAmount these sources are excluded.`,
+    //             'sellAmount': `The amount of sellToken (in sellToken units) that would be sold in this swap. Specifying sellAmount is the recommended way to interact with 0xAPI as it covers all on-chain sources.`,
+    //             'sources': `The percentage distribution of buyAmount or sellAmount split between each liquidity source. Ex: [{ name: '0x', proportion: "0.8" }, { name: 'Kyber', proportion: "0.2"}, ...]`,
+    //             'buyTokenAddress': `The ERC20 token address of the token you want to receive in quote.`,
+    //             'sellTokenAddress': `The ERC20 token address of the token you want to sell with quote.`,
+    //             'allowanceTarget': `The target contract address for which the user needs to have an allowance in order to be able to complete the swap. For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of 0x0000000000000000000000000000000000000000 is then returned instead.`,
+    //         },
+    //         sample_response: '{\n' +
+    //             '    "price": "198.02566690042823231",\n' +
+    //             '    "guaranteedPrice": "191.88959851561835913",\n' +
+    //             '    "to": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
+    //             '    "data": "0xa6c3bf330000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000007200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000002600000000000000000000000006924a03bb710eaf199ab6ac9f2bb148215ae9b5d000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000119f25fd7ebc6a400000000000000000000000000000000000000000000000000016c7d70543164aa3b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd420c0000000000000000000000000000000000000000000000000000017251c82bed00000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000005e0000000000000000000000000000000000000000000000000000000000000064000000000000000000000000000000000000000000000000000000000000006400000000000000000000000000000000000000000000000000000000000000024f47261b00000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000000000000000000000000000000000000000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010a4ce15149935d8a000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd5dc48b6ed252d3488d46ccd3297146fca393cbbc0053dd77a341c0133d612b7c4a8900000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000003c00000000000000000000000000000000000000000000000000000000000000420000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000001c4dc1600f30000000000000000000000006b175474e89094c44da98b954eedeac495271d0f0000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f800000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000140000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000ae3641dffb712e917b9dc3e6c271b6657ff39818000000000000000000000000000000000000000000000000016345785d8a00000000000000000000000000000000000000000000000000010a4ce15149935d8a00000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000020000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000024f47261b0000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000421c2e80750e2e69ac0e865ae163b236fc3d22632daeb909fc10a1a8ac05e4bd1212709da900d7785a5af9b77ba76a324b744da8e66108f72e61fa927aa5e9433dca0300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010400000000000000000000000000000000000000000000000000000000000000869584cd0000000000000000000000001000000000000000000000000000000000000011000000000000000000000000000000000000000000000000000000005ecd41a5",\n' +
+    //             '    "value": "10800000000000000",\n' +
+    //             '    "gas": "605952",\n' +
+    //             '    "estimatedGas": "504960",\n' +
+    //             '    "gasPrice": "36000000000",\n' +
+    //             '    "protocolFee": "10800000000000000",\n' +
+    //             '    "minimumProtocolFee": "5400000000000000",\n' +
+    //             '    "buyTokenAddress": "0x6b175474e89094c44da98b954eedeac495271d0f",\n' +
+    //             '    "sellTokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
+    //             '    "buyAmount": "19802566690042823231",\n' +
+    //             '    "sellAmount": "100000000000000000",\n' +
+    //             '    "estimatedGasTokenRefund": "192000",\n' +
+    //             '    "sources": [\n' +
+    //             '        {\n' +
+    //             '            "name": "0x",\n' +
+    //             '            "proportion": "1"\n' +
+    //             '        },\n' +
+    //             '        {\n' +
+    //             '            "name": "Uniswap",\n' +
+    //             '            "proportion": "0"\n' +
+    //             '        },\n' +
+    //             '        {\n' +
+    //             '            "name": "Eth2Dai",\n' +
+    //             '            "proportion": "0"\n' +
+    //             '        },\n' +
+    //             '        {\n' +
+    //             '            "name": "Kyber",\n' +
+    //             '            "proportion": "0"\n' +
+    //             '        },\n' +
+    //             '        {\n' +
+    //             '            "name": "Curve",\n' +
+    //             '            "proportion": "0"\n' +
+    //             '        },\n' +
+    //             '        {\n' +
+    //             '            "name": "LiquidityProvider",\n' +
+    //             '            "proportion": "0"\n' +
+    //             '        }\n' +
+    //             '    ],\n' +
+    //             '    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"\n' +
+    //             '}'
+    //     },
+    //     "Get Swap Price": {
+    //         url: '/swap/v1/price',
+    //         doc_url: 'https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-price',
+    //         description:  'Nearly identical to /swap/v1/quote, but with a few key differences. Rather than returning a transaction that can be submitted to an Ethereum node, this resource simply indicates the pricing that would be available for an analogous call to /swap/v1/quote. Intended for use with RFQ-T;',
+    //         params: {
+    //             sellToken: {description:'The ERC20 token address or symbol of the token you want to send. "ETH" can be provided as a valid sellToken.'},
+    //             buyToken: {description:'The ERC20 token address or symbol of the token you want to receive. "ETH" can be provided as a valid buyToken'},
+    //             sellAmount: {type: 'number', description:'(Optional) The amount of sellToken (in sellToken base units) you want to send.'},
+    //             buyAmount: {type: 'number',description:'(Optional) The amount of buyToken (in buyToken base units) you want to receive.'},
+    //             slippagePercentage: {type: 'number',description:'(Optional) The maximum acceptable slippage of the buyToken amount if sellAmount is provided, the maximum acceptable slippage of the sellAmount amount if buyAmount is provided. E.g 0.03 for 3% slippage allowed.'},
+    //             gasPrice: {type: 'number',description:'(Optional, defaults to ethgasstation "fast") The target gas price (in wei) for the swap transaction. If the price is too low to achieve the quote, an error will be returned.'},
+    //             takerAddress: {description:'(Optional) The address which will fill the quote. When provided the gas will be estimated and returned and the entire transaction will be validated for success. If the validation fails a Revert Error will be returned in the response.'},
+    //             excludedSources: {description:'(Optional) Liquidity sources (Uniswap, SushiSwap, 0x, Curve etc) that will not be included in the provided quote. Ex: excludedSources=Uniswap,SushiSwap,Curve.'},
+    //             includedSources: {description:'(Optional) For now only supports RFQT, which should be used when the integrator only wants RFQT liquidity without any other DEX orders. Requires a particular agreement with the 0x integrations team. This parameter cannot be combined with excludedSources.'},
+    //             skipValidation: {possible: ['true', 'false'],description:'(Optional) Normally, whenever a takerAddress is provided, the API will validate the quote for the user. When this parameter is set to true, that validation will be skipped. See also here.'},
+    //             intentOnFilling: {description:'(Optional) Used to enable RFQ-T liquidity. '},
+    //             feeRecipient: {description:'(Optional) The ETH address that should receive affiliate fees specified with buyTokenPercentageFee.'},
+    //             buyTokenPercentageFee: {type: 'number',description:'(Optional) The percentage (between 0 - 1.0) of the buyAmount that should be attributed to feeRecipient as affiliate fees. Note that this requires that the feeRecipient parameter is also specified in the request.'},
+    //             affiliateAddress: {description:'(Optional) An ETH address for which to attribute the trade for tracking and analytics purposes. Note affiliateAddress is only for tracking trades and has no impact on affiliate fees, for affiliate fees use feeRecipient.'},
+    //         },
+    //         response_attributes: {
+    //             'price': `If buyAmount was specified in the request it provides the price of buyToken in sellToken and vice versa. This price does not include the slippage provided in the request above, and therefore represents the best possible price.`,
+    //             'guaranteedPrice': `The price which must be met or else the entire transaction will revert. This price is influenced by the slippagePercentage parameter. On-chain sources may encounter price movements from quote to settlement.`,
+    //             'to': `The address of the contract to send call data to.`,
+    //             'data': `The call data required to be sent to the to contract address.`,
+    //             'value': `The amount of ether (in wei) that should be sent with the transaction. (Assuming protocolFee is paid in ether).`,
+    //             'gasPrice': `The gas price (in wei) that should be used to send the transaction. The transaction needs to be sent with this gasPrice or lower for the transaction to be successful.`,
+    //             'gas': `The estimated gas limit that should be used to send the transaction to guarantee settlement. While a computed estimate is returned in all responses, an accurate estimate will only be returned if a takerAddress is included in the request.`,
+    //             'estimatedGas': `The estimate for the amount of gas that will actually be used in the transaction. Always less than gas.`,
+    //             'protocolFee': `The maximum amount of ether that will be paid towards the protocol fee (in wei), and what is used to compute the value field of the transaction.`,
+    //             'minimumProtocolFee': `The minimum amount of ether that will be paid towards the protocol fee (in wei) during the transaction.`,
+    //             'buyAmount': `The amount of buyToken (in buyToken units) that would be bought in this swap. Certain on-chain sources do not allow specifying buyAmount, when using buyAmount these sources are excluded.`,
+    //             'sellAmount': `The amount of sellToken (in sellToken units) that would be sold in this swap. Specifying sellAmount is the recommended way to interact with 0xAPI as it covers all on-chain sources.`,
+    //             'sources': `The percentage distribution of buyAmount or sellAmount split between each liquidity source. Ex: [{ name: '0x', proportion: "0.8" }, { name: 'Kyber', proportion: "0.2"}, ...]`,
+    //             'buyTokenAddress': `The ERC20 token address of the token you want to receive in quote.`,
+    //             'sellTokenAddress': `The ERC20 token address of the token you want to sell with quote.`,
+    //             'allowanceTarget': `The target contract address for which the user needs to have an allowance in order to be able to complete the swap. For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of 0x0000000000000000000000000000000000000000 is then returned instead.`,
+    //         },
+    //         sample_response: '{\n' +
+    //             '    "price": "198.02566690042823231",\n' +
+    //             '    "guaranteedPrice": "191.88959851561835913",\n' +
+    //             '    "to": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
+    //             '    "data": "0xa6c3bf330000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000007200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000002600000000000000000000000006924a03bb710eaf199ab6ac9f2bb148215ae9b5d000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000119f25fd7ebc6a400000000000000000000000000000000000000000000000000016c7d70543164aa3b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd420c0000000000000000000000000000000000000000000000000000017251c82bed00000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000005e0000000000000000000000000000000000000000000000000000000000000064000000000000000000000000000000000000000000000000000000000000006400000000000000000000000000000000000000000000000000000000000000024f47261b00000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000000000000000000000000000000000000000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010a4ce15149935d8a000000000000000000000000000000000000000000000000016345785d8a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ecd5dc48b6ed252d3488d46ccd3297146fca393cbbc0053dd77a341c0133d612b7c4a8900000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000003c00000000000000000000000000000000000000000000000000000000000000420000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000001c4dc1600f30000000000000000000000006b175474e89094c44da98b954eedeac495271d0f0000000000000000000000005591360f8c7640fea5771c9682d6b5ecb776e1f800000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000140000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000ae3641dffb712e917b9dc3e6c271b6657ff39818000000000000000000000000000000000000000000000000016345785d8a00000000000000000000000000000000000000000000000000010a4ce15149935d8a00000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000020000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000024f47261b0000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000421c2e80750e2e69ac0e865ae163b236fc3d22632daeb909fc10a1a8ac05e4bd1212709da900d7785a5af9b77ba76a324b744da8e66108f72e61fa927aa5e9433dca0300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010400000000000000000000000000000000000000000000000000000000000000869584cd0000000000000000000000001000000000000000000000000000000000000011000000000000000000000000000000000000000000000000000000005ecd41a5",\n' +
+    //             '    "value": "10800000000000000",\n' +
+    //             '    "gas": "605952",\n' +
+    //             '    "estimatedGas": "504960",\n' +
+    //             '    "gasPrice": "36000000000",\n' +
+    //             '    "protocolFee": "10800000000000000",\n' +
+    //             '    "minimumProtocolFee": "5400000000000000",\n' +
+    //             '    "buyTokenAddress": "0x6b175474e89094c44da98b954eedeac495271d0f",\n' +
+    //             '    "sellTokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
+    //             '    "buyAmount": "19802566690042823231",\n' +
+    //             '    "sellAmount": "100000000000000000",\n' +
+    //             '    "estimatedGasTokenRefund": "192000",\n' +
+    //             '    "sources": [\n' +
+    //             '        {\n' +
+    //             '            "name": "0x",\n' +
+    //             '            "proportion": "1"\n' +
+    //             '        },\n' +
+    //             '        {\n' +
+    //             '            "name": "Uniswap",\n' +
+    //             '            "proportion": "0"\n' +
+    //             '        },\n' +
+    //             '        {\n' +
+    //             '            "name": "Eth2Dai",\n' +
+    //             '            "proportion": "0"\n' +
+    //             '        },\n' +
+    //             '        {\n' +
+    //             '            "name": "Kyber",\n' +
+    //             '            "proportion": "0"\n' +
+    //             '        },\n' +
+    //             '        {\n' +
+    //             '            "name": "Curve",\n' +
+    //             '            "proportion": "0"\n' +
+    //             '        },\n' +
+    //             '        {\n' +
+    //             '            "name": "LiquidityProvider",\n' +
+    //             '            "proportion": "0"\n' +
+    //             '        }\n' +
+    //             '    ],\n' +
+    //             '    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"\n' +
+    //             '}'
+    //     },
+    //     "Get Swap Sources": {
+    //         url: '/swap/v1/sources',
+    //         doc_url: 'https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-sources',
+    //         description:  'Returns the sources enabled for the chain.',
+    //         response_attributes: {
+    //             'records': `An array of Liquidity Sources.`,
+    //         },
+    //         sample_response: '{\n' +
+    //             '    "records": [\n' +
+    //             '        "0x",\n' +
+    //             '        "Balancer",\n' +
+    //             '        "Balancer_V2",\n' +
+    //             '        "Bancor",\n' +
+    //             '        "Component",\n' +
+    //             '        "CREAM",\n' +
+    //             '        "CryptoCom",\n' +
+    //             '        "Curve",\n' +
+    //             '        "Curve_V2",\n' +
+    //             '        "DODO",\n' +
+    //             '        "DODO_V2",\n' +
+    //             '        "Eth2Dai",\n' +
+    //             '        "Kyber",\n' +
+    //             '        "KyberDMM",\n' +
+    //             '        "Lido",\n' +
+    //             '        "Linkswap",\n' +
+    //             '        "LiquidityProvider",\n' +
+    //             '        "MakerPsm",\n' +
+    //             '        "Mooniswap",\n' +
+    //             '        "mStable",\n' +
+    //             '        "MultiHop",\n' +
+    //             '        "Saddle",\n' +
+    //             '        "Shell",\n' +
+    //             '        "ShibaSwap",\n' +
+    //             '        "Smoothy",\n' +
+    //             '        "SnowSwap",\n' +
+    //             '        "SushiSwap",\n' +
+    //             '        "Swerve",\n' +
+    //             '        "Uniswap",\n' +
+    //             '        "Uniswap_V2",\n' +
+    //             '        "Uniswap_V3",\n' +
+    //             '        "xSigma"\n' +
+    //             '    ]\n' +
+    //             '}'
+    //     },
+    //
+    //     "Get Orderbook": {
+    //         url: '/orderbook/v1',
+    //         doc_url: 'https://docs.0x.org/0x-api-orderbook/api-references/get-orderbook-v1',
+    //         description:  'Retrieves the orderbook for a given asset pair.',
+    //         params:{
+    //             'baseToken' : {description: `The address of makerToken or takerToken designated as the base currency in the currency pair calculation of price.`},
+    //             'quoteToken' : {description: `The address of makerToken or takerToken designated as the quote currency in the currency pair calculation of price.`},
+    //         },
+    //         response_attributes: {
+    //             'bids' :  `Paginated collection of SRA signed orders (below) where takerToken is equal to baseToken.`,
+    //
+    //             'asks' :  `Paginated collection of SRA signed orders (below) where makerToken is equal to baseToken.`,
+    //             'order' :  `Raw signed order.`,
+    //
+    //             'metaData' :  `Object where optional meta-data will be included, such as the orderHash and remainingFillableTakerAmount.`,
+    //         },
+    //         sample_response: '"bids": {\n' +
+    //             '        "total": 2,\n' +
+    //             '        "page": 1,\n' +
+    //             '        "perPage": 20,\n' +
+    //             '        "records": [\n' +
+    //             '            {\n' +
+    //             '                "order": {\n' +
+    //             '                    "signature": {\n' +
+    //             '                        "signatureType": 3,\n' +
+    //             '                        "r": "0xd471903a58c8af8e04606fdffef66d8dc820e8ad0bfc8da38df9e75774ce2145",\n' +
+    //             '                        "s": "0x7c98326b5cae57af19406f651b53e1d18cc687c956d4b5d49e63cc5ecde0b235",\n' +
+    //             '                        "v": 27\n' +
+    //             '                    },\n' +
+    //             '                    "sender": "0x0000000000000000000000000000000000000000",\n' +
+    //             '                    "maker": "0x56eb0ad2dc746540fab5c02478b31e2aa9ddc38c",\n' +
+    //             '                    "taker": "0x0000000000000000000000000000000000000000",\n' +
+    //             '                    "takerTokenFeeAmount": "0",\n' +
+    //             '                    "makerAmount": "100000000",\n' +
+    //             '                    "takerAmount": "10000000",\n' +
+    //             '                    "makerToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
+    //             '                    "takerToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",\n' +
+    //             '                    "salt": "46180318074336470317559353922611974059818459041810314650988282984048441965273",\n' +
+    //             '                    "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
+    //             '                    "feeRecipient": "0x0000000000000000000000000000000000000000",\n' +
+    //             '                    "expiry": "1614959239",\n' +
+    //             '                    "chainId": 1,\n' +
+    //             '                    "pool": "0x0000000000000000000000000000000000000000000000000000000000000000"\n' +
+    //             '                },\n' +
+    //             '                "metaData": {\n' +
+    //             '                    "orderHash": "0x0ffda2f9d9f41144bb063100403f926efa2ee5bacd9af00716175f00b030ff36",\n' +
+    //             '                    "remainingFillableTakerAmount": "10000000",\n' +
+    //             '                    "createdAt": "2021-03-05T15:32:18.473Z"\n' +
+    //             '                }\n' +
+    //             '            }\n' +
+    //             '        ]\n' +
+    //             '    },\n' +
+    //             '    "asks": {\n' +
+    //             '        "total": 2,\n' +
+    //             '        "page": 1,\n' +
+    //             '        "perPage": 20,\n' +
+    //             '        "records": [\n' +
+    //             '            {\n' +
+    //             '                "order": {\n' +
+    //             '                    "signature": {\n' +
+    //             '                        "signatureType": 3,\n' +
+    //             '                        "r": "0x5edf42008a5b379d44857634ffb6c0ef64a8884763bbbe8eecaca14f1b9670e9",\n' +
+    //             '                        "s": "0x6ed1c68cd18e2ede793f6cb7fdd5391c559cf59c2cc0876a7479e4ff7459a79a",\n' +
+    //             '                        "v": 28\n' +
+    //             '                    },\n' +
+    //             '                    "sender": "0x0000000000000000000000000000000000000000",\n' +
+    //             '                    "maker": "0x56eb0ad2dc746540fab5c02478b31e2aa9ddc38c",\n' +
+    //             '                    "taker": "0x0000000000000000000000000000000000000000",\n' +
+    //             '                    "takerTokenFeeAmount": "0",\n' +
+    //             '                    "makerAmount": "10000000",\n' +
+    //             '                    "takerAmount": "2000000000000000000000",\n' +
+    //             '                    "makerToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",\n' +
+    //             '                    "takerToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
+    //             '                    "salt": "56970174968746324800967727809155263811357634174793941230224490280738761530883",\n' +
+    //             '                    "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
+    //             '                    "feeRecipient": "0x0000000000000000000000000000000000000000",\n' +
+    //             '                    "expiry": "1614959117",\n' +
+    //             '                    "chainId": 1,\n' +
+    //             '                    "pool": "0x0000000000000000000000000000000000000000000000000000000000000000"\n' +
+    //             '                },\n' +
+    //             '                "metaData": {\n' +
+    //             '                    "orderHash": "0xf8b4d85e98d7dc41bb6b9b200aafe7a2b479f59d6ca5288fa990124a23f2056a",\n' +
+    //             '                    "remainingFillableTakerAmount": "2000000000000000000000",\n' +
+    //             '                    "createdAt": "2021-03-05T15:30:17.127Z"\n' +
+    //             '                }\n' +
+    //             '            }\n' +
+    //             '        ]\n' +
+    //             '    }'
+    //     },
+    //     "Get Orderbook Order Hash": {
+    //         url: '/orderbook/v1/order/:orderHash',
+    //         doc_url: 'https://docs.0x.org/0x-api-orderbook/api-references/get-orderbook-v1-order-orderhash',
+    //         description:  'Retrieves a specific order by orderHash.',
+    //         params:{
+    //             'orderHash' : {description: `The hash of the desired signed order.`, replace_2dots: true, required: true},
+    //         },
+    //         response_attributes: {
+    //             'order' :  `Raw signed order.`,
+    //             'metaData' :  `Object where optional meta-data will be included, such as the orderHash and remainingFillableTakerAmount.`,
+    //         },
+    //         sample_response: '{\n' +
+    //             '    "order": {\n' +
+    //             '        "signature": {\n' +
+    //             '            "signatureType": 3,\n' +
+    //             '            "r": "0x260e3ade4c5e995074e51c5e6031a7f9ac4c466923cf636a52da5618733ca733",\n' +
+    //             '            "s": "0x0ad43fef82c1deaa740905d76fd6201960b034dbaebda9ae55a28276fffda5b4",\n' +
+    //             '            "v": 27\n' +
+    //             '        },\n' +
+    //             '        "sender": "0x0000000000000000000000000000000000000000",\n' +
+    //             '        "maker": "0x56eb0ad2dc746540fab5c02478b31e2aa9ddc38c",\n' +
+    //             '        "taker": "0x0000000000000000000000000000000000000000",\n' +
+    //             '        "takerTokenFeeAmount": "0",\n' +
+    //             '        "makerAmount": "100000000000000",\n' +
+    //             '        "takerAmount": "2000000000000000000000",\n' +
+    //             '        "makerToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
+    //             '        "takerToken": "0xe41d2489571d322189246dafa5ebde1f4699f498",\n' +
+    //             '        "salt": "6783702559744797318323886303764333477871845949851321622397911580758640049826",\n' +
+    //             '        "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",\n' +
+    //             '        "feeRecipient": "0x0000000000000000000000000000000000000000",\n' +
+    //             '        "expiry": "1614957869",\n' +
+    //             '        "chainId": 1,\n' +
+    //             '        "pool": "0x0000000000000000000000000000000000000000000000000000000000000000"\n' +
+    //             '    },\n' +
+    //             '    "metaData": {\n' +
+    //             '        "orderHash": "0xd56098f729763f53b338c723be01ffdb8a1ff9dd8d323c9021ff1d8e29635fca",\n' +
+    //             '        "remainingFillableTakerAmount": "2000000000000000000000",\n' +
+    //             '        "createdAt": "2021-03-05T15:09:28.611Z"\n' +
+    //             '    }\n' +
+    //             '}'
+    //     },
+    //     "Get Orderbook Fee Recipients": {
+    //         url: '/orderbook/v1/fee_recipients',
+    //         doc_url: 'https://docs.0x.org/0x-api-orderbook/api-references/get-orderbook-v1-fee_recipients',
+    //         description:  'Retrieves a list of valid feeRecipient addresses.',
+    //         response_attributes: {
+    //             'record(s)': `A valid Ethereum address(s).`,
+    //         },
+    //         sample_response: '{\n' +
+    //             '    "total": 1,\n' +
+    //             '    "page": 1,\n' +
+    //             '    "perPage": 20,\n' +
+    //             '    "records": ["0x0000000000000000000000000000000000000000"]\n' +
+    //             '}'
+    //     },
+    // },
+    // '0xTracker': {
+    //     "doc_url": 'https://docs.0xtracker.com/',
+    //     'provider_description': 'The leading provider of 0x protocol market data, transparent Ethereum token price index and 0x protocol news aggregator.',
+    //     "base_url": "https://api.0xtracker.com",
+    //     "logo_url": "https://avatars.githubusercontent.com/u/42436424?s=200&v=4",
+    //
+    //     "Get App": {
+    //         url: '/apps/:slug',
+    //         doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#app',
+    //         description:  'Returns the details and stats of a single app.',
+    //         params:{
+    //             'slug' : {description: `Slug of the app to fetch. (e.g.: matcha)`, replace_2dots: true, required: true},
+    //             'statsPeriodTo' : {description: `End of the time period for which to return stats. Should be used as an alternative to the statsPeriod parameter. Must be in the format YYYY-MM-DD.`,  },
+    //             'statsPeriodFrom' : {description: `Start of the time period for which to return stats. Should be used as an alternative to the statsPeriod parameter. Must be in the format YYYY-MM-DD.`,  },
+    //             'statsPeriod' : {description: `The time period for which to return stats. Valid values are: "day", "week", "month", "year" and "all". Default value is "day"`, default: 'day', possible: ["day", "week", "month", "year" , "all"]  },
+    //         },
+    //         sample_response: '{\n' +
+    //             '    "categories": [\n' +
+    //             '        "dex-aggregator",\n' +
+    //             '        "relayer"\n' +
+    //             '    ],\n' +
+    //             '    "description": "Built by the 0x core team \u2013 Matcha is a DEX aggregator built on top of 0x API which allows users to easily swap tokens and place limit orders.",\n' +
+    //             '    "id": "5067df8b-f9cd-4a34-aee1-38d607100145",\n' +
+    //             '    "logoUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/matcha.png",\n' +
+    //             '    "name": "Matcha",\n' +
+    //             '    "stats": {\n' +
+    //             '        "activeTraders": 808,\n' +
+    //             '        "activeTradersChange": 19.174041297935105,\n' +
+    //             '        "avgTradeSize": 60230.98896439627,\n' +
+    //             '        "avgTradeSizeChange": 55.88229155059747,\n' +
+    //             '        "tradeCount": {\n' +
+    //             '            "relayed": 73,\n' +
+    //             '            "total": 1207\n' +
+    //             '        },\n' +
+    //             '        "tradeCountChange": {\n' +
+    //             '            "relayed": 108.57142857142857,\n' +
+    //             '            "total": 20.33898305084746\n' +
+    //             '        },\n' +
+    //             '        "tradeVolume": {\n' +
+    //             '            "relayed": 10889677.034785688,\n' +
+    //             '            "total": 72698803.6800263\n' +
+    //             '        },\n' +
+    //             '        "tradeVolumeChange": {\n' +
+    //             '            "relayed": 5910.600207842618,\n' +
+    //             '            "total": 87.58716440834611\n' +
+    //             '        }\n' +
+    //             '    },\n' +
+    //             '    "urlSlug": "matcha",\n' +
+    //             '    "websiteUrl": "https://matcha.xyz"\n' +
+    //             '}'
+    //     },
+    //     "Get Apps": {
+    //         url: '/apps',
+    //         doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#apps',
+    //         description:  'Returns a paginated collection of active apps and their associated stats for the specified time period.',
+    //         params:{
+    //             'sortDirection' : {description: 'The direction in which to sort results Valid values are "asc" and "desc".Default value is "desc".', default: 'desc', possible: ['asc', 'desc']},
+    //             'sortBy' : {possible: ["activeTraders", "tradeCount" , "tradeVolume"], default:'tradeVolume', description: `The field by which to sort results. Valid values are: "activeTraders", "tradeCount" and "tradeVolume". Default value is "tradeVolume".`,  },
+    //             'limit' : {description: `The maximum number of apps to return per page. Default value is 20. Maximum value is 50.`, default: 20, type: 'number' },
+    //             'page' : {description: `The page of data to return. Default value is 1.`, default: 20, type: 'number' },
+    //             'statsPeriod' : {description: `The time period for which to return stats. Valid values are: "day", "week", "month", "year" and "all". Default value is "day"`, default: 'day', possible: ["day", "week", "month", "year" , "all"]  },
+    //         },
+    //         sample_response: '{\n' +
+    //             '  "apps": [\n' +
+    //             '    {\n' +
+    //             '      "categories": [\n' +
+    //             '        "relayer"\n' +
+    //             '      ],\n' +
+    //             '      "description": "Built by the 0x core team – 0x API makes accessing DEX liquidity easy through the use of smart order routing which aggregates liquidity from 0x Mesh, Kyber, Uniswap, and more.",\n' +
+    //             '      "id": "052b4862-2142-4532-bdc0-416814b0a5fe",\n' +
+    //             '      "logoUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/0x-api.png",\n' +
+    //             '      "name": "0x API",\n' +
+    //             '      "stats": {\n' +
+    //             '        "activeTraders": 4857,\n' +
+    //             '        "activeTradersChange": -16.099499049922265,\n' +
+    //             '        "tradeCount": {\n' +
+    //             '          "relayed": 7316,\n' +
+    //             '          "total": 7316\n' +
+    //             '        },\n' +
+    //             '        "tradeCountChange": {\n' +
+    //             '          "relayed": -14.900546702338024,\n' +
+    //             '          "total": -14.900546702338024\n' +
+    //             '        },\n' +
+    //             '        "tradeVolume": {\n' +
+    //             '          "relayed": 27118521.443833765,\n' +
+    //             '          "total": 27118521.443833765\n' +
+    //             '        },\n' +
+    //             '        "tradeVolumeChange": {\n' +
+    //             '          "relayed": 30.176737544737716,\n' +
+    //             '          "total": 30.176737544737716\n' +
+    //             '        }\n' +
+    //             '      },\n' +
+    //             '      "urlSlug": "0x-api",\n' +
+    //             '      "websiteUrl": "https://0x.org/api"\n' +
+    //             '    },\n' +
+    //             '    // ...\n' +
+    //             '  ],\n' +
+    //             '  "page": 1,\n' +
+    //             '  "pageCount": 1,\n' +
+    //             '  "limit": 20,\n' +
+    //             '  "total": 10\n' +
+    //             '}'
+    //     },
+    //     "Get Article": {
+    //         url: '/articles',
+    //         doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#apps',
+    //         description:  'Returns a paged collection of news articles matching the specified parameters. Articles are sorted from most recent to least recent.',
+    //         params:{
+    //             'source' : {description: `Slug of an article source to filter by. `, },
+    //             'page' : {description: `The page of data to return. Default is 1.`,default: 1, type: 'number'  },
+    //         },
+    //         sample_response: '{\n' +
+    //             '    "articles": [\n' +
+    //             '        {\n' +
+    //             '            "date": "2022-03-22T11:58:09.000Z",\n' +
+    //             '            "id": "6239b9e38ff0ad00126c4099",\n' +
+    //             '            "imageUrl": "https://dexkit.com/wp-content/webpc-passthru.php?src=https://dexkit.com/wp-content/uploads/SuperApp-Latest-Update.png&nocache=1",\n' +
+    //             '            "slug": "superapp-version-00619-is-here-with-a-lot-of-features",\n' +
+    //             '            "source": {\n' +
+    //             '                "imageUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/dex-kit.png",\n' +
+    //             '                "name": "DexKit Swap",\n' +
+    //             '                "slug": "dex-kit",\n' +
+    //             '                "url": "https://swap.dexkit.com"\n' +
+    //             '            },\n' +
+    //             '            "summary": "Thinking of those users who want to undertake in the world of decentralized finance but do not have the technical knowledge, DEXKIT developed technologies aimed at easy use and now with universal compatibility. Users can deploy these tools (the aggregator and the NFT custom marketplace) and start their decentralized projects in a simple way, in record time, without the need to hire professionals.",\n' +
+    //             '            "title": "SuperApp version 0.0.6.19 is here with a lot of features!",\n' +
+    //             '            "url": "https://dexkit.com/update-superapp-0-0-6-19/"\n' +
+    //             '        },\n' +
+    //             '        {\n' +
+    //             '            "date": "2022-03-21T15:02:19.000Z",\n' +
+    //             '            "id": "623896248ff0ad00126b4b09",\n' +
+    //             '            "imageUrl": "https://miro.medium.com/max/1024/0*1MmkXSFTm_D4DzRP",\n' +
+    //             '            "slug": "superfluid-collateral-for-squeeth-in-the-uniswap-pool",\n' +
+    //             '            "source": {\n' +
+    //             '                "imageUrl": "https://resources.0xtracker.com/logos/opyn.png",\n' +
+    //             '                "name": "Opyn",\n' +
+    //             '                "slug": "opyn",\n' +
+    //             '                "url": "https://opyn.co"\n' +
+    //             '            },\n' +
+    //             '            "summary": "Superfluid means you get to do more stuff with your collateral. In the squeeth ecosystem this is enabled by allowing Uniswap v3 LPs to be collateral for short squeeth. This means\u00a0that",\n' +
+    //             '            "title": "Superfluid collateral for squeeth in the Uniswap pool",\n' +
+    //             '            "url": "https://medium.com/opyn/superfluid-collateral-for-squeeth-in-the-uniswap-pool-3b0585bb94a0?source=rss----850b56baf5d0---4"\n' +
+    //             '        } \n' +
+    //             '    ] \n' +
+    //             '}'
+    //     },
+    //     "Get Protocols": {
+    //         url: '/protocols',
+    //         doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#protocols',
+    //         description:  'Returns a paginated collection of protocols matching the specified parameters.',
+    //         params:{
+    //             'sortBy' : {description: `The field by which to sort protocols.`, default: 'fillVolume', possible: ['fillCount', 'fillVolume'] },
+    //             'page' : {description: `The time period for which to return stats. Must be one of: day, week, month, year, all.Default value is day.`,default: 'day', possible: ['day', 'week', 'month', 'year', 'all']  },
+    //         },
+    //         sample_response: '{\n' +
+    //             '  "protocols": [\n' +
+    //             '    {\n' +
+    //             '      "stats": {\n' +
+    //             '        "fillCount": 2026,\n' +
+    //             '        "fillVolume": 1728911.7356433223,\n' +
+    //             '        "tradeCount": 1559,\n' +
+    //             '        "tradeVolume": 1285629.9583338788\n' +
+    //             '      },\n' +
+    //             '      "version": 2\n' +
+    //             '    },\n' +
+    //             '    {\n' +
+    //             '      "stats": {\n' +
+    //             '        "fillCount": 374,\n' +
+    //             '        "fillVolume": 585201.4918576538,\n' +
+    //             '        "tradeCount": 357,\n' +
+    //             '        "tradeVolume": 540775.9960855007\n' +
+    //             '      },\n' +
+    //             '      "version": 3\n' +
+    //             '    }\n' +
+    //             '  ],\n' +
+    //             '  "page": 1,\n' +
+    //             '  "pageCount": 1,\n' +
+    //             '  "limit": 20,\n' +
+    //             '  "total": 2\n' +
+    //             '}'
+    //     },
+    //     "Get Token": {
+    //         url: '/tokens/:address',
+    //         doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#token',
+    //         description:  'Returns the full details of a single token.',
+    //         params:{
+    //             'address' : {description: `Address of the token to fetch.`,replace_2dots: true, required: true },
+    //             'statsPeriod' : {description: `The time period for which to return stats. Valid values are: "day", "week", "month", "year" and "all". Default value is "day"`, default: 'day', possible: ["day", "week", "month", "year" , "all"]  },
+    //         },
+    //         sample_response: '{\n' +
+    //             '  "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
+    //             '  "circulatingSupply": null,\n' +
+    //             '  "imageUrl": "https://cdn.staticaly.com/gh/TrustWallet/tokens/master/tokens/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png",\n' +
+    //             '  "lastTrade": {\n' +
+    //             '    "date": "2020-04-16T19:01:36.000Z",\n' +
+    //             '    "id": "5e98ac33f3edba0548d57499"\n' +
+    //             '  },\n' +
+    //             '  "marketCap": 401979735.10782796,\n' +
+    //             '  "name": "Wrapped Ether",\n' +
+    //             '  "price": {\n' +
+    //             '    "change": 8.77204150486982,\n' +
+    //             '    "close": 170.87,\n' +
+    //             '    "high": 174.47853088378906,\n' +
+    //             '    "last": 170.87,\n' +
+    //             '    "low": 145.86898803710938,\n' +
+    //             '    "open": 157.09\n' +
+    //             '  },\n' +
+    //             '  "stats": {\n' +
+    //             '    "fillCount": 3403,\n' +
+    //             '    "fillVolume": {\n' +
+    //             '      "token": 29343.563185668743,\n' +
+    //             '      "USD": 4839232.989858636\n' +
+    //             '    },\n' +
+    //             '    "tradeCount": 3064,\n' +
+    //             '    "tradeVolume": {\n' +
+    //             '      "token": 25417.591251252252,\n' +
+    //             '      "USD": 4189388.872657468\n' +
+    //             '    }\n' +
+    //             '  },\n' +
+    //             '  "statsPeriod": "day",\n' +
+    //             '  "symbol": "WETH",\n' +
+    //             '  "totalSupply": 2352547.1709944867,\n' +
+    //             '  "type": "erc-20"\n' +
+    //             '}'
+    //     },
+    //     "Get Traders": {
+    //         url: '/traders',
+    //         doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#traders',
+    //         description:  'Returns a paginated collection of active traders and their associated stats for the specified time period. Traders are returned in order of most fill volume to least fill volume.',
+    //         params:{
+    //             'apps' : {description: `A comma-separated list of app IDs to filter the traders by. App IDs can be found by calling the apps endpoint.` },
+    //
+    //             'type' : {description: `The type of traders to return. Must be one of: maker, taker.` },
+    //             'excludeRelayers' : {description: `Whether to exclude relayer taker addresses from the results. Default is true.`, default: 'true', possible: ['true', 'false'] },
+    //             'limit' : {description: `The maximum number of traders to return per page. Default value is 20. Maximum value is 50.`, default: 20, type: 'number' },
+    //             'page' : {description: `The page of data to return. Default value is 1.` ,default: 1, type: 'number'},
+    //
+    //             'statsPeriodTo' : {description: `End of the time period for which to return stats. Should be used as an alternative to the statsPeriod parameter. Must be in the format YYYY-MM-DD.`,  },
+    //             'statsPeriodFrom' : {description: `Start of the time period for which to return stats. Should be used as an alternative to the statsPeriod parameter. Must be in the format YYYY-MM-DD.`,  },
+    //             'statsPeriod' : {description: `The time period for which to return stats. Valid values are: "day", "week", "month", "year" and "all". Default value is "day"`, default: 'day', possible: ["day", "week", "month", "year" , "all"]  },
+    //         },
+    //         sample_response: '{\n' +
+    //             '  "page": 1,\n' +
+    //             '  "pageCount": 6,\n' +
+    //             '  "limit": 20,\n' +
+    //             '  "total": 119,\n' +
+    //             '  "traders": [\n' +
+    //             '    {\n' +
+    //             '      "address": "0x41f8d14c9475444f30a80431c68cf24dc9a8369a",\n' +
+    //             '      "stats": {\n' +
+    //             '        "fillCount": {\n' +
+    //             '          "maker": 0,\n' +
+    //             '          "taker": 259,\n' +
+    //             '          "total": 259\n' +
+    //             '        },\n' +
+    //             '        "fillVolume": {\n' +
+    //             '          "maker": 0,\n' +
+    //             '          "taker": 496613.5857697289,\n' +
+    //             '          "total": 496613.5857697289\n' +
+    //             '        }\n' +
+    //             '      }\n' +
+    //             '    },\n' +
+    //             '    // ...\n' +
+    //             '  ]\n' +
+    //             '}'
+    //     },
+    //     "Get Trade": {
+    //         url: '/fills/:id',
+    //         doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#trade',
+    //         description:  'Returns the full details of a single trade.',
+    //         params:{
+    //             'id' : {description: `ID of the trade to fetch.`,replace_2dots: true, required: true },
+    //         },
+    //         sample_response: '{\n' +
+    //             '  "affiliate": null,\n' +
+    //             '  "apps": [\n' +
+    //             '    {\n' +
+    //             '      "id": "a5808078-d297-4fbd-a818-dccd8a5438ed",\n' +
+    //             '      "logoUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/star-bit.png",\n' +
+    //             '      "name": "STAR BIT",\n' +
+    //             '      "type": "relayer",\n' +
+    //             '      "urlSlug": "star-bit"\n' +
+    //             '    }\n' +
+    //             '  ],\n' +
+    //             '  "assets": [\n' +
+    //             '    {\n' +
+    //             '      "amount": "0.023595691875",\n' +
+    //             '      "bridge": null,\n' +
+    //             '      "price": {\n' +
+    //             '        "USD": 186.71999999999997\n' +
+    //             '      },\n' +
+    //             '      "tokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
+    //             '      "tokenImageUrl": "https://cdn.staticaly.com/gh/TrustWallet/tokens/master/tokens/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png",\n' +
+    //             '      "tokenSymbol": "WETH",\n' +
+    //             '      "tokenType": "Wrapped Ether",\n' +
+    //             '      "traderType": "maker",\n' +
+    //             '      "type": "erc-20"\n' +
+    //             '    },\n' +
+    //             '    {\n' +
+    //             '      "amount": "2041",\n' +
+    //             '      "bridge": null,\n' +
+    //             '      "price": {\n' +
+    //             '        "USD": 0.0021586416398334148\n' +
+    //             '      },\n' +
+    //             '      "tokenAddress": "0x503f9794d6a6bb0df8fbb19a2b3e2aeab35339ad",\n' +
+    //             '      "tokenImageUrl": "https://0xtracker.com/assets/logos/starbit.png",\n' +
+    //             '      "tokenSymbol": "SBT",\n' +
+    //             '      "tokenType": "Star Bit Token",\n' +
+    //             '      "traderType": "taker",\n' +
+    //             '      "type": "erc-20"\n' +
+    //             '    }\n' +
+    //             '  ],\n' +
+    //             '  "date": "2019-11-04T18:22:03.000Z",\n' +
+    //             '  "fees": [],\n' +
+    //             '  "feeRecipient": "0x8124071f810d533ff63de61d0c98db99eeb99d64",\n' +
+    //             '  "feeRecipientMetadata": {\n' +
+    //             '    "address": "0x8124071f810d533ff63de61d0c98db99eeb99d64",\n' +
+    //             '    "imageUrl": null,\n' +
+    //             '    "isContract": false,\n' +
+    //             '    "name": null\n' +
+    //             '  },\n' +
+    //             '  "id": "5dc06d68ab099b000489d3fe",\n' +
+    //             '  "makerAddress": "0xda912ecc847b3d98ca882e396e693e485deed518",\n' +
+    //             '  "maker": {\n' +
+    //             '    "address": "0xda912ecc847b3d98ca882e396e693e485deed518",\n' +
+    //             '    "imageUrl": null,\n' +
+    //             '    "isContract": false,\n' +
+    //             '    "name": null\n' +
+    //             '  },\n' +
+    //             '  "orderHash": "0x9165afe0f746839d2f390972b9a4473910143e6650be48477e7eb0196b607b02",\n' +
+    //             '  "protocolVersion": 2,\n' +
+    //             '  "relayer": {\n' +
+    //             '    "imageUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/star-bit.png",\n' +
+    //             '    "name": "STAR BIT",\n' +
+    //             '    "slug": "star-bit"\n' +
+    //             '  },\n' +
+    //             '  "senderAddress": "0x0681e844593a051e2882ec897ecd5444efe19ff2",\n' +
+    //             '  "sender": {\n' +
+    //             '    "address": "0x0681e844593a051e2882ec897ecd5444efe19ff2",\n' +
+    //             '    "imageUrl": "https://cdn.staticaly.com/gh/0xTracker/ethereum-address-metadata/master/images/starbit.png",\n' +
+    //             '    "isContract": false,\n' +
+    //             '    "name": "StarbitEx"\n' +
+    //             '  },\n' +
+    //             '  "status": "successful",\n' +
+    //             '  "takerAddress": "0x0681e844593a051e2882ec897ecd5444efe19ff2",\n' +
+    //             '  "taker": {\n' +
+    //             '    "address": "0x0681e844593a051e2882ec897ecd5444efe19ff2",\n' +
+    //             '    "imageUrl": "https://cdn.staticaly.com/gh/0xTracker/ethereum-address-metadata/master/images/starbit.png",\n' +
+    //             '    "isContract": false,\n' +
+    //             '    "name": "StarbitEx"\n' +
+    //             '  },\n' +
+    //             '  "transactionHash": "0xc99fc0a2c65da2d3b94a1cd979afb05317203354a2dc6999c0dde26c61fecd0e",\n' +
+    //             '  "transactionFrom": {\n' +
+    //             '    "address": "0x0681E844593A051E2882Ec897ecD5444eFE19FF2",\n' +
+    //             '    "imageUrl": null,\n' +
+    //             '    "isContract": null,\n' +
+    //             '    "name": null\n' +
+    //             '  },\n' +
+    //             '  "transactionTo": {\n' +
+    //             '    "address": "0x080bf510FCbF18b91105470639e9561022937712",\n' +
+    //             '    "imageUrl": null,\n' +
+    //             '    "isContract": null,\n' +
+    //             '    "name": null\n' +
+    //             '  },\n' +
+    //             '  "value": {\n' +
+    //             '    "USD": 4.4057875869\n' +
+    //             '  }\n' +
+    //             '}'
+    //     },
+    //     "Get Trades": {
+    //         url: '/fills',
+    //         doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#trades',
+    //         description:  'Returns a paginated collection of trades matching the specified parameters.',
+    //         params:{
+    //             'apps' : {description: `A comma-separated list of app IDs to filter the traders by. App IDs can be found by calling the apps endpoint.` },
+    //             'trader' : {description: `Trader address to filter by.` },
+    //             'sortDirection' : {description: 'The direction in which to sort results Valid values are "asc" and "desc".Default value is "desc".', default: 'desc', possible: ['asc', 'desc']},
+    //             'sortBy' : {possible: ["activeTraders", "tradeCount" , "tradeVolume"], default:'tradeVolume', description: `The field by which to sort results. Valid values are: "activeTraders", "tradeCount" and "tradeVolume". Default value is "tradeVolume".`,  },
+    //
+    //             'valueTo' : {description: 'Maximum trade value (in USD) to filter by.' },
+    //             'valueFrom' : {description: 'Minimum trade value (in USD) to filter by.' },
+    //             'protocolVersion' : {description: `Protocol version to filter by.`  },
+    //
+    //             'token' : {description: 'Address of a token to filter by.' },
+    //             'limit' : {description: `The maximum number of traders to return per page. Default value is 20. Maximum value is 50.`, default: 20, type: 'number' },
+    //             'page' : {description: `The page of data to return. Default value is 1.` ,default: 1, type: 'number'},
+    //         },
+    //         sample_response: '{\n' +
+    //             '    "fills": [\n' +
+    //             '        {\n' +
+    //             '          "apps": [\n' +
+    //             '            {\n' +
+    //             '              "id": "0a5d5f06-1626-4276-893f-42527e5a4147",\n' +
+    //             '              "logoUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/tokenlon.png",\n' +
+    //             '              "name": "Tokenlon",\n' +
+    //             '              "type": "relayer",\n' +
+    //             '              "urlSlug": "tokenlon"\n' +
+    //             '            }\n' +
+    //             '          ],\n' +
+    //             '          "assets": [\n' +
+    //             '            {\n' +
+    //             '              "amount": "367.191483",\n' +
+    //             '              "bridge": null,\n' +
+    //             '              "price": {\n' +
+    //             '                "USD": 0.9997\n' +
+    //             '              },\n' +
+    //             '              "tokenAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",\n' +
+    //             '              "tokenImageUrl": "https://cdn.staticaly.com/gh/TrustWallet/tokens/master/tokens/0xdac17f958d2ee523a2206206994597c13d831ec7.png",\n' +
+    //             '              "tokenSymbol": "USDT",\n' +
+    //             '              "tokenType": "Tether USD",\n' +
+    //             '              "traderType": "maker",\n' +
+    //             '              "type": "erc-20"\n' +
+    //             '            },\n' +
+    //             '            {\n' +
+    //             '              "amount": "0.5",\n' +
+    //             '              "bridge": null,\n' +
+    //             '              "price": {\n' +
+    //             '                "USD": 734.1626511102\n' +
+    //             '              },\n' +
+    //             '              "tokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",\n' +
+    //             '              "tokenImageUrl": "https://cdn.staticaly.com/gh/TrustWallet/tokens/master/tokens/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png",\n' +
+    //             '              "tokenSymbol": "WETH",\n' +
+    //             '              "tokenType": "Wrapped Ether",\n' +
+    //             '              "traderType": "taker",\n' +
+    //             '              "type": "erc-20"\n' +
+    //             '            }\n' +
+    //             '          ],\n' +
+    //             '          "date": "2020-12-30T14:47:21.000Z",\n' +
+    //             '          "feeRecipient": "0xd4dff17ccf7ca237e66270cc097ae60dabf8f85b",\n' +
+    //             '          "id": "5fec93c57f7a4022f922b139",\n' +
+    //             '          "makerAddress": "0x9c597c4da5e8f052182fe9b3d12af7e61e8d809b",\n' +
+    //             '          "protocolVersion": 2,\n' +
+    //             '          "relayer": {\n' +
+    //             '            "imageUrl": "https://cdn.staticaly.com/gh/0xTracker/0x-tracker-worker/master/src/attributions/logos/tokenlon.png",\n' +
+    //             '            "name": "Tokenlon",\n' +
+    //             '            "slug": "tokenlon"\n' +
+    //             '          },\n' +
+    //             '          "status": "successful",\n' +
+    //             '          "takerAddress": "0x8d90113a1e286a5ab3e496fbd1853f265e5913c6",\n' +
+    //             '          "value": {\n' +
+    //             '            "USD": 367.0813255551\n' +
+    //             '          }\n' +
+    //             '        },\n' +
+    //             '        // ...\n' +
+    //             '    ],\n' +
+    //             '    "limit": 50,\n' +
+    //             '    "page": 1,\n' +
+    //             '    "pageCount": 17221,\n' +
+    //             '    "total": 344408\n' +
+    //             '}'
+    //     },
+    //
+    //     "Get Network Stats": {
+    //         url: '/stats/networks',
+    //         doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#network-stats',
+    //         description:  'Returns network stats for the specified time period.',
+    //         params:{
+    //             'period' : {description: `Time period for which to return stats. Must be one of: day, week, month, year, all. Default value is day.`,default: 'day', possible: ['day', 'week', 'month', 'year', 'all'] },
+    //         },
+    //         sample_response: '{\n' +
+    //             '  "fillCount": 1215,\n' +
+    //             '  "fillVolume": 1424278.9861453106,\n' +
+    //             '  "protocolFees": {\n' +
+    //             '    "ETH": "221.8",\n' +
+    //             '    "USD": 33270\n' +
+    //             '  },\n' +
+    //             '  "tradeCount": 887,\n' +
+    //             '  "tradeVolume": 1408589.3708279347\n' +
+    //             '}'
+    //     },
+    //     "Get Trader Stats": {
+    //         url: '/stats/trader',
+    //         doc_url: 'https://docs.0xtracker.com/api-reference/endpoints#trader-stats',
+    //         description:  'Returns active trader stats for the specified time period.',
+    //         params:{
+    //             'period' : {description: `Time period for which to return stats. Must be one of: day, week, month, year, all. Default value is day.`,default: 'day', possible: ['day', 'week', 'month', 'year', 'all'] },
+    //         },
+    //         sample_response: '{\n' +
+    //             '  "makerCount": 68,\n' +
+    //             '  "takerCount": 53,\n' +
+    //             '  "traderCount": 116\n' +
+    //             '}'
+    //     },
+    // },
+    // Aave: {
+    //     "doc_url": 'https://aave-api-v2.aave.com/',
+    //     'provider_description': 'Aave is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers. Depositors provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralised (perpetually) or undercollateralised (one-block liquidity) fashion.',
+    //     "base_url": "https://aave-api-v2.aave.com",
+    //     "logo_url": "https://aave.com/favicon64.png",
+    //     "Get TVL": {
+    //         url: '/data/tvl',
+    //         doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_tvl',
+    //         description: 'Gets the combined TVL of all markets and staking contracts' ,
+    //         sample_response: '{\n' +
+    //             '  "totalTvl": {\n' +
+    //             '    "tvlInEth": "2694999.404135708",\n' +
+    //             '    "tvlInUsd": "3325280801.4152594"\n' +
+    //             '  },\n' +
+    //             '  "marketTvls": {\n' +
+    //             '    "v1": {\n' +
+    //             '      "tvlInEth": "2694999.404135708",\n' +
+    //             '      "tvlInUsd": "3325280801.4152594"\n' +
+    //             '    },\n' +
+    //             '    "v2": {\n' +
+    //             '      "tvlInEth": "2694999.404135708",\n' +
+    //             '      "tvlInUsd": "3325280801.4152594"\n' +
+    //             '    },\n' +
+    //             '    "staking": {\n' +
+    //             '      "stkAave": {\n' +
+    //             '        "tvlInEth": "2694999.404135708",\n' +
+    //             '        "tvlInUsd": "3325280801.4152594"\n' +
+    //             '      },\n' +
+    //             '      "stkABPT": {\n' +
+    //             '        "tvlInEth": "2694999.404135708",\n' +
+    //             '        "tvlInUsd": "3325280801.4152594"\n' +
+    //             '      }\n' +
+    //             '    },\n' +
+    //             '    "updatedAt": "2016-08-29T09:12:33.001Z",\n' +
+    //             '    "createdAt": "2016-08-29T09:12:33.001Z"\n' +
+    //             '  }\n' +
+    //             '}'
+    //     },
+    //     "Get Daily Volume 24h": {
+    //         url: '/data/daily-volume-24-hours',
+    //         doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_daily_volume_24_hours',
+    //         description: 'Gets the combined volume of the protocol in the last 24 hours window' ,
+    //         sample_response: '{\n' +
+    //             '  "totalVolumeInUsd": 2537758161.0711317,\n' +
+    //             '  "totalVolumeInEth": 1.4578956086436396e+24,\n' +
+    //             '  "totalBorrowUSD": 93708825.01188761,\n' +
+    //             '  "totalBorrowETH": 5.383400458392099e+22,\n' +
+    //             '  "totalRepayETH": 4.5639311177594584e+22,\n' +
+    //             '  "totalRepayUSD": 79444326.27406068,\n' +
+    //             '  "totalDepositETH": 6.926962774121884e+23,\n' +
+    //             '  "totalDepositUSD": 1205776065.6689548,\n' +
+    //             '  "totalWithdrawalUSD": 1158828944.1162288,\n' +
+    //             '  "totalWithdrawalETH": 6.657260154699355e+23,\n' +
+    //             '  "totalStakedETH": 6.926962774121884e+23,\n' +
+    //             '  "totalStakedUSD": 1205776065.6689548,\n' +
+    //             '  "totalRedeemedUSD": 1158828944.1162288,\n' +
+    //             '  "totalRedeemedETH": 6.657260154699355e+23,\n' +
+    //             '  "reserves": {\n' +
+    //             '    "v1": [\n' +
+    //             '      {\n' +
+    //             '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '        "aToken": "0x4da9b813057d04baef4e5800e36083717b4a0341",\n' +
+    //             '        "asset": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '        "pool": "0x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '        "symbol": "TUSD",\n' +
+    //             '        "decimals": 18,\n' +
+    //             '        "priceInEth": "573034943849483",\n' +
+    //             '        "borrow": 1031806.6110582352,\n' +
+    //             '        "deposit": 0,\n' +
+    //             '        "repay": 1201747.9494428635,\n' +
+    //             '        "withdrawal": 1000000\n' +
+    //             '      }\n' +
+    //             '    ],\n' +
+    //             '    "v2": [\n' +
+    //             '      {\n' +
+    //             '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '        "aToken": "0x4da9b813057d04baef4e5800e36083717b4a0341",\n' +
+    //             '        "asset": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '        "pool": "0x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '        "symbol": "TUSD",\n' +
+    //             '        "decimals": 18,\n' +
+    //             '        "priceInEth": "573034943849483",\n' +
+    //             '        "borrow": 1031806.6110582352,\n' +
+    //             '        "deposit": 0,\n' +
+    //             '        "repay": 1201747.9494428635,\n' +
+    //             '        "withdrawal": 1000000\n' +
+    //             '      }\n' +
+    //             '    ],\n' +
+    //             '    "stk": [\n' +
+    //             '      {\n' +
+    //             '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '        "asset": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '        "symbol": "TUSD",\n' +
+    //             '        "decimals": 18,\n' +
+    //             '        "priceInEth": "573034943849483",\n' +
+    //             '        "stake": 1031806.6110582352,\n' +
+    //             '        "redeem": 1031806.6110582352\n' +
+    //             '      }\n' +
+    //             '    ]\n' +
+    //             '  }\n' +
+    //             '}'
+    //     },
+    //     "Get Liquidity": {
+    //         url: '/data/liquidity/v1',
+    //         doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_liquidity_v1',
+    //         description: 'Returns overall protocol liquidity at a certain date' ,
+    //         params: {
+    //             poolId: {description: 'The id of the Aave Lending Pool Addresses Provider (e.g. 0x24a42fd28c976a61d\nf5d00d0599c34c4f90748c8)', required: true},
+    //             date: {description: 'The date for where we want to get the data from (e.g. 01-01-2020)'}
+    //         },
+    //         sample_response: '[\n' +
+    //             '  {\n' +
+    //             '    "availableLiquidity": "942194.519059401080866728",\n' +
+    //             '    "averageStableRate": "100050758739420732058977873",\n' +
+    //             '    "baseLTVasCollateral": "0.75",\n' +
+    //             '    "baseVariableBorrowRate": "0",\n' +
+    //             '    "borrowingEnabled": true,\n' +
+    //             '    "decimals": 18,\n' +
+    //             '    "id": "0x0000000000085d4780b73119b644ae5ecd22b3760xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
+    //             '    "liquidityIndex": "1.01825210810387712252",\n' +
+    //             '    "liquidityRate": "0.10455997873609331382",\n' +
+    //             '    "name": "TrueUSD",\n' +
+    //             '    "optimalUtilisationRate": "0.8",\n' +
+    //             '    "pool": "0xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
+    //             '    "price": {\n' +
+    //             '      "id": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '      "priceInEth": "0.00057794"\n' +
+    //             '    },\n' +
+    //             '    "reserveFactor": "0.1",\n' +
+    //             '    "reserveInterestRateStrategy": "0x0ddec679166c367ae45036c8b2c169c5fb2dcee1",\n' +
+    //             '    "reserveLiquidationBonus": "0.05",\n' +
+    //             '      "timestamp": 1612997034,\n' +
+    //             '      "totalLiquidity": "6248213120765942920753579",\n' +
+    //             '      "utilizationRate": "0.84920576",\n' +
+    //             '      "variableBorrowIndex": "1059494494389873906724270151",\n' +
+    //             '      "variableBorrowRate": "0.22375297880588482699"\n' +
+    //             '    }\n' +
+    //             '  }\n' +
+    //             ']'
+    //     },
+    //     "Get Liquidity V2": {
+    //         url: '/data/liquidity/v2',
+    //         doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_liquidity_v2',
+    //         description: 'Returns overall protocol liquidity at a certain date' ,
+    //         params: {
+    //             poolId: {description: 'The id of the Aave Lending Pool Addresses Provider (e.g. 0x24a42fd28c976a61d\nf5d00d0599c34c4f90748c8)', required: true},
+    //             date: {description: 'The date for where we want to get the data from (e.g. 01-01-2020)'}
+    //         },
+    //         sample_response: '[\n' +
+    //             '  {\n' +
+    //             '    "availableLiquidity": "942194.519059401080866728",\n' +
+    //             '    "averageStableRate": "100050758739420732058977873",\n' +
+    //             '    "baseLTVasCollateral": "0.75",\n' +
+    //             '    "baseVariableBorrowRate": "0",\n' +
+    //             '    "borrowingEnabled": true,\n' +
+    //             '    "decimals": 18,\n' +
+    //             '    "id": "0x0000000000085d4780b73119b644ae5ecd22b3760xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
+    //             '    "liquidityIndex": "1.01825210810387712252",\n' +
+    //             '    "liquidityRate": "0.10455997873609331382",\n' +
+    //             '    "name": "TrueUSD",\n' +
+    //             '    "optimalUtilisationRate": "0.8",\n' +
+    //             '    "pool": "0xb53c1a33016b2dc2ff3653530bff1848a515c8c5",\n' +
+    //             '    "price": {\n' +
+    //             '      "id": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '      "priceInEth": "0.00057794"\n' +
+    //             '    },\n' +
+    //             '    "reserveFactor": "0.1",\n' +
+    //             '    "reserveInterestRateStrategy": "0x0ddec679166c367ae45036c8b2c169c5fb2dcee1",\n' +
+    //             '    "reserveLiquidationBonus": "0.05",\n' +
+    //             '      "timestamp": 1612997034,\n' +
+    //             '      "totalLiquidity": "6248213120765942920753579",\n' +
+    //             '      "utilizationRate": "0.84920576",\n' +
+    //             '      "variableBorrowIndex": "1059494494389873906724270151",\n' +
+    //             '      "variableBorrowRate": "0.22375297880588482699"\n' +
+    //             '    }\n' +
+    //             '  }\n' +
+    //             ']'
+    //     },
+    //     "Get Staking Pools": {
+    //         url: '/data/pools',
+    //         doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_pools',
+    //         description: 'Returns staking pool(stkAAVE, stkABPT) stats' ,
+    //         sample_response: '[\n' +
+    //             '  {\n' +
+    //             '    "liquidity": {\n' +
+    //             '      "usd": 78179450.32030025,\n' +
+    //             '      "eth": 44301.64683831359,\n' +
+    //             '      "native": 163287843.2696208\n' +
+    //             '    },\n' +
+    //             '    "price": {\n' +
+    //             '      "eth": 0.000271310135226434,\n' +
+    //             '      "usd": 0.4787830419880699\n' +
+    //             '    },\n' +
+    //             '    "address": "0xa1116930326D21fB917d5A27F1E9943A9595fb47",\n' +
+    //             '    "name": "Staked Aave Balance Pool Token",\n' +
+    //             '    "symbol": "stkABPT",\n' +
+    //             '    "apy": "5.52",\n' +
+    //             '    "updatedAt": "2021-02-12T15:19:20.571Z"\n' +
+    //             '  }\n' +
+    //             ']'
+    //     },
+    //     "Get Governance Leaderboard": {
+    //         url: '/data/governance-leaderboard',
+    //         doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_governance_leaderboard',
+    //         description: 'Get top governance participants. By calling this endpoint you will specify the power type in {\'vote\', \'proposition\'} and will receive the top users ranked by voting or proposition power' ,
+    //         params: {
+    //             power: {description: 'The type of power to rank users by', required: true, possible: ['vote', 'proposition']},
+    //             first: {description: 'Number of users to return', type: 'number'},
+    //             min: {description: 'Minimum number of votes or proposals a user must have participated in', type: 'number'}
+    //         },
+    //         sample_response: '[\n' +
+    //             '  {\n' +
+    //             '    "address": "0x0000000000000000000000000000000000000000",\n' +
+    //             '    "votingPower": 120.45,\n' +
+    //             '    "isVerified": true,\n' +
+    //             '    "avatar": "https://pbs.twimg.com/profile_images/1362172699192090629/JdD_IZSe_normal.jpg",\n' +
+    //             '    "name": "John Appleseed",\n' +
+    //             '    "handle": "jack",\n' +
+    //             '    "propositionPower": 12.7,\n' +
+    //             '    "votingWeight": 0.5,\n' +
+    //             '    "propositionWeight": 0.2,\n' +
+    //             '    "votingHistory": [\n' +
+    //             '      {\n' +
+    //             '        "id": "0x0000000000000000000000000000000000000000",\n' +
+    //             '        "proposal": {\n' +
+    //             '          "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '          "title": "Extend Aave Liquidity Incentives",\n' +
+    //             '          "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8"\n' +
+    //             '        },\n' +
+    //             '        "votingPower": 542.34,\n' +
+    //             '        "support": true,\n' +
+    //             '        "timestamp": 1590866770\n' +
+    //             '      }\n' +
+    //             '    ],\n' +
+    //             '    "proposalHistory": [\n' +
+    //             '      {\n' +
+    //             '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '        "state": "executed",\n' +
+    //             '        "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '        "aipNumber": 14,\n' +
+    //             '        "title": "Upgrade Aave V1 repayment for migration tool"\n' +
+    //             '      }\n' +
+    //             '    ],\n' +
+    //             '    "lastUpdateTimestamp": 1611158580,\n' +
+    //             '    "aaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '    "aavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '    "stkAaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '    "stkAavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '    "aaveBalance": 4,\n' +
+    //             '    "stkAaveBalance": 0.1\n' +
+    //             '  }\n' +
+    //             ']'
+    //     },
+    //     "Get Top Voters": {
+    //         url: '/data/proposa-top-voters',
+    //         doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_proposal_top_voters',
+    //         description: 'Get top voters for a given proposal. By calling this endpoint you will specify the proposal id and will receive the the top voters both for and against. Return format is [[forTopVoters],[againstTopVoters]]' ,
+    //         params: {
+    //             proposal: {description: 'Proposal id', required: true,  },
+    //         },
+    //         sample_response: '[\n' +
+    //             '  [\n' +
+    //             '    [\n' +
+    //             '      {\n' +
+    //             '        "address": "0x0000000000000000000000000000000000000000",\n' +
+    //             '        "votingPower": 120.45,\n' +
+    //             '        "isVerified": true,\n' +
+    //             '        "avatar": "https://pbs.twimg.com/profile_images/1362172699192090629/JdD_IZSe_normal.jpg",\n' +
+    //             '        "name": "John Appleseed",\n' +
+    //             '        "handle": "jack",\n' +
+    //             '        "propositionPower": 12.7,\n' +
+    //             '        "votingWeight": 0.5,\n' +
+    //             '        "propositionWeight": 0.2,\n' +
+    //             '        "votingHistory": [\n' +
+    //             '          {\n' +
+    //             '            "id": "0x0000000000000000000000000000000000000000",\n' +
+    //             '            "proposal": {\n' +
+    //             '              "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '              "title": "Extend Aave Liquidity Incentives",\n' +
+    //             '              "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8"\n' +
+    //             '            },\n' +
+    //             '            "votingPower": 542.34,\n' +
+    //             '            "support": true,\n' +
+    //             '            "timestamp": 1590866770\n' +
+    //             '          }\n' +
+    //             '        ],\n' +
+    //             '        "proposalHistory": [\n' +
+    //             '          {\n' +
+    //             '            "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '            "state": "executed",\n' +
+    //             '            "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '            "aipNumber": 14,\n' +
+    //             '            "title": "Upgrade Aave V1 repayment for migration tool"\n' +
+    //             '          }\n' +
+    //             '        ],\n' +
+    //             '        "lastUpdateTimestamp": 1611158580,\n' +
+    //             '        "aaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '        "aavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '        "stkAaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '        "stkAavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '        "aaveBalance": 4,\n' +
+    //             '        "stkAaveBalance": 0.1\n' +
+    //             '      }\n' +
+    //             '    ]\n' +
+    //             '  ]\n' +
+    //             ']'
+    //     },
+    //     "Governance User Search": {
+    //         url: '/data/governance-user-search',
+    //         doc_url: 'https://aave-api-v2.aave.com/#/data/get_data_governance_user_search',
+    //         description: 'Search for individual Aave governance user. By calling this endpoint you will specify the address and will receive governance info for a given user' ,
+    //         params: {
+    //             address: {description: 'user wallet address', required: true,  },
+    //         },
+    //         sample_response: '{\n' +
+    //             '  "address": "0x0000000000000000000000000000000000000000",\n' +
+    //             '  "votingPower": 120.45,\n' +
+    //             '  "isVerified": true,\n' +
+    //             '  "avatar": "https://pbs.twimg.com/profile_images/1362172699192090629/JdD_IZSe_normal.jpg",\n' +
+    //             '  "name": "John Appleseed",\n' +
+    //             '  "handle": "jack",\n' +
+    //             '  "propositionPower": 12.7,\n' +
+    //             '  "votingWeight": 0.5,\n' +
+    //             '  "propositionWeight": 0.2,\n' +
+    //             '  "votingHistory": [\n' +
+    //             '    {\n' +
+    //             '      "id": "0x0000000000000000000000000000000000000000",\n' +
+    //             '      "proposal": {\n' +
+    //             '        "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '        "title": "Extend Aave Liquidity Incentives",\n' +
+    //             '        "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8"\n' +
+    //             '      },\n' +
+    //             '      "votingPower": 542.34,\n' +
+    //             '      "support": true,\n' +
+    //             '      "timestamp": 1590866770\n' +
+    //             '    }\n' +
+    //             '  ],\n' +
+    //             '  "proposalHistory": [\n' +
+    //             '    {\n' +
+    //             '      "id": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '      "state": "executed",\n' +
+    //             '      "ipfsHash": "0x0000000000085d4780b73119b644ae5ecd22b3760x24a42fd28c976a61df5d00d0599c34c4f90748c8",\n' +
+    //             '      "aipNumber": 14,\n' +
+    //             '      "title": "Upgrade Aave V1 repayment for migration tool"\n' +
+    //             '    }\n' +
+    //             '  ],\n' +
+    //             '  "lastUpdateTimestamp": 1611158580,\n' +
+    //             '  "aaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '  "aavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '  "stkAaveVotingDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '  "stkAavePropositionDelegate": "0x0000000000085d4780b73119b644ae5ecd22b376",\n' +
+    //             '  "aaveBalance": 4,\n' +
+    //             '  "stkAaveBalance": 0.1,\n' +
+    //             '  "usersRepresented": [\n' +
+    //             '    null\n' +
+    //             '  ]\n' +
+    //             '}'
+    //     },
+    //
+    // },
 }
 
 
