@@ -986,8 +986,9 @@ input[type="date"] {
     vertical-align: center;
     text-align: center;
     font-size: 1.5rem;
-    color: #0e8e32;
+    /*color: #0e8e32;*/
     display: inline-block;
+    font-weight: bold;
     /*height: 2rem;*/
 }
 .instructions_download{
