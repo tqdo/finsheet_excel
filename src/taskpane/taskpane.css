@@ -1042,4 +1042,12 @@ input[type="date"] {
     z-index: 70000;
     background: white;
 }
+.icon_view_doc_function{
+    float: right;
+    margin-right: 25px;
+    color: black;
+}
+.icon_view_doc_function:hover{
+    color: #0e8e32
+}
 /*End report problem*/

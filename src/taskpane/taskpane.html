@@ -540,7 +540,7 @@
                     }
                     var show_desc = this.state.endpoint_params[param].show_desc && this.state.endpoint_params[param].description
                     params.push(<div className={'container'} style={{  paddingTop: '7px', paddingBottom: '7px'}}>
-                        <div className={'row flex-nowrap'}>
+                        <div className={'row '}>
                             <div className={'col-1 pointer'} onClick={this.tickBox} id={'box_' + param} style={{fontSize: '1.3rem'}} >{this.state.endpoint_params[param].selected ?
                                 <i className="far fa-check-square" style={{color: '#0e8e32'}}/> : <i className="far fa-square" style={is_required ? {color: '#ff6669'}:{}}/>}</div>
                             <div className={'col-5 param_title'} style={is_required ? {} : {paddingTop: '3px'}} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} id={'h_' + param}>

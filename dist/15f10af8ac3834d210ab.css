@@ -986,8 +986,9 @@ input[type="date"] {
     vertical-align: center;
     text-align: center;
     font-size: 1.5rem;
-    color: #0e8e32;
+    /*color: #0e8e32;*/
     display: inline-block;
+    font-weight: bold;
     /*height: 2rem;*/
 }
 .instructions_download{
@@ -1040,5 +1041,13 @@ input[type="date"] {
     color: black;
     z-index: 70000;
     background: white;
+}
+.icon_view_doc_function{
+    float: right;
+    margin-right: 25px;
+    color: black;
+}
+.icon_view_doc_function:hover{
+    color: #0e8e32
 }
 /*End report problem*/
