@@ -473,7 +473,7 @@ function Login() {
     login_warning.text("");
     $("#email").val("");
     $("#password").val("");
-    fetch(link + "/excel/login?email=" + email + "&password=" + password).then(function(response) {
+    fetch(link + "/excel/login?email=" + encodeURIComponent(email) + '&password='+encodeURIComponent(password)).then(function(response) {
       if (response.ok) {
         return response.json().then(function(json) {
           // console.log(json);
