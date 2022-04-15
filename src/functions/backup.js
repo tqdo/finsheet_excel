@@ -37,10 +37,10 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
         limit = undefined;
     }
     if (typeof limit !== "number" && typeof limit !== "undefined") {
-        return [["Limit has to be a positive interger"]];
+        return [["Limit has to be a positive integer"]];
     }
     if (typeof limit !== "undefined" && limit <= 0) {
-        return [["Limit has to be a positive interger"]];
+        return [["Limit has to be a positive integer"]];
     }
     ////// Check if frequency is valid
     var id = metric in map_excel_name_to_id ? map_excel_name_to_id[metric] : metric;

@@ -44,10 +44,10 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
     limit = undefined;
   }
   if (typeof limit !== "number" && typeof limit !== "undefined") {
-    return [["Limit has to be a positive interger"]];
+    return [["Limit has to be a positive integer"]];
   }
   if (typeof limit !== "undefined" && limit <= 0) {
-    return [["Limit has to be a positive interger"]];
+    return [["Limit has to be a positive integer"]];
   }
   ////// Check if frequency is valid
   var id = metric in map_excel_name_to_id ? map_excel_name_to_id[metric] : metric;
@@ -555,6 +555,78 @@ async function FS_MutualFundProfile(symbol, ){
   return data_to_return
 }
 
+async function holdingsHelper(symbol, skip, which){
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if(!symbol){return [["Symbol cannot be empty"]]}
+  if(typeof symbol !== 'string'){return [['Symbol has to be a string']]}
+  symbol = symbol.toUpperCase()
+
+  if(typeof skip !== 'number' && typeof skip !== 'undefined' ){return [['skip has to be an integer']]}
+  if(skip == undefined){skip = 0}
+
+  var prepare = {symbol: symbol, skip: skip.toString(), api_key: api_key, which: which,}
+  const url = link + "/excel/asset_holdings?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+  }
+
+  var json = await response.json()
+  // Logger.log(json)
+  if('message' in json){return json.message}
+
+  try {
+    var data_to_return = [['Date', json.data.atDate, '','','',''], ['Symbol', 'CUSIP', 'ISIN', 'Name', 'Percent', 'Share', 'Value']]
+    var data= json.data.holdings
+    for(var dic of data){
+      var arr = []
+      for(var key of map_name_holdings){
+        if(dic[key] !== null && dic[key] !== undefined){arr.push(dic[key])}else{arr.push('')}
+      }
+      data_to_return.push(arr)
+    }
+    return data_to_return.length > 2 ? data_to_return : []
+  } catch(e){
+    return [['No data']]
+  }
+}
+var map_name_holdings = {
+  "symbol": "Symbol",
+  "cusip": 'CUSIP',
+  "isin": "ISIN",
+  "name": 'Name',
+  "percent": 'Percent',
+  "share": "Share",
+  "value": "Value",
+}
+/**
+ * @customfunction FS_ETFHOLDINGS FS_EtfHoldings
+ * @param symbol {string} ETF symbol.
+ * @param [skip] {number} Skip first n results.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_EtfHoldings(symbol, skip){
+  return holdingsHelper(symbol, skip, 'etf_holdings')
+}
+/**
+ * @customfunction FS_MUTUALFUNDHOLDINGS FS_MutualFundHoldings
+ * @param symbol {string} Mutual Fund symbol.
+ * @param [skip] {number} Skip first n results.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_MutualFundHoldings(symbol, skip){
+  return holdingsHelper(symbol, skip, 'mutual_fund_holdings')
+}
 
 /**
  * @customfunction FS_LATEST FS_Latest
