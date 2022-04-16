@@ -562,8 +562,8 @@ async function holdingsHelper(symbol, skip, which){
   if(typeof symbol !== 'string'){return [['Symbol has to be a string']]}
   symbol = symbol.toUpperCase()
 
-  if(typeof skip !== 'number' && typeof skip !== 'undefined' ){return [['skip has to be an integer']]}
-  if(skip == undefined){skip = 0}
+  if(skip == undefined || skip === ''){skip = 0}
+  if(typeof skip !== 'number' && typeof skip !== 'undefined' ){return 'skip has to be an integer'}
 
   var prepare = {symbol: symbol, skip: skip.toString(), api_key: api_key, which: which,}
   const url = link + "/excel/asset_holdings?" + new URLSearchParams(prepare).toString()
@@ -588,7 +588,7 @@ async function holdingsHelper(symbol, skip, which){
     var data= json.data.holdings
     for(var dic of data){
       var arr = []
-      for(var key of map_name_holdings){
+      for(var key of Object.keys(map_name_holdings)){
         if(dic[key] !== null && dic[key] !== undefined){arr.push(dic[key])}else{arr.push('')}
       }
       data_to_return.push(arr)
