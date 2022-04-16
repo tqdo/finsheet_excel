@@ -13,6 +13,8 @@ mkdir wef
 cd wef
 open .
 (delete Production manifest if exists)
+copy the file manifest.xml into wef folder (manifest runs files in localhost:3000)
+CLose Excel
 npm run dev-server    // Run this in Golang
 Run in command line: defaults write com.microsoft.Excel OfficeWebAddinDeveloperExtras -bool true
 Open Excel

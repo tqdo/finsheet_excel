@@ -584,7 +584,7 @@ async function holdingsHelper(symbol, skip, which){
   if('message' in json){return json.message}
 
   try {
-    var data_to_return = [['Date', json.data.atDate, '','','',''], ['Symbol', 'CUSIP', 'ISIN', 'Name', 'Percent', 'Share', 'Value']]
+    var data_to_return = [['Date', json.data.atDate, '','','','', ''], ['Symbol', 'CUSIP', 'ISIN', 'Name', 'Percent', 'Share', 'Value']]
     var data= json.data.holdings
     for(var dic of data){
       var arr = []
