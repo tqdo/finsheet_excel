@@ -373,7 +373,7 @@ function checkCoupon(cookie, ){
             </div>
                 `
       }
-      else if (!myJson.is_paid_user && myJson.is_registered ) {      // This is the case for free user but not qualified for coupon (just register or have used coupon)
+      else if (!myJson.is_paid_user && myJson.is_registered && !myJson.free_has_all_access) {      // This is the case for free user but not qualified for coupon (just register or have used coupon)
         document.getElementById('header_coupon').innerHTML = `
                           <div class="alert alert-dismissible" role="alert"
               style="width: 100%; background-color: #222222; padding: 8px 14px 8px 5px;position: fixed; bottom: 0; margin-left: -8px;
