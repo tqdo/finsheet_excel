@@ -356,7 +356,7 @@ function checkCoupon(cookie, ){
     headers: {"Content-Type": "text/plain"},
   }).then(function (res) {
     res.json().then(function (myJson) {
-      // console.log(myJson)
+      console.log(myJson)
       window.show_coupon = 1-parseInt(myJson["have_used_coupon"]) > 0 && !myJson.is_paid_user
           && myJson["create_at"] && Math.abs((new Date()) - (new Date(myJson["create_at"].slice(0,10)))) / 36e5 > 72
       if(window.show_coupon ){
@@ -367,12 +367,32 @@ function checkCoupon(cookie, ){
                         font-size: 14px;
                         margin-bottom: 0;">
                         <span>
-                        Get your first month 30% off for any plan.  <a
+                        Get your first month 30% off for any plan.  <a onclick="goToAccountPage()"
                                 href="https://finsheet.io/account" style="color: white;cursor: pointer"><b><u style="color: #0e8e32">Redeem offer!</u></b></a>
                         </span>
             </div>
                 `
       }
+      else if (!myJson.is_paid_user && myJson.is_registered ) {      // This is the case for free user but not qualified for coupon (just register or have used coupon)
+        document.getElementById('header_coupon').innerHTML = `
+                          <div class="alert alert-dismissible" role="alert"
+              style="width: 100%; background-color: #222222; padding: 8px 14px 8px 5px;position: fixed; bottom: 0; margin-left: -8px;
+                      color: white;
+                      font-size: 14px;
+                      margin-bottom: 0;">
+                      <span>
+                      Your Free plan has a rate limit of 500/day and other limitations. <a onclick="goToAccountPage()"
+                              href="https://finsheet.io/account" style="color: white"><b><u style="color: #0e8e32">Upgrade</u></b></a> for unlimited usages.
+                      </span>
+          </div>
+              `
+      }
+
+      // Populate the account page
+      $("#account_name").text(myJson.name)
+      $("#account_email").text(myJson.email)
+      $("#account_plan").text(myJson.plan.length > 0 ? capFirst(myJson.plan[0].name) : 'Free')
+
     })
   })
 }
@@ -502,6 +522,50 @@ function Login() {
   }
 }
 
+function Register(){
+  console.log(1)
+  var name = $('#register_name').val()
+  var email = $('#register_email').val()
+  var password = $('#register_password').val()
+  var login_warning = $('#register_warning')
+  if(!email){console.log(2);login_warning.text("Email cannot be empty")}
+  else if (!email.includes('@')){login_warning.text("Invalid email")}
+  else if (!password){console.log(1);login_warning.text("Password cannot be empty") ;     console.log(login_warning.text())
+  }
+  else {
+    console.log(3)
+    $("#register_warning").css({ display: "none" });
+    $(".register_loader").css({ display: "block" });
+    login_warning.text('')
+    $('#register_name').val('')
+    $('#register_email').val('')
+    $('#register_password').val('')
+    fetch(link + '/excel/register?email=' + encodeURIComponent(email) + '&password='+encodeURIComponent(password) + '&name=' + encodeURIComponent(name)).then(function(response){
+      if (response.ok) {return response.json().then(function (json) {
+        console.log(json);
+        if(json.msg){
+          $(".register_loader").css({ display: "none" });
+          $("#register_warning").css({ display: "block" });
+          login_warning.text(json.msg);
+        } else {
+          // Successful register
+          addCookie("finsheet_api_key", json.token, 1000);
+          $(".register_loader").css({ display: "none" });
+          $("#register_warning").css({ display: "block" });
+          $("#if_have_api_key").css({ display: "flex" });
+          $("#register").css({ display: "none" });
+          $("#sign_out_button").css({ display: "flex" });
+          $("#header_login").css({ display: "none" });
+
+          checkCoupon(json.token)
+          window.cookie = json.token
+          setTimeout(() => {$('#functions_dropdown_wrap').addClass('left_bar_different_green')}, 200)
+          // getDataFromGS()
+        }
+      })} else {window.pushNoti("Network Error", 3000, "error")}
+    })
+  }
+}
 
 function toggleLogoutDropdown() {
   var div = $("#logout_dropdown");
@@ -516,8 +580,14 @@ function toggleLogoutDropdown() {
 
 
 
-function showApiInputDiv() {
-  $("#api_key_input_div").css({ display: "flex" });
+function showApiInputDiv(which = 'login') {
+  if(which === 'login'){
+    $("#api_key_input_div").css({ display: "flex" });
+    $("#register").css({ display: "none" });
+  } else if (which === 'register'){
+    $("#api_key_input_div").css({ display: "none" });
+    $("#register").css({ display: "flex" });
+  }
   $("#if_have_api_key").css({ display: "none" });
   $("#logout_dropdown").css({ display: "none" });
   eraseCookie("finsheet_api_key");
@@ -764,7 +834,7 @@ function onBlurNewSymbol() {
 function clickNavigate(which){
   var all_components = ['symbols', 'metrics', 'etf', 'mutual_fund', 'equity_metrics', 'equity_full_financials', 'equity_candles', 'forex_candles', 'forex_all_rates',
                 'crypto_candles', 'crypto_profile', 'etf_candles', 'etf_profile', 'streaming', 'mutual_fund_candles', 'mutual_fund_profile', 'latest',
-    'pattern_recognition', 'support_resistance', 'aggregate_indicators', 'technical_indicators',     'console']
+    'pattern_recognition', 'support_resistance', 'aggregate_indicators', 'technical_indicators',     'console', 'account']
   for(var name of all_components){
     if(which == name){
       $("#" + which).css({ display: "block" });
@@ -781,6 +851,10 @@ function clickNavigate(which){
   } else if (which === 'console'){
     makeDifferentGreen('console_left_bar')
     $('#header_coupon').addClass('display_none')
+  } else if (which === 'account'){
+    // console.log('which', which)
+    makeDifferentGreen('sign_out_button')
+    $('#header_coupon').removeClass('display_none')
   } else {
     makeDifferentGreen('functions_dropdown_wrap')
     $('#header_coupon').removeClass('display_none')
@@ -1677,7 +1751,7 @@ function clickExampleFormula(){
   }
 }
 
-var possible_different_green_id = {search_dropdown_wrap: 1, functions_dropdown_wrap:1, console_left_bar: 1}
+var possible_different_green_id = {search_dropdown_wrap: 1, functions_dropdown_wrap:1, console_left_bar: 1, sign_out_button: 1}
 function makeDifferentGreen(which){
   for(var w of Object.keys(possible_different_green_id)){
     if(w === which){
@@ -1971,6 +2045,13 @@ function toggleChat(){
   } else {
     window.Tawk_API.hideWidget()
   }
+}
+
+function goToAccountPage(e){
+  e.preventDefault()
+  // window.open('https://finsheet.io/account')
+  window.open('https://finsheet.io/account', '_blank').focus();
+
 }
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});

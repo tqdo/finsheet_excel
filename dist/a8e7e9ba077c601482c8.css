@@ -1050,4 +1050,24 @@ input[type="date"] {
 .icon_view_doc_function:hover{
     color: #0e8e32
 }
+.account_button{
+    padding: 10px;
+    background: #0e8e32;
+    color: white !important;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 7px
+}
+.account_button:hover{
+    color: white;
+    /* text-decoration: none */
+}
+.link{
+    color: #007bff;
+    cursor: pointer
+}
+.link:hover{
+    text-decoration: underline;
+    color: #0056b3
+}
 /*End report problem*/

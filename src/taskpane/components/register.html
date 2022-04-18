@@ -1,0 +1,33 @@
+<div style="margin: auto; display: flex; flex-direction: column; width: 100%; padding: 64px 10px 64px 10px" class="register">
+    <img src="https://finsheet.io/static/img/logo/Untitled-1.png" class='img' style="margin: 0px auto 0px auto; width: 80px; height: 80px"/>
+    <h3 style="font-size: 20px; margin-bottom: 35px; margin-top: 15px">Finsheet.io</h3>
+
+    <span  id="loginform">
+
+          <div class="form__field">
+              <input class="account" type="text" placeholder="Full Name" onfocus="this.placeholder = ''" style="height: 41px"
+                     onblur="this.placeholder = 'Full Name'" name="name" autocomplete="nope" required id="register_name">
+          </div>
+
+          <div class="form__field">
+              <input type="email" placeholder="Email address" onfocus="this.placeholder = ''" style="padding: 10px 17px; width: 100%"
+                     onblur="this.placeholder = 'Email address'" name="email" value="" id="register_email">
+          </div>
+
+          <div class="form__field">
+              <input type="password" placeholder="Password" onfocus="this.placeholder = ''" style="padding: 10px 17px; width: 100%"
+                     onblur="this.placeholder = 'Password'" name="password"   id="register_password">
+          </div>
+
+          <div class="form__field" style="margin-top: 50px; display: flex">
+              <input value="Register" id="submitButton" style="margin: auto; width: 100%; padding: 8px" onclick="Register()">
+          </div>
+
+      </span>
+    <div class="register_loader" style="display: none"></div>
+    <p style="color: #f44242" id="register_warning"></p>
+
+    <p style="margin-bottom: 0" class="link" ><a   onclick="showApiInputDiv()">Already have an account? Login</a></p>
+    <p><a href="https://finsheet.io/resetpwd" target="_blank" rel="noopener noreferrer">Forgot your password? </a></p>
+    <!-- <i class="fas fa-times x_close pointer" onclick="cancelApiKey()"></i> -->
+</div>

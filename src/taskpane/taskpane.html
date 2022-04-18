@@ -34,6 +34,8 @@
         var pre = location.hostname === "localhost" || location.hostname === "127.0.0.1" ? '' : '/finsheet_excel'
         $(function(){
             $("#api_key_input_div").load(pre + "/src/taskpane/components/login.html");
+            $("#register").load("/src/taskpane/components/register.html");
+
             $(".left_green_bar").load(pre +"/src/taskpane/components/left_green_bar.html");
 
             $("#symbols").load(pre +"/src/taskpane/components/search_symbols.html");
@@ -65,8 +67,7 @@
             $("#aggregate_indicators").load(pre +"/src/taskpane/components/fs_aggregate_indicators.html");
             $("#technical_indicators").load(pre +"/src/taskpane/components/fs_technical_indicators.html");
 
-            // $("#esg").load("/src/taskpane/components/fs_esg.html");
-            // $("#earnings_quality").load("/src/taskpane/components/fs_earnings_quality.html");
+            $("#account").load("/src/taskpane/components/account.html");
         });
     </script>
 
@@ -78,7 +79,9 @@
     <div style="display: none; width: 100%; position: relative; min-height: 500px;" id="api_key_input_div">
 
     </div>
+    <div style="display: none; width: 100%; position: relative; min-height: 500px;" id="register">
 
+    </div>
     <div id="if_have_api_key" style="display: flex">
 
 
@@ -88,7 +91,11 @@
             <div id="header_login">
                 <div class="alert alert-dismissible" role="alert"
                      style="width: 100%; background-color: #222222; padding: 8px 14px 8px 14px; margin-left: -8px; color: white; font-size: 14px; ">
-                        <span><div style="display: inline; color: #0e8e32; cursor: pointer; font-weight: bold" onclick="showApiInputDiv()">Login</div>&nbsp; to begin using Finsheet add-on</span>
+                        <span>
+                            <div style="display: inline; color: #0e8e32; cursor: pointer; font-weight: bold" onclick="showApiInputDiv('register')">Register</div> /
+                            <div style="display: inline; color: #0e8e32; cursor: pointer; font-weight: bold" onclick="showApiInputDiv()">Login</div>&nbsp;
+                            to begin using Finsheet add-on
+                        </span>
                 </div>
             </div>
 
@@ -123,6 +130,7 @@
 
 
             <div id="console" style="display: none"></div>
+            <div id="account" style="display: none"></div>
 
 <!--            <div id="esg" style="display: none"></div>-->
 <!--            <div id="earnings_quality" style="display: none"></div>-->
