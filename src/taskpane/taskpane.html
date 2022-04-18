@@ -34,7 +34,7 @@
         var pre = location.hostname === "localhost" || location.hostname === "127.0.0.1" ? '' : '/finsheet_excel'
         $(function(){
             $("#api_key_input_div").load(pre + "/src/taskpane/components/login.html");
-            $("#register").load("/src/taskpane/components/register.html");
+            $("#register").load(pre + "/src/taskpane/components/register.html");
 
             $(".left_green_bar").load(pre +"/src/taskpane/components/left_green_bar.html");
 
@@ -67,7 +67,7 @@
             $("#aggregate_indicators").load(pre +"/src/taskpane/components/fs_aggregate_indicators.html");
             $("#technical_indicators").load(pre +"/src/taskpane/components/fs_technical_indicators.html");
 
-            $("#account").load("/src/taskpane/components/account.html");
+            $("#account").load(pre + "/src/taskpane/components/account.html");
         });
     </script>
 
