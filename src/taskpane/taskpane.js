@@ -1,5 +1,5 @@
-var link = 'https://f077-71-187-24-225.ngrok.io'
-var link = 'https://finsheet.io'
+var link = 'https://52d0-100-1-255-113.ngrok.io'
+// var link = 'https://finsheet.io'
 console.log(link)
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
@@ -1818,7 +1818,7 @@ function helperHandleData(data, prefix, save){
     }
   }
   else {
-    save.push([prefix, data ? data : ''])
+    save.push([prefix, data !== null && data !== undefined ? data : ''])
   }
   // console.log(34)
 }

@@ -7274,15 +7274,15 @@ var big_api_map = {
         },
         "Withdrawing Addresses":{
             url: '/v1/metrics/addresses/receiving_from_exchanges_count',
-            doc_url: 'https://docs.glassnode.com/api/addresses#total-addresses',
+            doc_url: 'https://docs.glassnode.com/api/addresses#withdrawing-addresses',
             description:  'The number of unique addresses that appeared as a receiver in a transaction receiving funds from an exchanges.',
             params:{
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":71426}]'
         },
@@ -7294,9 +7294,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":792573183}]'
         },
@@ -7308,9 +7308,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7322,9 +7322,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7336,9 +7336,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7350,9 +7350,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7365,9 +7365,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7379,9 +7379,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7393,9 +7393,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7407,9 +7407,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7421,9 +7421,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7435,9 +7435,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7449,9 +7449,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7463,9 +7463,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7477,14 +7477,12 @@ var big_api_map = {
                 a: {description: 'asset symbol (ETH only)', required: true, default: 'ETH'},
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
-
-
         "UTXOs Created":{
             url: '/v1/metrics/blockchain/utxo_created_count',
             doc_url: 'https://docs.glassnode.com/api/blockchain#utxos-created',
@@ -7493,9 +7491,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7507,9 +7505,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7521,9 +7519,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7535,13 +7533,12 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
-
         "UTXOs Value Created (Mean)":{
             url: '/v1/metrics/blockchain/utxo_created_value_mean',
             doc_url: 'https://docs.glassnode.com/api/blockchain#utxo-value-created-mean',
@@ -7550,9 +7547,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7564,9 +7561,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7578,9 +7575,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7592,9 +7589,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7606,9 +7603,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7620,9 +7617,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7634,9 +7631,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.981980231502865}]'
         },
@@ -7648,9 +7645,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7662,9 +7659,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":618852}]'
         },
@@ -7676,9 +7673,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":663.838461538462}]'
         },
@@ -7690,9 +7687,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":663.838461538462}]'
         },
@@ -7704,9 +7701,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1347932.73076923}]'
         },
@@ -7718,9 +7715,9 @@ var big_api_map = {
                 a: {description: 'asset symbol', required: true, },
                 s: {description: 'since, unix timestamp', type: 'number'},
                 u: {description: 'until, unix timestamp', type: 'number'},
-                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1month']},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":175231255}]'
         },
@@ -7734,7 +7731,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '24h',  ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":55227243703.86716}]'
         },
@@ -7750,7 +7747,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
                 e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":55227243703.86716}]'
         },
@@ -7766,7 +7763,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
                 e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":55227243703.86716}]'
         },
@@ -7780,7 +7777,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: ['1h', '24h', '10m'  ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.14031713428927348}]'
         },
@@ -7795,7 +7792,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [  '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"o":{"binance":362581.12205584,"bitfinex":105628.17362217,"bithumb":20859.85074187,"bitmex":117389.09310413,"bitstamp":88317.95357653,"bittrex":93125.33273907,"coinbase":866330.21344423,"coincheck":31922.86654034,"ftx":37997.73382687,"gate.io":12495.57379613,"gemini":264542.65223614,"hitbtc":56699.28029552,"huobi":221957.39826201,"kraken":169890.49001436,"kucoin":288.00175251,"luno":7843.30335199,"okex":119884.43048572,"poloniex":38071.8728946}}]'
         },
@@ -7809,7 +7806,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.965586}]'
         },
@@ -7823,7 +7820,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.99579}]'
         },
@@ -7837,7 +7834,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.00099}]'
         },
@@ -7851,7 +7848,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.207087}]'
         },
@@ -7865,7 +7862,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":123333.45408548}]'
         },
@@ -7879,7 +7876,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":137890.97857473}]'
         },
@@ -7893,7 +7890,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[]'
         },
@@ -7907,7 +7904,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":356}]'
         },
@@ -7922,7 +7919,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":11392}]'
         },
@@ -7936,11 +7933,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":356}]'
         },
-
         "Total Number of Deposits ETH 2.0":{
             url: '/v1/metrics/eth2/staking_total_deposits_count',
             doc_url: 'https://docs.glassnode.com/api/eth2#total-number-of-deposits',
@@ -7951,7 +7947,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":104182}]'
         },
@@ -7966,7 +7962,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":3333122}]'
         },
@@ -7980,7 +7976,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":104121}]'
         },
@@ -7994,13 +7990,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":6.357425689697266}]'
         },
-
-
-
         "Gas Used (Total)":{
             url: '/v1/metrics/fees/gas_used_sum',
             doc_url: 'https://docs.glassnode.com/api/fees#gas-used-total',
@@ -8011,7 +8004,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":79071397736}]'
         },
@@ -8025,7 +8018,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":66674.87213441}]'
         },
@@ -8039,7 +8032,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":66674.87213441}]'
         },
@@ -8053,7 +8046,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":159727.884050846}]'
         },
@@ -8067,7 +8060,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":159727.884050846}]'
         },
@@ -8082,7 +8075,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":118525248946.951}]'
         },
@@ -8097,7 +8090,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":118525248946.951}]'
         },
@@ -8112,7 +8105,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":121.83630841}]'
         },
@@ -8127,7 +8120,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.000434578689197624}]'
         },
@@ -8142,7 +8135,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.000434578689197624}]'
         },
@@ -8157,11 +8150,10 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '1h', '24h', '10m',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":7.668783801835153}]'
         },
-
         "RHODL Ratio":{
             url: '/v1/metrics/indicators/rhodl_ratio',
             doc_url: 'https://docs.glassnode.com/api/indicators#rhodl-ratio',
@@ -8172,7 +8164,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":11736.695660092}]'
         },
@@ -8186,7 +8178,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":7107.76067290648}]'
         },
@@ -8200,11 +8192,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":12820.42304013733}]'
         },
-
         "Hash Ribbon":{
             url: '/v1/metrics/indicators/hash_ribbon',
             doc_url: 'https://docs.glassnode.com/api/indicators#hash-ribbon',
@@ -8215,7 +8206,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"o":{"buy":0,"capitulation":0,"crossed":0,"ma30":154402746378203560000,"ma60":151785951956532430000}}]'
         },
@@ -8229,7 +8220,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"o":{"ma128":8.375418784633655e+22,"ma14":9.30377876582909e+22,"ma200":8.19934213972157e+22,"ma25":9.250262836512482e+22,"ma40":9.130637732683341e+22,"ma60":8.922384160053527e+22,"ma9":9.33044489295953e+22,"ma90":8.645398228124447e+22}}]'
         },
@@ -8243,11 +8234,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.04627619655202409}]'
         },
-
         "NVT Ratio":{
             url: '/v1/metrics/indicators/nvt',
             doc_url: 'https://docs.glassnode.com/api/indicators#nvt-ratio',
@@ -8258,7 +8248,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":37.79788074473667}]'
         },
@@ -8272,7 +8262,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"o":{"ma128":8.375418784633655e+22,"ma14":9.30377876582909e+22,"ma200":8.19934213972157e+22,"ma25":9.250262836512482e+22,"ma40":9.130637732683341e+22,"ma60":8.922384160053527e+22,"ma9":9.33044489295953e+22,"ma90":8.645398228124447e+22}}]'
         },
@@ -8286,11 +8276,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '10m', '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.026456509738029408}]'
         },
-
         "Supply-Adjusted CDD":{
             url: '/v1/metrics/indicators/cdd_supply_adjusted',
             doc_url: 'https://docs.glassnode.com/api/indicators#supply-adjusted-cdd',
@@ -8301,7 +8290,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.42424034176182446}]'
         },
@@ -8315,7 +8304,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":0}]',
         },
@@ -8329,7 +8318,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '10m', '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":8.60164228946218e-7}]'
         },
@@ -8343,7 +8332,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":2.40989379548892}]'
         },
@@ -8357,7 +8346,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":1.05718779610037}]',
         },
@@ -8371,7 +8360,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [    '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.006707944759253438}]'
         },
@@ -8385,7 +8374,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [     '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614470400,"v":4020542992.4289646},{"t":1614556800,"v":4023369966.45044}]',
         },
@@ -8399,7 +8388,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [      '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614470400,"v":217.2524803519757},{"t":1614556800,"v":217.3982190952282}]'
         },
@@ -8413,7 +8402,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [     '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614470400,"v":371731.83586700866},{"t":1614556800,"v":368098.56978506857}]',
         },
@@ -8427,7 +8416,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [    '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1.01522641599799}]'
         },
@@ -8441,7 +8430,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":7908789.2082051}]'
         },
@@ -8455,7 +8444,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":29.6668550463353}]',
         },
@@ -8469,11 +8458,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [    '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":2.45491898148148}]'
         },
-
         "Dormancy":{
             url: '/v1/metrics/indicators/average_dormancy',
             doc_url: 'https://docs.glassnode.com/api/indicators#dormancy',
@@ -8484,7 +8472,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":16.03538584501977}]',
         },
@@ -8498,7 +8486,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h',    '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.617889587368704}]'
         },
@@ -8512,7 +8500,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":0.699516929765209}]',
         },
@@ -8526,7 +8514,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":0.00313812006065384}]',
         },
@@ -8540,7 +8528,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":0.696378809704555}]',
         },
@@ -8554,7 +8542,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [    '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":815467.3736572348}]',
         },
@@ -8568,7 +8556,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [    '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1280812570.76976}]'
         },
@@ -8582,7 +8570,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":6.68102662407061}]'
         },
@@ -8596,7 +8584,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [    '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"o":{"daysTillHalving":1154,"price":49768.16035012147,"ratio":55440.73166028007}}]',
         },
@@ -8610,7 +8598,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [    '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.8977729501845982}]'
         },
@@ -8624,7 +8612,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":1506266992.21939}]',
         },
@@ -8638,7 +8626,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h',    '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":225454421.449627}]'
         },
@@ -8652,7 +8640,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"o":{"h":23.345999612743775,"l":7.151128652306964,"v":18.578375571193103}}]',
         },
@@ -8666,7 +8654,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":0.8224360531929604}]',
         },
@@ -8680,7 +8668,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [     '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"o":{"1d_1w":0.207521569631565,"1h":0.212052635674677,"1h_24h":0.299032786844094,"1m_3m":0.0347611839512402,"1w_1m":0.215161624757444,"1y_2y":0.0061778135911899,"2y_3y":0.00329851566794942,"3m_6m":0.009272996101526,"3y_5y":0.00410557258366155,"5y_7y":0.00102545178870422,"6m_12m":0.00729489081511493,"7y_10y":0.000294958592834138,"more_10y":0}}]',
         },
@@ -8694,7 +8682,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":168947}]',
         },
@@ -8708,7 +8696,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m',   '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":238246}]'
         },
@@ -8722,7 +8710,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":165337}]'
         },
@@ -8736,7 +8724,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '10m', '1h', '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":171424}]',
         },
@@ -8750,7 +8738,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '10m',  '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":27695}]'
         },
@@ -8764,7 +8752,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m',   '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":7388}]',
         },
@@ -8778,7 +8766,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: ['10m',  '1h',    '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":5812}]'
         },
@@ -8792,7 +8780,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":4922}]',
         },
@@ -8806,7 +8794,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":2628}]',
         },
@@ -8820,7 +8808,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '10m', '1h',    '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":3271}]'
         },
@@ -8834,7 +8822,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":817}]',
         },
@@ -8848,7 +8836,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m',   '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":235}]'
         },
@@ -8862,7 +8850,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0}]'
         },
@@ -8876,7 +8864,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [    '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"o":{"1d_1w":0.159853649794143,"1h":0.415708795800463,"1h_24h":0.29537918812004,"1m_3m":0.0342055486481017,"1w_1m":0.0623956819233631,"1y_2y":0.00457325329569319,"2y_3y":0.0017866922364579,"3m_6m":0.0186408781923728,"3y_5y":0.00371712975354566,"5y_7y":0.000104414942927017,"6m_12m":0.0034481744425942,"7y_10y":0.000186592850296279,"more_10y":0}}]',
         },
@@ -8891,7 +8879,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [  '10m',  '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":204847.91621909}]'
         },
@@ -8906,7 +8894,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '10m',   '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":145553.35800477}]',
         },
@@ -8922,7 +8910,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":78770.7342042001}]'
         },
@@ -8938,7 +8926,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":30746.5840323598}]',
         },
@@ -8954,7 +8942,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":16855.39356992}]',
         },
@@ -8970,7 +8958,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":9185.62487197001}]'
         },
@@ -8986,7 +8974,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":1699.14939607}]',
         },
@@ -9001,7 +8989,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [  '10m',  '1h', '24h',    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":2253.55204756}]'
         },
@@ -9016,7 +9004,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '10m',   '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":880.424434749999}]',
         },
@@ -9032,7 +9020,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1831.68191778}]'
         },
@@ -9048,7 +9036,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":51.45232359}]',
         },
@@ -9064,7 +9052,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":91.9469516900001}]',
         },
@@ -9080,7 +9068,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: ['NATIVE', 'USD']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":0}]'
         },
@@ -9095,14 +9083,10 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":1.0701}]',
         },
-
-
-
-
         "Investor Capitalization":{
             url: '/v1/metrics/indicators/investor_capitalization',
             doc_url: 'https://docs.glassnode.com/api/indicators#investor-capitalization',
@@ -9114,7 +9098,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":259646688229.636}]',
         },
@@ -9129,7 +9113,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '1h',   '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":0.00534804912075168}]',
         },
@@ -9144,7 +9128,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [     '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"v":0.13053898829337524}]',
         },
@@ -9159,7 +9143,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [     '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"o":{"price":49768.16035012147,"score":0.204466254194098}}]',
         },
@@ -9174,11 +9158,10 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [     '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response:'[{"t":1614556800,"o":{"ma111":30932.94980026362,"ma350x2":33155.397225559085}}]',
         },
-
         "Purpose Bitcoin ETF Holdings":{
             url: '/v1/metrics/institutions/purpose_etf_holdings_sum',
             doc_url: 'https://docs.glassnode.com/api/institutions#purpose-bitcoin-etf-holdings',
@@ -9189,7 +9172,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '24h',     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":10673.7143}]'
         },
@@ -9203,11 +9186,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":10673.7143}]'
         },
-
         "Lightning Network Channel Size (Mean)":{
             url: '/v1/metrics/lightning/channel_size_mean',
             doc_url: 'https://docs.glassnode.com/api/lightning#lightning-network-channel-size-mean',
@@ -9219,7 +9201,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.028203547833657694}]'
         },
@@ -9234,7 +9216,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.028203547833657694}]'
         },
@@ -9249,11 +9231,10 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1101.40495}]'
         },
-
         "Lightning Network Number of Channels":{
             url: '/v1/metrics/lightning/channels_count',
             doc_url: 'https://docs.glassnode.com/api/lightning#lightning-network-number-of-channels',
@@ -9264,7 +9245,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":39052}]'
         },
@@ -9278,7 +9259,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":9301}]'
         },
@@ -9292,7 +9273,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',   '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":49768.16035012147}]'
         },
@@ -9306,11 +9287,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h',  '24h',     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"o":{"c":49768.16035012147,"h":49773.18922304233,"l":45159.50305252744,"o":45159.50305252744}}]'
         },
-
         "Price Drawdown from ATH":{
             url: '/v1/metrics/market/price_drawdown_relative',
             doc_url: 'https://docs.glassnode.com/api/market#price-drawdown-from-ath',
@@ -9321,7 +9301,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',   '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":-0.14679115046064417}]'
         },
@@ -9335,12 +9315,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [  '1h',  '24h',     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":217861878101.77612}]'
         },
-
-
         "Market Cap":{
             url: '/v1/metrics/market/marketcap_usd',
             doc_url: 'https://docs.glassnode.com/api/market#market-cap',
@@ -9351,7 +9329,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',   '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":927789865185.0476}]'
         },
@@ -9365,7 +9343,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":3.294147583645988}]'
         },
@@ -9379,7 +9357,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":281647935202.151}]'
         },
@@ -9393,7 +9371,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":5.83559714668574}]'
         },
@@ -9407,7 +9385,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":15108.054234485051}]'
         },
@@ -9421,7 +9399,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',  '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":9.33044489295953e+22}]'
         },
@@ -9435,7 +9413,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',  '1w', '1month'   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":140552942222359000000}]'
         },
@@ -9450,7 +9428,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',   ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":9.33044489295953e+22}]'
         },
@@ -9464,7 +9442,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.130398773239728}]'
         },
@@ -9478,7 +9456,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":812.5}]'
         },
@@ -9492,7 +9470,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.130398773239728}]'
         },
@@ -9506,7 +9484,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.0000021637976516006243}]'
         },
@@ -9521,7 +9499,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":139771}]'
         },
@@ -9537,7 +9515,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":4143005177.45272}]'
         },
@@ -9553,7 +9531,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":552566.082082158}]'
         },
@@ -9568,7 +9546,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [  '10m', '1h',  '24h',   '1w', '1month'    ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":18642237.5}]'
         },
@@ -9583,7 +9561,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [  '10m', '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":812.5}]'
         },
@@ -9597,11 +9575,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.01603495098272356}]'
         },
-
         "Supply Last Active < 24h":{
             url: '/v1/metrics/supply/active_24h',
             doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-less-than-24h',
@@ -9612,7 +9589,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":233939.129930867}]'
         },
@@ -9627,7 +9604,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":789358.463747983}]'
         },
@@ -9642,7 +9619,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1562687.4585108}]'
         },
@@ -9657,7 +9634,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":2779665.1789717}]'
         },
@@ -9672,7 +9649,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1280272.6049434}]'
         },
@@ -9687,7 +9664,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1555726.99288638}]'
         },
@@ -9702,7 +9679,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1867493.27412408}]'
         },
@@ -9717,7 +9694,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1986381.86580901}]'
         },
@@ -9732,12 +9709,10 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":2521489.65220627}]'
         },
-
-
         "Supply Last Active 5y-7y":{
             url: '/v1/metrics/supply/active_5y_7y',
             doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-5y-7y',
@@ -9749,7 +9724,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":733391.561829753}]'
         },
@@ -9764,7 +9739,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1340814.66965948}]'
         },
@@ -9779,7 +9754,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1990987.69235172}]'
         },
@@ -9793,15 +9768,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [     '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"o":{"1d_1w":0.0423424743809847,"1m_3m":0.149105770107891,"1w_1m":0.0838251019230284,"1y_2y":0.100175382602227,"24h":0.0125488761706242,"2y_3y":0.106552760408133,"3m_6m":0.0686759089376152,"3y_5y":0.135256814113985,"5y_7y":0.0393403185550958,"6m_12m":0.0834517312037454,"7y_10y":0.0719234839519387,"more_10y":0.106799824449813}}]'
         },
-
-
-
-
-
         "Supply Last Active 1+ Years Ago":{
             url: '/v1/metrics/supply/active_more_1y_percent',
             doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-1+-years-ago',
@@ -9812,7 +9782,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.560048584081162}]'
         },
@@ -9826,7 +9796,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.459873201478951}]'
         },
@@ -9840,7 +9810,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1986381.86580901}]'
         },
@@ -9854,7 +9824,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":2521489.65220627}]'
         },
@@ -9868,7 +9838,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [      '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"o":{"1d_1w":0.134582222871132,"1m_3m":0.297292774958315,"1w_1m":0.262816514753674,"1y_2y":0.0573075556214347,"24h":0.0401194237139516,"2y_3y":0.0377140693031246,"3m_6m":0.0629451050772352,"3y_5y":0.054150652419221,"5y_7y":0.00116650500732617,"6m_12m":0.0510635207384384,"7y_10y":0.00084085491073546,"more_10y":8.00625458962708e-7}}]'
         },
@@ -9882,7 +9852,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":15265060.6430131}]'
         },
@@ -9896,7 +9866,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":17793885.1168379}]'
         },
@@ -9910,7 +9880,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":835381.97866036}]'
         },
@@ -9924,7 +9894,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.955157549978859}]'
         },
@@ -9939,7 +9909,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"o":{"total_other":2678.92223173999,"total_p2pk":1742367.45328664,"total_p2pkh":9771350.33059723,"total_p2sh":5574230.6725032,"total_p2tr":0.00159787,"total_p2wpkh":1220786.16601274,"total_p2wsh":330794.99874156}}]'
         },
@@ -9953,7 +9923,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":280355}]'
         },
@@ -9967,7 +9937,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":3.244849537037037}]'
         },
@@ -9981,7 +9951,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [    '1h',  '24h',     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":686017}]'
         },
@@ -9995,7 +9965,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":2848362}]'
         },
@@ -10009,14 +9979,10 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":624.841889746921}]'
         },
-
-
-
-
         "Transaction Size (Total)":{
             url: '/v1/metrics/transactions/size_sum',
             doc_url: 'https://docs.glassnode.com/api/transactions#transaction-size-total',
@@ -10027,7 +9993,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":175177548}]'
         },
@@ -10041,7 +10007,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [   '10m',  '1h',  '24h', '1w', '1month'      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":540001}]'
         },
@@ -10055,7 +10021,7 @@ var big_api_map = {
                 u: {description: 'until, unix timestamp', type: 'number'},
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":6.250011574074074}]'
         },
@@ -10070,7 +10036,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1783340.7063559}]'
         },
@@ -10085,7 +10051,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1783340.7063559}]'
         },
@@ -10100,7 +10066,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1783340.7063559}]'
         },
@@ -10115,7 +10081,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',     ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":493208.537957407}]'
         },
@@ -10130,7 +10096,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1.76998025478891}]'
         },
@@ -10145,7 +10111,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":1.76998025478891}]'
         },
@@ -10160,7 +10126,7 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":8663}]'
         },
@@ -10175,14 +10141,10 @@ var big_api_map = {
                 i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":21588.6462354585}]'
         },
-
-
-
-
         "Exchange Inflow Volume (Mean)":{
             url: '/v1/metrics/transactions/transfers_volume_to_exchanges_mean',
             doc_url: 'https://docs.glassnode.com/api/transactions#exchange-inflow-volume-mean',
@@ -10196,7 +10158,7 @@ var big_api_map = {
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
                 e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.6147247372451271}]'
         },
@@ -10212,7 +10174,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
                 e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":0.7272150246853516}]'
         },
@@ -10228,7 +10190,7 @@ var big_api_map = {
                 f: {description: 'format', possible: ['JSON', 'CSV']},
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
                 e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":-7728.4047220868015}]'
         },
@@ -10245,7 +10207,7 @@ var big_api_map = {
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
                 e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":78290}]'
         },
@@ -10262,7 +10224,7 @@ var big_api_map = {
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
                 e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":76807}]'
         },
@@ -10279,7 +10241,7 @@ var big_api_map = {
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
                 e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":48126.799678921}]'
         },
@@ -10296,7 +10258,7 @@ var big_api_map = {
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
                 e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":55855.2044010078}]'
         },
@@ -10313,11 +10275,11 @@ var big_api_map = {
                 c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
                 e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
 
-                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized']}
             },
             sample_response: '[{"t":1614556800,"v":170151.612887479}]'
         },
-    }
+    },
 }
 
 

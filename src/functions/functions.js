@@ -1431,7 +1431,8 @@ async function FS_Api(provider, endpoint, parameters=[]) {
   if('message' in json){return [[json.message]]}
   var data = json.data
 
-  console.log(data)
+  if (typeof data === 'string' || data instanceof String){return [[data]]}
+
   try{
     for(var word of ['err', 'error', 'errors']){
       if(data[word] && !(typeof data[word] === 'object' && Object.keys(data[word]).length < 1)){
@@ -1503,7 +1504,7 @@ async function FS_Api(provider, endpoint, parameters=[]) {
         }
 
         res = rotateDataAfterExpandRow(pre_store)
-        console.log(key, data, used_data, pre_store, res)
+        // console.log(key, data, used_data, pre_store, res)
 
       }
       // Expand column
@@ -1547,6 +1548,7 @@ async function FS_Api(provider, endpoint, parameters=[]) {
       let prefix = ''
       pre_store.push(handleApiDataExpandColumn(data[key2],prefix))
     }
+
     // pre_store = flattenArray(pre_store)
 
     if(data.length < 1){
@@ -1554,6 +1556,7 @@ async function FS_Api(provider, endpoint, parameters=[]) {
     }
 
     final = rotateDataAfterExpandRow(pre_store)
+    // console.log(data, pre_store, final)
   }
 
   //If returned data is just text return it
