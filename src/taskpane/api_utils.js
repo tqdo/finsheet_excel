@@ -7225,6 +7225,3099 @@ var big_api_map = {
         },
 
     },
+
+    Glassnode: {
+        "doc_url": 'https://docs.glassnode.com/',
+        'provider_description': 'Glassnode is a blockchain data and intelligence provider that generates innovative on-chain metrics and tools for digital asset stakeholders.',
+        "base_url": "https://api.glassnode.com",
+        "logo_url": "https://crypto-central.io/library/uploads/Glassnode-Logo-300x300.png",
+        "Assets List":{
+            url: '/v1/metrics/assets',
+            doc_url: 'https://docs.glassnode.com/basic-api/assets',
+            description:  'Returns the list of supported assets.',
+            sample_response: '[\n' +
+                '  {\n' +
+                '    "symbol": "ETH",\n' +
+                '    "name": "Ethereum",\n' +
+                '    "isERC20": false,\n' +
+                '    "exchanges": [\n' +
+                '       "aggregated",\n' +
+                '       "bibox",\n' +
+                '       "bigone",\n' +
+                '       "binance",\n' +
+                '       "bitfinex",\n' +
+                '       "bithumb",\n' +
+                '       "bittrex",\n' +
+                '       "cobinhood",\n' +
+                '       "coinex",\n' +
+                '       "gate.io",\n' +
+                '       "gemini",\n' +
+                '       "hitbtc",\n' +
+                '       "huobi",\n' +
+                '       "kraken",\n' +
+                '       "kucoin",\n' +
+                '       "okex",\n' +
+                '       "poloniex",\n' +
+                '       "zb.com"\n' +
+                '    ]\n' +
+                '  },\n' +
+                '  {\n' +
+                '    "symbol": "BTC",\n' +
+                '    "name": "Bitcoin"\n' +
+                '    "isERC20": false,  \n' +
+                '    "exchanges": [\n' +
+                '      ...\n' +
+                '    ]      \n' +
+                '  },\n' +
+                '  ...\n' +
+                ']'
+        },
+        "Withdrawing Addresses":{
+            url: '/v1/metrics/addresses/receiving_from_exchanges_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#total-addresses',
+            description:  'The number of unique addresses that appeared as a receiver in a transaction receiving funds from an exchanges.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":71426}]'
+        },
+        "Total Addresses":{
+            url: '/v1/metrics/addresses/count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#total-addresses',
+            description:  'The total number of unique addresses that ever appeared in a transaction of the native coin in the network.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":792573183}]'
+        },
+        "Sending Addresses":{
+            url: '/v1/metrics/addresses/sending_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#sending-addresses',
+            description:  'The number of unique addresses that were active as a sender of funds. Only addresses that were active as a sender in successful non-zero transfers are counted.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Receiving Addresses":{
+            url: '/v1/metrics/addresses/receiving_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#receiving-addresses',
+            description:  'The number of unique addresses that were active as a receiver of funds. Only addresses that were active as a receiver in successful non-zero transfers are counted.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Active Addresses":{
+            url: '/v1/metrics/addresses/active_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#active-addresses',
+            description:  'The number of unique addresses that were active either as a sender or receiver. Only addresses that were active in successful transactions are counted.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "New Addresses":{
+            url: '/v1/metrics/addresses/new_non_zero_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#new-addresses',
+            description:  'The number of unique addresses that appeared for the first time in a transaction of the native coin in the network.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Addresses with non-zero balance":{
+            url: '/v1/metrics/addresses/non_zero_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#addresses-with-non-zero-balance',
+            description:  'The number of unique addresses holding a positive (non-zero) amount of coins. For Ethereum only Externally Owned Addresses (EOAs) are counted, contracts are excluded.\n' +
+                'For ERC-20 Assets 1h resolution is being updated every 24 hours.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Addresses with balance >= 0.01":{
+            url: '/v1/metrics/addresses/min_point_zero_1_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#addresses-with-balance-0.01',
+            description:  'The number of unique addresses holding at least 0.01 coins. For Ethereum only Externally Owned Addresses (EOAs) are counted, contracts are excluded.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Addresses with balance >= 0.1":{
+            url: '/v1/metrics/addresses/min_point_1_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#addresses-with-balance-0.1',
+            description:  'The number of unique addresses holding at least 0.1 coins. For Ethereum only Externally Owned Addresses (EOAs) are counted, contracts are excluded.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Addresses with balance >= 1":{
+            url: '/v1/metrics/addresses/min_1_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#addresses-with-balance-1',
+            description:  'The number of unique addresses holding at least 1 coins. For Ethereum only Externally Owned Addresses (EOAs) are counted, contracts are excluded.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Addresses with balance >= 10":{
+            url: '/v1/metrics/addresses/min_10_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#addresses-with-balance-10',
+            description:  'The number of unique addresses holding at least 10 coins. For Ethereum only Externally Owned Addresses (EOAs) are counted, contracts are excluded.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Addresses with balance >= 100":{
+            url: '/v1/metrics/addresses/min_100_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#addresses-with-balance-100',
+            description:  'The number of unique addresses holding at least 100 coins. For Ethereum only Externally Owned Addresses (EOAs) are counted, contracts are excluded.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Addresses with balance >= 1k":{
+            url: '/v1/metrics/addresses/min_1k_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#addresses-with-balance-1k',
+            description:  'The number of unique addresses holding at least 1k coins. For Ethereum only Externally Owned Addresses (EOAs) are counted, contracts are excluded.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Addresses with balance >= 10k":{
+            url: '/v1/metrics/addresses/min_10k_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#addresses-with-balance-10k',
+            description:  'The number of unique addresses holding at least 10k coins. For Ethereum only Externally Owned Addresses (EOAs) are counted, contracts are excluded.',
+            params:{
+                a: {description: 'asset symbol', required: true},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Addresses with balance >= 32 ETH":{
+            url: '/v1/metrics/addresses/min_32_count',
+            doc_url: 'https://docs.glassnode.com/api/addresses#addresses-with-balance-32-eth',
+            description:  'The number of unique addresses holding at least 32 ETH. This is the number of potential validators for ETH 2.0. Only Externally Owned Addresses (EOAs) are counted, contracts are excluded.',
+            params:{
+                a: {description: 'asset symbol (ETH only)', required: true, default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+
+
+        "UTXOs Created":{
+            url: '/v1/metrics/blockchain/utxo_created_count',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#utxos-created',
+            description:  'The number of created unspent transaction outputs.',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "UTXOs Spent":{
+            url: '/v1/metrics/blockchain/utxo_spent_count',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#utxos-spent',
+            description:  'The number of spent transaction outputs.',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "UTXOs Value Created (Total)":{
+            url: '/v1/metrics/blockchain/utxo_created_value_sum',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#utxo-value-created-total',
+            description:  'The total amount of coins in newly created UTXOs.',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "UTXOs Value Spent (Total)":{
+            url: '/v1/metrics/blockchain/utxo_spent_value_sum',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#utxo-value-spent-total',
+            description:  'The total amount of coins in spent transaction outputs.',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+
+        "UTXOs Value Created (Mean)":{
+            url: '/v1/metrics/blockchain/utxo_created_value_mean',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#utxo-value-created-mean',
+            description:  'The mean amount of coins in newly created UTXOs.',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "UTXOs Value Spent (Mean)":{
+            url: '/v1/metrics/blockchain/utxo_spent_value_mean',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#utxo-value-spent-mean',
+            description:  'The mean amount of coins in spent transaction outputs.',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "UTXOs Value Created (Median)":{
+            url: '/v1/metrics/blockchain/utxo_created_value_median',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#utxo-value-created-median',
+            description:  'The median amount of coins in newly created UTXOs.',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "UTXOs Value Spent (Median)":{
+            url: '/v1/metrics/blockchain/utxo_spent_value_median',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#utxo-value-spent-median',
+            description:  'The median amount of coins in spent transaction outputs.',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "UTXOs in Profits":{
+            url: '/v1/metrics/blockchain/utxo_profit_count',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#utxo-in-profit',
+            description:  'The number of unspent transaction outputs whose price at creation time was lower than the current price. For more information see this article (https://medium.com/glassnode-insights/dissecting-bitcoins-unrealised-on-chain-profit-loss-73e735020c8d).',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "UTXOs in Loss":{
+            url: '/v1/metrics/blockchain/utxo_loss_count',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#utxo-in-loss',
+            description:  'The number of unspent transaction outputs whose price at creation time was higher than the current price. For more information see this article (https://medium.com/glassnode-insights/dissecting-bitcoins-unrealised-on-chain-profit-loss-73e735020c8d).',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Percent UTXOs in Profit":{
+            url: '/v1/metrics/blockchain/utxo_profit_relative',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#percent-utxos-in-profit',
+            description:  'The percentage of unspent transaction outputs whose price at creation time was lower than the current price. For more information see this article (https://medium.com/glassnode-insights/dissecting-bitcoins-unrealised-on-chain-profit-loss-73e735020c8d).\n',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.981980231502865}]'
+        },
+        "Block Height":{
+            url: '/v1/metrics/blockchain/block_height',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#block-height',
+            description:  'The block height, i.e. the total number of blocks ever created and included in the main blockchain.\n',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Block Mined":{
+            url: '/v1/metrics/blockchain/block_count',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#block-mined',
+            description:  'The number of blocks created and included in the main blockchain in that time period.\n',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":618852}]'
+        },
+        "Block Interval (Mean)":{
+            url: '/v1/metrics/blockchain/block_interval_mean',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#block-interval-mean',
+            description:  'The mean time (in seconds) between mined blocks.',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":663.838461538462}]'
+        },
+        "Block Interval (Median)":{
+            url: '/v1/metrics/blockchain/block_interval_median',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#block-interval-median',
+            description:  'The median time (in seconds) between mined blocks.',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":663.838461538462}]'
+        },
+        "Block Size (Mean)":{
+            url: '/v1/metrics/blockchain/block_size_mean',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#block-size-mean',
+            description:  'The mean size of all blocks created within the time period (in bytes).\n',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1347932.73076923}]'
+        },
+        "Block Size (Total)":{
+            url: '/v1/metrics/blockchain/block_size_sum',
+            doc_url: 'https://docs.glassnode.com/api/blockchain#block-size-total',
+            description:  'The total size of all blocks created within the time period (in bytes).\n',
+            params:{
+                a: {description: 'asset symbol', required: true, },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h', '24h', '1w' ,'1m']},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":175231255}]'
+        },
+        "Total Value Locked in DeFi (TVL)":{
+            url: '/v1/metrics/defi/total_value_locked',
+            doc_url: 'https://docs.glassnode.com/api/defi',
+            description:  'The total value locked in all of DeFi. Please note that this does not only include DeFi in the Ethereum network. Source: DeFi Lama\n',
+            params:{
+                a: {description: 'asset symbol (ETH only)', required: true, default: "ETH"},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '24h',  ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":55227243703.86716}]'
+        },
+        "Exchange Balance (Total)":{
+            url: '/v1/metrics/distribution/balance_exchanges',
+            doc_url: 'https://docs.glassnode.com/api/distribution#exchange-balance-total',
+            description:  'The total amount of coins held on exchange addresses. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['1h', '24h', '10m'  ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":55227243703.86716}]'
+        },
+        "Exchange Net Position Change":{
+            url: '/v1/metrics/distribution/exchange_net_position_change',
+            doc_url: 'https://docs.glassnode.com/api/distribution#exchange-net-position-change',
+            description:  'The 30d change of the supply held in exchange wallets.',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":55227243703.86716}]'
+        },
+        "Exchange Balance (Percent)":{
+            url: '/v1/metrics/distribution/balance_exchanges_relative',
+            doc_url: 'https://docs.glassnode.com/api/distribution#exchange-balance-percent',
+            description:  'The percent supply held on exchange addresses. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['1h', '24h', '10m'  ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.14031713428927348}]'
+        },
+        "Exchange Balance (Stacked)":{
+            url: '/v1/metrics/distribution/balance_exchanges_all',
+            doc_url: 'https://docs.glassnode.com/api/distribution#exchange-balance-stacked',
+            description:  'The percent supply held on exchange addresses. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"o":{"binance":362581.12205584,"bitfinex":105628.17362217,"bithumb":20859.85074187,"bitmex":117389.09310413,"bitstamp":88317.95357653,"bittrex":93125.33273907,"coinbase":866330.21344423,"coincheck":31922.86654034,"ftx":37997.73382687,"gate.io":12495.57379613,"gemini":264542.65223614,"hitbtc":56699.28029552,"huobi":221957.39826201,"kraken":169890.49001436,"kucoin":288.00175251,"luno":7843.30335199,"okex":119884.43048572,"poloniex":38071.8728946}}]'
+        },
+        "Supply of Top 1% Addresses":{
+            url: '/v1/metrics/distribution/balance_1pct_holders',
+            doc_url: 'https://docs.glassnode.com/api/distribution#supply-of-top-1-addresses',
+            description:  'The percentage of supply held by the top 1% addresses. For Bitcoin we use entities (cluster of addresses controlled by the same network entity) rather than addresses. Exchange addresses/entities, smart contract addresses, and other special asset-specific addresses (e.g. team fund addresses) are excluded.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.965586}]'
+        },
+        "Gini Coefficient":{
+            url: '/v1/metrics/distribution/gini',
+            doc_url: 'https://docs.glassnode.com/api/distribution#gini-coefficient',
+            description:  'The gini coefficient for the distribution of coins over addresses. For Bitcoin we use entities (cluster of addresses controlled by the same network entity) rather than addresses for the computation of this metric. Exchange addresses/entities, smart contract addresses, and other special asset-specific addresses (e.g. team fund addresses) are excluded for the computation of the gini.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.99579}]'
+        },
+        "Herfindahl Index":{
+            url: '/v1/metrics/distribution/herfindahl',
+            doc_url: 'https://docs.glassnode.com/api/distribution#herfindahl-index',
+            description:  'Originally used as a measure of competition (https://en.wikipedia.org/wiki/Herfindahl–Hirschman_Index), we adapt the Herfindahl Index as a metric for decentralization. It measures the addresses\' shares of the current supply, and is defined as the sum of weighted address balances in the network. A large score indicates high concentration of supply, whereas a small score is an indicator for more evenly distributed funds across addresses. For Bitcoin we use entities (cluster of addresses controlled by the same network entity) rather than addresses. Exchange addresses/entities, smart contract addresses and other special asset-specific addresses (e.g. team fund addresses) are excluded.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.00099}]'
+        },
+        "Supply in Smart Contracts":{
+            url: '/v1/metrics/distribution/supply_contracts',
+            doc_url: 'https://docs.glassnode.com/api/distribution#supply-in-smart-contracts',
+            description: 'The percent of total supply of the token that is held in smart contracts.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.207087}]'
+        },
+        "Wrapped BTC (WBTC) Balance":{
+            url: '/v1/metrics/distribution/balance_wbtc',
+            doc_url: 'https://docs.glassnode.com/api/distribution#wrapped-btc-wbtc-balance',
+            description: 'Wrapped Bitcoin (WBTC) is the first ERC20 token backed 1:1 with Bitcoin and designed to act as representation of Bitcoin on the Ethereum blockchain. The WBTC supply listed here corresponds to the amount of Bitcoin held by BitGo, the custodian responsible for minting new WBTC ERC20 tokens and guaranteeing backing of new ERC20 tokens by actual BTC.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":123333.45408548}]'
+        },
+        "Mt. Gox Balance":{
+            url: '/v1/metrics/distribution/balance_mtgox_trustee',
+            doc_url: 'https://docs.glassnode.com/api/distribution#mt.-gox-balance',
+            description: 'The Mt. Gox Trustee Balance corresponds to the amount of BTC held in addresses controlled by Nobuaki Kobayashi, the trustee overseeing the Mt. Gox civil rehabilitation proceedings.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":137890.97857473}]'
+        },
+        "Luna Foundation Guard Balance":{
+            url: '/v1/metrics/distribution/balance_luna_foundation_guard',
+            doc_url: 'https://docs.glassnode.com/api/distribution#luna-foundation-guard-balance',
+            description: 'The Luna Foundation Guard Balance corresponds to the amount of BTC () held in addresses of the Luna Foundation Guard (LFG), which controls the bitcoin reserve supporting the TerraUSD (UST) stablecoin .\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[]'
+        },
+        "New Deposits ETH 2.0":{
+            url: '/v1/metrics/eth2/staking_deposits_count',
+            doc_url: 'https://docs.glassnode.com/api/eth2#new-deposits',
+            description: 'The number transactions depositing 32 ETH to the ETH2 deposit contract.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":356}]'
+        },
+        "New Value Staked ETH 2.0":{
+            url: '/v1/metrics/eth2/staking_volume_sum',
+            doc_url: 'https://docs.glassnode.com/api/eth2#new-value-staked',
+            description: 'The amount of ETH transferred to the ETH2 deposit contract.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":11392}]'
+        },
+        "New Validators ETH 2.0":{
+            url: '/v1/metrics/eth2/staking_validators_count',
+            doc_url: 'https://docs.glassnode.com/api/eth2#new-validators',
+            description: 'The number of new validators (accounts) depositing 32 ETH to the ETH2 deposit contract.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":356}]'
+        },
+
+        "Total Number of Deposits ETH 2.0":{
+            url: '/v1/metrics/eth2/staking_total_deposits_count',
+            doc_url: 'https://docs.glassnode.com/api/eth2#total-number-of-deposits',
+            description: 'The total number of transactions to the ETH2 deposit contract.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":104182}]'
+        },
+        "Total Value Staked ETH 2.0":{
+            url: '/v1/metrics/eth2/staking_total_volume_sum',
+            doc_url: 'https://docs.glassnode.com/api/eth2#total-value-staked',
+            description: 'The amount of ETH that has been deposited to the ETH2 deposit contract, the current ETH balance on the ETH2 deposit contract.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":3333122}]'
+        },
+        "Total Number of Validators ETH 2.0":{
+            url: '/v1/metrics/eth2/staking_validators_count',
+            doc_url: 'https://docs.glassnode.com/api/eth2#total-number-of-validators',
+            description: 'The total number of unique validators (accounts) that have deposited 32 ETH to the ETH2 deposit contract.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":104121}]'
+        },
+        "Phase 0 Staking Goal ETH 2.0":{
+            url: '/v1/metrics/eth2/staking_phase_0_goal_percent',
+            doc_url: 'https://docs.glassnode.com/api/eth2#phase-0-staking-goal',
+            description: 'The percentage of the Phase 0 staking goal, i.e. the total volume deposited to the ETH2 deposit contract divided by 524,288. The ETH2 network needs to reach at least 524,288 ETH (16,384 validators) to launch the mainnet.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":6.357425689697266}]'
+        },
+
+
+
+        "Gas Used (Total)":{
+            url: '/v1/metrics/fees/gas_used_sum',
+            doc_url: 'https://docs.glassnode.com/api/fees#gas-used-total',
+            description: 'The total amount of gas used in all transactions.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":79071397736}]'
+        },
+        "Gas Used (Mean)":{
+            url: '/v1/metrics/fees/gas_used_mean',
+            doc_url: 'https://docs.glassnode.com/api/fees#gas-used-mean',
+            description: 'The mean amount of gas used in all transactions.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":66674.87213441}]'
+        },
+        "Gas Used (Median)":{
+            url: '/v1/metrics/fees/gas_used_median',
+            doc_url: 'https://docs.glassnode.com/api/fees#gas-used-median',
+            description: 'The median amount of gas used in all transactions.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":66674.87213441}]'
+        },
+        "Transaction Gas Limit (Mean)":{
+            url: '/v1/metrics/fees/gas_limit_tx_mean',
+            doc_url: 'https://docs.glassnode.com/api/fees#transaction-gas-limit-mean',
+            description: 'The mean gas limit per transaction.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":159727.884050846}]'
+        },
+        "Transaction Gas Limit (Median)":{
+            url: '/v1/metrics/fees/gas_limit_tx_median',
+            doc_url: 'https://docs.glassnode.com/api/fees#transaction-gas-limit-median',
+            description: 'The median gas limit per transaction.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":159727.884050846}]'
+        },
+        "Gas Price (Mean)":{
+            url: '/v1/metrics/fees/gas_price_mean',
+            doc_url: 'https://docs.glassnode.com/api/fees#gas-price-mean',
+            description: 'The mean gas price paid per transaction.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":118525248946.951}]'
+        },
+        "Gas Price (Median)":{
+            url: '/v1/metrics/fees/gas_price_median',
+            doc_url: 'https://docs.glassnode.com/api/fees#gas-price-median',
+            description: 'The median gas price paid per transaction.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":118525248946.951}]'
+        },
+        "Fees (Total)":{
+            url: '/v1/metrics/fees/volume_sum',
+            doc_url: 'https://docs.glassnode.com/api/fees#fees-total',
+            description: 'The total amount of fees paid to miners. Issued (minted) coins are not included.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":121.83630841}]'
+        },
+        "Fees (Mean)":{
+            url: '/v1/metrics/fees/volume_mean',
+            doc_url: 'https://docs.glassnode.com/api/fees#fees-mean',
+            description: 'The mean amount of fees paid to miners. Issued (minted) coins are not included.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.000434578689197624}]'
+        },
+        "Fees (Median)":{
+            url: '/v1/metrics/fees/volume_median',
+            doc_url: 'https://docs.glassnode.com/api/fees#fees-median',
+            description: 'The median amount of fees paid to miners. Issued (minted) coins are not included.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h', '10m', '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.000434578689197624}]'
+        },
+        "Fee Ratio Multiple (FRM)":{
+            url: '/v1/metrics/fees/fee_ratio_multiple',
+            doc_url: 'https://docs.glassnode.com/api/fees#fee-ratio-multiple-frm',
+            description: 'The Fee Ratio Multiple (FRM) is defined as the ratio between the total miner revenue (blocks rewards + transaction fees) and transaction fees. FRM is a measure of a blockchain\'s security and gives an assessment how secure a chain is once block rewards disappear.',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'ETH'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h', '10m',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":7.668783801835153}]'
+        },
+
+        "RHODL Ratio":{
+            url: '/v1/metrics/indicators/rhodl_ratio',
+            doc_url: 'https://docs.glassnode.com/api/indicators#rhodl-ratio',
+            description: 'The Realized HODL Ratio is a market indicator that uses a ratio of the Realized Cap HODL Waves. In particular, the RHODL Ratio takes the ratio between the 1 week and the 1-2 years RCap HODL bands. In addition, it accounts for increased supply by weighting the ratio by the total market age. A high ratio is an indication of an overheated market and can be used to time cycle tops',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":11736.695660092}]'
+        },
+        "CVDD":{
+            url: '/v1/metrics/indicators/cvdd',
+            doc_url: 'https://docs.glassnode.com/api/indicators#cvdd',
+            description: 'Cumulative Value-Days Destroyed (CVDD) is the ratio of the cumulative USD value of Coin Days Destroyed and the market age (in days). Historically, CVDD has been an accurate indicator for global Bitcoin market bottoms',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":7107.76067290648}]'
+        },
+        "Balance Price":{
+            url: '/v1/metrics/indicators/balanced_price_usd',
+            doc_url: 'https://docs.glassnode.com/api/indicators#balanced-price',
+            description: 'Balanced Price is the difference between Realized Price and Transfer Price. Transfer Price is the cumulative sum of Coin Days Destroyed in USD, adjusted by circulating supply and total time since Bitcoin\'s inception. Balanced Price attempts to detect major cycle bottoms',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":12820.42304013733}]'
+        },
+
+        "Hash Ribbon":{
+            url: '/v1/metrics/indicators/hash_ribbon',
+            doc_url: 'https://docs.glassnode.com/api/indicators#hash-ribbon',
+            description: 'The Hash Ribbon is a market indicator that assumes that Bitcoin tends to reach a bottom when miners capitulate, i.e. when Bitcoin becomes too expensive to mine relative to the cost of mining. The Hash Ribbon indicates that the worst of the miner capitulation is over when the 30d MA of the hash rate crosses above the 60d MA (switch from light red to dark red areas). Times when this occurs and the price momentum switches from negative to positive have shown to be good buying opportunities (switch from dark red to white)',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"o":{"buy":0,"capitulation":0,"crossed":0,"ma30":154402746378203560000,"ma60":151785951956532430000}}]'
+        },
+        "Difficulty Ribbon":{
+            url: '/v1/metrics/indicators/difficulty_ribbon',
+            doc_url: 'https://docs.glassnode.com/api/indicators#difficulty-ribbon',
+            description: 'The Difficulty Ribbon is an indicator that uses simple moving averages (200d, 128d, 90d, 60d, 40d, 25d, 14d) of the Bitcoin mining difficulty (https://studio.glassnode.com/metrics?a=BTC&m=mining.DifficultyLatest) to create the ribbon. Historically, periods when the ribbon compresses have been good buying opportunities',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"o":{"ma128":8.375418784633655e+22,"ma14":9.30377876582909e+22,"ma200":8.19934213972157e+22,"ma25":9.250262836512482e+22,"ma40":9.130637732683341e+22,"ma60":8.922384160053527e+22,"ma9":9.33044489295953e+22,"ma90":8.645398228124447e+22}}]'
+        },
+        "Difficulty Ribbon Compression":{
+            url: '/v1/metrics/indicators/difficulty_ribbon_compression',
+            doc_url: 'https://docs.glassnode.com/api/indicators#difficulty-ribbon-compression',
+            description: 'Difficulty Ribbon Compression is a market indicator that uses a normalized standard deviation to quantify compression of the Difficulty Ribbon. Historically, zones of high compression (low values) have been good buying opportunities. The compression threshold is set here at 0.05.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.04627619655202409}]'
+        },
+
+        "NVT Ratio":{
+            url: '/v1/metrics/indicators/nvt',
+            doc_url: 'https://docs.glassnode.com/api/indicators#nvt-ratio',
+            description: 'The Network Value to Transactions (NVT) Ratio is computed by dividing the market cap by the transferred on-chain volume measured in USD',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":37.79788074473667}]'
+        },
+        "NVT Signal":{
+            url: '/v1/metrics/indicators/nvts',
+            doc_url: 'https://docs.glassnode.com/api/indicators#nvt-signal',
+            description: 'The NVT Signal (NVTS) is a modified version of the original NVT Ratio. It uses a 90 day moving average of the daily transaction volume in the denominator instead of the raw daily transaction volume. This moving average improves the ratio to better function as a leading indicator.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"o":{"ma128":8.375418784633655e+22,"ma14":9.30377876582909e+22,"ma200":8.19934213972157e+22,"ma25":9.250262836512482e+22,"ma40":9.130637732683341e+22,"ma60":8.922384160053527e+22,"ma9":9.33044489295953e+22,"ma90":8.645398228124447e+22}}]'
+        },
+        "Velocity":{
+            url: '/v1/metrics/indicators/velocity',
+            doc_url: 'https://docs.glassnode.com/api/indicators#velocity',
+            description: 'Velocity is a measure of how quickly units are circulating in the network and is calculated by dividing the on-chain transaction volume (in USD) by the market cap, i.e. the inverse of the NVT ratio.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '10m', '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.026456509738029408}]'
+        },
+
+        "Supply-Adjusted CDD":{
+            url: '/v1/metrics/indicators/cdd_supply_adjusted',
+            doc_url: 'https://docs.glassnode.com/api/indicators#supply-adjusted-cdd',
+            description: 'Adjusted Coin Days Destroyed simply divides CDD by the circulating supply (total amount of coins issued). Adjusted CDD more accurately represents the quantity of native coins sold by long-term holders over time.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.42424034176182446}]'
+        },
+        "Binary CDD":{
+            url: '/v1/metrics/indicators/cdd_supply_adjusted_binary',
+            doc_url: 'https://docs.glassnode.com/api/indicators#binary-cdd',
+            description: 'Binary Coin Days Destroyed (Binary CDD) is computed by thresholding Adjusted CDD by its average over time, i.e. taking the mean destruction over time and asking whether there were more Adjusted CDDs destroyed today than on average. Binary CDD is used in order to minimize the impact of exchange movements, which do not accurately reflect behavior of the long-term holders',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":0}]',
+        },
+        "Supply-Adjusted Dormancy":{
+            url: '/v1/metrics/indicators/average_dormancy_supply_adjusted',
+            doc_url: 'https://docs.glassnode.com/api/indicators#supply-adjusted-dormancy',
+            description: 'Dormancy is the average number of days destroyed per coin transacted, and is defined as the ratio of coin days destroyed and total transfer volume',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '10m', '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":8.60164228946218e-7}]'
+        },
+        "Puell Multiple":{
+            url: '/v1/metrics/indicators/puell_multiple',
+            doc_url: 'https://docs.glassnode.com/api/indicators#puell-multiple',
+            description: 'The Puell Multiple is calculated by dividing the daily issuance value of bitcoins (in USD) by the 365-day moving average of daily issuance value.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":2.40989379548892}]'
+        },
+        "aSOPR":{
+            url: '/v1/metrics/indicators/sopr_adjusted',
+            doc_url: 'https://docs.glassnode.com/api/indicators#asopr',
+            description: 'Adjusted SOPR is SOPR ignoring all outputs with a lifespan of less than 1 hour.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":1.05718779610037}]',
+        },
+        "Reserve Risk":{
+            url: '/v1/metrics/indicators/reserve_risk',
+            doc_url: 'https://docs.glassnode.com/api/indicators#reserve-risk',
+            description: 'Reserve Risk is defined as price / HODL Bank. It is used to assess the confidence of long-term holders relative to the price of the native coin at any given point in time. When confidence is high and price is low, there is an attractive risk/reward to invest (Reserve Risk is low). When confidence is low and price is high then risk/reward is unattractive at that time (Reserve Risk is high).',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [    '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.006707944759253438}]'
+        },
+        "Coin Years Destroyed (CYD)":{
+            url: '/v1/metrics/indicators/cyd',
+            doc_url: 'https://docs.glassnode.com/api/indicators#coin-years-destroyed-cyd',
+            description: 'Coin Years Destroyed (CYD) is defined as the 365 day rolling sum of Coin Days Destroyed (CDD), and shows the amount of coin days that have been destroyed over the past year. It is indicative of long-term holder behaviour',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [     '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614470400,"v":4020542992.4289646},{"t":1614556800,"v":4023369966.45044}]',
+        },
+        "Supply-Adjusted CYD":{
+            url: '/v1/metrics/indicators/cyd_supply_adjusted',
+            doc_url: 'https://docs.glassnode.com/api/indicators#supply-adjusted-cyd',
+            description: 'Coin Years Destroyed (CYD) is defined as the 365 day rolling sum of Coin Days Destroyed (CDD), and shows the amount of coin days that have been destroyed over the past year. It is indicative of long-term holder behaviour. This version is supply-adjusted to account for the increasing baseline of the metric over time.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [      '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614470400,"v":217.2524803519757},{"t":1614556800,"v":217.3982190952282}]'
+        },
+        "90D Coin Days Destroyed (CDD-90)":{
+            url: '/v1/metrics/indicators/cdd90_age_adjusted',
+            doc_url: 'https://docs.glassnode.com/api/indicators#90d-coin-days-destroyed-cdd-90',
+            description: '90D Coin Days Destroyed is the 90 day rolling sum of Coin Days Destroyed (CDD) and shows the amount of coin days that have been destroyed over the past year. This version is age-adjusted meaning that we normalize by time in order to account for the increasing baseline as time goes by.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [     '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614470400,"v":371731.83586700866},{"t":1614556800,"v":368098.56978506857}]',
+        },
+        "SOPR":{
+            url: '/v1/metrics/indicators/sopr',
+            doc_url: 'https://docs.glassnode.com/api/indicators#sopr',
+            description: 'The Spent Output Profit Ratio (SOPR) is computed by dividing the realized value (in USD) divided by the value at creation (USD) of a spent output. Or simply: price sold / price paid. This metric was created by Renato Shirakashi. For a detailed commentary see this post.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [    '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1.01522641599799}]'
+        },
+        "Coin Days Destroyed (CDD)":{
+            url: '/v1/metrics/indicators/cdd',
+            doc_url: 'https://docs.glassnode.com/api/indicators#coin-days-destroyed-cdd',
+            description: 'Coin Days Destroyed (CDD) for any given transaction is calculated by taking the number of coins in a transaction and multiplying it by the number of days it has been since those coins were last spent.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":7908789.2082051}]'
+        },
+        "ASOL":{
+            url: '/v1/metrics/indicators/asol',
+            doc_url: 'https://docs.glassnode.com/api/indicators#asol',
+            description: 'Average Spent Output Lifespan (ASOL) is the average age (in days) of spent transaction outputs. Outputs with a lifespan of less than 1h are discarded.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":29.6668550463353}]',
+        },
+        "MSOL":{
+            url: '/v1/metrics/indicators/msol',
+            doc_url: 'https://docs.glassnode.com/api/indicators#msol',
+            description: 'Median Spent Output Lifespan (MSOL) is the median age (in days) of spent transaction outputs. Outputs with a lifespan of less than 1h are discarded.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [    '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":2.45491898148148}]'
+        },
+
+        "Dormancy":{
+            url: '/v1/metrics/indicators/average_dormancy',
+            doc_url: 'https://docs.glassnode.com/api/indicators#dormancy',
+            description: 'Dormancy is the average number of days destroyed per coin transacted, and is defined as the ratio of coin days destroyed and total transfer volume',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":16.03538584501977}]',
+        },
+        "Liveliness":{
+            url: '/v1/metrics/indicators/liveliness',
+            doc_url: 'https://docs.glassnode.com/api/indicators#liveliness',
+            description: 'Liveliness is defined as the ratio of the sum of Coin Days Destroyed and the sum of all coin days ever created. Liveliness increases as long term holder liquidate positions and decreases while they accumulate to HODL.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h',    '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.617889587368704}]'
+        },
+        "Relative Unrealized Profit":{
+            url: '/v1/metrics/indicators/unrealized_profit',
+            doc_url: 'https://docs.glassnode.com/api/indicators#relative-unrealized-profit',
+            description: 'Relative Unrealized Profit is defined as the total profit in USD of all coins in existence whose price at realisation time was lower than the current price normalised by the market cap.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":0.699516929765209}]',
+        },
+        "Relative Unrealized Loss":{
+            url: '/v1/metrics/indicators/unrealized_loss',
+            doc_url: 'https://docs.glassnode.com/api/indicators#relative-unrealized-loss',
+            description: 'Relative Unrealized Loss is defined as the total loss in USD of all coins in existence whose price at realisation time was higher than the current price normalised the market cap.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":0.00313812006065384}]',
+        },
+        "Net Unrealized Profit/Loss (NUPL)":{
+            url: '/v1/metrics/indicators/net_unrealized_profit_loss',
+            doc_url: 'https://docs.glassnode.com/api/indicators#net-unrealized-profit-loss-nupl',
+            description: 'Net Unrealized Profit/Loss is the difference between Relative Unrealized Profit and Relative Unrealized Loss. This metric can also be calculated by subtracting realised cap from market cap, and dividing the result by the market cap',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":0.696378809704555}]',
+        },
+        "Entity-Adjusted Dormancy Flow":{
+            url: '/v1/metrics/indicators/dormancy_flow',
+            doc_url: 'https://docs.glassnode.com/api/indicators#entity-adjusted-dormancy-flow',
+            description: 'Entity-adjusted Dormancy Flow is the ratio of the current market capitalization and the annualized dormancy value (measured in USD). Entity-adjusted Dormancy Flow can be used to time market lows and assess whether the bull market remains in relatively normal conditions. It helps confirm whether Bitcoin is in a bullish or bearish primary trend',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [    '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":815467.3736572348}]',
+        },
+        "Net Realized Profit/Loss":{
+            url: '/v1/metrics/indicators/net_realized_profit_loss',
+            doc_url: 'https://docs.glassnode.com/api/indicators#net-realized-profit-loss',
+            description: 'Net Realized Profit/Loss is the net profit or loss of all moved coins, and is defined by the difference of Realized Profit - Realized Loss.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [    '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1280812570.76976}]'
+        },
+        "Realized P/L Ratio":{
+            url: '/v1/metrics/indicators/realized_profit_loss_ratio',
+            doc_url: 'https://docs.glassnode.com/api/indicators#realized-p-l-ratio',
+            description: 'Realized Profit/Loss Ratio is the ratio between all coins moved at a profit and at a loss, i.e. Realized Profit / Realized Loss..',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":6.68102662407061}]'
+        },
+        "Stock-to-Flow Ratio":{
+            url: '/v1/metrics/indicators/stock_to_flow_ratio',
+            doc_url: 'https://docs.glassnode.com/api/indicators#stock-to-flow-ratio',
+            description: 'The Stock to Flow (S/F) Ratio is a popular model that assumes that scarcity drives value. Stock to Flow is defined as the ratio of the current stock of a commodity (i.e. circulating Bitcoin supply) and the flow of new production (i.e. newly mined bitcoins). Bitcoin\'s price has historically followed the S/F Ratio and therefore it is a model that can be used to predict future Bitcoin valuations',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [    '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"o":{"daysTillHalving":1154,"price":49768.16035012147,"ratio":55440.73166028007}}]',
+        },
+        "Stock-to-Flow Deflection":{
+            url: '/v1/metrics/indicators/stock_to_flow_deflection',
+            doc_url: 'https://docs.glassnode.com/api/indicators#stock-to-flow-deflection',
+            description: 'The Stock to Flow (S/F) Deflection is the ratio between the current Bitcoin price and the S/F model. If deflection is ≥ 1 it means that Bitcoin is overvalued according to the S/F model, otherwise undervalued.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [    '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.8977729501845982}]'
+        },
+        "Realized Profit":{
+            url: '/v1/metrics/indicators/realized_profit',
+            doc_url: 'https://docs.glassnode.com/api/indicators#realized-profit',
+            description: 'Realized Profit denotes the total profit (USD value) of all moved coins whose price at their last movement was lower than the price at the current movement.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":1506266992.21939}]',
+        },
+        "Realized Loss":{
+            url: '/v1/metrics/indicators/realized_loss',
+            doc_url: 'https://docs.glassnode.com/api/indicators#realized-loss',
+            description: 'Realized Loss denotes the total loss (USD value) of all moved coins whose price at their last movement was higher than the price at the current movement.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h',    '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":225454421.449627}]'
+        },
+        "Stablecoin Supply Ratio (SSR)":{
+            url: '/v1/metrics/indicators/ssr',
+            doc_url: 'https://docs.glassnode.com/api/indicators#stablecoin-supply-ratio-ssr',
+            description: 'The Stablecoin Supply Ratio (SSR) is the ratio between Bitcoin supply and the supply of stablecoins denoted in BTC, or: Bitcoin Marketcap / Stablecoin Marketcap. We use the following stablecoins for the supply: USDT, TUSD, USDC, USDP, GUSD, DAI, SAI, and BUSD. When the SSR is low, the current stablecoin supply has more "buying power" to purchase BTC. It serves as a proxy for the supply/demand mechanics between BTC and USD',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"o":{"h":23.345999612743775,"l":7.151128652306964,"v":18.578375571193103}}]',
+        },
+        "Stablecoin Supply Ratio (SSR) Oscillator":{
+            url: '/v1/metrics/indicators/ssr_oscillator',
+            doc_url: 'https://docs.glassnode.com/api/indicators#stablecoin-supply-ratio-ssr-oscillator',
+            description: 'The Stablecoin Supply Ratio Oscillator is derived from the Stablecoin Supply Ratio (SSR), and quantifies how the 200d SMA of the SSR moves within the Bollinger Bands BB(200, 2)',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":0.8224360531929604}]',
+        },
+        "Spent Output Age Bands":{
+            url: '/v1/metrics/indicators/soab',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-output-age-bands',
+            description: 'Spent Output Age Bands (SOAB) is a bundle of all spent outputs that were created within a specified ageband. Each line represents the percentage of spent outputs that were created within the time period denoted in the legend.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [     '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"o":{"1d_1w":0.207521569631565,"1h":0.212052635674677,"1h_24h":0.299032786844094,"1m_3m":0.0347611839512402,"1w_1m":0.215161624757444,"1y_2y":0.0061778135911899,"2y_3y":0.00329851566794942,"3m_6m":0.009272996101526,"3y_5y":0.00410557258366155,"5y_7y":0.00102545178870422,"6m_12m":0.00729489081511493,"7y_10y":0.000294958592834138,"more_10y":0}}]',
+        },
+        "Spent Outputs < 1h":{
+            url: '/v1/metrics/indicators/sol_1h',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-less-than-1h',
+            description: 'The total number of spent outputs that were created within the last hour.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":168947}]',
+        },
+        "Spent Outputs 1h-24h":{
+            url: '/v1/metrics/indicators/sol_1h_24h',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-1h-24h',
+            description: 'The total number of spent outputs that were created between 1h and 24 hours ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',   '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":238246}]'
+        },
+        "Spent Outputs 1d-1w":{
+            url: '/v1/metrics/indicators/sol_1d_1w',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-1d-1w',
+            description: 'The total number of spent outputs that were created between 1d and 1w ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":165337}]'
+        },
+        "Spent Outputs 1w-1m":{
+            url: '/v1/metrics/indicators/sol_1w_1m',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-1w-1m',
+            description: 'The total number of spent outputs that were created between 1w and 1m ago.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '10m', '1h', '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":171424}]',
+        },
+        "Spent Outputs 1m-3m":{
+            url: '/v1/metrics/indicators/sol_1m_3m',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-1m-3m',
+            description: 'The total number of spent outputs that were created between 1m and 3m ago.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '10m',  '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":27695}]'
+        },
+        "Spent Outputs 3m-6m":{
+            url: '/v1/metrics/indicators/sol_3m_6m',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-3m-6m',
+            description: 'The total number of spent outputs that were created between 3m and 6m ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',   '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":7388}]',
+        },
+        "Spent Outputs 6m-12m":{
+            url: '/v1/metrics/indicators/sol_6m_12m',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-6m-12m',
+            description: 'The total number of spent outputs that were created between 6m and 12m ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m',  '1h',    '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":5812}]'
+        },
+        "Spent Outputs 1y-2y":{
+            url: '/v1/metrics/indicators/sol_1y_2y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-1y-2y',
+            description: 'The total number of spent outputs that were created between 1y and 2y ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":4922}]',
+        },
+        "Spent Outputs 2y-3y":{
+            url: '/v1/metrics/indicators/sol_2y_3y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-2y-3y',
+            description: 'The total number of spent outputs that were created between 2y and 3y ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":2628}]',
+        },
+        "Spent Outputs 3y-5y":{
+            url: '/v1/metrics/indicators/sol_3y_5y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-3y-5y',
+            description: 'The total number of spent outputs that were created between 3y and 5y ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '10m', '1h',    '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":3271}]'
+        },
+        "Spent Outputs 5y-7y":{
+            url: '/v1/metrics/indicators/sol_5y_7y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-5y-7y',
+            description: 'The total number of spent outputs that were created between 5y and 7y ago',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":817}]',
+        },
+        "Spent Outputs 7y-10y":{
+            url: '/v1/metrics/indicators/sol_7y_10y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-7y-10y',
+            description: 'The total number of spent outputs that were created between 7y and 10y ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',   '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":235}]'
+        },
+        "Spent Outputs > 10y":{
+            url: '/v1/metrics/indicators/sol_more_10y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-outputs-greater-than-10y',
+            description: 'The total number of spent outputs that were created more than 10 years ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0}]'
+        },
+        "Spent Volume Age Bands (SVAB)":{
+            url: '/v1/metrics/indicators/svab',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-age-bands-svab',
+            description: 'Spent Volume Age Bands (SVAB) is a separation of the on-chain transfer volume based on the coins\' age. Each band represents the percentage of spent volume that was previously moved within the time period denoted in the legend.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [    '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"o":{"1d_1w":0.159853649794143,"1h":0.415708795800463,"1h_24h":0.29537918812004,"1m_3m":0.0342055486481017,"1w_1m":0.0623956819233631,"1y_2y":0.00457325329569319,"2y_3y":0.0017866922364579,"3m_6m":0.0186408781923728,"3y_5y":0.00371712975354566,"5y_7y":0.000104414942927017,"6m_12m":0.0034481744425942,"7y_10y":0.000186592850296279,"more_10y":0}}]',
+        },
+        "Spent Volume < 1h":{
+            url: '/v1/metrics/indicators/svl_1h',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-less-than-1h',
+            description: 'The total transfer volume of coins younger than one hour.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '10m',  '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":204847.91621909}]'
+        },
+        "Spent Volume 1h-24h":{
+            url: '/v1/metrics/indicators/svl_1h_24h',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-1h-24h',
+            description: 'The total transfer volume of coins that were last active between 1h and 24 hours ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',   '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":145553.35800477}]',
+        },
+        "Spent Volume 1d-1w":{
+            url: '/v1/metrics/indicators/svl_1d_1w',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-1d-1w',
+            description: 'The total transfer volume of coins that were last active between 1d and 1w ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m',  '1h',    '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":78770.7342042001}]'
+        },
+        "Spent Volume 1w-1m":{
+            url: '/v1/metrics/indicators/svl_1w_1m',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-1w-1m',
+            description: 'The total transfer volume of coins that were last active between 1w and 1m ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":30746.5840323598}]',
+        },
+        "Spent Volume 1m-3m":{
+            url: '/v1/metrics/indicators/svl_1m_3m',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-1m-3m',
+            description: 'The total transfer volume of coins that were last active between 1m and 3m ago',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":16855.39356992}]',
+        },
+        "Spent Volume 3m-6m":{
+            url: '/v1/metrics/indicators/svl_3m_6m',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-3m-6m',
+            description: 'The total transfer volume of coins that were last active between 3m and 6m ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '10m', '1h',    '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":9185.62487197001}]'
+        },
+        "Spent Volume 6m-12m":{
+            url: '/v1/metrics/indicators/svl_6m_12m',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-6m-12m',
+            description: 'The total transfer volume of coins that were last active between 6m and 12m ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":1699.14939607}]',
+        },
+        "Spent Volume 1y-2y":{
+            url: '/v1/metrics/indicators/svl_1y_2y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-1y-2y',
+            description: 'The total transfer volume of coins that were last active between 1y and 2y ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '10m',  '1h', '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":2253.55204756}]'
+        },
+        "Spent Volume 2y-3y":{
+            url: '/v1/metrics/indicators/svl_2y_3y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-2y-3y',
+            description: 'The total transfer volume of coins that were last active between 2y and 3y ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',   '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":880.424434749999}]',
+        },
+        "Spent Volume 3y-5y":{
+            url: '/v1/metrics/indicators/svl_3y_5y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-3y-5y',
+            description: 'The total transfer volume of coins that were last active between 3y and 5y ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m',  '1h',    '24h',    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1831.68191778}]'
+        },
+        "Spent Volume 5y-7y":{
+            url: '/v1/metrics/indicators/svl_5y_7y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-5y-7y',
+            description: 'The total transfer volume of coins that were last active between 5y and 7y ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":51.45232359}]',
+        },
+        "Spent Volume 7y-10y":{
+            url: '/v1/metrics/indicators/svl_7y_10y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-7y-10y',
+            description: 'The total transfer volume of coins that were last active between 7y and 10y ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":91.9469516900001}]',
+        },
+        "Spent Volume > 10y":{
+            url: '/v1/metrics/indicators/svl_more_10y',
+            doc_url: 'https://docs.glassnode.com/api/indicators#spent-volume-greater-than-10y',
+            description: 'The total transfer volume of coins that were last active more than 10 years ago.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '10m', '1h',    '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: ['NATIVE', 'USD']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":0}]'
+        },
+        "Bitcoin Volatility Index (BVIN)":{
+            url: '/v1/metrics/indicators/bvin',
+            doc_url: 'https://docs.glassnode.com/api/indicators#bitcoin-volatility-index-bvin',
+            description: 'The Bitcoin Volatility Index (BVIN) is an implied volatility index that also represents the fair value of a bitcoin variance swap. The index is calculated by CryptoCompare using options data from Deribit and has been developed in collaboration with Carol Alexander and Arben Imeraj at the University of Sussex Business School. The index is suitable for use as a settlement price for bitcoin volatility futures',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":1.0701}]',
+        },
+
+
+
+
+        "Investor Capitalization":{
+            url: '/v1/metrics/indicators/investor_capitalization',
+            doc_url: 'https://docs.glassnode.com/api/indicators#investor-capitalization',
+            description: 'Investor Capitalization is the difference of Realized Cap and Thermocap. It discounts the capital paid to miners from the market’s general cost basis, serving as a bottom indicator in bear cycles.',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":259646688229.636}]',
+        },
+        "Realized Profits-to-Value (RPV) Ratio":{
+            url: '/v1/metrics/indicators/realized_profits_to_value_ratio',
+            doc_url: 'https://docs.glassnode.com/api/indicators#realized-profits-to-value-rpv-ratio',
+            description: 'The Realized Profits-to-Value Ratio (RPV) is defined as the ratio of Realized Profits and Realized Cap. This metric compares profit-taking in the market with its overall cost basis on a dollar-to-dollar basis',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '1h',   '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":0.00534804912075168}]',
+        },
+        "Seller Exhaustion Constant":{
+            url: '/v1/metrics/indicators/seller_exhaustion_constant',
+            doc_url: 'https://docs.glassnode.com/api/indicators#seller-exhaustion-constant',
+            description: 'Seller Exhaustion Constant is defined as the product of the Percentage Supply in Profit and 30-day price volatility. It detects when two factors co-align: low volatility and high losses, or, in other words, low risk bottoms',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [     '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"v":0.13053898829337524}]',
+        },
+        "Accumulation Trend Score":{
+            url: '/v1/metrics/indicators/accumulation_trend_score',
+            doc_url: 'https://docs.glassnode.com/api/indicators#accumulation-trend-score',
+            description: 'The Accumulation Trend Score is an indicator that reflects the relative size of entities that are actively accumulating coins on-chain in terms of their BTC holdings. The scale of the Accumulation Trend Score represents both the size of the entities balance (their participation score), and the amount of new coins they have acquired/sold over the last month (their balance change score). An Accumulation Trend Score of closer to 1 indicates that on aggregate, larger entities (or a big part of the network) are accumulating, and a value closer to 0 indicates they are distributing or not accumulating. This provides insight into the balance size of market participants, and their accumulation behavior over the last month',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [     '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"o":{"price":49768.16035012147,"score":0.204466254194098}}]',
+        },
+        "Pi Cycle Top Indicator":{
+            url: '/v1/metrics/indicators/pi_cycle_top',
+            doc_url: 'https://docs.glassnode.com/api/indicators#pi-cycle-top-indicator',
+            description: 'The Pi Cycle indicators is composed of the 111 day moving average (111SMA) and a 2x multiple of the 350 day moving average (350SMA x 2) of Bitcoin\'s price. This metric shows when BTC becomes significantly overheated (the shorter MA reaches the levels of the larger MA), and has historically been a good indicator for cycle tops',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [     '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response:'[{"t":1614556800,"o":{"ma111":30932.94980026362,"ma350x2":33155.397225559085}}]',
+        },
+
+        "Purpose Bitcoin ETF Holdings":{
+            url: '/v1/metrics/institutions/purpose_etf_holdings_sum',
+            doc_url: 'https://docs.glassnode.com/api/institutions#purpose-bitcoin-etf-holdings',
+            description: 'The number of bitcoin in the Purpose Bitcoin ETF. Source: Purpose Investments\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'BTC'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":10673.7143}]'
+        },
+        "Purpose Bitcoin ETF Flows":{
+            url: '/v1/metrics/institutions/purpose_etf_flows_sum',
+            doc_url: 'https://docs.glassnode.com/api/institutions#purpose-bitcoin-etf-flows',
+            description: 'The number of bitcoin flowing from/to the Purpose Bitcoin ETF. Source: Purpose Investments\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'BTC'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":10673.7143}]'
+        },
+
+        "Lightning Network Channel Size (Mean)":{
+            url: '/v1/metrics/lightning/channel_size_mean',
+            doc_url: 'https://docs.glassnode.com/api/lightning#lightning-network-channel-size-mean',
+            description: 'The mean BTC size of of public Lightning Network channels.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'BTC'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.028203547833657694}]'
+        },
+        "Lightning Network Channel Size (Median)":{
+            url: '/v1/metrics/lightning/channel_size_median',
+            doc_url: 'https://docs.glassnode.com/api/lightning#lightning-network-channel-size-median',
+            description: 'The median BTC size of of public Lightning Network channels.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'BTC'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.028203547833657694}]'
+        },
+        "Lightning Network Capacity":{
+            url: '/v1/metrics/lightning/network_capacity_sum',
+            doc_url: 'https://docs.glassnode.com/api/lightning#lightning-network-capacity',
+            description: 'The total amount of BTC locked in the Lightning Network.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'BTC'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1101.40495}]'
+        },
+
+        "Lightning Network Number of Channels":{
+            url: '/v1/metrics/lightning/channels_count',
+            doc_url: 'https://docs.glassnode.com/api/lightning#lightning-network-number-of-channels',
+            description: 'The number of public Lightning Network channels.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'BTC'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":39052}]'
+        },
+        "Lightning Network Number of Nodes":{
+            url: '/v1/metrics/lightning/nodes_count',
+            doc_url: 'https://docs.glassnode.com/api/lightning#lightning-network-number-of-nodes',
+            description: 'The number of Lightning Network nodes.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'BTC'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":9301}]'
+        },
+        "Price":{
+            url: '/v1/metrics/market/price_usd_close',
+            doc_url: 'https://docs.glassnode.com/api/market#price',
+            description: 'The asset\'s closing price in USD.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'BTC'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',   '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":49768.16035012147}]'
+        },
+        "Price OHLC":{
+            url: '/v1/metrics/market/price_usd_ohlc',
+            doc_url: 'https://docs.glassnode.com/api/market#price-ohlc',
+            description: 'OHLC candlestick chart of the asset\'s price in USD.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  default: 'BTC'},
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h',  '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"o":{"c":49768.16035012147,"h":49773.18922304233,"l":45159.50305252744,"o":45159.50305252744}}]'
+        },
+
+        "Price Drawdown from ATH":{
+            url: '/v1/metrics/market/price_drawdown_relative',
+            doc_url: 'https://docs.glassnode.com/api/market#price-drawdown-from-ath',
+            description: 'The percent drawdown of the asset\'s price from the previous all-time high.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',   '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":-0.14679115046064417}]'
+        },
+        "Delta Cap":{
+            url: '/v1/metrics/market/deltacap_usd',
+            doc_url: 'https://docs.glassnode.com/api/market#delta-cap',
+            description: 'Delta Cap is the difference between Realized Cap and Average Cap, where Average Cap is assumed to be the life-to-date moving average of Market Cap. It attempts to detect major market bottoms in Bitcoin cycles',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '1h',  '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":217861878101.77612}]'
+        },
+
+
+        "Market Cap":{
+            url: '/v1/metrics/market/marketcap_usd',
+            doc_url: 'https://docs.glassnode.com/api/market#market-cap',
+            description: 'The market capitalization (or network value) is defined as the product of the current supply by the current USD price.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,   },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: ['10m', '1h',  '24h',   '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":927789865185.0476}]'
+        },
+        "MVRV Ratio":{
+            url: '/v1/metrics/market/mvrv',
+            doc_url: 'https://docs.glassnode.com/api/market#mvrv-ratio',
+            description: 'MVRV is the ratio between market cap and realised cap. It gives an indication of when the traded price is below a “fair value”',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":3.294147583645988}]'
+        },
+        "Realized Cap":{
+            url: '/v1/metrics/market/marketcap_realized_usd',
+            doc_url: 'https://docs.glassnode.com/api/market#realized-cap',
+            description: 'Realized Cap values different part of the supplies at different prices (instead of using the current daily close). Specifically, it is computed by valuing each UTXO by the price when it was last moved.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":281647935202.151}]'
+        },
+        "MVRV Z-Score":{
+            url: '/v1/metrics/market/mvrv_z_score',
+            doc_url: 'https://docs.glassnode.com/api/market#mvrv-z-score',
+            description: 'The MVRV Z-Score is used to assess when Bitcoin is over/undervalued relative to its "fair value". When market value is significantly higher than realized value, it has historically indicated a market top (red zone), while the opposite has indicated market bottoms (green zone). Technically, MVRV Z-Score is defined as the ratio between the difference of market cap and realized cap, and the standard deviation of market cap, i.e. (market cap – realized cap) / std(market cap).\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":5.83559714668574}]'
+        },
+        "Realized Price":{
+            url: '/v1/metrics/market/price_realized_usd',
+            doc_url: 'https://docs.glassnode.com/api/market#realized-price',
+            description: 'Realized Price is the Realized Cap divided by the current supply.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":15108.054234485051}]'
+        },
+        "Difficulty":{
+            url: '/v1/metrics/mining/difficulty_latest',
+            doc_url: 'https://docs.glassnode.com/api/mining#difficulty',
+            description: 'The current estimated number of hashes required to mine a block. Note: Bitcoin difficulty is often denoted as the relative difficulty with respect to the genesis block, which required approximately 2^32 hashes. For better comparison across blockchains, our values are denoted in raw hashes.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',  '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":9.33044489295953e+22}]'
+        },
+        "Hash Rate":{
+            url: '/v1/metrics/mining/hash_rate_mean',
+            doc_url: 'https://docs.glassnode.com/api/mining#hash-rate',
+            description: 'The average estimated number of hashes per second produced by the miners in the network.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',  '1w', '1month'   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":140552942222359000000}]'
+        },
+        "Miner Revenue (Total)":{
+            url: '/v1/metrics/mining/revenue_sum',
+            doc_url: 'https://docs.glassnode.com/api/mining#miner-revenue-total',
+            description: 'The total miner revenue, i.e. fees plus newly minted coins.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',   ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":9.33044489295953e+22}]'
+        },
+        "Miner Revenue (Fees)":{
+            url: '/v1/metrics/mining/revenue_from_fees',
+            doc_url: 'https://docs.glassnode.com/api/mining#miner-revenue-fees',
+            description: 'The percentage of miner revenue derived from fees, i.e. fees divided by fees plus minted coins.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.130398773239728}]'
+        },
+        "Miner Revenue (Block Rewards)":{
+            url: '/v1/metrics/mining/volume_mined_sum',
+            doc_url: 'https://docs.glassnode.com/api/mining#miner-revenue-block-rewards',
+            description: 'The total amount of newly minted coins, i.e. block rewards.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m', '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":812.5}]'
+        },
+        "Thermocap":{
+            url: '/v1/metrics/mining/thermocap',
+            doc_url: 'https://docs.glassnode.com/api/mining#thermocap',
+            description: 'Aggregate security spend, or "Thermocap", is the aggregated amount of coins paid to miners and serves as a proxy to mining resources spent. It serves a measure of the true capital flow into Bitcoin and is computed as the aggregate coinbase transactions multiplied by the price in USD at the time they were mined',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.130398773239728}]'
+        },
+        "Market Cap to Thermocap Ratio":{
+            url: '/v1/metrics/mining/marketcap_thermocap_ratio',
+            doc_url: 'https://docs.glassnode.com/api/mining#market-cap-to-thermocap-ratio',
+            description: 'The Marketcap to Thermocap Ratio is simply defined as Marketcap / Thermocap, and can be used to assess if the asset\'s price is currently trading at a premium with respect to total security spend by miners. The ratio is adjusted to account for the increasing circulating supply over time.\n',
+            params:{
+                a: {description: 'asset symbol ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.0000021637976516006243}]'
+        },
+        "Uniswap Transactions":{
+            url: '/v1/metrics/protocols/uniswap_transaction_count',
+            doc_url: 'https://docs.glassnode.com/api/protocols#uniswap-transactions',
+            description: 'The total number of transactions that contains an interaction within Uniswap contracts. Includes Mint, Burn, and Swap events on the Uniswap core contracts.\n' +
+                'Note: When selecting Ethereum as the asset, the chart shows Uniswap\'s macro view of this metric, i.e. aggregate transaction count across all available assets on Uniswap.',
+            params:{
+                a: {description: 'asset symbol (ETH, AAVE)', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":139771}]'
+        },
+        "Uniswap Liquidity":{
+            url: '/v1/metrics/protocols/uniswap_liquidity_latest',
+            doc_url: 'https://docs.glassnode.com/api/protocols#uniswap-liquidity',
+            description: 'The current liquidity on Uniswap.\n' +
+                'Note: When selecting Ethereum as the asset, the chart shows Uniswap\'s macro view of this metric, i.e. aggregate liquidity across all available assets on Uniswap.',
+            params:{
+                a: {description: 'asset symbol (ETH, AAVE)', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":4143005177.45272}]'
+        },
+        "Uniswap Volume":{
+            url: '/v1/metrics/protocols/uniswap_volume_sum',
+            doc_url: 'https://docs.glassnode.com/api/protocols#uniswap-volume',
+            description: 'The total volume traded on Uniswap.\n' +
+                'Note: When selecting Ethereum as the asset, the chart shows Uniswap\'s macro view of this metric, i.e. aggregate volume across all available trading pairs on Uniswap.',
+            params:{
+                a: {description: 'asset symbol (ETH, AAVE)', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":552566.082082158}]'
+        },
+        "Circulating Supply":{
+            url: '/v1/metrics/supply/current',
+            doc_url: 'https://docs.glassnode.com/api/supply#circulating-supply',
+            description: 'The total amount of all coins ever created/issued, i.e. the circulating supply.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '10m', '1h',  '24h',   '1w', '1month'    ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":18642237.5}]'
+        },
+        "Coin Issuance":{
+            url: '/v1/metrics/supply/issued',
+            doc_url: 'https://docs.glassnode.com/api/supply#issuance',
+            description: 'The total amount of new coins added to the current supply, i.e. minted coins or new coins released to the network.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [  '10m', '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":812.5}]'
+        },
+        "Inflation Rate":{
+            url: '/v1/metrics/supply/inflation_rate',
+            doc_url: 'https://docs.glassnode.com/api/supply#inflation-rate',
+            description: 'The yearly inflation rate, i.e. the percentage of new coins issued, divided by the current supply (annualized).\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.01603495098272356}]'
+        },
+
+        "Supply Last Active < 24h":{
+            url: '/v1/metrics/supply/active_24h',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-less-than-24h',
+            description: 'The amount of circulating supply last moved in the last 24 hours.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":233939.129930867}]'
+        },
+        "Supply Last Active 1d-1w":{
+            url: '/v1/metrics/supply/active_1d_1w',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-1d-1w',
+            description: 'The amount of circulating supply last moved between 1 day and 1 week ago.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":789358.463747983}]'
+        },
+        "Supply Last Active 1w-1m":{
+            url: '/v1/metrics/supply/active_1w_1m',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-1w-1m',
+            description: 'The amount of circulating supply last moved between 1 week and 1 month ago.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1562687.4585108}]'
+        },
+        "Supply Last Active 1m-3m":{
+            url: '/v1/metrics/supply/active_1m_3m',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-1m-3m',
+            description: 'The amount of circulating supply last moved between 1 month and 3 months ago.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":2779665.1789717}]'
+        },
+        "Supply Last Active 3m-6m":{
+            url: '/v1/metrics/supply/active_3m_6m',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-1w-1m',
+            description: 'The amount of circulating supply last moved between 3 months and 6 months ago.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1280272.6049434}]'
+        },
+        "Supply Last Active 6m-12m":{
+            url: '/v1/metrics/supply/active_6m_12m',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-6m-12m',
+            description: 'The amount of circulating supply last moved between 6 months and 12 months ago.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1555726.99288638}]'
+        },
+        "Supply Last Active 1y-2y":{
+            url: '/v1/metrics/supply/active_1y_2y',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-1y-2y',
+            description: 'The amount of circulating supply last moved between 1 year and 2 years ago.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1867493.27412408}]'
+        },
+        "Supply Last Active 2y-3y":{
+            url: '/v1/metrics/supply/active_2y_3y',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-2y-3y',
+            description: 'The amount of circulating supply last moved between 2 years and 3 years ago.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1986381.86580901}]'
+        },
+        "Supply Last Active 3y-5y":{
+            url: '/v1/metrics/supply/active_3y_5y',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-3y-5y',
+            description: 'The amount of circulating supply last moved between 3 years and 5 years ago.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":2521489.65220627}]'
+        },
+
+
+        "Supply Last Active 5y-7y":{
+            url: '/v1/metrics/supply/active_5y_7y',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-5y-7y',
+            description: 'The amount of circulating supply last moved between 5 years and 7 years ago.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":733391.561829753}]'
+        },
+        "Supply Last Active Supply 7y-10y":{
+            url: '/v1/metrics/supply/active_7y_10y',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-supply-7y-10y',
+            description: 'The amount of circulating supply last moved between 7 years and 10 years ago.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1340814.66965948}]'
+        },
+        "Supply Last Active >10y":{
+            url: '/v1/metrics/supply/active_more_10y',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-greater-than-10y',
+            description: 'The amount of circulating supply last moved more than 10 years ago.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1990987.69235172}]'
+        },
+        "HODL Waves":{
+            url: '/v1/metrics/supply/hodl_waves',
+            doc_url: 'https://docs.glassnode.com/api/supply#hodl-waves',
+            description: 'Bundle of all active supply age bands, aka HODL waves. Each colored band shows the percentage of Bitcoin in existence that was last moved within the time period denoted in the legend',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [     '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"o":{"1d_1w":0.0423424743809847,"1m_3m":0.149105770107891,"1w_1m":0.0838251019230284,"1y_2y":0.100175382602227,"24h":0.0125488761706242,"2y_3y":0.106552760408133,"3m_6m":0.0686759089376152,"3y_5y":0.135256814113985,"5y_7y":0.0393403185550958,"6m_12m":0.0834517312037454,"7y_10y":0.0719234839519387,"more_10y":0.106799824449813}}]'
+        },
+
+
+
+
+
+        "Supply Last Active 1+ Years Ago":{
+            url: '/v1/metrics/supply/active_more_1y_percent',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-1+-years-ago',
+            description: 'The percent of circulating supply that has not moved in at least 1 year.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.560048584081162}]'
+        },
+        "Supply Last Active 2+ Years Ago":{
+            url: '/v1/metrics/supply/active_more_2y_percent',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-2+-years-ago',
+            description: 'The percent of circulating supply that has not moved in at least 2 years.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.459873201478951}]'
+        },
+        "Supply Last Active 3+ Years Ago":{
+            url: '/v1/metrics/supply/active_more_3y_percent',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-3+-years-ago',
+            description: 'The percent of circulating supply that has not moved in at least 3 years.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1986381.86580901}]'
+        },
+        "Supply Last Active 5+ Years Ago":{
+            url: '/v1/metrics/supply/active_more_5y_percent',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-last-active-5+-years-ago',
+            description: 'The percent of circulating supply that has not moved in at least 5 years.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":2521489.65220627}]'
+        },
+        "Realized Cap HODL Waves":{
+            url: '/v1/metrics/supply/rcap_hodl_waves',
+            doc_url: 'https://docs.glassnode.com/api/supply#realized-cap-hodl-waves',
+            description: 'HODL Waves weighted by Realized Price',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [      '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"o":{"1d_1w":0.134582222871132,"1m_3m":0.297292774958315,"1w_1m":0.262816514753674,"1y_2y":0.0573075556214347,"24h":0.0401194237139516,"2y_3y":0.0377140693031246,"3m_6m":0.0629451050772352,"3y_5y":0.054150652419221,"5y_7y":0.00116650500732617,"6m_12m":0.0510635207384384,"7y_10y":0.00084085491073546,"more_10y":8.00625458962708e-7}}]'
+        },
+        "Adjusted Supply":{
+            url: '/v1/metrics/supply/current_adjusted',
+            doc_url: 'https://docs.glassnode.com/api/supply#adjusted-supply',
+            description: 'The circulating supply adjusted by accounting for lost coins. The amount of lost coins is estimated by all those that have not moved in over 7 years.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":15265060.6430131}]'
+        },
+        "Supply in Profit":{
+            url: '/v1/metrics/supply/profit_sum',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-in-profit',
+            description: 'The circulating supply in profit, i.e. the amount of coins whose price at the time they last moved was lower than the current price',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":17793885.1168379}]'
+        },
+        "Supply in Loss":{
+            url: '/v1/metrics/supply/loss_sum',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-in-loss',
+            description: 'The circulating supply in loss, i.e. the amount of coins whose price at the time they last moved was higher than the current price',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":835381.97866036}]'
+        },
+        "Percent Supply in Profit":{
+            url: '/v1/metrics/supply/profit_relative',
+            doc_url: 'https://docs.glassnode.com/api/supply#percent-supply-in-profit',
+            description: 'The percentage of circulating supply in profit, i.e. the percentage of existing coins whose price at the time they last moved was lower than the current price',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.955157549978859}]'
+        },
+        "Supply by TxOut Type":{
+            url: '/v1/metrics/supply/supply_by_txout_type',
+            doc_url: 'https://docs.glassnode.com/api/supply#supply-by-txout-type',
+            description: 'This metric breaks down the total Bitcoin supply by transaction output types. Transaction output types, or txout types for short, are determined by the type of Bitcoin script conditions that are used to lock Bitcoin in the output. The most common transaction output types are:\n' +
+                'P2TR (Pay to Taproot): Funds are locked using a 32-byte hash that is either (1) a public key, (2) a combination of multiple public keys, or (3) a script hash. P2WPKH (Pay to Witness Public Key Hash): The SegWit version of P2PKH. P2WSH (Pay to Witness Script Hash): The SegWit version of P2SH. This type comes in two variants. P2SH (Pay to Script Hash): Funds are locked using arbitrary Bitcoin script instructions. P2PKH (Pay to Public Key Hash): The successor of P2PK, locking funds using the hash of a public key. P2PK (Pay to Public Key): The first available type, locking funds using a public key. Other: Serves as catch-all for all outputs whose script instructions don\'t match any of most commonly used output types listed above.',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"o":{"total_other":2678.92223173999,"total_p2pk":1742367.45328664,"total_p2pkh":9771350.33059723,"total_p2sh":5574230.6725032,"total_p2tr":0.00159787,"total_p2wpkh":1220786.16601274,"total_p2wsh":330794.99874156}}]'
+        },
+        "Transaction Count":{
+            url: '/v1/metrics/transactions/count',
+            doc_url: 'https://docs.glassnode.com/api/transactions#transaction-count',
+            description: 'The total amount of transactions. Only successful transactions are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":280355}]'
+        },
+        "Transaction Rate":{
+            url: '/v1/metrics/transactions/rate',
+            doc_url: 'https://docs.glassnode.com/api/transactions#transaction-rate',
+            description: 'The total amount of transactions per second. Only successful transactions are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":3.244849537037037}]'
+        },
+        "Contract Calls (External)":{
+            url: '/v1/metrics/transactions/contract_calls_external_count',
+            doc_url: 'https://docs.glassnode.com/api/transactions#contract-calls-external',
+            description: 'The total number of smart contract calls on the Ethereum network initiated by Externally Owned Addresses (EOAs), i.e. external transactions. Only successful transactions are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [    '1h',  '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":686017}]'
+        },
+        "Contract Calls (Internal)":{
+            url: '/v1/metrics/transactions/contract_calls_internal_count',
+            doc_url: 'https://docs.glassnode.com/api/transactions#contract-calls-internal',
+            description: 'The total number of internal smart contract calls on the Ethereum network, i.e. contract calls initiated by other contracts (internal transactions). Only successful transactions are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":2848362}]'
+        },
+        "Transaction Size (Mean)":{
+            url: '/v1/metrics/transactions/size_mean',
+            doc_url: 'https://docs.glassnode.com/api/transactions#transaction-size-mean',
+            description: 'The mean size of a transaction within the time period (in bytes).\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":624.841889746921}]'
+        },
+
+
+
+
+        "Transaction Size (Total)":{
+            url: '/v1/metrics/transactions/size_sum',
+            doc_url: 'https://docs.glassnode.com/api/transactions#transaction-size-total',
+            description: 'The total size of all transactions within the time period (in bytes).\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":175177548}]'
+        },
+        "Transfer Count":{
+            url: '/v1/metrics/transactions/transfers_count',
+            doc_url: 'https://docs.glassnode.com/api/transactions#transfer-count',
+            description: 'The total amount of transfers. One transaction can trigger one or more transfers. Only successful, non-zero transfers are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [   '10m',  '1h',  '24h', '1w', '1month'      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":540001}]'
+        },
+        "Transfer Rate":{
+            url: '/v1/metrics/transactions/transfers_rate',
+            doc_url: 'https://docs.glassnode.com/api/transactions#transfer-rate',
+            description: 'The total amount of transfers per second. One transaction can trigger one or more transfers. Only successful, non-zero transfers are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":6.250011574074074}]'
+        },
+        "Transfer Volume (Total)":{
+            url: '/v1/metrics/transactions/transfers_volume_sum',
+            doc_url: 'https://docs.glassnode.com/api/transactions#transfer-volume-total',
+            description: 'The total amount of coins transferred on-chain. Only successful transfers are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1783340.7063559}]'
+        },
+        "Transfer Volume (Mean)":{
+            url: '/v1/metrics/transactions/transfers_volume_mean',
+            doc_url: 'https://docs.glassnode.com/api/transactions#transfer-volume-mean',
+            description: 'The mean value of a transfer. Only successful transfers are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1783340.7063559}]'
+        },
+        "Transfer Volume (Median)":{
+            url: '/v1/metrics/transactions/transfers_volume_median',
+            doc_url: 'https://docs.glassnode.com/api/transactions#transfer-volume-median',
+            description: 'The median value of a transfer. Only successful transfers are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h', '1w', '1month'     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1783340.7063559}]'
+        },
+        "Change-Adjusted Volume (Total)":{
+            url: '/v1/metrics/transactions/transfers_volume_adjusted_sum',
+            doc_url: 'https://docs.glassnode.com/api/transactions#change-adjusted-volume-total',
+            description: 'The total amount of coins transferred on-chain, adjusted by change volume. Only successful transfers are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":493208.537957407}]'
+        },
+        "Change-Adjusted Volume (Mean)":{
+            url: '/v1/metrics/transactions/transfers_volume_adjusted_mean',
+            doc_url: 'https://docs.glassnode.com/api/transactions#change-adjusted-volume-mean',
+            description: 'The mean amount of coins transferred on-chain, adjusted by change volume. Only successful transfers are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1.76998025478891}]'
+        },
+        "Change-Adjusted Volume (Median)":{
+            url: '/v1/metrics/transactions/transfers_volume_adjusted_median',
+            doc_url: 'https://docs.glassnode.com/api/transactions#change-adjusted-volume-median',
+            description: 'The median amount of coins transferred on-chain, adjusted by change volume. Only successful transfers are counted.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":1.76998025478891}]'
+        },
+        "Inter-Exchange Transfers":{
+            url: '/v1/metrics/transactions/transfers_between_exchanges_count',
+            doc_url: 'https://docs.glassnode.com/api/transactions#inter-exchange-transfers',
+            description: 'The total count of transfers between exchanges. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":8663}]'
+        },
+        "Inter-Exchange Volume":{
+            url: '/v1/metrics/transactions/transfers_volume_between_exchanges_sum',
+            doc_url: 'https://docs.glassnode.com/api/transactions#inter-exchange-volume',
+            description: 'The total amount of coins transferred between exchanges. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":21588.6462354585}]'
+        },
+
+
+
+
+        "Exchange Inflow Volume (Mean)":{
+            url: '/v1/metrics/transactions/transfers_volume_to_exchanges_mean',
+            doc_url: 'https://docs.glassnode.com/api/transactions#exchange-inflow-volume-mean',
+            description: 'The mean value of a transfer to exchanges addresses. Only successful transfers are counted. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.6147247372451271}]'
+        },
+        "Exchange Outflow Volume (Mean)":{
+            url: '/v1/metrics/transactions/transfers_volume_from_exchanges_mean',
+            doc_url: 'https://docs.glassnode.com/api/transactions#exchange-outflow-volume-mean',
+            description: 'The mean value of a transfer from exchanges addresses. Only successful transfers are counted. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":0.7272150246853516}]'
+        },
+        "Exchange Netflow Volume":{
+            url: '/v1/metrics/transactions/transfers_volume_exchanges_net',
+            doc_url: 'https://docs.glassnode.com/api/transactions#exchange-netflow-volume',
+            description: 'The difference of in volume flowing into exchanges and out of exchanges, i.e. the net flow of coins into/out of exchanges. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',     ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":-7728.4047220868015}]'
+        },
+        "Exchange Deposits":{
+            url: '/v1/metrics/transactions/transfers_to_exchanges_count',
+            doc_url: 'https://docs.glassnode.com/api/transactions#exchange-deposits',
+            description: 'The total count of transfers to exchange addresses, i.e. the number of on-chain deposits to exchanges. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":78290}]'
+        },
+        "Exchange Withdrawals":{
+            url: '/v1/metrics/transactions/transfers_from_exchanges_count',
+            doc_url: 'https://docs.glassnode.com/api/transactions#exchange-withdrawals',
+            description: 'The total count of transfers from exchange addresses, i.e. the number of on-chain withdrawals from exchanges. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":76807}]'
+        },
+        "Exchange Inflow Volume (Total)":{
+            url: '/v1/metrics/transactions/transfers_volume_to_exchanges_sum',
+            doc_url: 'https://docs.glassnode.com/api/transactions#exchange-inflow-volume-total',
+            description: 'The total amount of coins transferred to exchange addresses. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":48126.799678921}]'
+        },
+        "Exchange Outflow Volume (Total)":{
+            url: '/v1/metrics/transactions/transfers_volume_from_exchanges_sum',
+            doc_url: 'https://docs.glassnode.com/api/transactions#exchange-outflow-volume-total',
+            description: 'The total amount of coins transferred from exchange addresses. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":55855.2044010078}]'
+        },
+        "In-house Exchange Volume":{
+            url: '/v1/metrics/transactions/transfers_volume_within_exchanges_sum',
+            doc_url: 'https://docs.glassnode.com/api/transactions#in-house-exchange-volume',
+            description: 'The total amount of coins transferred within wallets of the same exchange. Note that exchange metrics are based on our labeled data of exchange addresses that we constantly keep updating, as well as data science techniques and statistical information that changes over time. Therefore these metrics are mutable – the data is stable, but especially most recent data points are subject to slight fluctuations as time progresses.\n',
+            params:{
+                a: {description: 'asset symbol  ', required: true,  },
+                s: {description: 'since, unix timestamp', type: 'number'},
+                u: {description: 'until, unix timestamp', type: 'number'},
+                i: {description: 'frequency interval', possible: [ '10m',  '1h',  '24h',      ]},
+                f: {description: 'format', possible: ['JSON', 'CSV']},
+                c: {description: 'currency', possible: [ 'NATIVE', 'USD'  ]},
+                e: {description: 'exchange name', possible: ['aggregated', 'binance', 'bittrex', 'coinex', 'gate.io', 'gemini', 'huobi', 'kucoin', 'poloniex', 'bibox', 'bigone', 'bitfinex', 'coinbase', 'hitbtc', 'kraken', 'okex', 'bithumb', 'zb.com', 'cobinhood', 'bitmex', 'bitstamp', 'coincheck', 'ftx', 'luno']},
+
+                timestamp_format: {description: 'timestamp format', possible: ['unix', 'humanized (RFC 3339)']}
+            },
+            sample_response: '[{"t":1614556800,"v":170151.612887479}]'
+        },
+    }
 }
 
 
