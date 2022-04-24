@@ -1,5 +1,5 @@
 var link = 'https://52d0-100-1-255-113.ngrok.io'
-// var link = 'https://finsheet.io'
+var link = 'https://finsheet.io'
 console.log(link)
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
