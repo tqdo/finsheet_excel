@@ -16,15 +16,44 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
     return [["Please login using the sidebar"]];
   }
 
-  if (!ticker) {
-    return [["Symbol cannot be empty"]];
+  // Check if just 1 cell 1 ticker convert the array to string
+  console.log('ticker', ticker)
+  if(Array.isArray(ticker)){
+    if(!Array.isArray(ticker[0])  ){
+      ticker = ticker[0]
+    } else if(ticker.length === 1 && ticker[0].length === 1){
+      ticker = ticker[0][0]
+    }
   }
-  if (typeof ticker !== "string") {
-    return [["Symbol has to be a string"]];
-  }
-  if(ticker.includes(",") || ticker.includes(";")){return ["Invalid symbol"]}
 
-  ticker = ticker.toUpperCase();
+  var unique_tickers = {}
+  console.log('ticker', ticker)
+  if(!Array.isArray(ticker)){  // Do these checks if ticker is just one value (from FS_EquityFullFinancials)
+    if (!ticker) {
+      return [["Symbol cannot be empty"]];
+    }
+    if (typeof ticker !== "string") {
+      return [["Symbol has to be a string"]];
+    }
+    if(ticker.includes(",") || ticker.includes(";")){return ["Invalid symbol"]}
+    ticker = ticker.toUpperCase();
+  } else {      // This is from FS_EquityMetrics
+    if(limit !== undefined && limit !== 1 && limit !== ""  ){
+      return [['To get data for multiple stocks, limit has to be 1 or empty.']]
+    }
+
+    for(let sub_arr of ticker){
+      for(let tick of sub_arr){
+        if(tick){
+          unique_tickers[tick] = 1
+        }
+      }
+    }
+    if(Object.keys(unique_tickers).length < 1){return [['Symbols cannot be empty']]}
+    if(Object.keys(unique_tickers).length > 100){return [['Too many symbols, maximum is 100 each time.']]}
+  }
+
+
   if (!metric) {
     return [["Metric cannot be empty"]];
   }
@@ -33,6 +62,9 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   if (!(metric in map_excel_name_to_id) && !["bs", "cf", "ic"].includes(metric)) {
     return [["Unsupported metric"]];
   }
+
+  if(metric === 'price_latest' && Array.isArray(ticker)  ){return [['This metric does not support multiple symbols at the same time.']]}
+
   if (freq === "") {
     freq = undefined;
   }
@@ -97,7 +129,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   }
   /// If not applicable, set limit = undefined (avoid getting useless output from Go and make it convenient to process data later)
   else if (!is_full_statement) {
-    limit = undefined;
+    limit = 'undefined';
   }
   //// Prepare stuff to send to Go
   var prepare = {};
@@ -115,16 +147,19 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
         ["", ""],
         ticker,
         [metric_full_info],
-        [ticker]
+        Array.isArray(ticker) ? Object.keys(unique_tickers) : [ticker]
     );
   }
-  prepare = { ...prepare, ...{ ticker: ticker, metric: id, freq: freq, api_key: api_key, limit: limit , is_full_statement: is_full_statement ? "y" : "n" } };
+  prepare = { ...prepare, ...{ ticker: (Array.isArray(ticker)  ? '[' + Object.keys(unique_tickers).length.toString() : ticker), metric: id,
+      freq: freq, api_key: api_key, limit: limit ? limit.toString() : 'undefined' , is_full_statement: is_full_statement ? "y" : "n" } };
   if (id == 206) {
     prepare["is_latest_price"] = "1";
   }
+  console.log('ticker', ticker)
   //// Now get data
-  const url = link + "/excel/standard?" + new URLSearchParams(prepare).toString()
-  const response = await fetch(url);
+  var urlParams = {api_key: api_key, limit: limit, is_full_statement: is_full_statement ? "y" : "n", freq: freq}
+  const url = link + "/excel/standard?" + new URLSearchParams(urlParams).toString()
+  const response = await fetch(url, {method: 'POST', body: JSON.stringify(prepare)});
 
   if (!response.ok) {
     var error = await response.text()
@@ -133,14 +168,217 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
     catch (e) {return [['Rate limit reached. Please try again later.']]}
   }
   var json = await response.json()
-  // console.log(response, json)
+  console.log( json)
   if('message' in json){return [[json.message]]}
-  return handle_receive_AR_EQUITY(json, is_full_statement, id);
+  return handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers);
 }
+// async function equityHelper(symbol, metric, period = undefined, limit = undefined) {
+//   // return [["Please login using the sidebar"]];
+//   // console.log(123)
+//
+//   if (period == null) { period = undefined}
+//   if (limit == null) { limit = undefined }
+//   var api_key = readCookie("finsheet_api_key");
+//   // console.log(api_key)
+//   var freq = period;
+//   var ticker = symbol;
+//
+//   if (!api_key) {
+//     return [["Please login using the sidebar"]];
+//   }
+//
+//   if (!ticker) {
+//     return [["Symbol cannot be empty"]];
+//   }
+//   if (typeof ticker !== "string") {
+//     return [["Symbol has to be a string"]];
+//   }
+//   if(ticker.includes(",") || ticker.includes(";")){return ["Invalid symbol"]}
+//   ticker = ticker.toUpperCase();
+//
+//
+//
+//   if (!metric) {
+//     return [["Metric cannot be empty"]];
+//   }
+//   metric = metric.toLowerCase();
+//
+//   if (!(metric in map_excel_name_to_id) && !["bs", "cf", "ic"].includes(metric)) {
+//     return [["Unsupported metric"]];
+//   }
+//   if (freq === "") {
+//     freq = undefined;
+//   }
+//
+//   if (typeof freq !== "string" && typeof freq !== "undefined") {
+//     return [["Period has to be a string"]];
+//   }
+//   if (limit === "") {
+//     limit = undefined;
+//   }
+//   if (typeof limit !== "number" && typeof limit !== "undefined") {
+//     return [["Limit has to be a positive integer"]];
+//   }
+//   if (typeof limit !== "undefined" && limit <= 0) {
+//     return [["Limit has to be a positive integer"]];
+//   }
+//   ////// Check if frequency is valid
+//   var id = metric in map_excel_name_to_id ? map_excel_name_to_id[metric] : metric;
+//   var is_full_statement = ["bs", "cf", "ic"].includes(id);
+//
+//   // First if the freq is undefined and this metric has default freq, set to default
+//   if (freq === undefined && (is_full_statement || map_metrics[id].default_freq)) {
+//     if ([ "cf", "ic"].includes(id)) {
+//       freq = "TTM";
+//     } else if(id === 'bs'){
+//       freq = "Q"
+//     } else {
+//       freq = map_metrics[id].default_freq;
+//     }
+//   }
+//   // Next if user submit a freq but this metric has no freq (like price, share count...), then report error
+//   else if (!is_full_statement && !map_metrics[id].default_freq && freq !== undefined) {
+//     return [["This metric does not support periods"]];
+//   }
+//
+//   // Now check whether the freq users enter is valid or not
+//   else if (freq !== undefined) {
+//     freq = freq.toUpperCase();
+//
+//     if (["bs", "ic"].includes(id) && freq.includes("YTD")) {
+//       return [["Period YTD is only available for cf"]];
+//     }
+//     if (id === "bs" && freq.includes("TTM")) {
+//       return [["Period TTM is only available for ic and cf"]];
+//     }
+//
+//     if (is_full_statement) {
+//       var supported_freq = id === "cf" ? ["FY", "TTM", "Q", "YTD"] : id === "bs" ? ["FY", "Q"] : ["FY", "TTM", "Q"];
+//       freq = isValidFreq_returnCleanString(freq, supported_freq, "TTM", id);
+//     } else if (map_metrics[id].default_freq) {
+//       freq = isValidFreq_returnCleanString(freq, map_metrics[id].supported_freq, map_metrics[id].default_freq, id);
+//     } else {
+//       freq = false;
+//     }
+//     if (freq === false) {
+//       return [["Invalid period"]];
+//     }
+//   }
+//   ///// Combine limit with freq to become series freq if applicable
+//   if (!is_full_statement && ["TTM", "FY", "Q", "YTD"].includes(freq) && limit && limit > 1) {
+//     freq += "@" + limit;
+//   }
+//   /// If not applicable, set limit = undefined (avoid getting useless output from Go and make it convenient to process data later)
+//   else if (!is_full_statement) {
+//     limit = undefined;
+//   }
+//   //// Prepare stuff to send to Go
+//   var prepare = {};
+//   if (!is_full_statement) {
+//     var metric_full_info = { field_code: id };
+//     if (freq !== "-1" && freq !== "" && freq !== undefined) {
+//       metric_full_info["period"] = freq;
+//     }
+//     prepare = generate_query(
+//         1,
+//         "watchlist",
+//         [],
+//         [metric_full_info],
+//         [],
+//         ["", ""],
+//         ticker,
+//         [metric_full_info],
+//         [ticker]
+//     );
+//   }
+//   prepare = { ...prepare, ...{ ticker: ticker, metric: id, freq: freq, api_key: api_key, limit: limit , is_full_statement: is_full_statement ? "y" : "n" } };
+//   if (id == 206) {
+//     prepare["is_latest_price"] = "1";
+//   }
+//   //// Now get data
+//   const url = link + "/excel/standard?" + new URLSearchParams(prepare).toString()
+//   const response = await fetch(url);
+//
+//   if (!response.ok) {
+//     var error = await response.text()
+//     // console.log("err", error)
+//     try{return [[JSON.parse(error).error]]}
+//     catch (e) {return [['Rate limit reached. Please try again later.']]}
+//   }
+//   var json = await response.json()
+//   // console.log(response, json)
+//   if('message' in json){return [[json.message]]}
+//   return handle_receive_AR_EQUITY(json, is_full_statement, id);
+// }
+
+/**
+ * @customfunction FS_TEST FS_Test
+ * @param symbol {string[][]} Stock Symbol.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_Test(symbol){
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if(!symbol){return [[""]]}
+  var ticker = symbol
+
+
+  if(Array.isArray(ticker)){
+    if(!Array.isArray(ticker[0])  ){
+      ticker = ticker[0]
+    } else if(ticker.length === 1 && ticker[0].length === 1){
+      ticker = ticker[0][0]
+    }
+  }
+
+  if(!Array.isArray(ticker)){
+    ticker = [[ticker]]
+  } else {// todo: for now only allow 1 ticker, in the future when find a way to get latest price efficiently for multi stocks then
+          //       allow multi stocks
+    return [['Multiple tickers are not allowed.']]
+  }
+
+  var unique_tickers = {}
+  for(let sub_arr of ticker){
+    for(let tick of sub_arr){
+      if(tick){
+        unique_tickers[tick] = 1
+      }
+    }
+  }
+
+  if(Object.keys(unique_tickers).length < 1){return [['Symbols cannot be empty']]}
+  if(Object.keys(unique_tickers).length > 100){return [['Too many symbols, maximum is 100 each time.']]}
+
+
+  //// Now get data
+  var prepare = {ticker: Object.keys(unique_tickers), api_key: api_key, is_gs: "y" }
+
+  var urlParams = {  api_key: api_key, }
+  const url = link + "/excel/latest?" + new URLSearchParams(urlParams).toString()
+  const response = await fetch(url, {method: 'POST', body: JSON.stringify(prepare)});
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+
+  return [[json.data]]
+}
+
 
 /**
  * @customfunction FS_EQUITYMETRICS FS_EquityMetrics
- * @param symbol {string} Stock Symbol.
+ * @param symbol {string[][]} Stock Symbol.
  * @param metric {string} Metric.
  * @param [period] {string} Period (optional).
  * @param [limit] {number} Limit (optional, default to 1).
@@ -630,7 +868,7 @@ async function FS_MutualFundHoldings(symbol, skip){
 
 /**
  * @customfunction FS_LATEST FS_Latest
- * @param symbol {string} Symbol.
+ * @param symbol {string[][]} Symbol.
  * @returns {string[][]} Result array.
  * ...
  */
@@ -638,13 +876,43 @@ async function FS_Latest(symbol, ){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if(!symbol){return [[""]]}
-  if(typeof symbol !== 'string'){return [['Symbol has to be a string']]}
-  symbol = symbol.toUpperCase()
+  var ticker = symbol
+
+
+  if(Array.isArray(ticker)){
+    if(!Array.isArray(ticker[0])  ){
+      ticker = ticker[0]
+    } else if(ticker.length === 1 && ticker[0].length === 1){
+      ticker = ticker[0][0]
+    }
+  }
+
+  if(!Array.isArray(ticker)){
+    ticker = [[ticker]]
+  } else {// todo: for now only allow 1 ticker, in the future when find a way to get latest price efficiently for multi stocks then
+          //       allow multi stocks
+    return [['Multiple tickers are not allowed.']]
+  }
+
+  var unique_tickers = {}
+  for(let sub_arr of ticker){
+    for(let tick of sub_arr){
+      if(tick){
+        unique_tickers[tick] = 1
+      }
+    }
+  }
+
+  if(Object.keys(unique_tickers).length < 1){return [['Symbols cannot be empty']]}
+  if(Object.keys(unique_tickers).length > 100){return [['Too many symbols, maximum is 100 each time.']]}
+
 
   //// Now get data
-  var prepare = {ticker: symbol, api_key: api_key, }
-  const url = link + "/excel/latest?" + new URLSearchParams(prepare).toString()
-  const response = await fetch(url);
+  var prepare = {ticker: Object.keys(unique_tickers), api_key: api_key, is_gs: "y" }
+
+  var urlParams = {  api_key: api_key, }
+  const url = link + "/excel/latest?" + new URLSearchParams(urlParams).toString()
+  const response = await fetch(url, {method: 'POST', body: JSON.stringify(prepare)});
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {

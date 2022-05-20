@@ -1,11 +1,28 @@
 {
     "functions": [
         {
+            "id": "FS_TEST",
+            "name": "FS_Test",
+            "parameters": [
+                {
+                    "description": "Stock Symbol.",
+                    "dimensionality": "matrix",
+                    "name": "symbol",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
             "id": "FS_EQUITYMETRICS",
             "name": "FS_EquityMetrics",
             "parameters": [
                 {
                     "description": "Stock Symbol.",
+                    "dimensionality": "matrix",
                     "name": "symbol",
                     "type": "string"
                 },
@@ -333,6 +350,7 @@
             "parameters": [
                 {
                     "description": "Symbol.",
+                    "dimensionality": "matrix",
                     "name": "symbol",
                     "type": "string"
                 }

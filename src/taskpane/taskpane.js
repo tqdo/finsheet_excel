@@ -1,4 +1,4 @@
-var link = 'https://52d0-100-1-255-113.ngrok.io'
+var link = 'https://c7e8-100-1-255-113.ngrok.io'
 var link = 'https://finsheet.io'
 // Todo: uncomment Finsheet url
 console.log(link)
@@ -665,7 +665,7 @@ function changeNewSymbol() {
   if (!input) {
     return;
   }
-  fetch("https://valueinvesting.io/get_some_companies?val=" + input).then(function(response) {
+  fetch(link + "/search_symbols?which=stock&val=" + input).then(function(response) {
     if (response.ok) {
       return response.json().then(function(json) {
         // console.log(json);
@@ -1392,7 +1392,7 @@ function isValidFreq_returnCleanString(string, supported_freq = ["FY", "TTM", "Q
   return string;
 }
 
-function handle_receive_AR_EQUITY(json, is_full_statement, id) {
+function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers) {
   if ("message" in json) {
     return [[json.message ? json.message : 'Something went wrong, please try again']];
   }
@@ -1407,11 +1407,50 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id) {
       return [["No data"]];
     }
 
-    // If only has 1 value in json.data meaning not series, simply return it
-    if (Object.keys(json.data).length == 1) {
-      for (var key of Object.keys(json.data)) {
-        if(key=== "39_-1"){return  [["No data"]];}
-        return [[json.data[key]]];
+    // // If only has 1 value in json.data meaning not series, simply return it
+    // if (Object.keys(json.data).length == 1) {
+    //   for (var key of Object.keys(json.data)) {
+    //     if(key=== "39_-1"){return  [["No data"]];}
+    //     return [[json.data[key]]];
+    //   }
+    // }
+    // If only has 1 value in json.data meaning not series, simply return it (check whether ticker is an array, handle appropriately)
+    if(Array.isArray(ticker)){
+      // Handle each ticker (we have multiple tickers)
+      let to_return = zeros([ticker.length, ticker[0].length], 'No data')
+      let position_of_each_ticker = {}
+      for(let tic of Object.keys(unique_tickers)){position_of_each_ticker[tic] = {}}
+      for(let i=0;i<ticker.length;i++){
+        for(let j=0;j<ticker[0].length;j++){
+          if(ticker[i][j] in  position_of_each_ticker){
+            position_of_each_ticker[ticker[i][j]][i + '@' + j] = 1
+          }
+          // If ticker at that slot is empty, change No data to ''
+          if(!ticker[i][j]){to_return[i][j] = ''}
+        }
+      }
+      for(let tic of Object.keys(json.data)){
+        if(position_of_each_ticker[tic] && json.data[tic] && Object.keys(json.data[tic]).length == 1){
+          for(let key of Object.keys(json.data[tic])){
+            if(key !== "39_-1"){
+              let value = json.data[tic][key]
+              // Populate all cells of this ticker
+              for(let pos_str of Object.keys(position_of_each_ticker[tic])){
+                let pos_arr = pos_str.split('@')
+                to_return[pos_arr[0]][pos_arr[1]] = value
+              }
+            }
+          }
+        }
+      }
+      return to_return
+    } else {
+      console.log(json.data)
+      if(Object.keys(json.data).length == 1){
+        for(var key of Object.keys(json.data)){
+          if(key=== "39_-1"){return  [["No data"]]}
+          return [[json.data[key]]]
+        }
       }
     }
 
@@ -2054,6 +2093,18 @@ function goToAccountPage(e){
   window.open('https://finsheet.io/account', '_blank').focus();
 
 }
+
+function zeros(dimensions,val=0) {
+  var array = [];
+
+  for (var i = 0; i < dimensions[0]; ++i) {
+    array.push(dimensions.length === 1 ? val : zeros(dimensions.slice(1),val));
+  }
+
+  return array;
+}
+
+
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
 // $("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});
