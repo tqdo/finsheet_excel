@@ -1557,6 +1557,10 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
 
 async function refresh_all_sheets_js(){
   await Excel.run(function (context) {
+    // Replace for screener
+    let this_sheet = context.workbook.worksheets.getActiveWorksheet();
+    this_sheet.replaceAll('=@FS_EquityMetrics', '=FS_EquityMetrics', { completeMatch: false});
+
     var ss = context.workbook.worksheets;
     ss.load("items");
     return context.sync().then(function () {
@@ -1575,6 +1579,9 @@ async function refresh_1_sheet_js(sheet){
     var range = sheet.getUsedRange(true);
     // range.load("formulas");
     range.calculate()
+
+    // Replace for screener
+    sheet.replaceAll('=@FS_EquityMetrics', '=FS_EquityMetrics', { completeMatch: false});
 
     return context.sync().then(function () { });
   })
