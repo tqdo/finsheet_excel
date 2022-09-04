@@ -673,7 +673,7 @@ function changeNewSymbol() {
           all_symbols.append(
               `<div class="one_filter_suggestion pointer" id="${dic.tickers}" onmousedown="clickSymbol('${dic.tickers +
               "__" +
-              dic.comp_name}')"><div style="display: inline; color: #2cbd54">${dic.tickers}</div>${" - " +
+              dic.comp_name + '__' + dic.exchange}')"><div style="display: inline; color: #2cbd54">${dic.tickers}</div>${" - " +
               dic.comp_name}</div>`
           );
         }
@@ -714,6 +714,7 @@ function clickSymbol(str) {
   $(".symbol_wrap").css({ display: "block" });
   $("#symbol_result").text(arr[0]);
   $("#comp_name_result").text(arr[1]);
+  $("#comp_exchange").text(arr[2]);
   $("#symbol_input").val("");
 }
 

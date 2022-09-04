@@ -1992,13 +1992,13 @@ async function FS_BondTick(isin,   date= undefined, limit = undefined, ){
   var data = json.data
 
   var data_to_return = [['Period',  'Price', 'Volume', 'Side']]
-  if (!data.c) { return [['No data']] }
-  if(data.c.constructor === Array){
-    for(var i=0;i<data.c.length;i++){
+  if (!data.p) { return [['No data']] }
+  if(data.p.constructor === Array){
+    for(var i=0;i<data.p.length;i++){
       data_to_return.push([
         data.t && data.t[i] ? new Date(data.t[i] ) : '',
         data.p[i] ? data.p[i] : '',
-        data.v && data.v[i] ? data.v[i] : '',
+        data.v && (data.v[i] || data.v[i] == 0) ? data.v[i] : '',
         data.si && data.si[i] ? (data.si[i].toString() === '1' ? 'Buy' : 'Sell') : '',
       ])
     }
