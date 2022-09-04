@@ -548,6 +548,87 @@
                 "dimensionality": "matrix",
                 "type": "string"
             }
+        },
+        {
+            "id": "FS_BONDCANDLES",
+            "name": "FS_BondCandles",
+            "parameters": [
+                {
+                    "description": "ISIN of bind.",
+                    "name": "isin",
+                    "type": "string"
+                },
+                {
+                    "description": "From.",
+                    "name": "from",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "To (optional).",
+                    "name": "to",
+                    "optional": true,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_BONDTICK",
+            "name": "FS_BondTick",
+            "parameters": [
+                {
+                    "description": "ISIN of bind.",
+                    "name": "isin",
+                    "type": "string"
+                },
+                {
+                    "description": "date.",
+                    "name": "date",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "limit (optional).",
+                    "name": "limit",
+                    "optional": true,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_FUTURESCANDLES",
+            "name": "FS_FuturesCandles",
+            "parameters": [
+                {
+                    "description": "Futures Contract Symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "From.",
+                    "name": "from",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "To (optional).",
+                    "name": "to",
+                    "optional": true,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
         }
     ]
 }

@@ -1838,4 +1838,183 @@ async function FS_Api(provider, endpoint, parameters=[]) {
 }
 
 
+/**
+ * @customfunction FS_BONDCANDLES FS_BondCandles
+ * @param isin {string} ISIN of bind.
+ * @param from {string} From.
+ * @param [to] {string} To (optional).
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_BondCandles(isin,   from= undefined, to = undefined, ){
+  if (to == null) { to = undefined }
+  var symbol = isin
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if (!symbol) { return [["ISIN cannot be empty"]] }
+  if (typeof symbol !== 'string') { return [['ISIN has to be a string']] }
+  symbol = symbol.toUpperCase()
 
+  //// Check from
+  if(!from){return [["'from' cannot be empty"]]}
+
+  // Handle unix time
+  if(typeof from == 'number' || !isNaN(from)){
+    if(from < 73000){
+      from = (from -25569)*86400
+    }
+    from = Math.round(from)
+  }
+  // Now convert string/Date object or whatever input user gives.
+  else{
+    from = Date.parse(from) / 1000
+    if(isNaN(from) || from < 0) return [["Invalid 'from'"]]
+  }
+
+  //// Check to
+  if(to == '' || to === undefined){
+    to = current_time
+  }
+  // Handle unix time
+  else if(typeof to == 'number' || !isNaN(to)){
+    if(to < 73000){
+      to = (to -25569)*86400
+    }
+    to = Math.round(to)
+  }
+  // Now convert string/Date object or whatever input user gives.
+  else{
+    to = Date.parse(to) / 1000
+    if(isNaN(to) || to < 0) return [["Invalid 'to'"]]
+  }
+  if(to <=from){return [["'to' has to be after 'from'"]]}
+  console.log(from ,to)
+  //// Send and get data
+  var prepare = { ticker: symbol,  from: from, to: to, api_key: api_key,   }
+
+
+  //// Now get data
+  const url = link + "/excel/bond_candles?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data
+
+  var data_to_return = [['Period',   'Close' ]]
+  if (!data.c) { return [['No data']] }
+  if(data.c.constructor === Array){
+    for(var i=0;i<data.c.length;i++){
+      data_to_return.push([
+        data.t && data.t[i] ? new Date(data.t[i] * 1000) : '',
+        data.c[i] ? data.c[i] : '',
+      ])
+    }
+  }
+  if (data_to_return.length < 2) { return [['No data']] }
+  return data_to_return
+}
+
+
+/**
+ * @customfunction FS_BONDTICK FS_BondTick
+ * @param isin {string} ISIN of bind.
+ * @param date {string} date.
+ * @param [limit] {string} limit (optional).
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_BondTick(isin,   date= undefined, limit = undefined, ){
+  var symbol = isin, from = date
+  if (to == null) { to = undefined }
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if (!symbol) { return [["ISIN cannot be empty"]] }
+  if (typeof symbol !== 'string') { return [['ISIN has to be a string']] }
+  symbol = symbol.toUpperCase()
+
+
+
+  //// Check from
+  if(!from){return [["'date' cannot be empty"]]}
+
+  // Handle unix time
+  if(typeof from == 'number' || !isNaN(from)){
+    if(from < 73000){
+      from = (from -25569)*86400
+    }
+    from = Math.round(from)
+  }
+  // Now convert string/Date object or whatever input user gives.
+  else{
+    from = Date.parse(from) / 1000
+    if(isNaN(from) || from < 0) return [["Invalid 'date'"]]
+  }
+
+  // Convert timestamp to date format to use with Finnhub
+  from = new Date(from * 1000)
+  const offset = from.getTimezoneOffset()
+  from = new Date(from.getTime() - (offset*60*1000))
+  from =  from.toISOString().split('T')[0]
+
+  //// Send and get data
+  var prepare = { ticker: symbol,   from: from, limit: limit.toString(), api_key: api_key,   }
+
+
+  //// Now get data
+  const url = link + "/excel/bond_tick?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data
+
+  var data_to_return = [['Period',  'Price', 'Volume', 'Side']]
+  if (!data.c) { return [['No data']] }
+  if(data.c.constructor === Array){
+    for(var i=0;i<data.c.length;i++){
+      data_to_return.push([
+        data.t && data.t[i] ? new Date(data.t[i] ) : '',
+        data.p[i] ? data.p[i] : '',
+        data.v && data.v[i] ? data.v[i] : '',
+        data.si && data.si[i] ? (data.si[i].toString() === '1' ? 'Buy' : 'Sell') : '',
+      ])
+    }
+  }
+  if (data_to_return.length < 2) { return [['No data']] }
+  return data_to_return
+}
+
+/**
+ * @customfunction FS_FUTURESCANDLES FS_FuturesCandles
+ * @param symbol {string} Futures Contract Symbol.
+ * @param from {string} From.
+ * @param [to] {string} To (optional).
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_FuturesCandles(symbol,   from= undefined, to = undefined, ){
+  return candlesHelper(symbol, "D", from, to , "future" )
+}
