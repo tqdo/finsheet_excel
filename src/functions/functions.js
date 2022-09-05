@@ -501,7 +501,9 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
         data.h && data.h[i] ? data.h[i] : '',
         data.l && data.l[i] ? data.l[i] : '',
         data.c[i] ? data.c[i] : '',
-        data.v && data.v[i] ? data.v[i] : '',
+        // data.v && data.v[i] ? data.v[i] : '',
+        data.v && (data.v[i] || (data.v[i] == 0 && which === 'future')) ? data.v[i] : '',
+
       ])
     }
   } else { // This result is from Quote (get the latest)
