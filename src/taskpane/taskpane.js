@@ -654,34 +654,25 @@ function onFocusNewFilter() {
   changeNewFilterName();
 }
 
-function onFocusNewSymbol() {
-  $("#symbol_dropdown").css({ display: "block" });
+function onFocusNewSymbol(which='stock'){
+  $(which == 'stock' ? "#symbol_dropdown" : '#future_symbol_dropdown').css({ display: "block" });
 }
 
-function changeNewSymbol() {
-  var input = $("#symbol_input").val();
-  var all_symbols = $(".all_symbols");
+function changeNewSymbol(which='stock'){
+  var input = $(which == 'future' ? "#future_symbol_input" : "#symbol_input").val()
+  var all_symbols = $('.all_symbols' + (which == 'future' ? '_future' : ''))
   all_symbols.empty();
-  if (!input) {
-    return;
-  }
-  fetch(link + "/search_symbols?which=stock&val=" + input).then(function(response) {
-    if (response.ok) {
-      return response.json().then(function(json) {
-        // console.log(json);
-        for (var dic of json.data) {
-          all_symbols.append(
-              `<div class="one_filter_suggestion pointer" id="${dic.tickers}" onmousedown="clickSymbol('${dic.tickers +
-              "__" +
-              dic.comp_name + '__' + dic.exchange}')"><div style="display: inline; color: #2cbd54">${dic.tickers}</div>${" - " +
-              dic.comp_name}</div>`
-          );
-        }
-      });
-    } else {
-      console.log("Network Error", 3000, "error");
-    }
-  });
+  if(!input){ return}
+  fetch(link + "/search_symbols?which=" + which + "&val=" + input).then(function(response){
+    if (response.ok) {return response.json().then(function (json) {
+      console.log(json);
+      for(var dic of json.data){
+        all_symbols.append(
+            `<div class="one_filter_suggestion pointer" id="${dic.tickers}" onmousedown="clickSymbol('${dic.tickers + '__' +  dic.comp_name + '__' + (dic.exchange ? dic.exchange : dic.tickers.split(':')[0])}')"><div style="display: inline; color: #2cbd54">${dic.tickers}</div>${' - ' + dic.comp_name}</div>`
+        )
+      }
+    })} else {window.pushNoti("Network Error", 3000, "error")}
+  })
 }
 
 function changeNewFilterName() {
@@ -709,13 +700,22 @@ function changeNewFilterName() {
   }
 }
 
-function clickSymbol(str) {
-  var arr = str.split("__");
-  $(".symbol_wrap").css({ display: "block" });
-  $("#symbol_result").text(arr[0]);
-  $("#comp_name_result").text(arr[1]);
-  $("#comp_exchange").text(arr[2]);
-  $("#symbol_input").val("");
+function clickSymbol(str){
+  var arr = str.split('__')
+  if(arr[0].includes(':')){ // this is for Futures
+    $(".future_symbol_wrap").css({display: 'block'})
+    $("#future_symbol").text(arr[0])
+    $("#future_name").text(arr[1])
+    $("#future_exchange").text(arr[2])
+    $("#future_symbol_input").val('')
+  } else {          // this is for Stocks
+    $(".symbol_wrap").css({display: 'block'})
+    $("#symbol_result").text(arr[0])
+    $("#comp_name_result").text(arr[1])
+    $("#comp_exchange").text(arr[2])
+    $("#symbol_input").val('')
+  }
+
 }
 
 function clickMetric(key){
@@ -828,15 +828,15 @@ function onBlurNewFilter() {
   $("#metric_dropdown").css({ display: "none" });
 }
 
-function onBlurNewSymbol() {
-  $("#symbol_dropdown").css({ display: "none" });
+function onBlurNewSymbol(which='stock'){
+  $(which == 'stock' ? "#symbol_dropdown" : '#future_symbol_dropdown').css({ display: "none" });
 }
 
 
 function clickNavigate(which){
   var all_components = ['symbols', 'metrics', 'etf', 'mutual_fund', 'equity_metrics', 'equity_full_financials', 'equity_candles', 'forex_candles', 'forex_all_rates',
                 'crypto_candles', 'crypto_profile', 'etf_candles', 'etf_profile', 'streaming', 'mutual_fund_candles', 'mutual_fund_profile', 'latest',
-    'pattern_recognition', 'support_resistance', 'aggregate_indicators', 'technical_indicators',     'console', 'account']
+    'pattern_recognition', 'support_resistance', 'aggregate_indicators', 'technical_indicators',     'console', 'account', 'future']
   for(var name of all_components){
     if(which == name){
       $("#" + which).css({ display: "block" });
@@ -847,7 +847,7 @@ function clickNavigate(which){
   $('#functions_dropdown').css({display: 'none'})
   $('#search_dropdown').css({display: 'none'})
 
-  if(['symbols', 'metrics', 'etf', 'mutual_fund'].includes(which)){
+  if(['symbols', 'metrics', 'etf', 'mutual_fund', 'future'].includes(which)){
     makeDifferentGreen('search_dropdown_wrap')
     $('#header_coupon').removeClass('display_none')
   } else if (which === 'console'){

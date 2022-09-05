@@ -1,0 +1,34 @@
+<div style="position: relative; margin: 15px 0px 5px 0;">
+    <!-- Now start symbol lookup -->
+    <!-- <div class="customized_period_wrap" style="height:2px"></div> -->
+    <div style="position: relative; display: inline-block; width: 95%;" >
+        <i class="fas fa-search icon_all_metrics_popup_input"></i>
+        <input class="all_metrics_popup_input " autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+               placeholder="Futures Contract Lookup..." onfocus="onFocusNewSymbol('future')" oninput="changeNewSymbol('future')" onblur="onBlurNewSymbol('future')" id="future_symbol_input">
+    </div>
+
+    <div class='filter_suggestions standard_dropdown' style="display: none" id="future_symbol_dropdown">
+        <div class='all_symbols_future' style="min-height: 15px; overflow: auto" >
+
+        </div>
+    </div>
+
+    <div class="each_main_section" style="min-height: 200px">
+        <div class="future_symbol_wrap" style="display: none">
+            <div class="candle_argument" >
+                <div class="candle_argument_name" style="font-weight: bold">Stock Ticker</div>
+                <div class="candle_argument_explain" id="future_symbol" style="color: #2cbd54; font-weight: bold"></div>
+            </div>
+
+            <div class="candle_argument">
+                <div class="candle_argument_name" style="">Company Name</div>
+                <div class="candle_argument_explain" id="future_name"></div>
+            </div>
+
+            <div class="candle_argument">
+                <div class="candle_argument_name" style="">Exchange</div>
+                <div class="candle_argument_explain" id="future_exchange"></div>
+            </div>
+        </div>
+    </div>
+</div>

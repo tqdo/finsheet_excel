@@ -1937,7 +1937,6 @@ async function FS_BondCandles(isin,   from= undefined, to = undefined, ){
  */
 async function FS_BondTick(isin,   date= undefined, limit = undefined, ){
   var symbol = isin, from = date
-  if (to == null) { to = undefined }
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if (!symbol) { return [["ISIN cannot be empty"]] }
