@@ -157,7 +157,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   }
   console.log('ticker', ticker)
   //// Now get data
-  var urlParams = {api_key: api_key, limit: limit, is_full_statement: is_full_statement ? "y" : "n", freq: freq}
+  var urlParams = {api_key: api_key, limit: limit, is_full_statement: is_full_statement ? "y" : "n", freq: freq, is_share: id == '37' ? 'y' :'n'}
   const url = link + "/excel/standard?" + new URLSearchParams(urlParams).toString()
   const response = await fetch(url, {method: 'POST', body: JSON.stringify(prepare)});
 
@@ -353,7 +353,7 @@ async function FS_Test(symbol){
 
 
   //// Now get data
-  var prepare = {ticker: Object.keys(unique_tickers), api_key: api_key, is_gs: "y" }
+  var prepare = {ticker: Object.keys(unique_tickers), api_key: api_key,   }
 
   var urlParams = {  api_key: api_key, }
   const url = link + "/excel/latest?" + new URLSearchParams(urlParams).toString()
@@ -910,7 +910,7 @@ async function FS_Latest(symbol, ){
 
 
   //// Now get data
-  var prepare = {ticker: Object.keys(unique_tickers), api_key: api_key, is_gs: "y" }
+  var prepare = {ticker: Object.keys(unique_tickers), api_key: api_key,   }
 
   var urlParams = {  api_key: api_key, }
   const url = link + "/excel/latest?" + new URLSearchParams(urlParams).toString()
@@ -2018,4 +2018,163 @@ async function FS_BondTick(isin,   date= undefined, limit = undefined, ){
  */
 async function FS_FuturesCandles(symbol,   from= undefined, to = undefined, ){
   return candlesHelper(symbol, "D", from, to , "future" )
+}
+
+
+/**
+ * @customfunction FS_OPTIONEXPIRATIONDATES FS_OptionExpirationDates
+ * @param symbol {string} Stock symbol.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_OptionExpirationDates(symbol, ){
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if(!symbol){return "Symbol cannot be empty"}
+  if(typeof symbol !== 'string'){return 'Symbol has to be a string'}
+  symbol = symbol.toUpperCase()
+
+  //// Send and get data
+  var prepare =  {ticker: symbol,   api_key: api_key, }
+
+  const url = link + "/excel/option?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+
+  var data = json.data
+  console.log(data)
+  var data_to_return = [ ]
+  if(data.constructor === Array){
+    for(var i=0;i<data.length;i++){
+      var dic = data[i]
+      data_to_return.push([
+        dic.expirationDate
+      ])
+    }
+  }
+
+  if(data_to_return.length <1){return [['No data']]}
+  return data_to_return
+}
+
+
+
+/**
+ * @customfunction FS_OPTIONCHAIN FS_OptionChain
+ * @param symbol {string} Stock symbol.
+ * @param type {string} Type.
+ * @param expirationDate {string} Expiration date.
+ * @param [options] {any[][]} Options (optional).
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_OptionChain(symbol, type, expirationDate, options=[] ){
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+
+  if(!symbol){return "Symbol cannot be empty"}
+  if(typeof symbol !== 'string'){return 'Symbol has to be a string'}
+  symbol = symbol.toUpperCase()
+
+  if(typeof type !== 'string'){return '"type" has to be a string'}
+  type = type.toLowerCase()
+  if(type != "call" && type != "put"){return [['"type" has to be call or put']]}
+  if(!expirationDate){return [['"expirationDate" cannot be empty']]}
+  if(typeof expirationDate !== 'string'){return [['"expirationDate" has to be a string']]}
+  if(!dateIsValid(expirationDate)){return [['Invalid "expirationDate"']]}
+  if(!options){options = []}
+
+  console.log(1, options)
+  var indicator_fields_dic = {}
+  try{
+    for(let arr of options){
+      indicator_fields_dic[arr[0].toString()] = arr[1].toString()
+    }
+  } catch (e) {
+    return [['Invalid "options"']]
+  }
+  var metrics = {}
+  var has_header = true
+  if(indicator_fields_dic.header == 'false'){has_header = false}
+  if(indicator_fields_dic.metrics){
+    let temp = indicator_fields_dic.metrics.split('&')
+    if(!temp.includes('all')){
+      for(var metric of temp){
+        if(option_cols.includes(metric)){metrics[metric] = 1}
+      }
+    } else {
+      for(var metric of option_cols){
+        metrics[metric] = 1
+      }
+    }
+  } else {
+    for(var metric of option_cols){
+      metrics[metric] = 1
+    }
+  }
+  console.log(2)
+  //// Send and get data
+  var prepare =  {ticker: symbol,   api_key: api_key,    }
+
+  const url = link + "/excel/option?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  console.log(3)
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+
+  var data = json.data
+  console.log(data)
+  var data_to_return = [ ]
+  if(data.constructor === Array){
+    for(var i=0;i<data.length;i++){
+      var temp_dic = data[i]
+      if(temp_dic.expirationDate != expirationDate){continue}
+      var list = temp_dic.options[type.toUpperCase()]
+      for(var dic of list){
+        var arr = []
+        for(var col of option_cols){
+          if(col in metrics){
+            arr.push(dic[col] || dic[col] == 0 ? dic[col] : '')
+          }
+        }
+        data_to_return.push(arr)
+      }
+    }
+  }
+
+  if(data_to_return.length <1){return [['No data']]}
+  if(has_header){
+    var arr = []
+    for(var col of option_cols){
+      if(col in metrics){
+        arr.push(col)
+      }
+    }
+    data_to_return = [arr].concat(data_to_return)
+  }
+  return data_to_return
 }

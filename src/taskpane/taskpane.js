@@ -1,4 +1,4 @@
-var link = 'https://c7e8-100-1-255-113.ngrok.io'
+var link = 'https://d263-100-1-232-170.ngrok.io'
 var link = 'https://finsheet.io'
 // Todo: uncomment Finsheet url
 console.log(link)
@@ -44,7 +44,7 @@ var map_metrics = {
   '34': {display_name: 'Price Relative to S&P500 (4 Week)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_relative_to_sp500_4w', default_0: 0},
   '35': {display_name: 'Price Relative to S&P500 (YTD)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'relative_to_sp500_ytd', default_0: 0},
   '36': {display_name: 'Sedol Number', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'sedol', default_0: 0},
-  '37': {display_name: 'Number of Outstanding Shares', is_financial_group: '', display_group:['Valuation'], 'type': '1', currency_type: '0', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'shares_out', default_0: 0},
+  '37': {display_name: 'Number of Outstanding Shares', is_financial_group: '', display_group:['Valuation'], 'type': '1', currency_type: '0', default_freq: 'Q', supported_freq:['Q'], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'shares_out', default_0: 0},
   '38': {display_name: 'Headquarter State', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'state', default_0: 0},
   '39': {display_name: '', is_financial_group: '', display_group:[''], 'type': '', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: 'n', plot_type: '', excel: '', default_0: 0},
   '40': {display_name: 'Company Website', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'weburl', default_0: 0},
@@ -350,6 +350,34 @@ for (var key of Object.keys(map_metrics)) {
     map_excel_name_to_id[dic.excel] = key;
   }
 }
+
+var option_cols = ['contractName',
+  'contractSize',
+  'contractPeriod',
+  'currency',
+  'type',
+  'inTheMoney',
+  'lastTradeDateTime',
+  'expirationDate',
+  'strike',
+  'lastPrice',
+  'bid',
+  'ask',
+  'change',
+  'changePercent',
+  'volume',
+  'openInterest',
+  'impliedVolatility',
+  'delta',
+  'gamma',
+  'theta',
+  'vega',
+  'rho',
+  'theoretical',
+  'intrinsicValue',
+  'timeValue',
+  'updatedAt',
+  'daysBeforeExpiration']
 
 function checkCoupon(cookie, ){
   fetch(link + "/checkcoupon?api_key=" + cookie, {
@@ -2112,6 +2140,23 @@ function zeros(dimensions,val=0) {
   return array;
 }
 
+function dateIsValid(dateStr) {
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+
+  if (dateStr.match(regex) === null) {
+    return false;
+  }
+
+  const date = new Date(dateStr);
+
+  const timestamp = date.getTime();
+
+  if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) {
+    return false;
+  }
+
+  return date.toISOString().startsWith(dateStr);
+}
 
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
