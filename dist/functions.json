@@ -676,6 +676,21 @@
                 "dimensionality": "matrix",
                 "type": "string"
             }
+        },
+        {
+            "id": "FS_SHORTINTEREST",
+            "name": "FS_ShortInterest",
+            "parameters": [
+                {
+                    "description": "Stock symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
         }
     ]
 }

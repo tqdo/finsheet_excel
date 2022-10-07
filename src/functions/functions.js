@@ -2178,3 +2178,42 @@ async function FS_OptionChain(symbol, type, expirationDate, options=[] ){
   }
   return data_to_return
 }
+
+
+/**
+ * @customfunction FS_SHORTINTEREST FS_ShortInterest
+ * @param symbol {string} Stock symbol.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_ShortInterest(symbol, ){
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if(!symbol){return [["Symbol cannot be empty"]]}
+  if(typeof symbol !== 'string'){return [['Symbol has to be a string']]}
+  symbol = symbol.toUpperCase()
+
+  //// Now get data
+  var prepare = {symbol: symbol, api_key: api_key, }
+  const url = link + "/excel/short-interest?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+  }
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data.data
+  if(data.status === 'No data'){return [['No data']]}
+  var data_to_return = [['Settlement Date', 'Short Interest', 'Short Ratio', 'Short % of Shares Outstanding']]
+  for(var dic of data){
+    data_to_return.push([dic.settlementDate, dic.shortInterest, dic.shortRatio, dic.shortPercentOutstanding])
+  }
+  return data_to_return
+}
