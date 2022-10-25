@@ -2158,6 +2158,31 @@ function dateIsValid(dateStr) {
   return date.toISOString().startsWith(dateStr);
 }
 
+
+var map_exchange_tick = {
+  A: 'NYSE MKT LLC',
+  B : 'Nasdaq OMX BX, Inc.',
+  C : 'National Stock Exchange Inc. (NSX)',
+  D : 'FINRA',
+  I: 'International Securities Exchange, LLC (ISE)',
+  J : 'Bats EDGA',
+  K: 'Bats EDGX',
+  M: 'Chicago Stock Exchange, Inc.',
+  N: 'New York Stock Exchange LLC',
+  P: 'NYSE Arca, Inc.',
+  S: 'Consolidated Tape System',
+  T: 'Nasdaq Stock Exchange (Tape A, B)',
+  Q: 'Nasdaq Stock Exchange (Tape C)',
+  V: 'IEX',
+  W: 'Chicago Board Options Exchanges',
+  X: 'Nasdaq OMX PSX, Inc. LLC',
+  Y: 'Bats BYX Exchange, Inc.',
+  Z: 'Bats BZX Exchange, Inc.',
+  U: 'Other OTC',
+  UB: 'OTC BULLETIN BOARD',
+  MB: 'MEMX',
+  EP: 'MIAX Pearl',
+}
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
 // $("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});

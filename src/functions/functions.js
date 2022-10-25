@@ -1931,7 +1931,7 @@ async function FS_BondCandles(isin,   from= undefined, to = undefined, ){
 
 /**
  * @customfunction FS_BONDTICK FS_BondTick
- * @param isin {string} ISIN of bind.
+ * @param isin {string} ISIN of bond.
  * @param date {string} date.
  * @param [limit] {string} limit (optional).
  * @returns {string[][]} Result array.
@@ -2216,4 +2216,108 @@ async function FS_ShortInterest(symbol, ){
     data_to_return.push([dic.settlementDate, dic.shortInterest, dic.shortRatio, dic.shortPercentOutstanding])
   }
   return data_to_return
+}
+
+
+/**
+ * @customfunction FS_EQUITYTICK FS_EquityTick
+ * @param symbol {string} Stock symbol.
+ * @param date {string} date.
+ * @param limit {string} limit.
+ * @param [skip] {string} skip (optional).
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_EquityTick(symbol,   date , limit, skip = undefined, ){
+  var   from = date
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if (!symbol) { return [["Symbol cannot be empty"]] }
+  if (typeof symbol !== 'string') { return [['Symbol has to be a string']] }
+  symbol = symbol.toUpperCase()
+  if(symbol.includes('.') && !(symbol in {'BRK.A': 1, 'BRK.B': 1})){
+    return [["We only support US stocks for this function currently."]]
+  }
+
+  if (!limit) { return [["Limit cannot be empty"]] }
+
+  if(!skip){
+    skip = "0"
+  } else {
+    skip = skip.toString()
+  }
+
+  //// Check from
+  if(!from){return [["'date' cannot be empty"]]}
+
+  // Handle unix time
+  if(typeof from == 'number' || !isNaN(from)){
+    if(from < 73000){
+      from = (from -25569)*86400
+    }
+    from = Math.round(from)
+  }
+  // Now convert string/Date object or whatever input user gives.
+  else{
+    from = Date.parse(from) / 1000
+    if(isNaN(from) || from < 0) return [["Invalid 'date'"]]
+  }
+
+  // Limit to last 10 years
+  if(from * 1000 < Date.now() - 3600 * 24 * 366 * 10 * 1000){
+    return [["'date' cannot be more that 10 years ago"]]
+  }
+
+  // Convert timestamp to date format to use with Finnhub
+  from = new Date(from * 1000)
+  const offset = from.getTimezoneOffset()
+  from = new Date(from.getTime() - (offset*60*1000))
+  from =  from.toISOString().split('T')[0]
+
+  //// Send and get data
+  var prepare = { ticker: symbol,   from: from, limit: limit.toString(), skip: skip.toString(), api_key: api_key,   }
+
+
+  //// Now get data
+  const url = link + "/excel/equity_tick?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data
+
+  try {
+    var data_to_return = [
+      ['Count',  data.count ? data.count : '', 'Total',  data.total ? data.total : '', ''  ],
+      ["Venue/Exchange"	, "Timestamp", "Price"	,"Volume",	"Trade conditions"]
+    ]
+    if(!data.p ){return 'No data'}
+    if(data.p.constructor === Array){
+      for(var i=0;i<data.p.length;i++){
+        data_to_return.push([
+          data.x && data.x[i] ? (data.x[i] in map_exchange_tick ? map_exchange_tick[data.x[i]] : data.x[i])  : '',
+          data.t[i] ? new Date(data.t[i] ) : '',
+          data.p && data.p[i] ? data.p[i]  : '',
+          data.v && (data.v[i] || data.v[i] == 0) ? data.v[i] : '',
+          data.c && data.c[i] ? data.c[i].join() : '',
+        ])
+      }
+    }
+
+    if(data_to_return.length <3){return 'No data'}
+    return data_to_return
+  } catch(e){
+    return [['No data']]
+  }
 }
