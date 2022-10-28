@@ -42,6 +42,12 @@
                     "name": "limit",
                     "optional": true,
                     "type": "number"
+                },
+                {
+                    "description": "Options (optional).",
+                    "name": "options",
+                    "optional": true,
+                    "type": "string"
                 }
             ],
             "result": {
@@ -106,6 +112,18 @@
                     "name": "to",
                     "optional": true,
                     "type": "string"
+                },
+                {
+                    "description": "Metrics (optional).",
+                    "name": "metrics",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Options (optional).",
+                    "name": "options",
+                    "optional": true,
+                    "type": "string"
                 }
             ],
             "result": {
@@ -136,6 +154,18 @@
                 {
                     "description": "To (optional).",
                     "name": "to",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Metrics (optional).",
+                    "name": "metrics",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Options (optional).",
+                    "name": "options",
                     "optional": true,
                     "type": "string"
                 }
@@ -170,6 +200,18 @@
                     "name": "to",
                     "optional": true,
                     "type": "string"
+                },
+                {
+                    "description": "Metrics (optional).",
+                    "name": "metrics",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Options (optional).",
+                    "name": "options",
+                    "optional": true,
+                    "type": "string"
                 }
             ],
             "result": {
@@ -202,6 +244,18 @@
                     "name": "to",
                     "optional": true,
                     "type": "string"
+                },
+                {
+                    "description": "Metrics (optional).",
+                    "name": "metrics",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Options (optional).",
+                    "name": "options",
+                    "optional": true,
+                    "type": "string"
                 }
             ],
             "result": {
@@ -232,6 +286,18 @@
                 {
                     "description": "To (optional).",
                     "name": "to",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Metrics (optional).",
+                    "name": "metrics",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Options (optional).",
+                    "name": "options",
                     "optional": true,
                     "type": "string"
                 }
@@ -623,6 +689,18 @@
                     "name": "to",
                     "optional": true,
                     "type": "string"
+                },
+                {
+                    "description": "Metrics (optional).",
+                    "name": "metrics",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Options (optional).",
+                    "name": "options",
+                    "optional": true,
+                    "type": "string"
                 }
             ],
             "result": {
@@ -714,6 +792,40 @@
                 {
                     "description": "skip (optional).",
                     "name": "skip",
+                    "optional": true,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_EARNINGSCALENDAR",
+            "name": "FS_EarningsCalendar",
+            "parameters": [
+                {
+                    "description": "from date (optional).",
+                    "name": "from",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "to date (optional).",
+                    "name": "to",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "stock symbol (optional).",
+                    "name": "symbol",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "specify \"true\" to include international markets (optional).",
+                    "name": "international",
                     "optional": true,
                     "type": "string"
                 }

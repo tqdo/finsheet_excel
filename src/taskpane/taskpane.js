@@ -1421,7 +1421,7 @@ function isValidFreq_returnCleanString(string, supported_freq = ["FY", "TTM", "Q
   return string;
 }
 
-function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers) {
+function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers, sub_options) {
   if ("message" in json) {
     return [[json.message ? json.message : 'Something went wrong, please try again']];
   }
@@ -1531,6 +1531,9 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
         data_to_return[1].push(small_arr[1]);
       }
     }
+
+    if(!sub_options){sub_options=""}
+    if(sub_options.toLowerCase().includes('nh')){data_to_return = [data_to_return[1]]}
     return data_to_return;
   }
 

@@ -1,9 +1,10 @@
 ﻿function capFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-async function equityHelper(symbol, metric, period = undefined, limit = undefined) {
+async function equityHelper(symbol, metric, period = undefined, limit = undefined, options = undefined) {
   // return [["Please login using the sidebar"]];
   // console.log(123)
+  var sub_options = options
 
   if (period == null) { period = undefined}
   if (limit == null) { limit = undefined }
@@ -170,7 +171,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   var json = await response.json()
   console.log( json)
   if('message' in json){return [[json.message]]}
-  return handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers);
+  return handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers, sub_options);
 }
 // async function equityHelper(symbol, metric, period = undefined, limit = undefined) {
 //   // return [["Please login using the sidebar"]];
@@ -382,15 +383,16 @@ async function FS_Test(symbol){
  * @param metric {string} Metric.
  * @param [period] {string} Period (optional).
  * @param [limit] {number} Limit (optional, default to 1).
+ * @param [options] {string} Options (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EquityMetrics(symbol, metric, period = undefined, limit = undefined){
+async function FS_EquityMetrics(symbol, metric, period = undefined, limit = undefined, options = undefined){
   if(!metric){return [["Metric cannot be empty"]]}
   metric = metric.toLowerCase()
   if(!(metric in map_excel_name_to_id) ){return [["Unsupported metric"]]}
   if(!symbol){return [['']]}
-  return equityHelper(symbol, metric, period , limit )
+  return equityHelper(symbol, metric, period , limit , options)
 }
 
 /**
@@ -420,7 +422,7 @@ var properties = ["close", "open", "high", "low", "volume"]
 
 
 
-async function candlesHelper(symbol, resolution, from, to = undefined, which="stock" ) {
+async function candlesHelper(symbol, resolution, from, to = undefined,metrics= undefined, options= undefined, which="stock" ) {
   if (to == null) { to = undefined }
   console.log(from, to)
   var api_key = readCookie("finsheet_api_key");
@@ -491,20 +493,44 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
   if('message' in json){return [[json.message]]}
   var data = json.data
 
-  var data_to_return = [['Period',  'Open', 'High', 'Low','Close', 'Volume']]
-  if (!data.c) { return [['No data']] }
+  // Handle options
+  if(!options){options = ''}
+  var is_nh = options.toLowerCase().includes('nh')
+  var is_desc = options.toLowerCase().includes('-')
+
+  // Handle metrics / columns
+  var headers = []
+  var map_col_name = {'Period': 't',  'Open': 'o', 'High': 'h', 'Low': 'l','Close': 'c', 'Volume': 'v'}
+  if(!metrics || metrics == "all" || metrics == "All" || metrics == 'ALL'){headers = ['Period',  'Open', 'High', 'Low','Close', 'Volume']}
+  else {
+    var arr_metrics = metrics.split('&')
+    for(var elem of arr_metrics){
+      var reformat = capFirst(elem.toLowerCase())
+      if(reformat in map_col_name){
+        headers.push(reformat)
+      }
+    }
+  }
+
+  var data_to_return = []
+  if(!data.c ){return [['No data']]}
   if(data.c.constructor === Array){
     for(var i=0;i<data.c.length;i++){
-      data_to_return.push([
-        data.t && data.t[i] ? new Date(data.t[i] * 1000) : '',
-        data.o && data.o[i] ? data.o[i] : '',
-        data.h && data.h[i] ? data.h[i] : '',
-        data.l && data.l[i] ? data.l[i] : '',
-        data.c[i] ? data.c[i] : '',
-        // data.v && data.v[i] ? data.v[i] : '',
-        data.v && (data.v[i] || (data.v[i] == 0 && which === 'future')) ? data.v[i] : '',
+      // var pre_time = new Date(data.t[i] * 1000);
+      // var correct_time = new Date(pre_time.getTime() + pre_time.getTimezoneOffset() * 60000);
+      // if(i<1){Logger.log([data.t[i], new Date(data.t[i] * 1000).toISOString()] )}
+      // data_to_return.push([new Date(data.t[i] * 1000), data.c[i], data.o[i], data.h[i], data.l[i], data.v[i]])
 
-      ])
+      var one_row = []
+      for(var elem of headers){
+        if(elem == 'Period'){
+          one_row.push(data.t && data.t[i] ? new Date(data.t[i] * 1000) : '')
+        } else {
+          one_row.push(data[map_col_name[elem]] && data[map_col_name[elem]][i] ? data[map_col_name[elem]][i] : '')
+        }
+      }
+      data_to_return.push(one_row)
+
     }
   } else { // This result is from Quote (get the latest)
     data_to_return.push([
@@ -516,7 +542,16 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
       data.v  ? data.v : ''
     ])
   }
-  if (data_to_return.length < 2) { return [['No data']] }
+
+  if(data_to_return.length < 1){return [['No data']]}
+
+  if(is_desc){
+    data_to_return.reverse()
+  }
+
+  if(!is_nh){
+    data_to_return = [headers].concat(data_to_return)
+  }
   return data_to_return
 }
 
@@ -526,11 +561,13 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
  * @param resolution {string} Resolution.
  * @param from {string} From.
  * @param [to] {string} To (optional).
+ * @param [metrics] {string} Metrics (optional).
+ * @param [options] {string} Options (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EquityCandles(symbol, resolution, from= undefined, to = undefined, ){
-  return candlesHelper(symbol, resolution, from, to , "stock" )
+async function FS_EquityCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined ){
+  return candlesHelper(symbol, resolution, from, to , metrics, options,"stock" )
 }
 
 /**
@@ -539,11 +576,13 @@ async function FS_EquityCandles(symbol, resolution, from= undefined, to = undefi
  * @param resolution {string} Resolution.
  * @param from {string} From.
  * @param [to] {string} To (optional).
+ * @param [metrics] {string} Metrics (optional).
+ * @param [options] {string} Options (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_ForexCandles(symbol, resolution, from= undefined, to = undefined, ){
-  return candlesHelper(symbol, resolution, from, to , "forex" )
+async function FS_ForexCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined){
+  return candlesHelper(symbol, resolution, from, to ,metrics, options, "forex" )
 }
 
 /**
@@ -552,11 +591,13 @@ async function FS_ForexCandles(symbol, resolution, from= undefined, to = undefin
  * @param resolution {string} Resolution.
  * @param from {string} From.
  * @param [to] {string} To (optional).
+ * @param [metrics] {string} Metrics (optional).
+ * @param [options] {string} Options (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_CryptoCandles(symbol, resolution, from= undefined, to = undefined, ){
-  return candlesHelper(symbol, resolution, from, to , "crypto" )
+async function FS_CryptoCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined){
+  return candlesHelper(symbol, resolution, from, to ,metrics, options, "crypto" )
 }
 
 /**
@@ -565,11 +606,13 @@ async function FS_CryptoCandles(symbol, resolution, from= undefined, to = undefi
  * @param resolution {string} Resolution.
  * @param from {string} From.
  * @param [to] {string} To (optional).
+ * @param [metrics] {string} Metrics (optional).
+ * @param [options] {string} Options (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EtfCandles(symbol, resolution, from= undefined, to = undefined, ){
-  return candlesHelper(symbol, resolution, from, to , "etf" )
+async function FS_EtfCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined){
+  return candlesHelper(symbol, resolution, from, to , metrics, options,"etf" )
 }
 
 /**
@@ -578,11 +621,13 @@ async function FS_EtfCandles(symbol, resolution, from= undefined, to = undefined
  * @param resolution {string} Resolution.
  * @param from {string} From.
  * @param [to] {string} To (optional).
+ * @param [metrics] {string} Metrics (optional).
+ * @param [options] {string} Options (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_MutualFundCandles(symbol, resolution, from= undefined, to = undefined, ){
-  return candlesHelper(symbol, resolution, from, to , "mutual_fund" )
+async function FS_MutualFundCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined ){
+  return candlesHelper(symbol, resolution, from, to ,metrics, options, "mutual_fund" )
 }
 
 /**
@@ -2013,11 +2058,13 @@ async function FS_BondTick(isin,   date= undefined, limit = undefined, ){
  * @param symbol {string} Futures Contract Symbol.
  * @param from {string} From.
  * @param [to] {string} To (optional).
+ * @param [metrics] {string} Metrics (optional).
+ * @param [options] {string} Options (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_FuturesCandles(symbol,   from= undefined, to = undefined, ){
-  return candlesHelper(symbol, "D", from, to , "future" )
+async function FS_FuturesCandles(symbol,   from= undefined, to = undefined, metrics=undefined, options=undefined){
+  return candlesHelper(symbol, "D", from, to , metrics, options, "future" )
 }
 
 
@@ -2320,4 +2367,117 @@ async function FS_EquityTick(symbol,   date , limit, skip = undefined, ){
   } catch(e){
     return [['No data']]
   }
+}
+
+
+/**
+ * @customfunction FS_EARNINGSCALENDAR FS_EarningsCalendar
+ * @param [from] {string} from date (optional).
+ * @param [to] {string} to date (optional).
+ * @param [symbol] {string} stock symbol (optional).
+ * @param [international] {string} specify "true" to include international markets (optional).
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_EarningsCalendar(from,   to, symbol, international  ){
+  var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+
+
+
+
+  //// Check from
+  if(from ){
+    // Handle unix time
+    if(typeof from == 'number' || !isNaN(from)){
+      var from_string = from.toString()
+      if(from_string.length >= 12) {      // This is miliseconds, divide by 1000
+        from = from / 1000
+      }
+      from = Math.round(from)
+    }
+    // Or convert string/Date object or whatever input user gives.
+    else{
+      from = Date.parse(from) / 1000
+      if(isNaN(from) || from < 0) return "Invalid 'date'"
+    }
+
+    // Convert timestamp to date format to use with Finnhub
+    from = new Date(from * 1000)
+    const offset = from.getTimezoneOffset()
+    from = new Date(from.getTime() - (offset*60*1000))
+    from =  from.toISOString().split('T')[0]
+  } else {
+    from = ""
+  }
+
+  //// Check to
+  if(to ){
+    // Handle unix time
+    if(typeof to == 'number' || !isNaN(to)){
+      var from_string = to.toString()
+      if(from_string.length >= 12) {      // This is miliseconds, divide by 1000
+        to = to / 1000
+      }
+      to = Math.round(to)
+    }
+    // Or convert string/Date object or whatever input user gives.
+    else{
+      to = Date.parse(to) / 1000
+      if(isNaN(to) || to < 0) return "Invalid 'date'"
+    }
+
+    // Convert timestamp to date format to use with Finnhub
+    to = new Date(to * 1000)
+    const offset = to.getTimezoneOffset()
+    to = new Date(to.getTime() - (offset*60*1000))
+    to =  to.toISOString().split('T')[0]
+  } else {
+    to = ""
+  }
+
+  if(!symbol){symbol = ""}
+
+  //// Send and get data
+  var   prepare =  {ticker: symbol,  from: from, to: to, api_key: api_key,  international: international, is_gs: "y" }
+
+
+
+  //// Now get data
+  const url = link + "/excel/earningscalendar?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data
+
+  data = data.earningsCalendar
+  var data_to_return = [['Date',  'Hour', 'Symbol', 'Revenue Actual' , 'Revenue Estimate', 'EPS Actual', 'EPS Estimate', 'Reporting period' ]]
+  var map_hour ={bmo: 'Before Market Open', amc: 'After Market Close', dmh: 'During Market Hour'}
+  for(var dic of data){
+    data_to_return.push([
+      dic.date,
+      dic.hour in map_hour ? map_hour[dic.hour] : dic.hour,
+      dic.symbol,
+      dic.revenueActual ? dic.revenueActual : '',
+      dic.revenueEstimate ? dic.revenueEstimate : '',
+      dic.epsActual ? dic.epsActual : '',
+      dic.epsEstimate ? dic.epsEstimate : '',
+      'Q' + dic.quarter + '/' + dic.year
+
+    ])
+  }
+  if (data_to_return.length < 2) { return [['No data']] }
+  return data_to_return
 }
