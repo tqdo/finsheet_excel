@@ -2481,3 +2481,61 @@ async function FS_EarningsCalendar(from,   to, symbol, international  ){
   if (data_to_return.length < 2) { return [['No data']] }
   return data_to_return
 }
+
+
+
+
+
+
+/**
+ * @customfunction FS_INSTITUTIONALPORTFOLIOS FS_InstitutionalPortfolios
+ * @param guru {string} Guru/institution name.
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_InstitutionalPortfolios(guru ){
+   var api_key = readCookie("finsheet_api_key");
+  if (!api_key) { return [["Please login using the sidebar"]] }
+  if(!guru){return [['Guru name cannot be empty']]}
+  if(!(guru.toLowerCase() in reversed_map_url_guru)){return [['This guru/institution is not currently supported']]}
+
+  //// Send and get data
+  var prepare =  {guru: guru, is_gs: "y" , api_key: api_key}
+
+  //// Now get data
+  const url = link + "/excel/institutional-holding?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data
+
+  try {
+    var data_to_return = []
+    for(var dic of data){
+      if(dic.ticker && dic.ticker !== '--'){
+        data_to_return.push([
+          dic.ticker
+        ])
+      }
+
+    }
+
+    if(data_to_return.length <1){return [['No data']]}
+    return data_to_return
+  } catch(e){
+    return [['No data']]
+  }
+}
+

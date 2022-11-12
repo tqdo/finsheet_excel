@@ -2186,6 +2186,71 @@ var map_exchange_tick = {
   MB: 'MEMX',
   EP: 'MIAX Pearl',
 }
+
+
+
+var map_url_guru = {
+  'arnold-van-den-berg': ['Arnold Van Den Berg',
+    'VAN DEN BERG MANAGEMENT INC/TX'],
+  'barrow-hanley-mewhinney-strauss': ['Barrow, Hanley, Mewhinney & Strauss',
+    'BARROW HANLEY MEWHINNEY & STRAUSS LLC'],
+  'bill-ackman': ['Bill Ackman', 'Pershing Square Capital Management, L.P.'],
+  'bill-gates': ['Bill Gates', 'Bill & Melinda Gates Foundation Trust'],
+  'bruce-berkowitz': ['Bruce Berkowitz', 'FAIRHOLME CAPITAL MANAGEMENT LLC'],
+  'charles-brandes': ['Charles Brandes', 'BRANDES INVESTMENT PARTNERS, LP'],
+  'charlie-munger': ['Charlie Munger', 'DAILY JOURNAL CORP'],
+  'chris-davis': ['Chris Davis', 'DAVIS SELECTED ADVISERS'],
+  'chuck-akre': ['Chuck Akre', 'AKRE CAPITAL MANAGEMENT LLC'],
+  'david-einhorn': ['David Einhorn', 'GREENLIGHT CAPITAL INC'],
+  'david-tepper': ['David Tepper', 'APPALOOSA LP'],
+  'dodge-cox': ['Dodge & Cox', 'Dodge & Cox'],
+  'donald-smith-co': ['Donald Smith & Co', 'DONALD SMITH & CO., INC.'],
+  'first-eagle-investment': ['First Eagle Investment',
+    'First Eagle Investment Management, LLC'],
+  'george-soros': ['George Soros', 'SOROS FUND MANAGEMENT LLC'],
+  'glenn-greenberg': ['Glenn Greenberg', 'Brave Warrior Advisors, LLC'],
+  'hotchkis-wiley': ['HOTCHKIS & WILEY',
+    'HOTCHKIS & WILEY CAPITAL MANAGEMENT LLC'],
+  'jefferies-group': ['Jefferies Group', 'LEUCADIA NATIONAL CORP'],
+  'joel-greenblatt': ['Joel Greenblatt', 'Gotham Asset Management, LLC'],
+  'john-paulson': ['John Paulson', 'PAULSON & CO INC'],
+  'john-rogers': ['John Rogers', 'ARIEL INVESTMENTS, LLC'],
+  'julian-robertson': ['Julian Robertson', 'TIGER MANAGEMENT L.L.C.'],
+  'kahn-brothers': ['Kahn Brothers', 'KAHN BROTHERS & CO INC /DE/'],
+  'keeley-teton-advisors-llc': ['Keeley-Teton Advisors, LLC',
+    'Keeley-Teton Advisors, LLC'],
+  'ken-fisher': ['Ken Fisher', 'Fisher Asset Management, LLC'],
+  'ken-heebner': ['Ken Heebner', 'CAPITAL GROWTH MANAGEMENT LP'],
+  'mario-gabelli': ['Mario Gabelli', 'GAMCO INVESTORS, INC. ET AL'],
+  'mason-hawkins': ['Mason Hawkins', 'SOUTHEASTERN ASSET MANAGEMENT INC/TN/'],
+  'mohnish-pabrai': ['Mohnish Pabrai', 'Dalal Street, LLC'],
+  'prem-watsa': ['Prem Watsa', 'Fairfax Financial Holdings Ltd/ Can'],
+  'private-capital': ['Private Capital', 'Private Capital Management, LLC'],
+  'richard-pzena': ['Richard Pzena', 'PZENA INVESTMENT MANAGEMENT LLC'],
+  'robert-bruce': ['Robert Bruce', 'Bruce & Co., Inc.'],
+  'robert-karr': ['Robert Karr', 'JOHO CAPITAL LLC'],
+  'robert-olstein': ['Robert Olstein', 'Olstein Capital Management, L.P.'],
+  'ron-baron': ['Ron Baron', 'BAMCO INC /NY/'],
+  'ronald-muhlenkamp': ['Ronald Muhlenkamp', 'MUHLENKAMP & CO INC'],
+  'ruane-cunniff': ['Ruane Cunniff', 'Ruane, Cunniff & Goldfarb L.P.'],
+  'seth-klarman': ['Seth Klarman', 'BAUPOST GROUP LLC/MA'],
+  'steve-mandel': ['Steve Mandel', 'LONE PINE CAPITAL LLC'],
+  'third-avenue-management': ['Third Avenue Management',
+    'THIRD AVENUE MANAGEMENT LLC'],
+  'tom-gayner': ['Tom Gayner', 'MARKEL CORP'],
+  'tweedy-browne': ['Tweedy Browne', 'TWEEDY BROWNE CO LLC//'],
+  'wallace-weitz': ['Wallace Weitz', 'WEITZ INVESTMENT MANAGEMENT, INC.'],
+  'warren-buffett': ['Warren Buffett', 'Berkshire Hathaway Inc'],
+  'yacktman-asset-management': ['Yacktman Asset Management',
+    'YACKTMAN ASSET MANAGEMENT LP'],
+  'yale-university': ['Yale University', 'YALE UNIVERSITY']
+}
+
+var reversed_map_url_guru = {}
+for(var i of Object.keys(map_url_guru)){
+  reversed_map_url_guru[map_url_guru[i][0].toLowerCase()] = i
+}
+
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
 // $("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});

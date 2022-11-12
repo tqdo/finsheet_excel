@@ -834,6 +834,21 @@
                 "dimensionality": "matrix",
                 "type": "string"
             }
+        },
+        {
+            "id": "FS_INSTITUTIONALPORTFOLIOS",
+            "name": "FS_InstitutionalPortfolios",
+            "parameters": [
+                {
+                    "description": "Guru/institution name.",
+                    "name": "guru",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
         }
     ]
 }
