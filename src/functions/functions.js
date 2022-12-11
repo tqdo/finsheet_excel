@@ -152,7 +152,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
     );
   }
   prepare = { ...prepare, ...{ ticker: (Array.isArray(ticker)  ? '[' + Object.keys(unique_tickers).length.toString() : ticker), metric: id,
-      freq: freq, api_key: api_key, limit: limit ? limit.toString() : 'undefined' , is_full_statement: is_full_statement ? "y" : "n" } };
+      freq: freq, api_key: api_key, limit: limit ? limit.toString() : 'undefined' , is_full_statement: is_full_statement ? "y" : "n" , is_share: id == '37' ? 'y' :'n'} };
   if (id == 206) {
     prepare["is_latest_price"] = "1";
   }
