@@ -44,7 +44,7 @@ var map_metrics = {
   '34': {display_name: 'Price Relative to S&P500 (4 Week)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_relative_to_sp500_4w', default_0: 0},
   '35': {display_name: 'Price Relative to S&P500 (YTD)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'relative_to_sp500_ytd', default_0: 0},
   '36': {display_name: 'Sedol Number', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'sedol', default_0: 0},
-  '37': {display_name: 'Number of Outstanding Shares', is_financial_group: '', display_group:['Valuation'], 'type': '1', currency_type: '0', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'shares_out', default_0: 0},
+  '37': {display_name: 'Number of Outstanding Shares', is_financial_group: '', display_group:['Valuation'], 'type': '1', currency_type: '0', default_freq: 'Q', supported_freq:['Q'], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'shares_out', default_0: 0},
   '38': {display_name: 'Headquarter State', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'state', default_0: 0},
   '39': {display_name: '', is_financial_group: '', display_group:[''], 'type': '', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: 'n', plot_type: '', excel: '', default_0: 0},
   '40': {display_name: 'Company Website', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'weburl', default_0: 0},
@@ -812,7 +812,7 @@ function clickMetric(key){
   if(info_dic.default_freq){
     $('#customized_period_wrap').css({display: 'block'})
 
-    var freqs = duplicate(example_freq)
+    var freqs =   duplicate(example_freq)
     if(!info_dic.supported_freq.includes('TTM')){freqs[1] = ['Get data for the fiscal year two-year prior', 'FY-2']}
     if(!info_dic.supported_freq.includes('Q')){
       if(!info_dic.supported_freq.includes('TTM')){freqs = freqs.slice(0,2)}
@@ -823,6 +823,10 @@ function clickMetric(key){
     }
     if(key in analyst_metrics && info_dic.supported_freq.includes('FY')){
       freqs.push(['Get forecast data for the next fiscal year', 'FY+1'])
+    }
+
+    if (info_dic.excel === 'shares_out' ){
+      freqs = duplicate(example_freq.slice(2, example_freq.length))
     }
 
     var customized_period = $('.customized_period_section')
@@ -1338,6 +1342,14 @@ var fiancials_fields = {
 
 function isValidFreq_returnCleanString(string, supported_freq = ["FY", "TTM", "Q", "YTD"], default_freq = "TTM", code) {
   string = string.replace(/\s/g, "");
+  if(code == '37' ){
+    if( string.includes('TTM') || string.includes('YTD')){
+      return false
+    }
+    if(string.includes("FY") && !string.includes('Q')){
+      return false
+    }
+  }
   if (string === "") {
     return "";
   }
@@ -1348,7 +1360,7 @@ function isValidFreq_returnCleanString(string, supported_freq = ["FY", "TTM", "Q
     string = string.slice(0, string.length - 2);
   }
   for (var freq of ["FY", "TTM", "Q", "YTD"]) {
-    if (!supported_freq.includes(freq) && string.includes(freq)) {
+    if (!supported_freq.includes(freq) && string.includes(freq) &&  code != '37') {
       return false;
     }
   }
