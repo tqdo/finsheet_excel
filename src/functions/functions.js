@@ -111,7 +111,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
     if (id === "bs" && freq.includes("TTM")) {
       return [["Period TTM is only available for ic and cf"]];
     }
-
+    // console.log(id, map_metrics[id].default_freq)
     if (is_full_statement) {
       var supported_freq = id === "cf" ? ["FY", "TTM", "Q", "YTD"] : id === "bs" ? ["FY", "Q"] : ["FY", "TTM", "Q"];
       freq = isValidFreq_returnCleanString(freq, supported_freq, "TTM", id);

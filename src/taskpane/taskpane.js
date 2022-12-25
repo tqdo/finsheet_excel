@@ -1486,7 +1486,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
       }
       return to_return
     } else {
-      console.log(json.data)
+
       if(Object.keys(json.data).length == 1){
         for(var key of Object.keys(json.data)){
           if(key=== "39_-1"){return  [["No data"]]}
@@ -1496,7 +1496,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
     }
 
     ///// Now deal with series for standard metric (need to figure out appropriate date header). MAY HANDLE IN GO
-    var numYearLimit = parseInt(json.numYearLimit)
+     var numYearLimit = parseInt(json.numYearLimit)
     var earliest_second = Math.floor(Date.now() / 1000) - numYearLimit * 365 * 24 * 60 * 60
 
     var index_value_arr = [];
@@ -1522,8 +1522,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
     index_value_arr = index_value_arr.sort(function(a, b) {
       return b[0] - a[0];
     });
-
-    // Now get date arrays of financial statements
+     // Now get date arrays of financial statements
     var dic_all_dates = {};
     try {
       dic_all_dates = JSON.parse(json.data["310_-1"]);
@@ -1533,8 +1532,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
     if (!dic_all_dates[freq_to_lookup_date]) {
       return [["No data"]];
     }
-
-    var dates_array = dic_all_dates[freq_to_lookup_date];
+     var dates_array = dic_all_dates[freq_to_lookup_date];
     var data_to_return = [[], []];
     for (var small_arr of index_value_arr) {
       var index = small_arr[0];
@@ -1543,10 +1541,9 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
         data_to_return[1].push(small_arr[1]);
       }
     }
-
-    if(!sub_options){sub_options=""}
+     if(!sub_options){sub_options=""}
     if(sub_options.toLowerCase().includes('nh')){data_to_return = [data_to_return[1]]}
-    return data_to_return;
+     return data_to_return;
   }
 
   //  Now deal with full financial statements (bs, cf, ic)
