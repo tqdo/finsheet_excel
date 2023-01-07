@@ -497,6 +497,7 @@ async function candlesHelper(symbol, resolution, from, to = undefined,metrics= u
   if(!options){options = ''}
   var is_nh = options.toLowerCase().includes('nh')
   var is_desc = options.toLowerCase().includes('-')
+  var is_ct = options.toLowerCase().includes('ct')
 
   // Handle metrics / columns
   var headers = []
@@ -524,7 +525,7 @@ async function candlesHelper(symbol, resolution, from, to = undefined,metrics= u
       var one_row = []
       for(var elem of headers){
         if(elem == 'Period'){
-          one_row.push(data.t && data.t[i] ? new Date(data.t[i] * 1000) : '')
+          one_row.push(data.t && data.t[i] ? (is_ct ? new Date(data.t[i] * 1000) : data.t[i]): '')
         } else {
           one_row.push(data[map_col_name[elem]] && data[map_col_name[elem]][i] ? data[map_col_name[elem]][i] : '')
         }
@@ -1489,7 +1490,8 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
 
     for(var i=0;i<data.c.length;i++){
       var arr = [
-        data.t && data.t[i] ? new Date(data.t[i] * 1000) : '',
+        // data.t && data.t[i] ? new Date(data.t[i] * 1000) : '',
+        data.t && data.t[i] ?  data.t[i]   : '',
         data.o && data.o[i] ? data.o[i] : '',
         data.h && data.h[i] ? data.h[i] : '',
         data.l && data.l[i] ? data.l[i] : '',
@@ -1890,10 +1892,11 @@ async function FS_Api(provider, endpoint, parameters=[]) {
  * @param isin {string} ISIN of bind.
  * @param from {string} From.
  * @param [to] {string} To (optional).
+ * @param [options] {string} options (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_BondCandles(isin,   from= undefined, to = undefined, ){
+async function FS_BondCandles(isin,   from= undefined, to = undefined, options = undefined){
   if (to == null) { to = undefined }
   var symbol = isin
   var api_key = readCookie("finsheet_api_key");
@@ -1959,17 +1962,31 @@ async function FS_BondCandles(isin,   from= undefined, to = undefined, ){
   if('message' in json){return [[json.message]]}
   var data = json.data
 
+  // Handle options
+  if(!options){options = ''}
+  var is_nh = options.toLowerCase().includes('nh')
+  var is_desc = options.toLowerCase().includes('-')
+  var is_ct = options.toLowerCase().includes('ct')
+
   var data_to_return = [['Period',   'Close' ]]
   if (!data.c) { return [['No data']] }
   if(data.c.constructor === Array){
     for(var i=0;i<data.c.length;i++){
       data_to_return.push([
-        data.t && data.t[i] ? new Date(data.t[i] * 1000) : '',
+        data.t && data.t[i] ? ( is_ct ? new Date(data.t[i] * 1000) : data.t[i]): '',
         data.c[i] ? data.c[i] : '',
       ])
     }
   }
-  if (data_to_return.length < 2) { return [['No data']] }
+  if(data_to_return.length <1){return [['No data']]}
+
+  if(is_desc){
+    data_to_return.reverse()
+  }
+
+  if(!is_nh){
+    data_to_return = [['Period',  'Close',  ]].concat(data_to_return)
+  }
   return data_to_return
 }
 
@@ -1979,10 +1996,11 @@ async function FS_BondCandles(isin,   from= undefined, to = undefined, ){
  * @param isin {string} ISIN of bond.
  * @param date {string} date.
  * @param [limit] {string} limit (optional).
+ * @param [options] {string} options (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_BondTick(isin,   date= undefined, limit = undefined, ){
+async function FS_BondTick(isin,   date= undefined, limit = undefined, options = undefined){
   var symbol = isin, from = date
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
@@ -2037,19 +2055,33 @@ async function FS_BondTick(isin,   date= undefined, limit = undefined, ){
   if('message' in json){return [[json.message]]}
   var data = json.data
 
-  var data_to_return = [['Period',  'Price', 'Volume', 'Side']]
+  // Handle options
+  if(!options){options = ''}
+  var is_nh = options.toLowerCase().includes('nh')
+  var is_desc = options.toLowerCase().includes('-')
+  var is_ct = options.toLowerCase().includes('ct')
+
+  var data_to_return = [ ]
   if (!data.p) { return [['No data']] }
   if(data.p.constructor === Array){
     for(var i=0;i<data.p.length;i++){
       data_to_return.push([
-        data.t && data.t[i] ? new Date(data.t[i] ) : '',
+        data.t && data.t[i] ? (is_ct ? new Date(data.t[i] ) : parseInt(data.t[i] / 1000)): '',
         data.p[i] ? data.p[i] : '',
         data.v && (data.v[i] || data.v[i] == 0) ? data.v[i] : '',
         data.si && data.si[i] ? (data.si[i].toString() === '1' ? 'Buy' : 'Sell') : '',
       ])
     }
   }
-  if (data_to_return.length < 2) { return [['No data']] }
+  if(data_to_return.length <1){return [['No data']]}
+
+  if(is_desc){
+    data_to_return.reverse()
+  }
+
+  if(!is_nh){
+    data_to_return = [['Period',  'Price', 'Volume', 'Side'  ]].concat(data_to_return)
+  }
   return data_to_return
 }
 
@@ -2272,10 +2304,11 @@ async function FS_ShortInterest(symbol, ){
  * @param date {string} date.
  * @param limit {string} limit.
  * @param [skip] {string} skip (optional).
+ * @param [options] {string} options (optional).
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EquityTick(symbol,   date , limit, skip = undefined, ){
+async function FS_EquityTick(symbol,   date , limit, skip = undefined, options = undefined){
   var   from = date
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
@@ -2344,6 +2377,10 @@ async function FS_EquityTick(symbol,   date , limit, skip = undefined, ){
   if('message' in json){return [[json.message]]}
   var data = json.data
 
+  // Handle options
+  if(!options){options = ''}
+  var is_ct = options.toLowerCase().includes('ct')
+
   try {
     var data_to_return = [
       ['Count',  data.count ? data.count : '', 'Total',  data.total ? data.total : '', ''  ],
@@ -2354,7 +2391,7 @@ async function FS_EquityTick(symbol,   date , limit, skip = undefined, ){
       for(var i=0;i<data.p.length;i++){
         data_to_return.push([
           data.x && data.x[i] ? (data.x[i] in map_exchange_tick ? map_exchange_tick[data.x[i]] : data.x[i])  : '',
-          data.t[i] ? new Date(data.t[i] ) : '',
+          data.t[i] ? ( is_ct ? new Date(data.t[i]) : parseInt(data.t[i]/1000) ): '',
           data.p && data.p[i] ? data.p[i]  : '',
           data.v && (data.v[i] || data.v[i] == 0) ? data.v[i] : '',
           data.c && data.c[i] ? data.c[i].join() : '',

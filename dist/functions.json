@@ -635,6 +635,12 @@
                     "name": "to",
                     "optional": true,
                     "type": "string"
+                },
+                {
+                    "description": "options (optional).",
+                    "name": "options",
+                    "optional": true,
+                    "type": "string"
                 }
             ],
             "result": {
@@ -660,6 +666,12 @@
                 {
                     "description": "limit (optional).",
                     "name": "limit",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "options (optional).",
+                    "name": "options",
                     "optional": true,
                     "type": "string"
                 }
@@ -792,6 +804,12 @@
                 {
                     "description": "skip (optional).",
                     "name": "skip",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "options (optional).",
+                    "name": "options",
                     "optional": true,
                     "type": "string"
                 }
