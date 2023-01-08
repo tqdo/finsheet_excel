@@ -1635,6 +1635,7 @@ async function refresh_selected_js(){
 
     return context.sync().then(function () { });
   })
+
 }
 
 
@@ -2258,6 +2259,62 @@ var map_url_guru = {
 var reversed_map_url_guru = {}
 for(var i of Object.keys(map_url_guru)){
   reversed_map_url_guru[map_url_guru[i][0].toLowerCase()] = i
+}
+
+
+async function check_whether_reach_limit(output, address){
+  if( output[0][0] === "You are sending too many requests. Wait a minute and continue."){
+    window.Cells_to_refresh[address] = 1
+    // delete window.Cells_to_refresh[address]
+  } else {
+    // window.Cells_to_refresh[address] = 1
+    delete window.Cells_to_refresh[address]
+  }
+
+  if(window.have_not_start_refresh_limit_reach){
+    setInterval(async function () {
+      await Excel.run(async (context) => {
+        let sheets = context.workbook.worksheets;
+        sheets.load("items/name");
+
+        await context.sync();
+
+        let out = {}
+        for (const sheet of sheets.items) {
+          out[sheet.name] = []
+          // console.log(sheet.name)
+        }
+        // console.log(2, window.Cells_to_refresh)
+        for (let cell of Object.keys(window.Cells_to_refresh)){
+          let cell_sheet_name = cell.split('!')[0]
+          for (const sheet of sheets.items) {
+            // console.log(cell, cell_sheet_name, sheet.name)
+            if(cell_sheet_name === sheet.name){
+              out[sheet.name].push(cell.split('!')[1])
+              // console.log(cell)
+              break
+            }
+          }
+        }
+
+        let count = 0
+        for (const sheet of sheets.items) {
+          // console.log(sheet.name)
+          if(out[sheet.name].length > 0){
+
+            let range = sheet.getRanges(out[sheet.name].join(','))
+            range.calculate()
+            await context.sync()
+            count += out[sheet.name].length
+            if(count > 500){break}
+          }
+        }
+        console.log(23)
+      })
+    }, 1000);
+
+    window.have_not_start_refresh_limit_reach = 0
+  }
 }
 
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});

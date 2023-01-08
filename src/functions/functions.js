@@ -169,7 +169,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
     catch (e) {return [['Rate limit reached. Please try again later.']]}
   }
   var json = await response.json()
-  console.log( json)
+  // console.log( json)
   if('message' in json){return [[json.message]]}
   return handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers, sub_options);
 }
@@ -384,15 +384,19 @@ async function FS_Test(symbol){
  * @param [period] {string} Period (optional).
  * @param [limit] {number} Limit (optional, default to 1).
  * @param [options] {string} Options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EquityMetrics(symbol, metric, period = undefined, limit = undefined, options = undefined){
+async function FS_EquityMetrics(symbol, metric, period = undefined, limit = undefined, options = undefined, invocation){
   if(!metric){return [["Metric cannot be empty"]]}
   metric = metric.toLowerCase()
   if(!(metric in map_excel_name_to_id) ){return [["Unsupported metric"]]}
   if(!symbol){return [['']]}
-  return equityHelper(symbol, metric, period , limit , options)
+  const  to_return = equityHelper(symbol, metric, period , limit , options)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 
 /**
@@ -401,15 +405,19 @@ async function FS_EquityMetrics(symbol, metric, period = undefined, limit = unde
  * @param statement {string} Statement (bs, ic or cf).
  * @param [period] {string} Period (optional).
  * @param [limit] {number} Limit (optional, default to 1).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EquityFullFinancials(symbol, statement, period = undefined, limit = undefined){
+async function FS_EquityFullFinancials(symbol, statement, period = undefined, limit = undefined, invocation){
   var metric = statement
   if(!metric){return [["Metric cannot be empty"]]}
   metric = metric.toLowerCase()
   if(!['bs', 'cf', 'ic'].includes(metric) ){return [["Unsupported metric"]]}
-  return equityHelper(symbol, metric, period , limit )
+  const  to_return = equityHelper(symbol, metric, period , limit )
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 
 
@@ -564,11 +572,15 @@ async function candlesHelper(symbol, resolution, from, to = undefined,metrics= u
  * @param [to] {string} To (optional).
  * @param [metrics] {string} Metrics (optional).
  * @param [options] {string} Options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EquityCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined ){
-  return candlesHelper(symbol, resolution, from, to , metrics, options,"stock" )
+async function FS_EquityCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined , invocation){
+  const  to_return = candlesHelper(symbol, resolution, from, to , metrics, options,"stock" )
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 
 /**
@@ -579,11 +591,15 @@ async function FS_EquityCandles(symbol, resolution, from= undefined, to = undefi
  * @param [to] {string} To (optional).
  * @param [metrics] {string} Metrics (optional).
  * @param [options] {string} Options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_ForexCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined){
-  return candlesHelper(symbol, resolution, from, to ,metrics, options, "forex" )
+async function FS_ForexCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined, invocation){
+  const  to_return = candlesHelper(symbol, resolution, from, to , metrics, options,"forex" )
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 
 /**
@@ -594,11 +610,16 @@ async function FS_ForexCandles(symbol, resolution, from= undefined, to = undefin
  * @param [to] {string} To (optional).
  * @param [metrics] {string} Metrics (optional).
  * @param [options] {string} Options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_CryptoCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined){
-  return candlesHelper(symbol, resolution, from, to ,metrics, options, "crypto" )
+async function FS_CryptoCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined, invocation){
+  const  to_return = candlesHelper(symbol, resolution, from, to , metrics, options,"crypto" )
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+
 }
 
 /**
@@ -609,11 +630,15 @@ async function FS_CryptoCandles(symbol, resolution, from= undefined, to = undefi
  * @param [to] {string} To (optional).
  * @param [metrics] {string} Metrics (optional).
  * @param [options] {string} Options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EtfCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined){
-  return candlesHelper(symbol, resolution, from, to , metrics, options,"etf" )
+async function FS_EtfCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined, invocation){
+  const  to_return = candlesHelper(symbol, resolution, from, to , metrics, options,"etf" )
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 
 /**
@@ -624,20 +649,18 @@ async function FS_EtfCandles(symbol, resolution, from= undefined, to = undefined
  * @param [to] {string} To (optional).
  * @param [metrics] {string} Metrics (optional).
  * @param [options] {string} Options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_MutualFundCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined ){
-  return candlesHelper(symbol, resolution, from, to ,metrics, options, "mutual_fund" )
+async function FS_MutualFundCandles(symbol, resolution, from= undefined, to = undefined, metrics=undefined, options=undefined , invocation){
+   const  to_return = candlesHelper(symbol, resolution, from, to , metrics, options,"mutual_fund" )
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 
-/**
- * @customfunction FS_FOREXALLRATES FS_ForexAllRates
- * @param base_currency {string} base_currency.
- * @returns {string[][]} Result array.
- * ...
- */
-async function FS_ForexAllRates(base_currency="USD", ){
+async function helperAllRate(base_currency){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
 
@@ -664,6 +687,19 @@ async function FS_ForexAllRates(base_currency="USD", ){
   }
   return data_to_return
 }
+/**
+ * @customfunction FS_FOREXALLRATES FS_ForexAllRates
+ * @param base_currency {string} base_currency.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_ForexAllRates(base_currency="USD", invocation ){
+  const  to_return = helperAllRate(base_currency)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
 
 var map_name_crypto_profile = {
   "name": "Name",
@@ -678,13 +714,7 @@ var map_name_crypto_profile = {
   "proofType": "Proof Type"
 }
 
-/**
- * @customfunction FS_CRYPTOPROFILE FS_CryptoProfile
- * @param symbol {string} Crypto symbol such as BTC or ETH.
- * @returns {string[][]} Result array.
- * ...
- */
-async function FS_CryptoProfile(symbol, ){
+async function helperCryptoProfile(symbol){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if(!symbol){return [["Symbol cannot be empty"]]}
@@ -717,6 +747,19 @@ async function FS_CryptoProfile(symbol, ){
   }
   return data_to_return
 }
+/**
+ * @customfunction FS_CRYPTOPROFILE FS_CryptoProfile
+ * @param symbol {string} Crypto symbol such as BTC or ETH.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_CryptoProfile(symbol, invocation ){
+  const  to_return = helperCryptoProfile(symbol)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
 
 
 var map_name_etf_profile = {
@@ -739,13 +782,7 @@ var map_name_etf_profile = {
   "trackingIndex": "Tracking Index",
   "website": "Website"
 }
-/**
- * @customfunction FS_ETFPROFILE FS_EtfProfile
- * @param symbol {string} ETF symbol.
- * @returns {string[][]} Result array.
- * ...
- */
-async function FS_EtfProfile(symbol, ){
+async function helperEtfProfile(symbol){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if(!symbol){return [["Symbol cannot be empty"]]}
@@ -781,6 +818,20 @@ async function FS_EtfProfile(symbol, ){
   return data_to_return
 }
 
+/**
+ * @customfunction FS_ETFPROFILE FS_EtfProfile
+ * @param symbol {string} ETF symbol.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_EtfProfile(symbol, invocation){
+  const  to_return = helperEtfProfile(symbol)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
 var map_name_mutual_fund_profile = {
   "benchmark": "Benchmark",
   "beta": 'Beta',
@@ -799,13 +850,7 @@ var map_name_mutual_fund_profile = {
   "turnover": "Turnover"
 }
 
-/**
- * @customfunction FS_MUTUALFUNDPROFILE FS_MutualFundProfile
- * @param symbol {string} Mutual Fund symbol.
- * @returns {string[][]} Result array.
- * ...
- */
-async function FS_MutualFundProfile(symbol, ){
+async function helperMutualFundProfile(symbol){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if(!symbol){return [["Symbol cannot be empty"]]}
@@ -839,6 +884,20 @@ async function FS_MutualFundProfile(symbol, ){
     }
   }
   return data_to_return
+}
+
+/**
+ * @customfunction FS_MUTUALFUNDPROFILE FS_MutualFundProfile
+ * @param symbol {string} Mutual Fund symbol.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_MutualFundProfile(symbol, invocation ){
+  const  to_return = helperMutualFundProfile(symbol)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 
 async function holdingsHelper(symbol, skip, which){
@@ -897,30 +956,32 @@ var map_name_holdings = {
  * @customfunction FS_ETFHOLDINGS FS_EtfHoldings
  * @param symbol {string} ETF symbol.
  * @param [skip] {number} Skip first n results.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EtfHoldings(symbol, skip){
-  return holdingsHelper(symbol, skip, 'etf_holdings')
+async function FS_EtfHoldings(symbol, skip, invocation){
+  const  to_return = holdingsHelper(symbol, skip, 'etf_holdings')
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 /**
  * @customfunction FS_MUTUALFUNDHOLDINGS FS_MutualFundHoldings
  * @param symbol {string} Mutual Fund symbol.
  * @param [skip] {number} Skip first n results.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_MutualFundHoldings(symbol, skip){
-  return holdingsHelper(symbol, skip, 'mutual_fund_holdings')
+async function FS_MutualFundHoldings(symbol, skip, invocation){
+  const  to_return = holdingsHelper(symbol, skip, 'mutual_fund_holdings')
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 
-/**
- * @customfunction FS_LATEST FS_Latest
- * @param symbol {string[][]} Symbol.
- * @returns {string[][]} Result array.
- * ...
- */
-async function FS_Latest(symbol, ){
+async function helperLatest(symbol){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if(!symbol){return [[""]]}
@@ -938,7 +999,7 @@ async function FS_Latest(symbol, ){
   if(!Array.isArray(ticker)){
     ticker = [[ticker]]
   } else {// todo: for now only allow 1 ticker, in the future when find a way to get latest price efficiently for multi stocks then
-          //       allow multi stocks
+    //       allow multi stocks
     return [['Multiple tickers are not allowed.']]
   }
 
@@ -976,6 +1037,19 @@ async function FS_Latest(symbol, ){
   if('message' in json){return [[json.message]]}
 
   return [[json.data]]
+}
+/**
+ * @customfunction FS_LATEST FS_Latest
+ * @param symbol {string[][]} Symbol.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_Latest(symbol, invocation){
+  const  to_return = helperLatest(symbol)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 
 ////// Websocket
@@ -1035,6 +1109,10 @@ window.have_not_set_interval_change_color = true
 window.can_call_streaming = true
 
 connect()
+
+window.Cells_to_refresh = {}
+window.Sheet_to_refresh = {}
+window.have_not_start_refresh_limit_reach = 1
 
 /**
  * Stream Real-time price for Stocks, Cryptos, Forex, ETFs and Mutual Funds.
@@ -1181,16 +1259,7 @@ async function FS_Streaming(symbol, invocation ){
 }
 
 
-
-
-/**
- * @customfunction FS_PATTERNRECOGNITION FS_PatternRecognition
- * @param symbol {string} Symbol.
- * @param resolution {string} Resolution.
- * @returns {string[][]} Result array.
- * ...
- */
-async function FS_PatternRecognition(symbol, resolution,){
+async function helperPR(symbol, resolution){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if (!symbol) { return [["Symbol cannot be empty"]] }
@@ -1202,7 +1271,7 @@ async function FS_PatternRecognition(symbol, resolution,){
   if (resolution in lower_res) { resolution = resolution.toUpperCase() }
 
   var prepare = {api_key : api_key, symbol: symbol, resolution: resolution, which: 'pattern_recognition'}
-  console.log(0, prepare)
+  // console.log(0, prepare)
   const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
@@ -1236,7 +1305,7 @@ async function FS_PatternRecognition(symbol, resolution,){
       const number_to_add = max_len - data_to_return[i].length
       for(var j=0; j< number_to_add; j++){
         data_to_return[i].push(['',''])
-        console.log(data_to_return[i].length)
+        // console.log(data_to_return[i].length)
       }
     }
     if (data_to_return.length < 1 ){return  [['No data']]}
@@ -1248,22 +1317,30 @@ async function FS_PatternRecognition(symbol, resolution,){
       }
       final.push(arr)
     }
-    console.log(final)
+    // console.log(final)
     return final
   } catch (e) {
     return [['No data']]
   }
-
 }
 
 /**
- * @customfunction FS_SUPPORTRESISTANCE FS_SupportResistance
+ * @customfunction FS_PATTERNRECOGNITION FS_PatternRecognition
  * @param symbol {string} Symbol.
  * @param resolution {string} Resolution.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_SupportResistance(symbol, resolution,) {
+async function FS_PatternRecognition(symbol, resolution, invocation){
+  const  to_return = helperPR(symbol, resolution)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+
+}
+
+async function helperSR(symbol, resolution){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) {
     return [["Please login using the sidebar"]]
@@ -1316,15 +1393,22 @@ async function FS_SupportResistance(symbol, resolution,) {
   }
 }
 
-
 /**
- * @customfunction FS_AGGREGATEINDICATORS FS_AggregateIndicators
+ * @customfunction FS_SUPPORTRESISTANCE FS_SupportResistance
  * @param symbol {string} Symbol.
  * @param resolution {string} Resolution.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_AggregateIndicators(symbol, resolution,) {
+async function FS_SupportResistance(symbol, resolution, invocation) {
+  const  to_return = helperSR(symbol, resolution)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+async function helperAI(symbol, resolution){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) {
     return [["Please login using the sidebar"]]
@@ -1381,20 +1465,25 @@ async function FS_AggregateIndicators(symbol, resolution,) {
   }
 }
 
-
 /**
- * @customfunction FS_TECHNICALINDICATORS FS_TechnicalIndicators
+ * @customfunction FS_AGGREGATEINDICATORS FS_AggregateIndicators
  * @param symbol {string} Symbol.
  * @param resolution {string} Resolution.
- * @param indicator {string} Indicator name.
- * @param from {string} From.
- * @param [to] {string} To (optional).
- * @param [parameters] {any[][]} Indicator fields (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=undefined, parameters=[]) {
+async function FS_AggregateIndicators(symbol, resolution, invocation) {
+  const  to_return = helperAI(symbol, resolution)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+
+async function helperTI(symbol, resolution, indicator, from, to , parameters){
   var indicator_fields = parameters
+  if(!indicator_fields){indicator_fields = []}
   if (to == null) { to = undefined }
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
@@ -1455,7 +1544,7 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
     return [["Invalid parameters"]]
   }
 
-  console.log('prepare', prepare)
+  // console.log('prepare', prepare)
   //// Now send get data
   const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
@@ -1471,7 +1560,7 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
   }
 
   var json = await response.json()
-  console.log(json)
+  // console.log(json)
   if('message' in json){return [[json.message]]}
   try {
     var data = json.data
@@ -1504,11 +1593,30 @@ async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=un
       data_to_return.push(arr)
     }
     if (data_to_return.length < 2) { return [['No data']] }
-    console.log(data_to_return)
+    // console.log(data_to_return)
     return data_to_return
   } catch (e) {
     return [['No data']]
   }
+}
+
+/**
+ * @customfunction FS_TECHNICALINDICATORS FS_TechnicalIndicators
+ * @param symbol {string} Symbol.
+ * @param resolution {string} Resolution.
+ * @param indicator {string} Indicator name.
+ * @param from {string} From.
+ * @param [to] {string} To (optional).
+ * @param [parameters] {any[][]} Indicator fields (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_TechnicalIndicators(symbol, resolution, indicator, from, to=undefined, parameters=[], invocation) {
+  const  to_return = helperTI(symbol, resolution, indicator, from, to , parameters)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 
 }
 
@@ -1564,13 +1672,8 @@ var esg_map = {
   'socialScore': 'Social Score',
   'totalESGScore': 'Total ESG Score'
 }
-/**
- * @customfunction FS_ESG FS_ESG
- * @param symbol {string} Stock symbol.
- * @returns {string[][]} Result array.
- * ...
- */
-async function FS_ESG(symbol, ){
+
+async function helperESG(symbol){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if(!symbol){return [["Symbol cannot be empty"]]}
@@ -1611,17 +1714,21 @@ async function FS_ESG(symbol, ){
   return data_to_return
 }
 
-
-
 /**
- * @customfunction FS_EARNINGSQUALITY FS_EarningsQuality
+ * @customfunction FS_ESG FS_ESG
  * @param symbol {string} Stock symbol.
- * @param freq {string} Frequency (annual or quarterly).
- * @param [limit] {number} Limit.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EarningsQuality(symbol, freq, limit){
+async function FS_ESG(symbol, invocation ){
+  const  to_return = helperESG(symbol )
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+async function helperEQ(symbol, freq, limit){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if(!symbol){return [["Symbol cannot be empty"]]}
@@ -1679,16 +1786,23 @@ async function FS_EarningsQuality(symbol, freq, limit){
   return data_to_return
 }
 
-
 /**
- * @customfunction FS_API FS_Api
- * @param provider {string} Provider name.
- * @param endpoint {string} Endpoint name.
- * @param [parameters] {any[][]} Parameters.
+ * @customfunction FS_EARNINGSQUALITY FS_EarningsQuality
+ * @param symbol {string} Stock symbol.
+ * @param freq {string} Frequency (annual or quarterly).
+ * @param [limit] {number} Limit.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_Api(provider, endpoint, parameters=[]) {
+async function FS_EarningsQuality(symbol, freq, limit, invocation){
+  const  to_return = helperEQ(symbol, freq, limit)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+async function helperApi(provider, endpoint, parameters){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if (!provider) { return [["Provider name cannot be empty"]] }
@@ -1728,7 +1842,7 @@ async function FS_Api(provider, endpoint, parameters=[]) {
       final_params[param] = params[param].default.toString()
     }
   }
-  console.log(12, final_params)
+  // console.log(12, final_params)
   var prepare = {api_key: api_key, base_url: base_url, endpoint_url: endpoint_url, params: JSON.stringify(final_params), return_structure: return_structure}
   //// Now send get data
   const url = link + "/excel/api?" + new URLSearchParams(prepare).toString()
@@ -1753,7 +1867,7 @@ async function FS_Api(provider, endpoint, parameters=[]) {
   try{
     for(var word of ['err', 'error', 'errors']){
       if(data[word] && !(typeof data[word] === 'object' && Object.keys(data[word]).length < 1)){
-          return [[JSON.stringify(data[word])]]
+        return [[JSON.stringify(data[word])]]
       }
     }
   } catch(e){}
@@ -1886,17 +2000,23 @@ async function FS_Api(provider, endpoint, parameters=[]) {
   return final
 }
 
-
 /**
- * @customfunction FS_BONDCANDLES FS_BondCandles
- * @param isin {string} ISIN of bind.
- * @param from {string} From.
- * @param [to] {string} To (optional).
- * @param [options] {string} options (optional).
+ * @customfunction FS_API FS_Api
+ * @param provider {string} Provider name.
+ * @param endpoint {string} Endpoint name.
+ * @param [parameters] {any[][]} Parameters.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_BondCandles(isin,   from= undefined, to = undefined, options = undefined){
+async function FS_Api(provider, endpoint, parameters=[], invocation) {
+  const  to_return = helperApi(provider, endpoint, parameters)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+async function helperBondCandles(isin,   from , to , options){
   if (to == null) { to = undefined }
   var symbol = isin
   var api_key = readCookie("finsheet_api_key");
@@ -1968,7 +2088,7 @@ async function FS_BondCandles(isin,   from= undefined, to = undefined, options =
   var is_desc = options.toLowerCase().includes('-')
   var is_ct = options.toLowerCase().includes('ct')
 
-  var data_to_return = [['Period',   'Close' ]]
+  var data_to_return = []
   if (!data.c) { return [['No data']] }
   if(data.c.constructor === Array){
     for(var i=0;i<data.c.length;i++){
@@ -1990,24 +2110,30 @@ async function FS_BondCandles(isin,   from= undefined, to = undefined, options =
   return data_to_return
 }
 
-
 /**
- * @customfunction FS_BONDTICK FS_BondTick
- * @param isin {string} ISIN of bond.
- * @param date {string} date.
- * @param [limit] {string} limit (optional).
+ * @customfunction FS_BONDCANDLES FS_BondCandles
+ * @param isin {string} ISIN of bind.
+ * @param from {string} From.
+ * @param [to] {string} To (optional).
  * @param [options] {string} options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_BondTick(isin,   date= undefined, limit = undefined, options = undefined){
+async function FS_BondCandles(isin,   from= undefined, to = undefined, options = undefined, invocation){
+  const  to_return = helperBondCandles(isin,   from , to , options)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+async function helperBondTick(isin,   date , limit  , options){
   var symbol = isin, from = date
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if (!symbol) { return [["ISIN cannot be empty"]] }
   if (typeof symbol !== 'string') { return [['ISIN has to be a string']] }
   symbol = symbol.toUpperCase()
-
 
 
   //// Check from
@@ -2025,16 +2151,15 @@ async function FS_BondTick(isin,   date= undefined, limit = undefined, options =
     from = Date.parse(from) / 1000
     if(isNaN(from) || from < 0) return [["Invalid 'date'"]]
   }
-
-  // Convert timestamp to date format to use with Finnhub
+   // Convert timestamp to date format to use with Finnhub
   from = new Date(from * 1000)
   const offset = from.getTimezoneOffset()
   from = new Date(from.getTime() - (offset*60*1000))
   from =  from.toISOString().split('T')[0]
 
-  //// Send and get data
+   //// Send and get data
+  if(!limit){limit = 25000}
   var prepare = { ticker: symbol,   from: from, limit: limit.toString(), api_key: api_key,   }
-
 
   //// Now get data
   const url = link + "/excel/bond_tick?" + new URLSearchParams(prepare).toString()
@@ -2086,27 +2211,41 @@ async function FS_BondTick(isin,   date= undefined, limit = undefined, options =
 }
 
 /**
+ * @customfunction FS_BONDTICK FS_BondTick
+ * @param isin {string} ISIN of bond.
+ * @param date {string} date.
+ * @param [limit] {string} limit (optional).
+ * @param [options] {string} options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_BondTick(isin,   date= undefined, limit = undefined, options = undefined, invocation){
+  const  to_return = helperBondTick(isin,   date , limit  , options)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+/**
  * @customfunction FS_FUTURESCANDLES FS_FuturesCandles
  * @param symbol {string} Futures Contract Symbol.
  * @param from {string} From.
  * @param [to] {string} To (optional).
  * @param [metrics] {string} Metrics (optional).
  * @param [options] {string} Options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_FuturesCandles(symbol,   from= undefined, to = undefined, metrics=undefined, options=undefined){
-  return candlesHelper(symbol, "D", from, to , metrics, options, "future" )
+async function FS_FuturesCandles(symbol,   from= undefined, to = undefined, metrics=undefined, options=undefined, invocation){
+  const  to_return = candlesHelper(symbol, "D", from, to , metrics, options, "future" )
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 
-
-/**
- * @customfunction FS_OPTIONEXPIRATIONDATES FS_OptionExpirationDates
- * @param symbol {string} Stock symbol.
- * @returns {string[][]} Result array.
- * ...
- */
-async function FS_OptionExpirationDates(symbol, ){
+async function helperOXD(symbol){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if(!symbol){return "Symbol cannot be empty"}
@@ -2134,7 +2273,7 @@ async function FS_OptionExpirationDates(symbol, ){
   if('message' in json){return [[json.message]]}
 
   var data = json.data
-  console.log(data)
+  // console.log(data)
   var data_to_return = [ ]
   if(data.constructor === Array){
     for(var i=0;i<data.length;i++){
@@ -2149,18 +2288,21 @@ async function FS_OptionExpirationDates(symbol, ){
   return data_to_return
 }
 
-
-
 /**
- * @customfunction FS_OPTIONCHAIN FS_OptionChain
+ * @customfunction FS_OPTIONEXPIRATIONDATES FS_OptionExpirationDates
  * @param symbol {string} Stock symbol.
- * @param type {string} Type.
- * @param expirationDate {string} Expiration date.
- * @param [options] {any[][]} Options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_OptionChain(symbol, type, expirationDate, options=[] ){
+async function FS_OptionExpirationDates(symbol, invocation ){
+  const  to_return = helperOXD(symbol)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+async function helperOC(symbol, type, expirationDate, options){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
 
@@ -2176,7 +2318,7 @@ async function FS_OptionChain(symbol, type, expirationDate, options=[] ){
   if(!dateIsValid(expirationDate)){return [['Invalid "expirationDate"']]}
   if(!options){options = []}
 
-  console.log(1, options)
+  // console.log(1, options)
   var indicator_fields_dic = {}
   try{
     for(let arr of options){
@@ -2204,14 +2346,14 @@ async function FS_OptionChain(symbol, type, expirationDate, options=[] ){
       metrics[metric] = 1
     }
   }
-  console.log(2)
+
   //// Send and get data
   var prepare =  {ticker: symbol,   api_key: api_key,    }
 
   const url = link + "/excel/option?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
-  console.log(3)
+
   //Expect that status code is in 200-299 range
   if (!response.ok) {
     try{
@@ -2226,7 +2368,7 @@ async function FS_OptionChain(symbol, type, expirationDate, options=[] ){
   if('message' in json){return [[json.message]]}
 
   var data = json.data
-  console.log(data)
+  // console.log(data)
   var data_to_return = [ ]
   if(data.constructor === Array){
     for(var i=0;i<data.length;i++){
@@ -2260,12 +2402,23 @@ async function FS_OptionChain(symbol, type, expirationDate, options=[] ){
 
 
 /**
- * @customfunction FS_SHORTINTEREST FS_ShortInterest
+ * @customfunction FS_OPTIONCHAIN FS_OptionChain
  * @param symbol {string} Stock symbol.
+ * @param type {string} Type.
+ * @param expirationDate {string} Expiration date.
+ * @param [options] {any[][]} Options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_ShortInterest(symbol, ){
+async function FS_OptionChain(symbol, type, expirationDate, options=[], invocation ){
+  const  to_return = helperOC(symbol, type, expirationDate, options)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+async function helperSI(symbol){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if(!symbol){return [["Symbol cannot be empty"]]}
@@ -2297,18 +2450,21 @@ async function FS_ShortInterest(symbol, ){
   return data_to_return
 }
 
-
 /**
- * @customfunction FS_EQUITYTICK FS_EquityTick
+ * @customfunction FS_SHORTINTEREST FS_ShortInterest
  * @param symbol {string} Stock symbol.
- * @param date {string} date.
- * @param limit {string} limit.
- * @param [skip] {string} skip (optional).
- * @param [options] {string} options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EquityTick(symbol,   date , limit, skip = undefined, options = undefined){
+async function FS_ShortInterest(symbol, invocation ){
+  const  to_return = helperSI(symbol)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+async function helperET(symbol,   date , limit, skip  , options){
   var   from = date
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
@@ -2406,22 +2562,27 @@ async function FS_EquityTick(symbol,   date , limit, skip = undefined, options =
   }
 }
 
-
 /**
- * @customfunction FS_EARNINGSCALENDAR FS_EarningsCalendar
- * @param [from] {string} from date (optional).
- * @param [to] {string} to date (optional).
- * @param [symbol] {string} stock symbol (optional).
- * @param [international] {string} specify "true" to include international markets (optional).
+ * @customfunction FS_EQUITYTICK FS_EquityTick
+ * @param symbol {string} Stock symbol.
+ * @param date {string} date.
+ * @param limit {string} limit.
+ * @param [skip] {string} skip (optional).
+ * @param [options] {string} options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EarningsCalendar(from,   to, symbol, international  ){
+async function FS_EquityTick(symbol,   date , limit, skip = undefined, options = undefined, invocation){
+  const  to_return = helperET(symbol,   date , limit, skip  , options)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+async function helperEC(from,   to, symbol, international ){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
-
-
-
 
   //// Check from
   if(from ){
@@ -2519,19 +2680,27 @@ async function FS_EarningsCalendar(from,   to, symbol, international  ){
   return data_to_return
 }
 
-
-
-
-
-
 /**
- * @customfunction FS_INSTITUTIONALPORTFOLIOS FS_InstitutionalPortfolios
- * @param guru {string} Guru/institution name.
+ * @customfunction FS_EARNINGSCALENDAR FS_EarningsCalendar
+ * @param [from] {string} from date (optional).
+ * @param [to] {string} to date (optional).
+ * @param [symbol] {string} stock symbol (optional).
+ * @param [international] {string} specify "true" to include international markets (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_InstitutionalPortfolios(guru ){
-   var api_key = readCookie("finsheet_api_key");
+async function FS_EarningsCalendar(from,   to, symbol, international , invocation ){
+  const  to_return = helperEC(from,   to, symbol, international )
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
+
+
+
+async function helperIP(guru){
+  var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if(!guru){return [['Guru name cannot be empty']]}
   if(!(guru.toLowerCase() in reversed_map_url_guru)){return [['This guru/institution is not currently supported']]}
@@ -2574,5 +2743,20 @@ async function FS_InstitutionalPortfolios(guru ){
   } catch(e){
     return [['No data']]
   }
+}
+
+
+/**
+ * @customfunction FS_INSTITUTIONALPORTFOLIOS FS_InstitutionalPortfolios
+ * @param guru {string} Guru/institution name.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_InstitutionalPortfolios(guru , invocation){
+  const  to_return = helperIP(guru)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
 }
 
