@@ -1,4 +1,4 @@
-var link = 'https://d263-100-1-232-170.ngrok.io'
+var link = 'https://54e9-100-1-232-170.ngrok.io'
 var link = 'https://finsheet.io'
 // Todo: uncomment Finsheet url
 console.log(link)
@@ -161,7 +161,7 @@ var map_metrics = {
   '157': {display_name: 'Minority Interest', is_financial_group: 'BS', display_group:['Financials'], 'type': '1', currency_type: '1', default_freq: 'Q', supported_freq:['Q', 'FY'], can_be_filter: '', can_be_column: '', plot_type: '1', excel: 'minority_interest_bs', default_0: 0},
   '158': {display_name: 'Minority Interest', is_financial_group: 'IC', display_group:['Financials'], 'type': '1', currency_type: '1', default_freq: 'TTM', supported_freq:['Q', 'TTM', 'FY'], can_be_filter: '', can_be_column: '', plot_type: '1', excel: 'minority_interest_ic', default_0: 0},
   '159': {display_name: 'Revenue Growth YoY', is_financial_group: '', display_group:['Growth', 'Popular'], 'type': '2', currency_type: '', default_freq: 'TTM', supported_freq:['Q', 'TTM', 'FY'], can_be_filter: '', can_be_column: '', plot_type: '2', excel: 'rev_growth_yoy', default_0: 0},
-  '160': {display_name: 'Dividends Per Share', is_financial_group: '', display_group:['Efficiency'], 'type': '0', currency_type: '1', default_freq: 'TTM', supported_freq:['TTM', 'FY', 'Q'], can_be_filter: '', can_be_column: '', plot_type: '0', excel: 'dividend_per_share', default_0: 1},
+  // '160': {display_name: 'Dividends Per Share', is_financial_group: '', display_group:['Efficiency'], 'type': '0', currency_type: '1', default_freq: 'TTM', supported_freq:['TTM', 'FY', 'Q'], can_be_filter: '', can_be_column: '', plot_type: '0', excel: 'dividend_per_share', default_0: 1},
   '161': {display_name: 'EBITD Per Share', is_financial_group: '', display_group:['Financials'], 'type': '0', currency_type: '1', default_freq: 'TTM', supported_freq:['TTM', 'FY', 'Q'], can_be_filter: '', can_be_column: '', plot_type: '0', excel: 'ebitd_per_share', default_0: 0},
   '162': {display_name: 'Free Cash Flow Per Share', is_financial_group: '', display_group:['Financials'], 'type': '0', currency_type: '1', default_freq: 'TTM', supported_freq:['TTM', 'FY', 'Q'], can_be_filter: '', can_be_column: '', plot_type: '0', excel: 'fcf_per_share', default_0: 0},
   '163': {display_name: 'Operating Cash Flow / Revenue', is_financial_group: '', display_group:['Efficiency'], 'type': '2', currency_type: '', default_freq: 'TTM', supported_freq:['TTM', 'FY', 'Q'], can_be_filter: '', can_be_column: '', plot_type: '2', excel: 'ocf_to_rev', default_0: 0},
@@ -2311,7 +2311,7 @@ async function check_whether_reach_limit(output, address){
         }
         console.log(23)
       })
-    }, 1000);
+    }, 60000);
 
     window.have_not_start_refresh_limit_reach = 0
   }

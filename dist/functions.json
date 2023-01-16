@@ -19,6 +19,9 @@
         {
             "id": "FS_EQUITYMETRICS",
             "name": "FS_EquityMetrics",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Stock Symbol.",
@@ -58,6 +61,9 @@
         {
             "id": "FS_EQUITYFULLFINANCIALS",
             "name": "FS_EquityFullFinancials",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Stock Symbol.",
@@ -90,6 +96,9 @@
         {
             "id": "FS_EQUITYCANDLES",
             "name": "FS_EquityCandles",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Stock Symbol.",
@@ -134,6 +143,9 @@
         {
             "id": "FS_FOREXCANDLES",
             "name": "FS_ForexCandles",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Forex Symbol.",
@@ -178,6 +190,9 @@
         {
             "id": "FS_CRYPTOCANDLES",
             "name": "FS_CryptoCandles",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Crypto Symbol.",
@@ -222,6 +237,9 @@
         {
             "id": "FS_ETFCANDLES",
             "name": "FS_EtfCandles",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Etf Symbol.",
@@ -266,6 +284,9 @@
         {
             "id": "FS_MUTUALFUNDCANDLES",
             "name": "FS_MutualFundCandles",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Mutual Fund Symbol.",
@@ -310,6 +331,9 @@
         {
             "id": "FS_FOREXALLRATES",
             "name": "FS_ForexAllRates",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "base_currency.",
@@ -326,6 +350,9 @@
         {
             "id": "FS_CRYPTOPROFILE",
             "name": "FS_CryptoProfile",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Crypto symbol such as BTC or ETH.",
@@ -341,6 +368,9 @@
         {
             "id": "FS_ETFPROFILE",
             "name": "FS_EtfProfile",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "ETF symbol.",
@@ -356,6 +386,9 @@
         {
             "id": "FS_MUTUALFUNDPROFILE",
             "name": "FS_MutualFundProfile",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Mutual Fund symbol.",
@@ -371,6 +404,9 @@
         {
             "id": "FS_ETFHOLDINGS",
             "name": "FS_EtfHoldings",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "ETF symbol.",
@@ -392,6 +428,9 @@
         {
             "id": "FS_MUTUALFUNDHOLDINGS",
             "name": "FS_MutualFundHoldings",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Mutual Fund symbol.",
@@ -413,6 +452,9 @@
         {
             "id": "FS_LATEST",
             "name": "FS_Latest",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Symbol.",
@@ -447,6 +489,9 @@
         {
             "id": "FS_PATTERNRECOGNITION",
             "name": "FS_PatternRecognition",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Symbol.",
@@ -467,6 +512,9 @@
         {
             "id": "FS_SUPPORTRESISTANCE",
             "name": "FS_SupportResistance",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Symbol.",
@@ -487,6 +535,9 @@
         {
             "id": "FS_AGGREGATEINDICATORS",
             "name": "FS_AggregateIndicators",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Symbol.",
@@ -507,6 +558,9 @@
         {
             "id": "FS_TECHNICALINDICATORS",
             "name": "FS_TechnicalIndicators",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Symbol.",
@@ -550,6 +604,9 @@
         {
             "id": "FS_ESG",
             "name": "FS_ESG",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Stock symbol.",
@@ -565,6 +622,9 @@
         {
             "id": "FS_EARNINGSQUALITY",
             "name": "FS_EarningsQuality",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Stock symbol.",
@@ -591,6 +651,9 @@
         {
             "id": "FS_API",
             "name": "FS_Api",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Provider name.",
@@ -618,6 +681,9 @@
         {
             "id": "FS_BONDCANDLES",
             "name": "FS_BondCandles",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "ISIN of bind.",
@@ -651,6 +717,9 @@
         {
             "id": "FS_BONDTICK",
             "name": "FS_BondTick",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "ISIN of bond.",
@@ -684,6 +753,9 @@
         {
             "id": "FS_FUTURESCANDLES",
             "name": "FS_FuturesCandles",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Futures Contract Symbol.",
@@ -723,6 +795,9 @@
         {
             "id": "FS_OPTIONEXPIRATIONDATES",
             "name": "FS_OptionExpirationDates",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Stock symbol.",
@@ -738,6 +813,9 @@
         {
             "id": "FS_OPTIONCHAIN",
             "name": "FS_OptionChain",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Stock symbol.",
@@ -770,6 +848,9 @@
         {
             "id": "FS_SHORTINTEREST",
             "name": "FS_ShortInterest",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Stock symbol.",
@@ -785,6 +866,9 @@
         {
             "id": "FS_EQUITYTICK",
             "name": "FS_EquityTick",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Stock symbol.",
@@ -822,6 +906,9 @@
         {
             "id": "FS_EARNINGSCALENDAR",
             "name": "FS_EarningsCalendar",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "from date (optional).",
@@ -856,10 +943,53 @@
         {
             "id": "FS_INSTITUTIONALPORTFOLIOS",
             "name": "FS_InstitutionalPortfolios",
+            "options": {
+                "requiresAddress": true
+            },
             "parameters": [
                 {
                     "description": "Guru/institution name.",
                     "name": "guru",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
+        },
+        {
+            "id": "FS_DIVIDENDS",
+            "name": "FS_Dividends",
+            "options": {
+                "requiresAddress": true
+            },
+            "parameters": [
+                {
+                    "description": "Stock symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "from.",
+                    "name": "from",
+                    "type": "string"
+                },
+                {
+                    "description": "to.",
+                    "name": "to",
+                    "type": "string"
+                },
+                {
+                    "description": "metrics (optional).",
+                    "name": "metrics",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "options (optional).",
+                    "name": "options",
+                    "optional": true,
                     "type": "string"
                 }
             ],

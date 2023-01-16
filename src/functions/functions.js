@@ -925,7 +925,7 @@ async function holdingsHelper(symbol, skip, which){
   }
 
   var json = await response.json()
-  // Logger.log(json)
+  // console.log(json)
   if('message' in json){return json.message}
 
   try {
@@ -2760,3 +2760,144 @@ async function FS_InstitutionalPortfolios(guru , invocation){
   return to_return
 }
 
+async function helperDividends(symbol, from, to ,metrics, options){
+  console.log(13)
+  var api_key = readCookie("finsheet_api_key");
+  if(!api_key){return [["Please login using the sidebar"]]}
+
+  if(!symbol){return [['symbol cannot be empty']]}
+  if(!from){return [['from cannot be empty']]}
+  if(!to){return [['to cannot be empty']]}
+
+  console.log(1)
+  //// Check from
+  if(from ){
+    // Handle unix time
+    if(typeof from == 'number' || !isNaN(from)){
+      var from_string = from.toString()
+      if(from_string.length >= 12) {      // This is miliseconds, divide by 1000
+        from = from / 1000
+      }
+      from = Math.round(from)
+    }
+    // Or convert string/Date object or whatever input user gives.
+    else{
+      from = Date.parse(from) / 1000
+      if(isNaN(from) || from < 0) return "Invalid 'date'"
+    }
+
+    // Convert timestamp to date format to use with Finnhub
+    from = new Date(from * 1000)
+    const offset = from.getTimezoneOffset()
+    from = new Date(from.getTime() - (offset*60*1000))
+    from =  from.toISOString().split('T')[0]
+  } else {
+    from = ""
+  }
+  console.log(2)
+  //// Check to
+  if(to ){
+    // Handle unix time
+    if(typeof to == 'number' || !isNaN(to)){
+      var from_string = to.toString()
+      if(from_string.length >= 12) {      // This is miliseconds, divide by 1000
+        to = to / 1000
+      }
+      to = Math.round(to)
+    }
+    // Or convert string/Date object or whatever input user gives.
+    else{
+      to = Date.parse(to) / 1000
+      if(isNaN(to) || to < 0) return "Invalid 'date'"
+    }
+
+    // Convert timestamp to date format to use with Finnhub
+    to = new Date(to * 1000)
+    const offset = to.getTimezoneOffset()
+    to = new Date(to.getTime() - (offset*60*1000))
+    to =  to.toISOString().split('T')[0]
+  } else {
+    to = ""
+  }
+
+  //// Send and get data
+  var prepare =  {ticker: symbol,  from: from, to: to, api_key: api_key,    is_gs: "y" }
+  console.log(12, prepare)
+  //// Now get data
+  const url = link + "/excel/dividend?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data
+
+  // Handle options
+  if(!options){options = ''}
+  var is_nh = options.toLowerCase().includes('nh')
+  var is_desc = options.toLowerCase().includes('-')
+
+  // Handle metrics / columns
+  var headers = []
+  var map_col_name = {'declarationDate': 1,  'recordDate': 1, 'payDate': 1,'amount': 1, 'adjustedAmount': 1,'currency': 1}
+  if(!metrics || metrics == "all" || metrics == "All" || metrics == 'ALL'){headers = ['declarationDate',  'recordDate', 'payDate','amount', 'adjustedAmount','currency',]}
+  else {
+    var arr_metrics = metrics.split('&')
+    for(var elem of arr_metrics){
+      var reformat = elem
+      if(reformat in map_col_name){
+        headers.push(reformat)
+      }
+    }
+  }
+
+  var data_to_return = []
+  for(var i=0;i<data.length;i++){
+    var dic = data[i]
+    var one_row = []
+    for(var elem of headers){
+      one_row.push(dic[elem] ? dic[elem] : '')
+    }
+    data_to_return.push(one_row)
+
+  }
+
+  if(data_to_return.length < 1){return [['No data']]}
+
+  if(is_desc){
+    data_to_return.reverse()
+  }
+
+  if(!is_nh){
+    data_to_return = [headers].concat(data_to_return)
+  }
+  return data_to_return
+}
+
+/**
+ * @customfunction FS_DIVIDENDS FS_Dividends
+ * @param symbol {string} Stock symbol.
+ * @param from {string} from.
+ * @param to {string} to.
+ * @param [metrics] {string} metrics (optional).
+ * @param [options] {string} options (optional).
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_Dividends(symbol, from, to ,metrics, options , invocation){
+  const  to_return = helperDividends(symbol, from, to ,metrics, options)
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
