@@ -2263,7 +2263,7 @@ for(var i of Object.keys(map_url_guru)){
 
 
 async function check_whether_reach_limit(output, address){
-  if( output[0][0] === "You are sending too many requests. Wait a minute and continue."){
+  if( output[0][0].startsWith("You are sending too many requests") && output[0][0].endsWith('Wait a minute and continue.')){
     window.Cells_to_refresh[address] = 1
     // delete window.Cells_to_refresh[address]
   } else {

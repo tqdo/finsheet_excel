@@ -478,8 +478,22 @@ async function candlesHelper(symbol, resolution, from, to = undefined,metrics= u
   }
   if(to <=from){return [["'to' has to be after 'from'"]]}
   console.log(from ,to)
+
+  var function_name = 'FS_EquityCandles'
+  if(which == 'future'){
+    function_name = 'FS_FuturesCandles'
+  } else if(which == 'etf'){
+    function_name = 'FS_EtfCandles'
+  } if(which == 'mutual_fund'){
+    function_name = 'FS_MutualFundCandles'
+  } if(which == 'crypto'){
+    function_name = 'FS_CryptoCandles'
+  } if(which == 'forex'){
+    function_name = 'FS_ForexCandles'
+  }
+
   //// Send and get data
-  var prepare = { ticker: symbol, resolution: resolution, from: from, to: to, api_key: api_key, properties: JSON.stringify(properties) , which: which, }
+  var prepare = { ticker: symbol, resolution: resolution, from: from, to: to, api_key: api_key, properties: JSON.stringify(properties) , which: which, function_name: function_name }
 
 
   //// Now get data
@@ -665,7 +679,7 @@ async function helperAllRate(base_currency){
   if (!api_key) { return [["Please login using the sidebar"]] }
 
   //// Now get data
-  var prepare = {base_currency: base_currency, api_key: api_key}
+  var prepare = {base_currency: base_currency, api_key: api_key, function_name: 'FS_ForexAllRates'}
   const url = link + "/excel/forex_all_rates?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
@@ -723,7 +737,7 @@ async function helperCryptoProfile(symbol){
   symbol = symbol.toUpperCase()
 
   //// Now get data
-  var prepare = {symbol: symbol, api_key: api_key, which: "crypto_profile"}
+  var prepare = {symbol: symbol, api_key: api_key, which: "crypto_profile", function_name: 'FS_CryptoProfile'}
   const url = link + "/excel/asset_profile?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
@@ -790,7 +804,7 @@ async function helperEtfProfile(symbol){
   symbol = symbol.toUpperCase()
 
   //// Now get data
-  var prepare = {symbol: symbol, api_key: api_key, which: "etf_profile"}
+  var prepare = {symbol: symbol, api_key: api_key, which: "etf_profile", function_name: 'FS_EtfProfile'}
   const url = link + "/excel/asset_profile?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
@@ -858,7 +872,7 @@ async function helperMutualFundProfile(symbol){
   symbol = symbol.toUpperCase()
 
   //// Now get data
-  var prepare = {symbol: symbol, api_key: api_key, which: "mutual_fund_profile"}
+  var prepare = {symbol: symbol, api_key: api_key, which: "mutual_fund_profile", function_name: 'FS_MutualFundProfile'}
   const url = link + "/excel/asset_profile?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
@@ -910,7 +924,12 @@ async function holdingsHelper(symbol, skip, which){
   if(skip == undefined || skip === ''){skip = 0}
   if(typeof skip !== 'number' && typeof skip !== 'undefined' ){return 'skip has to be an integer'}
 
-  var prepare = {symbol: symbol, skip: skip.toString(), api_key: api_key, which: which,}
+  var function_name = 'FS_EtfHoldings'
+  if(which == 'mutual_fund_holdings'){
+    function_name = 'FS_MutualFundsHoldings'
+  }
+
+  var prepare = {symbol: symbol, skip: skip.toString(), api_key: api_key, which: which, function_name: function_name}
   const url = link + "/excel/asset_holdings?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
@@ -1270,7 +1289,7 @@ async function helperPR(symbol, resolution){
   if (!(resolution in valid_resolution)) { return [['Invalid resolution']] }
   if (resolution in lower_res) { resolution = resolution.toUpperCase() }
 
-  var prepare = {api_key : api_key, symbol: symbol, resolution: resolution, which: 'pattern_recognition'}
+  var prepare = {api_key : api_key, symbol: symbol, resolution: resolution, which: 'pattern_recognition', function_name: 'FS_PatternRecognition'}
   // console.log(0, prepare)
   const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
@@ -1363,7 +1382,7 @@ async function helperSR(symbol, resolution){
     resolution = resolution.toUpperCase()
   }
 
-  var prepare = {api_key: api_key, symbol: symbol, resolution: resolution, which: 'support_resistance'}
+  var prepare = {api_key: api_key, symbol: symbol, resolution: resolution, which: 'support_resistance', function_name: 'FS_SupportResistance'}
 
   const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
@@ -1431,7 +1450,7 @@ async function helperAI(symbol, resolution){
     resolution = resolution.toUpperCase()
   }
 
-  var prepare = {api_key: api_key, symbol: symbol, resolution: resolution, which: 'aggregate_indicators'}
+  var prepare = {api_key: api_key, symbol: symbol, resolution: resolution, which: 'aggregate_indicators', function_name: 'FS_AggregateIndicators'}
 
   const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
@@ -1539,7 +1558,8 @@ async function helperTI(symbol, resolution, indicator, from, to , parameters){
     for(let arr of indicator_fields){
       indicator_fields_dic[arr[0].toString()] = arr[1].toString()
     }
-    prepare = { symbol: symbol, resolution: resolution, from: from, to: to, api_key: api_key, indicator: indicator, indicator_fields: JSON.stringify(indicator_fields_dic), which: 'technical_indicators'}
+    prepare = { symbol: symbol, resolution: resolution, from: from, to: to, api_key: api_key, indicator: indicator,
+      indicator_fields: JSON.stringify(indicator_fields_dic), which: 'technical_indicators' , function_name: 'FS_TechnicalIndicators'}
   } catch (e) {
     return [["Invalid parameters"]]
   }
@@ -1681,7 +1701,7 @@ async function helperESG(symbol){
   symbol = symbol.toUpperCase()
 
   //// Now get data
-  var prepare = {symbol: symbol, api_key: api_key, }
+  var prepare = {symbol: symbol, api_key: api_key, function_name: 'FS_ESG'}
   const url = link + "/excel/alternative/esg?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
@@ -1741,7 +1761,7 @@ async function helperEQ(symbol, freq, limit){
   if(typeof  limit !== "number"){return [['Limit has to be a number']]}
 
   //// Now get data
-  var prepare = {symbol: symbol, api_key: api_key, freq : freq}
+  var prepare = {symbol: symbol, api_key: api_key, freq : freq, function_name: 'FS_EarningsQuality'}
   const url = link + "/excel/alternative/earnings_quality?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
@@ -2060,7 +2080,7 @@ async function helperBondCandles(isin,   from , to , options){
   if(to <=from){return [["'to' has to be after 'from'"]]}
   console.log(from ,to)
   //// Send and get data
-  var prepare = { ticker: symbol,  from: from, to: to, api_key: api_key,   }
+  var prepare = { ticker: symbol,  from: from, to: to, api_key: api_key, function_name: 'FS_BondCandles'   }
 
 
   //// Now get data
@@ -2159,7 +2179,7 @@ async function helperBondTick(isin,   date , limit  , options){
 
    //// Send and get data
   if(!limit){limit = 25000}
-  var prepare = { ticker: symbol,   from: from, limit: limit.toString(), api_key: api_key,   }
+  var prepare = { ticker: symbol,   from: from, limit: limit.toString(), api_key: api_key, function_name: 'FS_BondTick'   }
 
   //// Now get data
   const url = link + "/excel/bond_tick?" + new URLSearchParams(prepare).toString()
@@ -2253,7 +2273,7 @@ async function helperOXD(symbol){
   symbol = symbol.toUpperCase()
 
   //// Send and get data
-  var prepare =  {ticker: symbol,   api_key: api_key, }
+  var prepare =  {ticker: symbol,   api_key: api_key, function_name: 'FS_OptionExpirationDates'}
 
   const url = link + "/excel/option?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
@@ -2348,7 +2368,7 @@ async function helperOC(symbol, type, expirationDate, options){
   }
 
   //// Send and get data
-  var prepare =  {ticker: symbol,   api_key: api_key,    }
+  var prepare =  {ticker: symbol,   api_key: api_key,   function_name: 'FS_OptionChain' }
 
   const url = link + "/excel/option?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
@@ -2426,7 +2446,7 @@ async function helperSI(symbol){
   symbol = symbol.toUpperCase()
 
   //// Now get data
-  var prepare = {symbol: symbol, api_key: api_key, }
+  var prepare = {symbol: symbol, api_key: api_key, function_name: 'FS_ShortInterest'}
   const url = link + "/excel/short-interest?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
@@ -2511,7 +2531,7 @@ async function helperET(symbol,   date , limit, skip  , options){
   from =  from.toISOString().split('T')[0]
 
   //// Send and get data
-  var prepare = { ticker: symbol,   from: from, limit: limit.toString(), skip: skip.toString(), api_key: api_key,   }
+  var prepare = { ticker: symbol,   from: from, limit: limit.toString(), skip: skip.toString(), api_key: api_key,  function_name: 'FS_EquityTick' }
 
 
   //// Now get data
@@ -2637,7 +2657,7 @@ async function helperEC(from,   to, symbol, international ){
   if(!symbol){symbol = ""}
 
   //// Send and get data
-  var   prepare =  {ticker: symbol,  from: from, to: to, api_key: api_key,  international: international, is_gs: "y" }
+  var   prepare =  {ticker: symbol,  from: from, to: to, api_key: api_key,  international: international,  function_name: 'FS_EarningsCalendar' }
 
 
 
@@ -2706,7 +2726,7 @@ async function helperIP(guru){
   if(!(guru.toLowerCase() in reversed_map_url_guru)){return [['This guru/institution is not currently supported']]}
 
   //// Send and get data
-  var prepare =  {guru: guru, is_gs: "y" , api_key: api_key}
+  var prepare =  {guru: guru, is_gs: "y" , api_key: api_key, function_name: 'FS_InstitutionalPortfolios'}
 
   //// Now get data
   const url = link + "/excel/institutional-holding?" + new URLSearchParams(prepare).toString()
@@ -2821,7 +2841,7 @@ async function helperDividends(symbol, from, to ,metrics, options){
   }
 
   //// Send and get data
-  var prepare =  {ticker: symbol,  from: from, to: to, api_key: api_key,    is_gs: "y" }
+  var prepare =  {ticker: symbol,  from: from, to: to, api_key: api_key,   function_name: 'FS_Dividends'}
   console.log(12, prepare)
   //// Now get data
   const url = link + "/excel/dividend?" + new URLSearchParams(prepare).toString()
