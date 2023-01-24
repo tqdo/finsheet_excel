@@ -1447,7 +1447,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
     if (Object.keys(json.data).length == 0) {
       return [["No data"]];
     }
-
+    console.log(23, json, ticker)
     // // If only has 1 value in json.data meaning not series, simply return it
     // if (Object.keys(json.data).length == 1) {
     //   for (var key of Object.keys(json.data)) {
@@ -1486,9 +1486,10 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
       }
       return to_return
     } else {
-
+      console.log(24, Object.keys(json.data), Object.keys(json.data).length)
       if(Object.keys(json.data).length == 1){
         for(var key of Object.keys(json.data)){
+          console.log([[json.data[key]]])
           if(key=== "39_-1"){return  [["No data"]]}
           return [[json.data[key]]]
         }
@@ -2263,7 +2264,7 @@ for(var i of Object.keys(map_url_guru)){
 
 
 async function check_whether_reach_limit(output, address){
-  if( output[0][0].startsWith("You are sending too many requests") && output[0][0].endsWith('Wait a minute and continue.')){
+  if( (typeof output[0][0] === 'string' || output[0][0] instanceof String) && output[0][0].startsWith("You are sending too many requests") && output[0][0].endsWith('Wait a minute and continue.')){
     window.Cells_to_refresh[address] = 1
     // delete window.Cells_to_refresh[address]
   } else {
