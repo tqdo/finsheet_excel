@@ -571,7 +571,7 @@ function Register(){
     $('#register_password').val('')
     fetch(link + '/excel/register?email=' + encodeURIComponent(email) + '&password='+encodeURIComponent(password) + '&name=' + encodeURIComponent(name)).then(function(response){
       if (response.ok) {return response.json().then(function (json) {
-        console.log(json);
+        // console.log(json);
         if(json.msg){
           $(".register_loader").css({ display: "none" });
           $("#register_warning").css({ display: "block" });
@@ -693,7 +693,7 @@ function changeNewSymbol(which='stock'){
   if(!input){ return}
   fetch(link + "/search_symbols?which=" + which + "&val=" + input).then(function(response){
     if (response.ok) {return response.json().then(function (json) {
-      console.log(json);
+      // console.log(json);
       for(var dic of json.data){
         all_symbols.append(
             `<div class="one_filter_suggestion pointer" id="${dic.tickers}" onmousedown="clickSymbol('${dic.tickers + '__' +  dic.comp_name + '__' + (dic.exchange ? dic.exchange : dic.tickers.split(':')[0])}')"><div style="display: inline; color: #2cbd54">${dic.tickers}</div>${' - ' + dic.comp_name}</div>`
@@ -1447,7 +1447,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
     if (Object.keys(json.data).length == 0) {
       return [["No data"]];
     }
-    console.log(23, json, ticker)
+    // console.log(23, json, ticker)
     // // If only has 1 value in json.data meaning not series, simply return it
     // if (Object.keys(json.data).length == 1) {
     //   for (var key of Object.keys(json.data)) {
@@ -1486,10 +1486,10 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
       }
       return to_return
     } else {
-      console.log(24, Object.keys(json.data), Object.keys(json.data).length)
+      // console.log(24, Object.keys(json.data), Object.keys(json.data).length)
       if(Object.keys(json.data).length == 1){
         for(var key of Object.keys(json.data)){
-          console.log([[json.data[key]]])
+          // console.log([[json.data[key]]])
           if(key=== "39_-1"){return  [["No data"]]}
           return [[json.data[key]]]
         }

@@ -207,7 +207,7 @@
             initializeTypeHead() {
                 let searchSource = []
                 var json =  intergration_json
-                console.log(json)
+                // console.log(json)
                 json.extraDocs.forEach(function (element, index) {
                     element.subSection.forEach(function (sub, i) {
                         if(!sub['summary'].includes('|')){return}
@@ -275,7 +275,7 @@
                     });
 
                 searchMaster.bind('typeahead:select', function (ev, suggestion, name) {
-                    console.log(suggestion)
+                    // console.log(suggestion)
                     var arr = suggestion.header.split(' | ')
                     thisComponent.props.updateEndpoint(arr[0], arr[1])
                     searchMaster.typeahead('close')
