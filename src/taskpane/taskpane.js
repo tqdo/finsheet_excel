@@ -1,4 +1,4 @@
-var link = 'https://54e9-100-1-232-170.ngrok.io'
+var link = 'https://7df3-100-1-232-170.ngrok.io'
 var link = 'https://finsheet.io'
 // Todo: uncomment Finsheet url
 console.log(link)
@@ -2263,59 +2263,70 @@ for(var i of Object.keys(map_url_guru)){
 }
 
 
+function makeInterval(map, time){
+  setInterval(async function () {
+    await Excel.run(async (context) => {
+      // console.log(map)
+      let sheets = context.workbook.worksheets;
+      sheets.load("items/name");
+
+      await context.sync();
+
+      let out = {}
+      for (const sheet of sheets.items) {
+        out[sheet.name] = []
+        // console.log(sheet.name)
+      }
+      // console.log(2, window.Cells_to_refresh)
+      for (let cell of Object.keys(map)){
+        let cell_sheet_name = cell.split('!')[0]
+        for (const sheet of sheets.items) {
+          // console.log(cell, cell_sheet_name, sheet.name)
+          if(cell_sheet_name === sheet.name){
+            out[sheet.name].push(cell.split('!')[1])
+            // console.log(cell)
+            break
+          }
+        }
+      }
+
+      let count = 0
+      for (const sheet of sheets.items) {
+        // console.log(sheet.name)
+        if(out[sheet.name].length > 0){
+
+          let range = sheet.getRanges(out[sheet.name].join(','))
+          range.calculate()
+          await context.sync()
+          count += out[sheet.name].length
+          if(count > 500){break}
+        }
+      }
+      console.log(23)
+    })
+  }, time);
+}
+
 async function check_whether_reach_limit(output, address){
-  if( (typeof output[0][0] === 'string' || output[0][0] instanceof String) && output[0][0].startsWith("You are sending too many requests") && output[0][0].endsWith('Wait a minute and continue.')){
+  if( (typeof output[0][0] === 'string' || output[0][0] instanceof String) && output[0][0].startsWith("You are sending too many requests") && output[0][0].endsWith('ait a minute and continue.')){
     window.Cells_to_refresh[address] = 1
     // delete window.Cells_to_refresh[address]
-  } else {
+  }  else {
     // window.Cells_to_refresh[address] = 1
     delete window.Cells_to_refresh[address]
   }
+  // console.log(34, window.Cells_to_refresh, address)
 
   if(window.have_not_start_refresh_limit_reach){
-    setInterval(async function () {
-      await Excel.run(async (context) => {
-        let sheets = context.workbook.worksheets;
-        sheets.load("items/name");
-
-        await context.sync();
-
-        let out = {}
-        for (const sheet of sheets.items) {
-          out[sheet.name] = []
-          // console.log(sheet.name)
-        }
-        // console.log(2, window.Cells_to_refresh)
-        for (let cell of Object.keys(window.Cells_to_refresh)){
-          let cell_sheet_name = cell.split('!')[0]
-          for (const sheet of sheets.items) {
-            // console.log(cell, cell_sheet_name, sheet.name)
-            if(cell_sheet_name === sheet.name){
-              out[sheet.name].push(cell.split('!')[1])
-              // console.log(cell)
-              break
-            }
-          }
-        }
-
-        let count = 0
-        for (const sheet of sheets.items) {
-          // console.log(sheet.name)
-          if(out[sheet.name].length > 0){
-
-            let range = sheet.getRanges(out[sheet.name].join(','))
-            range.calculate()
-            await context.sync()
-            count += out[sheet.name].length
-            if(count > 500){break}
-          }
-        }
-        console.log(23)
-      })
-    }, 60000);
+    makeInterval(window.Cells_to_refresh, 60000)
 
     window.have_not_start_refresh_limit_reach = 0
   }
+}
+
+var resolution_map_to_seconds = {
+  '1':60, '5':60*5, '15':60*15, '30':60*30, '60':3600,
+  'D':3600 * 24, 'W':3600 * 24 * 7, 'M':3600 * 24 * 30,
 }
 
 // $("#search_dropdown_wrap").on("mouseover", function() {console.log(3);$("#search_dropdown").show();}).on("mouseout", function() {$("#search_dropdown").hide();});

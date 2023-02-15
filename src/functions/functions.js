@@ -158,7 +158,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   }
   console.log('ticker', ticker)
   //// Now get data
-  var urlParams = {api_key: api_key, limit: limit, is_full_statement: is_full_statement ? "y" : "n", freq: freq, is_share: id == '37' ? 'y' :'n'}
+  var urlParams = {api_key: api_key, limit: limit, is_full_statement: is_full_statement ? "y" : "n", freq: freq, is_share: id == '37' ? 'y' :'n', function_name: 'FS_EquityMetrics'}
   const url = link + "/excel/standard?" + new URLSearchParams(urlParams).toString()
   const response = await fetch(url, {method: 'POST', body: JSON.stringify(prepare)});
 
@@ -476,8 +476,12 @@ async function candlesHelper(symbol, resolution, from, to = undefined,metrics= u
     to = Date.parse(to) / 1000
     if(isNaN(to) || to < 0) return [["Invalid 'to'"]]
   }
-  if(to <=from){return [["'to' has to be after 'from'"]]}
-  console.log(from ,to)
+  if(to <from){return [["'to' has to be after or equal to 'from'"]]}
+  var to_equal_from = 0
+  if(to == from){
+    to = from + resolution_map_to_seconds[resolution]
+    to_equal_from = 1
+  }
 
   var function_name = 'FS_EquityCandles'
   if(which == 'future'){
@@ -553,6 +557,7 @@ async function candlesHelper(symbol, resolution, from, to = undefined,metrics= u
         }
       }
       data_to_return.push(one_row)
+      if(to_equal_from){break}
 
     }
   } else { // This result is from Quote (get the latest)
@@ -1386,6 +1391,7 @@ async function helperSR(symbol, resolution){
 
   const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
+
 
   //Expect that status code is in 200-299 range
   if (!response.ok) {
