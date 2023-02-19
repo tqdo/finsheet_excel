@@ -1433,7 +1433,7 @@ function isValidFreq_returnCleanString(string, supported_freq = ["FY", "TTM", "Q
   return string;
 }
 
-function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers, sub_options) {
+function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers, is_nh, only_get_latest_when_limit_larger_1) {
   if ("message" in json) {
     return [[json.message ? json.message : 'Something went wrong, please try again']];
   }
@@ -1487,12 +1487,33 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
       return to_return
     } else {
       // console.log(24, Object.keys(json.data), Object.keys(json.data).length)
+
+      // console.log('aj,', json)
+      // If only 1 value, meaning 1 stock and no header, simply return
       if(Object.keys(json.data).length == 1){
+        if('backward_period_map' in json.data){return [['No data']]}
         for(var key of Object.keys(json.data)){
           // console.log([[json.data[key]]])
           if(key=== "39_-1"){return  [["No data"]]}
           return [[json.data[key]]]
         }
+      }
+
+      // If 2 keys, meaning 1 value and 1 backwardmap (1 stock, 1 value and has header), deal with it here
+      if(Object.keys(json.data).length  == 2){
+        var to_return =[[], []]
+        for(var key of Object.keys(json.data)){
+          if(key === 'backward_period_map'){
+            for(var key2 of Object.keys(json.data.backward_period_map)){
+              var temp_arr = key2.split('_')
+              to_return[0].push(temp_arr[temp_arr.length - 1])
+            }
+          } else {
+            to_return[1].push(json.data[key])
+          }
+        }
+        return to_return
+
       }
     }
 
@@ -1542,8 +1563,13 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
         data_to_return[1].push(small_arr[1]);
       }
     }
-     if(!sub_options){sub_options=""}
-    if(sub_options.toLowerCase().includes('nh')){data_to_return = [data_to_return[1]]}
+    if(only_get_latest_when_limit_larger_1){
+      try{
+        data_to_return[0] = [data_to_return[0][data_to_return[0].length - 1]]
+        data_to_return[1] = [data_to_return[1][data_to_return[1].length - 1]]
+      } catch (e){}
+    }
+     if(is_nh){data_to_return = [data_to_return[1]]}
      return data_to_return;
   }
 

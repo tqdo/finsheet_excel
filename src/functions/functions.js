@@ -5,6 +5,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   // return [["Please login using the sidebar"]];
   // console.log(123)
   var sub_options = options
+  if(!sub_options){sub_options=""}
 
   if (period == null) { period = undefined}
   if (limit == null) { limit = undefined }
@@ -18,7 +19,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   }
 
   // Check if just 1 cell 1 ticker convert the array to string
-  console.log('ticker', ticker)
+  // console.log('ticker', ticker)
   if(Array.isArray(ticker)){
     if(!Array.isArray(ticker[0])  ){
       ticker = ticker[0]
@@ -28,7 +29,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   }
 
   var unique_tickers = {}
-  console.log('ticker', ticker)
+  // console.log('ticker', ticker)
   if(!Array.isArray(ticker)){  // Do these checks if ticker is just one value (from FS_EquityFullFinancials)
     if (!ticker) {
       return [["Symbol cannot be empty"]];
@@ -124,6 +125,22 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
       return [["Invalid period"]];
     }
   }
+
+  var is_nh = limit < 2 || limit == undefined || freq.includes('.')  || freq.includes('-') || freq.includes('+') || sub_options.toLowerCase().indexOf('nh') !== -1
+  if(sub_options.toLowerCase().includes('h') && sub_options.toLowerCase().indexOf('nh') === -1){
+    is_nh = false
+  }
+  if(Array.isArray(ticker) && !is_nh){
+    return [["can't display header when there are multiple tickers as input"]]
+  }
+  var only_get_latest_when_limit_larger_1 = false
+  if(!Array.isArray(ticker) && !is_nh && (limit < 2 || limit == undefined)){ // only 1 stock and needs header
+    if(["TTM", "FY", "Q", "YTD"].includes(freq)){ // if default, since can't call time series to get the exact date, set limit to 2 so that it calls time series automatically
+      only_get_latest_when_limit_larger_1 = true
+      limit = 2
+    }
+  }
+
   ///// Combine limit with freq to become series freq if applicable
   if (!is_full_statement && ["TTM", "FY", "Q", "YTD"].includes(freq) && limit && limit > 1) {
     freq += "@" + limit;
@@ -132,6 +149,8 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   else if (!is_full_statement) {
     limit = 'undefined';
   }
+
+  // console.log(13, freq, limit)
   //// Prepare stuff to send to Go
   var prepare = {};
   if (!is_full_statement) {
@@ -152,13 +171,13 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
     );
   }
   prepare = { ...prepare, ...{ ticker: (Array.isArray(ticker)  ? '[' + Object.keys(unique_tickers).length.toString() : ticker), metric: id,
-      freq: freq, api_key: api_key, limit: limit ? limit.toString() : 'undefined' , is_full_statement: is_full_statement ? "y" : "n" , is_share: id == '37' ? 'y' :'n'} };
+      freq: freq, api_key: api_key, limit: limit ? limit.toString() : 'undefined' , is_full_statement: is_full_statement ? "y" : "n" , is_share: id == '37' ? 'y' :'n', is_nh: is_nh ? 'y' : 'n'} };
   if (id == 206) {
     prepare["is_latest_price"] = "1";
   }
-  console.log('ticker', ticker)
+  // console.log('ticker', prepare)
   //// Now get data
-  var urlParams = {api_key: api_key, limit: limit, is_full_statement: is_full_statement ? "y" : "n", freq: freq, is_share: id == '37' ? 'y' :'n', function_name: 'FS_EquityMetrics'}
+  var urlParams = {api_key: api_key, limit: limit, is_full_statement: is_full_statement ? "y" : "n", freq: freq, is_share: id == '37' ? 'y' :'n', function_name: 'FS_EquityMetrics',  is_nh: is_nh ? 'y' : 'n'}
   const url = link + "/excel/standard?" + new URLSearchParams(urlParams).toString()
   const response = await fetch(url, {method: 'POST', body: JSON.stringify(prepare)});
 
@@ -171,7 +190,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   var json = await response.json()
   // console.log( json)
   if('message' in json){return [[json.message]]}
-  return handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers, sub_options);
+  return handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers, is_nh, only_get_latest_when_limit_larger_1);
 }
 // async function equityHelper(symbol, metric, period = undefined, limit = undefined) {
 //   // return [["Please login using the sidebar"]];
@@ -432,7 +451,7 @@ var properties = ["close", "open", "high", "low", "volume"]
 
 async function candlesHelper(symbol, resolution, from, to = undefined,metrics= undefined, options= undefined, which="stock" ) {
   if (to == null) { to = undefined }
-  console.log(from, to)
+  // console.log(from, to)
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
   if (!symbol) { return [["Symbol cannot be empty"]] }
@@ -2084,7 +2103,7 @@ async function helperBondCandles(isin,   from , to , options){
     if(isNaN(to) || to < 0) return [["Invalid 'to'"]]
   }
   if(to <=from){return [["'to' has to be after 'from'"]]}
-  console.log(from ,to)
+  // console.log(from ,to)
   //// Send and get data
   var prepare = { ticker: symbol,  from: from, to: to, api_key: api_key, function_name: 'FS_BondCandles'   }
 
@@ -2787,7 +2806,7 @@ async function FS_InstitutionalPortfolios(guru , invocation){
 }
 
 async function helperDividends(symbol, from, to ,metrics, options){
-  console.log(13)
+  // console.log(13)
   var api_key = readCookie("finsheet_api_key");
   if(!api_key){return [["Please login using the sidebar"]]}
 
@@ -2795,7 +2814,7 @@ async function helperDividends(symbol, from, to ,metrics, options){
   if(!from){return [['from cannot be empty']]}
   if(!to){return [['to cannot be empty']]}
 
-  console.log(1)
+  // console.log(1)
   //// Check from
   if(from ){
     // Handle unix time
@@ -2820,7 +2839,7 @@ async function helperDividends(symbol, from, to ,metrics, options){
   } else {
     from = ""
   }
-  console.log(2)
+  // console.log(2)
   //// Check to
   if(to ){
     // Handle unix time
@@ -2848,7 +2867,7 @@ async function helperDividends(symbol, from, to ,metrics, options){
 
   //// Send and get data
   var prepare =  {ticker: symbol,  from: from, to: to, api_key: api_key,   function_name: 'FS_Dividends'}
-  console.log(12, prepare)
+  // console.log(12, prepare)
   //// Now get data
   const url = link + "/excel/dividend?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
