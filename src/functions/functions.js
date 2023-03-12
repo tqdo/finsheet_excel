@@ -723,7 +723,7 @@ async function helperAllRate(base_currency){
   for(var key of Object.keys(data)){
     data_to_return.push([key, data[key]])
   }
-  return data_to_return
+  return data_to_return.length > 0 ? data_to_return : [['No data']]
 }
 /**
  * @customfunction FS_FOREXALLRATES FS_ForexAllRates
@@ -853,7 +853,7 @@ async function helperEtfProfile(symbol){
       data_to_return.push([map_name_etf_profile[key], data[key]])
     }
   }
-  return data_to_return
+  return data_to_return.length > 0 ? data_to_return : [['No data']]
 }
 
 /**
@@ -921,7 +921,7 @@ async function helperMutualFundProfile(symbol){
       data_to_return.push([map_name_mutual_fund_profile[key], data[key]])
     }
   }
-  return data_to_return
+  return data_to_return.length > 0 ? data_to_return : [['No data']]
 }
 
 /**
@@ -981,7 +981,7 @@ async function holdingsHelper(symbol, skip, which){
       }
       data_to_return.push(arr)
     }
-    return data_to_return.length > 2 ? data_to_return : []
+    return data_to_return.length > 2 ? data_to_return : [['No data']]
   } catch(e){
     return [['No data']]
   }
@@ -1756,7 +1756,7 @@ async function helperESG(symbol){
       data_to_return.push([name, data[key]])
     }
   }
-  return data_to_return
+  return data_to_return.length > 0 ? data_to_return : [['No data']]
 }
 
 /**
@@ -1828,7 +1828,7 @@ async function helperEQ(symbol, freq, limit){
     data_to_return.push([capFirst(name.split(/(?=[A-Z])/).join(' '))].concat([].concat(store_data[name]).reverse()))
   }
   data_to_return[0][0] = ''
-  return data_to_return
+  return data_to_return.length > 0 ? data_to_return : [['No data']]
 }
 
 /**
