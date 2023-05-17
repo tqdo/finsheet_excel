@@ -116,7 +116,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
         prepare["is_latest_price"] = "1";
     }
     //// Now get data
-    const url = "https://finsheet.io/excel/standard?" + new URLSearchParams(prepare).toString()
+    const url = "https://finsheet.io/qweiop/standard?" + new URLSearchParams(prepare).toString()
     const response = await fetch(url);
     //Expect that status code is in 200-299 range
     if (!response.ok) {
@@ -212,7 +212,7 @@ async function candlesHelper(symbol, resolution, from, to = undefined, which="st
 
 
     //// Now get data
-    const url = "https://finsheet.io/excel/candles?" + new URLSearchParams(prepare).toString()
+    const url = "https://finsheet.io/qweiop/candles?" + new URLSearchParams(prepare).toString()
     const response = await fetch(url);
 
     //Expect that status code is in 200-299 range

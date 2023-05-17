@@ -522,7 +522,7 @@ function Login() {
     login_warning.text("");
     $("#email").val("");
     $("#password").val("");
-    fetch(link + "/excel/login?email=" + encodeURIComponent(email) + '&password='+encodeURIComponent(password)).then(function(response) {
+    fetch(link + "/qweiop/login?email=" + encodeURIComponent(email) + '&password='+encodeURIComponent(password)).then(function(response) {
       if (response.ok) {
         return response.json().then(function(json) {
           // console.log(json);
@@ -569,7 +569,7 @@ function Register(){
     $('#register_name').val('')
     $('#register_email').val('')
     $('#register_password').val('')
-    fetch(link + '/excel/register?email=' + encodeURIComponent(email) + '&password='+encodeURIComponent(password) + '&name=' + encodeURIComponent(name)).then(function(response){
+    fetch(link + '/qweiop/register?email=' + encodeURIComponent(email) + '&password='+encodeURIComponent(password) + '&name=' + encodeURIComponent(name)).then(function(response){
       if (response.ok) {return response.json().then(function (json) {
         // console.log(json);
         if(json.msg){
@@ -2359,3 +2359,4 @@ var resolution_map_to_seconds = {
 // $("#functions_dropdown_wrap").on("mouseover", function() {$("#functions_dropdown").show();}).on("mouseout", function() {$("#functions_dropdown").hide();});
 // $("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});
 
+// Todo: if build new prod, make sure change qweiop in all files back to the correct value
