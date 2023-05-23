@@ -2706,6 +2706,7 @@ async function helperEC(from,   to, symbol, international, options ){
   var data = json.data
 
   data = data.earningsCalendar
+  if(!options){options = ''}
   var is_nh = options.toString().toUpperCase().includes('NH')
   var data_to_return = is_nh ? [] : [['Date',  'Hour', 'Symbol', 'Revenue Actual' , 'Revenue Estimate', 'EPS Actual', 'EPS Estimate', 'Reporting period' ]]
   var map_hour ={bmo: 'Before Market Open', amc: 'After Market Close', dmh: 'During Market Hour'}
