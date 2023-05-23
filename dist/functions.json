@@ -933,6 +933,12 @@
                     "name": "international",
                     "optional": true,
                     "type": "string"
+                },
+                {
+                    "description": "set to \"NH\" to omit the header row.",
+                    "name": "options",
+                    "optional": true,
+                    "type": "string"
                 }
             ],
             "result": {

@@ -2625,7 +2625,7 @@ async function FS_EquityTick(symbol,   date , limit, skip = undefined, options =
   return to_return
 }
 
-async function helperEC(from,   to, symbol, international ){
+async function helperEC(from,   to, symbol, international, options ){
   var api_key = readCookie("finsheet_api_key");
   if (!api_key) { return [["Please login using the sidebar"]] }
 
@@ -2706,7 +2706,8 @@ async function helperEC(from,   to, symbol, international ){
   var data = json.data
 
   data = data.earningsCalendar
-  var data_to_return = [['Date',  'Hour', 'Symbol', 'Revenue Actual' , 'Revenue Estimate', 'EPS Actual', 'EPS Estimate', 'Reporting period' ]]
+  var is_nh = options.toString().toUpperCase().includes('NH')
+  var data_to_return = is_nh ? [] : [['Date',  'Hour', 'Symbol', 'Revenue Actual' , 'Revenue Estimate', 'EPS Actual', 'EPS Estimate', 'Reporting period' ]]
   var map_hour ={bmo: 'Before Market Open', amc: 'After Market Close', dmh: 'During Market Hour'}
   for(var dic of data){
     data_to_return.push([
@@ -2721,7 +2722,8 @@ async function helperEC(from,   to, symbol, international ){
 
     ])
   }
-  if (data_to_return.length < 2) { return [['No data']] }
+  if(is_nh && data_to_return.length < 1) { return [['No data']] }
+  if (!is_nh && data_to_return.length < 2) { return [['No data']] }
   return data_to_return
 }
 
@@ -2731,13 +2733,14 @@ async function helperEC(from,   to, symbol, international ){
  * @param [to] {string} to date (optional).
  * @param [symbol] {string} stock symbol (optional).
  * @param [international] {string} specify "true" to include international markets (optional).
+ * @param [options] {string} set to "NH" to omit the header row.
  * @param {CustomFunctions.Invocation} invocation Invocation object.
  * @requiresAddress
  * @returns {string[][]} Result array.
  * ...
  */
-async function FS_EarningsCalendar(from,   to, symbol, international , invocation ){
-  const  to_return = helperEC(from,   to, symbol, international )
+async function FS_EarningsCalendar(from,   to, symbol, international , options, invocation ){
+  const  to_return = helperEC(from,   to, symbol, international, options )
   await check_whether_reach_limit(await to_return, invocation.address)
   return to_return
 }
