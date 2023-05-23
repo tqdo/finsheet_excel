@@ -522,7 +522,7 @@ function Login() {
     login_warning.text("");
     $("#email").val("");
     $("#password").val("");
-    fetch(link + "/qweiop/login?email=" + encodeURIComponent(email) + '&password='+encodeURIComponent(password)).then(function(response) {
+    fetch(link + "/excel/login?email=" + encodeURIComponent(email) + '&password='+encodeURIComponent(password)).then(function(response) {
       if (response.ok) {
         return response.json().then(function(json) {
           // console.log(json);
@@ -569,7 +569,7 @@ function Register(){
     $('#register_name').val('')
     $('#register_email').val('')
     $('#register_password').val('')
-    fetch(link + '/qweiop/register?email=' + encodeURIComponent(email) + '&password='+encodeURIComponent(password) + '&name=' + encodeURIComponent(name)).then(function(response){
+    fetch(link + '/excel/register?email=' + encodeURIComponent(email) + '&password='+encodeURIComponent(password) + '&name=' + encodeURIComponent(name)).then(function(response){
       if (response.ok) {return response.json().then(function (json) {
         // console.log(json);
         if(json.msg){
@@ -1494,7 +1494,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
         if('backward_period_map' in json.data){return [['No data']]}
         for(var key of Object.keys(json.data)){
           // console.log([[json.data[key]]])
-          if(key=== "39_-1"){return  [["No data"]]}
+          if(key=== "39_-1" || json.data[key] === null){return  [["No data"]]}
           return [[json.data[key]]]
         }
       }
@@ -1512,6 +1512,7 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
             to_return[1].push(json.data[key])
           }
         }
+        if(to_return[1].length < 1 || to_return[1][0] === null){to_return[1] = ['No data']}
         return to_return
 
       }

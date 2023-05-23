@@ -178,7 +178,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   // console.log('ticker', prepare)
   //// Now get data
   var urlParams = {api_key: api_key, limit: limit, is_full_statement: is_full_statement ? "y" : "n", freq: freq, is_share: id == '37' ? 'y' :'n', function_name: 'FS_EquityMetrics',  is_nh: is_nh ? 'y' : 'n'}
-  const url = link + "/qweiop/standard?" + new URLSearchParams(urlParams).toString()
+  const url = link + "/excel/standard?" + new URLSearchParams(urlParams).toString()
   const response = await fetch(url, {method: 'POST', body: JSON.stringify(prepare)});
 
   if (!response.ok) {
@@ -376,7 +376,7 @@ async function FS_Test(symbol){
   var prepare = {ticker: Object.keys(unique_tickers), api_key: api_key,   }
 
   var urlParams = {  api_key: api_key, }
-  const url = link + "/qweiop/latest?" + new URLSearchParams(urlParams).toString()
+  const url = link + "/excel/latest?" + new URLSearchParams(urlParams).toString()
   const response = await fetch(url, {method: 'POST', body: JSON.stringify(prepare)});
 
   //Expect that status code is in 200-299 range
@@ -520,7 +520,7 @@ async function candlesHelper(symbol, resolution, from, to = undefined,metrics= u
 
 
   //// Now get data
-  const url = link + "/qweiop/candles?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/candles?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -704,7 +704,7 @@ async function helperAllRate(base_currency){
 
   //// Now get data
   var prepare = {base_currency: base_currency, api_key: api_key, function_name: 'FS_ForexAllRates'}
-  const url = link + "/qweiop/forex_all_rates?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/forex_all_rates?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -762,7 +762,7 @@ async function helperCryptoProfile(symbol){
 
   //// Now get data
   var prepare = {symbol: symbol, api_key: api_key, which: "crypto_profile", function_name: 'FS_CryptoProfile'}
-  const url = link + "/qweiop/asset_profile?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/asset_profile?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -829,7 +829,7 @@ async function helperEtfProfile(symbol){
 
   //// Now get data
   var prepare = {symbol: symbol, api_key: api_key, which: "etf_profile", function_name: 'FS_EtfProfile'}
-  const url = link + "/qweiop/asset_profile?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/asset_profile?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -897,7 +897,7 @@ async function helperMutualFundProfile(symbol){
 
   //// Now get data
   var prepare = {symbol: symbol, api_key: api_key, which: "mutual_fund_profile", function_name: 'FS_MutualFundProfile'}
-  const url = link + "/qweiop/asset_profile?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/asset_profile?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -954,7 +954,7 @@ async function holdingsHelper(symbol, skip, which){
   }
 
   var prepare = {symbol: symbol, skip: skip.toString(), api_key: api_key, which: which, function_name: function_name}
-  const url = link + "/qweiop/asset_holdings?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/asset_holdings?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -1063,7 +1063,7 @@ async function helperLatest(symbol){
   var prepare = {ticker: Object.keys(unique_tickers), api_key: api_key,   }
 
   var urlParams = {  api_key: api_key, }
-  const url = link + "/qweiop/latest?" + new URLSearchParams(urlParams).toString()
+  const url = link + "/excel/latest?" + new URLSearchParams(urlParams).toString()
   const response = await fetch(url, {method: 'POST', body: JSON.stringify(prepare)});
 
   //Expect that status code is in 200-299 range
@@ -1315,7 +1315,7 @@ async function helperPR(symbol, resolution){
 
   var prepare = {api_key : api_key, symbol: symbol, resolution: resolution, which: 'pattern_recognition', function_name: 'FS_PatternRecognition'}
   // console.log(0, prepare)
-  const url = link + "/qweiop/technical?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -1408,7 +1408,7 @@ async function helperSR(symbol, resolution){
 
   var prepare = {api_key: api_key, symbol: symbol, resolution: resolution, which: 'support_resistance', function_name: 'FS_SupportResistance'}
 
-  const url = link + "/qweiop/technical?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
 
@@ -1477,7 +1477,7 @@ async function helperAI(symbol, resolution){
 
   var prepare = {api_key: api_key, symbol: symbol, resolution: resolution, which: 'aggregate_indicators', function_name: 'FS_AggregateIndicators'}
 
-  const url = link + "/qweiop/technical?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -1591,7 +1591,7 @@ async function helperTI(symbol, resolution, indicator, from, to , parameters){
 
   // console.log('prepare', prepare)
   //// Now send get data
-  const url = link + "/qweiop/technical?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/technical?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -1727,7 +1727,7 @@ async function helperESG(symbol){
 
   //// Now get data
   var prepare = {symbol: symbol, api_key: api_key, function_name: 'FS_ESG'}
-  const url = link + "/qweiop/alternative/esg?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/alternative/esg?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -1787,7 +1787,7 @@ async function helperEQ(symbol, freq, limit){
 
   //// Now get data
   var prepare = {symbol: symbol, api_key: api_key, freq : freq, function_name: 'FS_EarningsQuality'}
-  const url = link + "/qweiop/alternative/earnings_quality?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/alternative/earnings_quality?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -1890,7 +1890,7 @@ async function helperApi(provider, endpoint, parameters){
   // console.log(12, final_params)
   var prepare = {api_key: api_key, base_url: base_url, endpoint_url: endpoint_url, params: JSON.stringify(final_params), return_structure: return_structure}
   //// Now send get data
-  const url = link + "/qweiop/api?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/api?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -2109,7 +2109,7 @@ async function helperBondCandles(isin,   from , to , options){
 
 
   //// Now get data
-  const url = link + "/qweiop/bond_candles?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/bond_candles?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -2207,7 +2207,7 @@ async function helperBondTick(isin,   date , limit  , options){
   var prepare = { ticker: symbol,   from: from, limit: limit.toString(), api_key: api_key, function_name: 'FS_BondTick'   }
 
   //// Now get data
-  const url = link + "/qweiop/bond_tick?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/bond_tick?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -2300,7 +2300,7 @@ async function helperOXD(symbol){
   //// Send and get data
   var prepare =  {ticker: symbol,   api_key: api_key, function_name: 'FS_OptionExpirationDates'}
 
-  const url = link + "/qweiop/option?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/option?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
 
@@ -2395,7 +2395,7 @@ async function helperOC(symbol, type, expirationDate, options){
   //// Send and get data
   var prepare =  {ticker: symbol,   api_key: api_key,   function_name: 'FS_OptionChain' }
 
-  const url = link + "/qweiop/option?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/option?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
 
@@ -2472,7 +2472,7 @@ async function helperSI(symbol){
 
   //// Now get data
   var prepare = {symbol: symbol, api_key: api_key, function_name: 'FS_ShortInterest'}
-  const url = link + "/qweiop/short-interest?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/short-interest?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -2560,7 +2560,7 @@ async function helperET(symbol,   date , limit, skip  , options){
 
 
   //// Now get data
-  const url = link + "/qweiop/equity_tick?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/equity_tick?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -2687,7 +2687,7 @@ async function helperEC(from,   to, symbol, international, options ){
 
 
   //// Now get data
-  const url = link + "/qweiop/earningscalendar?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/earningscalendar?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -2758,7 +2758,7 @@ async function helperIP(guru){
   var prepare =  {guru: guru, is_gs: "y" , api_key: api_key, function_name: 'FS_InstitutionalPortfolios'}
 
   //// Now get data
-  const url = link + "/qweiop/institutional-holding?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/institutional-holding?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
@@ -2873,7 +2873,7 @@ async function helperDividends(symbol, from, to ,metrics, options){
   var prepare =  {ticker: symbol,  from: from, to: to, api_key: api_key,   function_name: 'FS_Dividends'}
   // console.log(12, prepare)
   //// Now get data
-  const url = link + "/qweiop/dividend?" + new URLSearchParams(prepare).toString()
+  const url = link + "/excel/dividend?" + new URLSearchParams(prepare).toString()
   const response = await fetch(url);
 
   //Expect that status code is in 200-299 range
