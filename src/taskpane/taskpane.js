@@ -8,14 +8,14 @@ console.log(link)
  */
 var map_metrics = {
   '0': {display_name: 'Average Daily Trading Volume (10d)', is_financial_group: '', display_group:['Valuation'], 'type': '1', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'avg_trading_volume_10d', default_0: 0},
-  '1': {display_name: 'Average Daily Return (13w)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_return_daily_13w', default_0: 0},
-  '2': {display_name: 'Average Daily Return (26w)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_return_daily_26w', default_0: 0},
+  '1': {display_name: 'Price Return (13w)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_return_daily_13w', default_0: 0},
+  '2': {display_name: 'Price Return (26w)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_return_daily_26w', default_0: 0},
   '3': {display_name: 'Average Monthly Trading Volume (3m)', is_financial_group: '', display_group:['Valuation'], 'type': '1', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'avg_trading_volume_10d', default_0: 0},
   '4': {display_name: '52 Week High', is_financial_group: '', display_group:['Valuation', 'Popular'], 'type': '0', currency_type: '2', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_high_52w', default_0: 0},
   '5': {display_name: '52 Week High Date', is_financial_group: '', display_group:['Valuation'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'price_high_date_52w', default_0: 0},
   '6': {display_name: '52 Week Low', is_financial_group: '', display_group:['Valuation', 'Popular'], 'type': '0', currency_type: '2', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_low_52w', default_0: 0},
   '7': {display_name: '52 Week Low Date', is_financial_group: '', display_group:['Valuation'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'price_low_date_52w', default_0: 0},
-  '8': {display_name: 'Average Daily Return (5d)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_return_daily_5d', default_0: 0},
+  '8': {display_name: 'Price Return (5d)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_return_daily_5d', default_0: 0},
   '9': {display_name: 'Headquarter Address', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'address', default_0: 0},
   '10': {display_name: 'Headquarter City', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'city', default_0: 0},
   '11': {display_name: 'Operating Country', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'country', default_0: 0},
@@ -32,7 +32,7 @@ var map_metrics = {
   '22': {display_name: 'Sub-Industry', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'gsubind', default_0: 0},
   '23': {display_name: 'IPO Date', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'ipo', default_0: 0},
   '24': {display_name: 'Market Capitalization', is_financial_group: '', display_group:['Valuation', 'Popular'], 'type': '1', currency_type: '2', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '1', excel: 'market_cap', default_0: 0},
-  '25': {display_name: 'Average Daily Return (Month to Date)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'mtd_price_return_daily', default_0: 0},
+  '25': {display_name: 'Price Return (MTD)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'mtd_price_return_daily', default_0: 0},
   '26': {display_name: 'NAICS Industry', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'naics', default_0: 0},
   '27': {display_name: 'NAICS National Industry', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'naics_national_industry', default_0: 0},
   '28': {display_name: 'NAICS Sector', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'naics_sector', default_0: 0},
@@ -48,7 +48,7 @@ var map_metrics = {
   '38': {display_name: 'Headquarter State', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'state', default_0: 0},
   '39': {display_name: '', is_financial_group: '', display_group:[''], 'type': '', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: 'n', plot_type: '', excel: '', default_0: 0},
   '40': {display_name: 'Company Website', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'weburl', default_0: 0},
-  '41': {display_name: 'Average Daily Return (YTD)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'ytd_price_return_daily', default_0: 0},
+  '41': {display_name: 'Price Return (YTD)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'ytd_price_return_daily', default_0: 0},
   '42': {display_name: 'Asset Turnover', is_financial_group: '', display_group:['Efficiency', 'Popular'], 'type': '0', currency_type: '0', default_freq: 'TTM', supported_freq:['TTM', 'FY', 'Q'], can_be_filter: '', can_be_column: '', plot_type: '0', excel: 'asset_turnover', default_0: 0},
   '43': {display_name: 'Book Value Per Share', is_financial_group: '', display_group:['Financials'], 'type': '0', currency_type: '1', default_freq: 'Q', supported_freq:['FY', 'Q'], can_be_filter: '', can_be_column: '', plot_type: '0', excel: 'bv_share', default_0: 0},
   '44': {display_name: 'Accounts Payable', is_financial_group: 'BS', display_group:['Financials'], 'type': '1', currency_type: '1', default_freq: 'Q', supported_freq:['FY', 'Q'], can_be_filter: '', can_be_column: '', plot_type: '1', excel: 'account_payable', default_0: 0},
@@ -165,7 +165,7 @@ var map_metrics = {
   '161': {display_name: 'EBITD Per Share', is_financial_group: '', display_group:['Financials'], 'type': '0', currency_type: '1', default_freq: 'TTM', supported_freq:['TTM', 'FY', 'Q'], can_be_filter: '', can_be_column: '', plot_type: '0', excel: 'ebitd_per_share', default_0: 0},
   '162': {display_name: 'Free Cash Flow Per Share', is_financial_group: '', display_group:['Financials'], 'type': '0', currency_type: '1', default_freq: 'TTM', supported_freq:['TTM', 'FY', 'Q'], can_be_filter: '', can_be_column: '', plot_type: '0', excel: 'fcf_per_share', default_0: 0},
   '163': {display_name: 'Operating Cash Flow / Revenue', is_financial_group: '', display_group:['Efficiency'], 'type': '2', currency_type: '', default_freq: 'TTM', supported_freq:['TTM', 'FY', 'Q'], can_be_filter: '', can_be_column: '', plot_type: '2', excel: 'ocf_to_rev', default_0: 0},
-  '164': {display_name: 'Average Daily Return (52w)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_return_daily_52w', default_0: 0},
+  '164': {display_name: 'Price Return (52w)', is_financial_group: '', display_group:['Valuation'], 'type': '2', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'price_return_daily_52w', default_0: 0},
   '165': {display_name: 'Beta', is_financial_group: '', display_group:['Valuation', 'Risk'], 'type': '0', currency_type: '0', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'beta', default_0: 0},
   '166': {display_name: 'CUSIP Number', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'cusip', default_0: 0},
   '167': {display_name: 'ISIN Number', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: '', plot_type: '', excel: 'isisn', default_0: 0},
@@ -1035,12 +1035,14 @@ function generate_query(
 
   // If we have some data and mode == "new_filter" and create ticker_str to send to Golang
   if (data.length > 0 && (mode === "new_filter" || mode === "edit_columns" || mode === "watchlist")) {
-    obj["ticker_str"] = "(";
-    for (var dic of data) {
-      var arr = split_ticker_exchange(mode === "watchlist" ? dic : dic.ticker); // If watchlist then data is a list of tickers
-      obj["ticker_str"] += "('" + arr[0] + "', '" + arr[1] + "') ,";
-    }
-    obj["ticker_str"] = obj["ticker_str"].slice(0, obj["ticker_str"].length - 2) + ")";
+    // obj["ticker_str"] = "(";
+    // for (var dic of data) {
+    //   var arr = split_ticker_exchange(mode === "watchlist" ? dic : dic.ticker); // If watchlist then data is a list of tickers
+    //   obj["ticker_str"] += "('" + arr[0] + "', '" + arr[1] + "') ,";
+    // }
+    // obj["ticker_str"] = obj["ticker_str"].slice(0, obj["ticker_str"].length - 2) + ")";
+
+    obj['ticker_arr'] = JSON.stringify(data)
 
     // send all count as well, so that later send back to JS to recover
     var count_arr = [];
@@ -1455,8 +1457,11 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
     //     return [[json.data[key]]];
     //   }
     // }
+
     // If only has 1 value in json.data meaning not series, simply return it (check whether ticker is an array, handle appropriately)
     if(Array.isArray(ticker)){
+      var ticker_map_back = json.map_back ? json.map_back : {}
+
       // Handle each ticker (we have multiple tickers)
       let to_return = zeros([ticker.length, ticker[0].length], 'No data')
       let position_of_each_ticker = {}
@@ -1471,14 +1476,30 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
         }
       }
       for(let tic of Object.keys(json.data)){
-        if(position_of_each_ticker[tic] && json.data[tic] && Object.keys(json.data[tic]).length == 1){
+        // If this tic is in ticker_map_back, meaning it was originally a secondary ticker and was mapped to primary when getting data
+        // Now we use ticker_map_back to map the primary from json.data back to the secondary ticker
+        var rev_mapped_tic = tic in ticker_map_back ? ticker_map_back[tic] : tic
+
+        // OR condition to handle the case of ['FOX', 'FOXA'] both appear in the data, then need to populate for both
+        var has_position = position_of_each_ticker[rev_mapped_tic] || position_of_each_ticker[tic]
+
+        if(has_position && json.data[tic] && Object.keys(json.data[tic]).length == 1){
           for(let key of Object.keys(json.data[tic])){
             if(key !== "39_-1"){
               let value = json.data[tic][key]
               // Populate all cells of this ticker
-              for(let pos_str of Object.keys(position_of_each_ticker[tic])){
-                let pos_arr = pos_str.split('@')
-                to_return[pos_arr[0]][pos_arr[1]] = value
+              if(position_of_each_ticker[rev_mapped_tic]){
+                for(let pos_str of Object.keys(position_of_each_ticker[rev_mapped_tic])){
+                  let pos_arr = pos_str.split('@')
+                  to_return[pos_arr[0]][pos_arr[1]] = value
+                }
+              }
+
+              if(rev_mapped_tic !== tic && position_of_each_ticker[tic]){
+                for(let pos_str of Object.keys(position_of_each_ticker[tic])){
+                  let pos_arr = pos_str.split('@')
+                  to_return[pos_arr[0]][pos_arr[1]] = value
+                }
               }
             }
           }
