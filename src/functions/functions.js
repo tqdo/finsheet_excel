@@ -409,6 +409,10 @@ async function FS_Test(symbol){
  * ...
  */
 async function FS_EquityMetrics(symbol, metric, period = undefined, limit = undefined, options = undefined, invocation){
+  if(metric === 'price_latest'){
+    metric = 'price_last_close'
+  }
+
   if(!metric){return [["Metric cannot be empty"]]}
   metric = metric.toLowerCase()
   if(!(metric in map_excel_name_to_id) ){return [["Unsupported metric"]]}
