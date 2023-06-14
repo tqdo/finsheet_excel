@@ -65,7 +65,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
     return [["Unsupported metric"]];
   }
 
-  if(metric === 'price_latest' && Array.isArray(ticker)  ){return [['This metric does not support multiple symbols at the same time.']]}
+  if((metric === 'price_latest' || metric === 'price_last_close') && Array.isArray(ticker)  ){return [['This metric does not support multiple symbols at the same time.']]}
 
   if (freq === "") {
     freq = undefined;
@@ -409,9 +409,9 @@ async function FS_Test(symbol){
  * ...
  */
 async function FS_EquityMetrics(symbol, metric, period = undefined, limit = undefined, options = undefined, invocation){
-  if(metric === 'price_latest'){
-    metric = 'price_last_close'
-  }
+  // if(metric === 'price_latest'){
+  //   metric = 'price_last_close'
+  // }
 
   if(!metric){return [["Metric cannot be empty"]]}
   metric = metric.toLowerCase()
