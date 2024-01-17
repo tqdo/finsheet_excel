@@ -451,7 +451,12 @@ var valid_resolution = {
 var lower_res = { 'd': 1, 'w': 1, 'm': 1 }
 var properties = ["close", "open", "high", "low", "volume"]
 
-
+function convertEpochToSpecificTimezone(timeEpoch, offset){
+  var d = new Date(timeEpoch);
+  var utc = d.getTime() + (d.getTimezoneOffset() * 60000);  //This converts to UTC 00:00
+  var nd = new Date(utc + (3600000*offset));
+  return nd;
+}
 
 async function candlesHelper(symbol, resolution, from, to = undefined,metrics= undefined, options= undefined, which="stock" ) {
   if (to == null) { to = undefined }
@@ -574,7 +579,15 @@ async function candlesHelper(symbol, resolution, from, to = undefined,metrics= u
       var one_row = []
       for(var elem of headers){
         if(elem == 'Period'){
-          one_row.push(data.t && data.t[i] ? (is_ct ? new Date(data.t[i] * 1000) : data.t[i]): '')
+          var used_datetime = ''
+          try{
+            used_datetime = is_ct ? new Date(data.t[i] * 1000) : data.t[i]
+            if(window.email === 'galdinoafalcao@gmail.com'){
+              used_datetime = convertEpochToSpecificTimezone(data.t[i] * 1000, -5)
+            }
+          } catch (e) {}
+
+          one_row.push(data.t && data.t[i] ? used_datetime : '')
         } else {
           one_row.push(data[map_col_name[elem]] && data[map_col_name[elem]][i] ? data[map_col_name[elem]][i] : '')
         }

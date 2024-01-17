@@ -420,6 +420,7 @@ function checkCoupon(cookie, ){
       // Populate the account page
       $("#account_name").text(myJson.name)
       $("#account_email").text(myJson.email)
+      window.email = myJson.email
       $("#account_plan").text(myJson.plan.length > 0 ? capFirst(myJson.plan[0].name) : 'Free')
 
     })
