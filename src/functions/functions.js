@@ -582,7 +582,7 @@ async function candlesHelper(symbol, resolution, from, to = undefined,metrics= u
           var used_datetime = ''
           try{
             used_datetime = is_ct ? new Date(data.t[i] * 1000) : data.t[i]
-            if(window.email === 'galdinoafalcao@gmail.com'){
+            if(window.email === 'galdinoafalcao@gmail.com' && is_ct){
               used_datetime = convertEpochToSpecificTimezone(data.t[i] * 1000, -5)
             }
           } catch (e) {}
@@ -2915,8 +2915,8 @@ async function helperDividends(symbol, from, to ,metrics, options){
 
   // Handle metrics / columns
   var headers = []
-  var map_col_name = {'declarationDate': 1,  'recordDate': 1, 'payDate': 1,'amount': 1, 'adjustedAmount': 1,'currency': 1}
-  if(!metrics || metrics == "all" || metrics == "All" || metrics == 'ALL'){headers = ['declarationDate',  'recordDate', 'payDate','amount', 'adjustedAmount','currency',]}
+  var map_col_name = {'declarationDate': 1,  'recordDate': 1, 'payDate': 1,'amount': 1, 'adjustedAmount': 1,'currency': 1, 'date': 1}
+  if(!metrics || metrics == "all" || metrics == "All" || metrics == 'ALL'){headers = ['date', 'declarationDate',  'recordDate', 'payDate','amount', 'adjustedAmount','currency',]}
   else {
     var arr_metrics = metrics.split('&')
     for(var elem of arr_metrics){
