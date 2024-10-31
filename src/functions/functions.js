@@ -1120,6 +1120,7 @@ function connect(first_symbol) {
   window.socket = new WebSocket('wss://' + link.slice(8,) + '/ws?api_key=' + api_key)
 
   window.socket.onopen = function() {
+
     console.log('Socket open')
     if(first_symbol){
       window.socket.send(JSON.stringify({symbol: first_symbol, "type": "subscribe",}))
@@ -1128,6 +1129,7 @@ function connect(first_symbol) {
   };
 
   window.socket.onmessage = function(e) {
+    window.plan = 'global' // If user can receive a message, they are likely global customer, save to to cookie so that reconnect later
     if(window.Should_Update_Streaming){   // Whether user chooses to pause or not pause streaming
       var data = JSON.parse(e.data)
       var symbol = data.data[0].s
@@ -1139,13 +1141,15 @@ function connect(first_symbol) {
   window.socket.onclose = function(e) {
     console.log(12, e)
     setTimeout(function() {
-      if(e.code === 1000){
-        window.have_not_reconnect_websocket = false
+      // if(e.code === 1000){
+      //   window.have_not_reconnect_websocket = false
+      //   connect();
+      // } else {
+      //   window.can_call_streaming = false
+      // }
+      if(window.plan === 'global'){
         connect();
-      } else {
-        window.can_call_streaming = false
       }
-
     }, 1000);
   };
 
