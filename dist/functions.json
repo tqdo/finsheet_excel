@@ -1003,6 +1003,34 @@
                 "dimensionality": "matrix",
                 "type": "string"
             }
+        },
+        {
+            "id": "FS_HISTORICALMARKETCAP",
+            "name": "FS_HistoricalMarketCap",
+            "options": {
+                "requiresAddress": true
+            },
+            "parameters": [
+                {
+                    "description": "Stock symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "from, YYYY-MM-DD.",
+                    "name": "from",
+                    "type": "string"
+                },
+                {
+                    "description": "to, YYYY-MM-DD.",
+                    "name": "to",
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
         }
     ]
 }

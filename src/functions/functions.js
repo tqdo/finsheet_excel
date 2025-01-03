@@ -2971,3 +2971,90 @@ async function FS_Dividends(symbol, from, to ,metrics, options , invocation){
   await check_whether_reach_limit(await to_return, invocation.address)
   return to_return
 }
+
+function isValidDate(str) {
+  const regex = /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/;
+  if (!regex.test(str)) return false;
+
+  // Additional validation for valid date
+  const [year, month, day] = str.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  return date.getMonth() === month - 1 && date.getFullYear() === year;
+}
+
+async function helperHistoricalMarketCap(symbol, from, to ){
+  // console.log(13)
+  var api_key = readCookie("finsheet_api_key");
+  if(!api_key){return [["Please login using the sidebar"]]}
+
+  if(!symbol){return [['symbol cannot be empty']]}
+  if(!from){return [['from cannot be empty']]}
+  if(!to){return [['to cannot be empty']]}
+
+  // console.log(1)
+  //// Check from
+  //// Check from
+  if(!isValidDate(from)){
+    return [["Invalid from date, needs to follow format YYYY-MM-DD"]]
+  }
+
+  //// Check to
+  if(!isValidDate(to)){
+    return [["Invalid to date, needs to follow format YYYY-MM-DD"]]
+  }
+
+  //// Send and get data
+  var prepare =  {ticker: symbol,  from: from, to: to, api_key: api_key,   function_name: 'FS_HistoricalMarketCap'}
+  // console.log(12, prepare)
+  //// Now get data
+  const url = link + "/excel/historical_market_cap?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data
+
+  data = data.data
+  data. reverse()
+
+
+  var data_to_return = []
+  for(var i=0;i<data.length;i++){
+    var dic = data[i]
+    var one_row = [dic.atDate, dic.marketCapitalization]
+    data_to_return.push(one_row)
+  }
+
+  if(data_to_return.length < 1){return [['No data']]}
+
+  data_to_return = [['Date', 'MarketCap']].concat(data_to_return)
+  return data_to_return
+}
+
+
+/**
+ * @customfunction FS_HISTORICALMARKETCAP FS_HistoricalMarketCap
+ * @param symbol {string} Stock symbol.
+ * @param from {string} from, YYYY-MM-DD.
+ * @param to {string} to, YYYY-MM-DD.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_HistoricalMarketCap(symbol, from, to , invocation){
+  const  to_return = helperHistoricalMarketCap(symbol, from, to  )
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
