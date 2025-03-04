@@ -1031,6 +1031,41 @@
                 "dimensionality": "matrix",
                 "type": "string"
             }
+        },
+        {
+            "id": "FS_REVENUEBREAKDOWN",
+            "name": "FS_RevenueBreakdown",
+            "options": {
+                "requiresAddress": true
+            },
+            "parameters": [
+                {
+                    "description": "Stock symbol.",
+                    "name": "symbol",
+                    "type": "string"
+                },
+                {
+                    "description": "Category (\"product\" or \"geography\").",
+                    "name": "category",
+                    "type": "string"
+                },
+                {
+                    "description": "Frequency (\"annual\" or \"quarterly\"). Default is \"annual\".",
+                    "name": "freq",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "Number of periods to returned. If empty, function will return all periods.",
+                    "name": "limit",
+                    "optional": true,
+                    "type": "number"
+                }
+            ],
+            "result": {
+                "dimensionality": "matrix",
+                "type": "string"
+            }
         }
     ]
 }

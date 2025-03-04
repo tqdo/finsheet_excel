@@ -3058,3 +3058,119 @@ async function FS_HistoricalMarketCap(symbol, from, to , invocation){
   await check_whether_reach_limit(await to_return, invocation.address)
   return to_return
 }
+
+
+function checkPositiveInteger(str) {
+  // Check if the string matches the pattern for a positive integer
+  if (/^[1-9]\d*$/.test(str)) {
+    return parseInt(str, 10);
+  } else {
+    return "";
+  }
+}
+function findLongestSubarray(arrays) {
+  if (!arrays || !Array.isArray(arrays) || arrays.length === 0) return [];
+
+  return arrays.reduce((longest, current) =>
+      Array.isArray(current) && current.length > longest.length ? current : longest, []);
+}
+
+async function helperRevenueBreakdown(symbol, category, freq, limit){
+  // console.log(13)
+  var api_key = readCookie("finsheet_api_key");
+  if(!api_key){return [["Please login using the sidebar"]]}
+
+  if(!symbol){return [['symbol cannot be empty']]}
+  if(!category){return [['category cannot be empty']]}
+  if(category != 'product' && category != 'geography'){
+    return [["category can only be 'product' or 'geography'"]]
+  }
+
+  //// Check freq
+  if(!freq){
+    freq = 'annual'
+  }
+  if(freq != 'annual' && freq != 'quarterly'){
+    return [["freq can only be 'annual' or 'quarterly'"]]
+  }
+
+  //// Check limit
+  if(limit){
+    limit = checkPositiveInteger(limit.toString())
+  }
+
+  //// Send and get data
+  var prepare =  {ticker: symbol,    api_key: api_key,    function_name:'FS_RevenueBreakdown'}
+  // console.log(12, prepare)
+  //// Now get data
+  const url = link + "/excel/revenue_breakdown?" + new URLSearchParams(prepare).toString()
+  const response = await fetch(url);
+
+  //Expect that status code is in 200-299 range
+  if (!response.ok) {
+    try{
+      var error = await response.text()
+      return [[JSON.parse(error).error]]
+    } catch (e) {
+      return [['No data']]
+    }
+
+  }
+
+  var json = await response.json()
+  if('message' in json){return [[json.message]]}
+  var data = json.data
+
+  try {
+    data = data.data[freq]['revenue_by_' + category]
+    data = findLongestSubarray(data)
+  } catch(e){return [['No data']]}
+
+  let periods = ['']
+
+  var data_to_return = []
+  for(var i=0;i<data.length;i++){
+    var dic = data[i]
+    var actual_data = dic.data
+    if(limit){
+      actual_data = actual_data.slice(-limit)
+    }
+
+    // First populate periods
+    if(periods.length < 2){
+      for(let d of actual_data){
+        periods.push(d.period)
+      }
+    }
+
+    // Now save data
+    var one_row = [dic.label]
+    for(let d of actual_data){
+      one_row.push(d.value ? parseFloat(d.value) / 1000000 : '')
+    }
+    data_to_return.push(one_row)
+  }
+
+  if(data_to_return.length < 1){return [['No data']]}
+
+  data_to_return = [periods].concat(data_to_return)
+  return data_to_return
+}
+
+
+/**
+ * @customfunction FS_REVENUEBREAKDOWN FS_RevenueBreakdown
+ * @param symbol {string} Stock symbol.
+ * @param category {string} Category ("product" or "geography").
+ * @param [freq] {string} Frequency ("annual" or "quarterly"). Default is "annual".
+ * @param [limit] {number} Number of periods to returned. If empty, function will return all periods.
+ * @param {CustomFunctions.Invocation} invocation Invocation object.
+ * @requiresAddress
+ * @returns {string[][]} Result array.
+ * ...
+ */
+async function FS_RevenueBreakdown(symbol, category, freq, limit , invocation){
+  const  to_return = helperRevenueBreakdown(symbol,  category, freq, limit  )
+  await check_whether_reach_limit(await to_return, invocation.address)
+  return to_return
+}
