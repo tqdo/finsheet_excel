@@ -296,7 +296,7 @@ var map_metrics = {
   '296': {display_name: '', is_financial_group: '', display_group:[''], 'type': '', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: 'n', plot_type: '', excel: '', default_0: 0},
   '297': {display_name: '', is_financial_group: '', display_group:[''], 'type': '', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: 'n', plot_type: '', excel: '', default_0: 0},
   '298': {display_name: '', is_financial_group: '', display_group:[''], 'type': '', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: 'n', plot_type: '', excel: '', default_0: 0},
-  '299': {display_name: '', is_financial_group: '', display_group:[''], 'type': '', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: 'n', can_be_column: 'n', plot_type: '', excel: '', default_0: 0},
+  '299': {display_name: 'all_latest_dates', is_financial_group: '', display_group:[''], 'type': '', currency_type: '', default_freq: 'TTM', supported_freq:['TTM', 'FY'], can_be_filter: 'n', can_be_column: 'n', plot_type: '', excel: 'all_latest_dates', default_0: 0},
   '300': {display_name: 'Operating Cash Flow Per Share', is_financial_group: '', display_group:['Financials'], 'type': '0', currency_type: '1', default_freq: 'TTM', supported_freq:['FY', 'Q', 'TTM'], can_be_filter: '', can_be_column: '', plot_type: '0', excel: 'ocf_per_share', default_0: 0},
   '301': {display_name: 'Country of Exchange', is_financial_group: '', display_group:['Profile'], 'type': '3', currency_type: '', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '', excel: 'country_of_exchange', default_0: 0},
   '302': {display_name: 'Price / Earnings (P/E)', is_financial_group: '', display_group:['Valuation', 'Popular'], 'type': '0', currency_type: '0', default_freq: '', supported_freq:[''], can_be_filter: '', can_be_column: '', plot_type: '0', excel: 'pe', default_0: 0},
@@ -715,6 +715,9 @@ function changeNewFilterName() {
   var count = 0;
   for (var key of Object.keys(map_metrics)) {
     var display_name = map_metrics[key].display_name;
+    if(display_name.toLowerCase() === "all_latest_dates"){
+      continue
+    }
     var check_whether_metric_can_be_used = map_metrics[key].excel !== "";
     if (display_name.toLowerCase().includes(input.toLowerCase()) && check_whether_metric_can_be_used) {
       count += 1;
@@ -1439,7 +1442,7 @@ function isValidFreq_returnCleanString(string, supported_freq = ["FY", "TTM", "Q
   return string;
 }
 
-function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers, is_nh, only_get_latest_when_limit_larger_1) {
+function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers, is_nh, only_get_latest_when_limit_larger_1, metric, freq) {
   if ("message" in json) {
     return [[json.message ? json.message : 'Something went wrong, please try again']];
   }
@@ -1509,6 +1512,14 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
           }
         }
       }
+
+      // Deal with all_latest_dates
+      if(metric === 'all_latest_dates'){
+        for(let i =0; i <to_return.length; i++){
+          to_return[i] = [getSpecificLatestDate(to_return[i][0], freq)]
+        }
+      }
+
       return to_return
     } else {
       // console.log(24, Object.keys(json.data), Object.keys(json.data).length)
@@ -1520,6 +1531,12 @@ function handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_ti
         for(var key of Object.keys(json.data)){
           // console.log([[json.data[key]]])
           if(key=== "39_-1" || json.data[key] === null){return  [["No data"]]}
+
+          // Deal with all_latest_dates
+          if(metric == 'all_latest_dates'){
+            json.data[key] = getSpecificLatestDate(json.data[key], freq)
+          }
+
           return [[json.data[key]]]
         }
       }
@@ -2386,3 +2403,8 @@ var resolution_map_to_seconds = {
 // $("#refresh_dropdown_wrap").on("mouseover", function() {$("#refresh_dropdown").show();}).on("mouseout", function() {$("#refresh_dropdown").hide();});
 
 // Todo: if build new prod, make sure change qweiop in all files back to the correct value, then change back to qweiop
+
+function getSpecificLatestDate(dict_str, which) {
+  let dict  = JSON.parse(dict_str)
+  return dict[which]
+}

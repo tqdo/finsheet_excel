@@ -190,7 +190,7 @@ async function equityHelper(symbol, metric, period = undefined, limit = undefine
   var json = await response.json()
   // console.log( json)
   if('message' in json){return [[json.message]]}
-  return handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers, is_nh, only_get_latest_when_limit_larger_1);
+  return handle_receive_AR_EQUITY(json, is_full_statement, id, ticker, unique_tickers, is_nh, only_get_latest_when_limit_larger_1, metric, freq);
 }
 // async function equityHelper(symbol, metric, period = undefined, limit = undefined) {
 //   // return [["Please login using the sidebar"]];
